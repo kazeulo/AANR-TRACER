@@ -1,0 +1,22 @@
+:root {
+  --color-primary: #133015;
+  --color-secondary: #30b232;
+  --color-background: #DBFE8C;
+  --text-color: #ccc;
+
+  --bg-color-light: #F7F7F7;  /* off-white color */
+  --bg-color-gradient: linear-gradient(
+        to right,
+        var(--secondary-color),
+        var(--tertiary-color)
+    );
+
+  --button-padding: 12px 24px;
+  --button-border-radius: 15px;
+}
+
+button{
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  transition: 0.5s transform ease;
+}
