@@ -1,15 +1,21 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from Express!' });
+// Serve frontend build
+const frontendPath = path.join(__dirname, "../client/dist");
+app.use(express.static(frontendPath));
+
+// Always return index.html for React routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port", PORT);
 });
