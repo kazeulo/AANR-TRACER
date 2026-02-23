@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Desktop/AANR-TRACER/styles/global.css"],"sourcesContent":["/* General styling & global reset */\r\n\r\n:root {\r\n   --primary-font:'Montserrat', sans-serif;\r\n\r\n  --primary-color: #133015;\r\n  --secondary-color: #30b232;\r\n  --tertiary-color: #DBFE8C;\r\n\r\n  --bg-color-light: #F7F7F7; /* off-white */\r\n\r\n  --bg-gradient: linear-gradient(\r\n    to right,\r\n    var(--primary-color),\r\n    var(--secondary-color),\r\n    var(--tertiary-color)\r\n  );\r\n}\r\n\r\n* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n   font-family: var(--primary-font);\r\n   background: var(--bg-color);\r\n   color: var(--text-color);\r\n   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;\r\n   line-height: 1.6;\r\n}\r\n\r\na {\r\n   text-decoration: none;\r\n   color: inherit;\r\n}\r\n\r\nbutton {\r\n   border: none;\r\n   cursor: pointer;\r\n   font-family: inherit;\r\n}\r\n\r\nimg {\r\n   max-width: 100%;\r\n   display: block;\r\n}\r\n"],"names":[],"mappings":"AAEA;;;;;;;;;AAiBA;;;;;;AAMA;;;;;;;;AAQA;;;;;AAKA;;;;;;AAMA"}}]
+}

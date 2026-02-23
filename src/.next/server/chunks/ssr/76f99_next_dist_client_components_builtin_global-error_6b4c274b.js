@@ -1,0 +1,3 @@
+module.exports=[37594,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(81848);a.n(d("[project]/Desktop/AANR-TRACER/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},60589,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(81848);a.n(d("[project]/Desktop/AANR-TRACER/node_modules/next/dist/client/components/builtin/global-error.js"))},75094,a=>{"use strict";a.i(37594);var b=a.i(60589);a.n(b)}];
+
+//# sourceMappingURL=76f99_next_dist_client_components_builtin_global-error_6b4c274b.js.map

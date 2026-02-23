@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Desktop/AANR-TRACER/app/globals.css"],"sourcesContent":["/* General styling & global reset */\n\n:root {\n  --primary-font:'Montserrat', sans-serif;\n\n  --primary-color: #1c5620;\n  --secondary-color: #4ab230;\n  --tertiary-color: #DBFE8C;\n\n  --bg-color-light: #F7F7F7; /* off-white */\n\n  --bg-gradient: linear-gradient(\n    to right,\n    var(--primary-color),\n    var(--secondary-color),\n    var(--tertiary-color)\n  );\n}\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nbody {\n  font-size: 1 rem;\n  font-family: var(--primary-font);\n  background: var(--bg-color);\n  color: var(--text-color);\n  line-height: 1.6;\n}\n\na {\n  text-decoration: none;\n  color: inherit;\n}\n\nbutton {\n  border: none;\n  cursor: pointer;\n  font-family: inherit;\n}\n\nimg {\n  max-width: 100%;\n  display: block;\n}"],"names":[],"mappings":"AAEA;;;;;;;;;AAiBA;;;;;;AAMA;;;;;;;;AAQA;;;;;AAKA;;;;;;AAMA"}}]
+}
