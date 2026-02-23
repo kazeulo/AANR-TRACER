@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AANR TRACER
 
-## Getting Started
+**Technology Readiness Assessment for Commercialization Enhancement and Roadmapping**
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Overview
+
+**TRACER** is an assessment and recommendation-support tool designed to systematically evaluate the **Technology Readiness Level (TRL)** of innovations in the **Agriculture, Aquatic, and Natural Resources (AANR)** sector.
+
+The platform applies a structured readiness assessment framework and generates **evidence-based, indicative recommendations** to support the progression of technologies from research and development toward adoption and utilization.
+
+Technologies are evaluated using defined criteria covering:
+
+- Technology development status
+- Intellectual property position
+- Technology transfer initiatives
+- Commercialization readiness
+
+This supports:
+
+- Informed decision-making
+- Standardized documentation
+- Strategic planning across stages of technology maturation
+
+---
+
+## Tech Stack
+
+- **Next.js** – Frontend and server rendering
+- **Express.js** – Backend API
+- **Hugging Face** - AI-powered recommendations
+  - meta-llama/Llama-3.1-8B-Instruct
+
+---
+
+## Documentation
+
+Detailed documentation is available in: `docs/`
+
+---
+
+## Project Structure
 ```
+AANR-TRACER/
+├── docs/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── utils/
+│   └── styles/
+├── CHANGELOG.md
+├── README.md
+├── package.json
+└── next.config.ts
+```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Changelog
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Version history is available in: `CHANGELOG.md`
