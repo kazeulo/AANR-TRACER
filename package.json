@@ -9,18 +9,28 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "lucide-react": "^0.575.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@types/node": "^20.6.1",
+    "@types/react": "^19.0.42",
+    "@types/react-dom": "^19.0.11",
+    "eslint": "^9.23.0",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  }
+    "tailwindcss": "^3.3.4",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "typescript": "^5.2.2"
+  },
+  "description": "**Technology Readiness Assessment for Commercialization Enhancement and Roadmapping**",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
