@@ -8,7 +8,7 @@
 
   --primary-color: #1c5620;
   --secondary-color: #4ab230;
-  --tertiary-color: #DBFE8C;
+  --tertiary-color: #bafe8c;
 
   --bg-color-light: #F7F7F7; 
   --text-color: #111111;
@@ -40,4 +40,12 @@
   .nav-link.active {
     color: var(--primary-color);
   }
+}
+
+.footer-link {
+  @apply text-sm text-gray-300 hover:text-[var(--tertiary-color)] transition-colors duration-300;
+}
+
+.social-icon {
+  @apply text-gray-300 transition-colors duration-300;
 }

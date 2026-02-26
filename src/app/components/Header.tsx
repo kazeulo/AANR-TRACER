@@ -19,7 +19,7 @@ export default function Header() {
     `transition-colors duration-300 ${pathname === path ? "text-[var(--primary-color)] underline" : "text-[var(--text-color)] hover:text-[var(--primary-color)]"}`;
 
   return (
-    <nav className="bg-white shadow-md p-4 sm:p-6">
+    <nav className="bg-white py-6 sm:py-6 max-w-7xl mx-auto w-full">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           <span className="text-[var(--secondary-color)]">AANR</span>
