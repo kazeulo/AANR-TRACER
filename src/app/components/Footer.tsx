@@ -15,7 +15,7 @@ export default function Footer() {
       className="text-white"
       style={{ background: "var(--bg-gradient-darker)" }}
     >
-      <div className="max-w-8xl mx-auto px-6 lg:px-20 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-12">
 
         {/* Brand Section */}
         <div className="mb-10">

@@ -40,49 +40,53 @@ export default function HomePage() {
   return (
     <main className="flex flex-col">
 
-      {/* ================= HERO SECTION ================= */}
-      <section
-        className="relative min-h-screen flex items-center text-white px-6 lg:px-20 overflow-hidden"
-        style={{ background: "var(--bg-gradient)" }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="flex justify-start">
-            <div className="max-w-2xl text-left">
+    {/* ================= HERO SECTION ================= */}
+    <section
+      className="relative min-h-screen flex items-center pt-20 pb-32 text-white px-6 lg:px-20 overflow-hidden"
+      style={{ background: "var(--bg-gradient)" }}
+    >
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="max-w-2xl">
 
-              <h3 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-[var(--tertiary-color)]">
-                Technology Readiness Assessment for Commercialization Enhancement and Roadmapping
-              </h3>
+          <h1 className="text-4xl md:text-5xl font-bold leading-9 md:leading-12 mb-6 text-[var(--tertiary-color)]">
+            Technology Readiness Assessment for Commercialization Enhancement and Roadmapping
+          </h1>
 
-              <p className="text-lg md:text-md text-gray-200 mb-8">
-                Your guide in assessing the technical and commercial readiness of AANR technologies.
-              </p>
+          <p className="textsm md:text-md text-gray-200 mb-8">
+            Your guide in assessing the technical and commercial readiness of AANR technologies.
+          </p>
 
-              <Link
-                href="/assessment"
-                className="inline-block px-8 py-3 bg-[var(--secondary-color)] rounded-3xl font-semibold shadow-lg hover:scale-105 hover:opacity-90 transition-all duration-300"
-              >
-                Start Assessment
-              </Link>
-
-            </div>
-          </div>
-        </div>
-
-        {/* ===== Wave Design ===== */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-          <svg
-            viewBox="0 0 1440 320"
-            className="w-full h-[150px]"
-            preserveAspectRatio="none"
+          <Link
+            href="/assessment"
+            className="inline-block px-8 py-3 
+            bg-[var(--secondary-color)] 
+            rounded-3xl font-semibold 
+            shadow-xl 
+            hover:scale-105 hover:shadow-2xl 
+            hover:-translate-y-1 
+            transition-all duration-300"
           >
-            <path
-              fill="#ffffff"
-              fillOpacity="1"
-              d="M0,224L80,202.7C160,181,320,139,480,144C640,149,800,203,960,213.3C1120,224,1280,192,1360,176L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-            ></path>
-          </svg>
+            Start Assessment
+          </Link>
+
         </div>
-      </section>
+      </div>
+
+      {/* ===== Wave Design ===== */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+        <svg
+          viewBox="0 0 1440 320"
+          className="w-full h-[160px]"
+          preserveAspectRatio="none"
+        >
+          <path
+            fill="#ffffff"
+            fillOpacity="1"
+            d="M0,224L80,202.7C160,181,320,139,480,144C640,149,800,203,960,213.3C1120,224,1280,192,1360,176L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+          />
+        </svg>
+      </div>
+    </section>
 
       {/* ================= ABOUT SECTION ================= */}
       <section className="py-10 px-6 lg:px-20 bg-white text-gray-800 ">
@@ -113,7 +117,7 @@ export default function HomePage() {
           </div>
 
           <div className="md:col-span-3">
-            <img src="img/pcaarrd building.JPG" className="rounded-2xl "></img>
+            <img src="/img/pcaarrd-building.jpg" className="rounded-2xl "></img>
           </div>
 
         </div>
