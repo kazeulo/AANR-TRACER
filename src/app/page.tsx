@@ -1,4 +1,4 @@
-// import  Header  from "./components/Header";
+import  Header  from "./components/Header";
 import '../styles/teaser.css';
 
 export default function Home() {
