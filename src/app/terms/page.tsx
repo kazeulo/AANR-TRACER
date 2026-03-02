@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 const categories = [
   {
@@ -257,17 +257,21 @@ const categories = [
         ],
       },
     ],
-  }
+  },
 ]
 
 export default function Terms() {
   const [search, setSearch] = useState("")
+  const refs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+
+  const scrollToId = (id: string) => {
+    refs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
   const filteredCategories = categories
     .map((category) => {
       const filteredSections = category.sections.filter((section) => {
         const searchText = search.toLowerCase()
-
         return (
           category.title.toLowerCase().includes(searchText) ||
           section.title.toLowerCase().includes(searchText) ||
@@ -277,7 +281,6 @@ export default function Terms() {
           )
         )
       })
-
       if (
         category.title.toLowerCase().includes(search.toLowerCase()) ||
         filteredSections.length > 0
@@ -287,88 +290,122 @@ export default function Terms() {
           sections: filteredSections,
         }
       }
-
       return null
     })
     .filter(
       (category): category is {
         title: string
-        sections: {
-          title: string
-          definition: string
-          examples: string[]
-        }[]
+        sections: { title: string; definition: string; examples: string[] }[]
       } => category !== null
     )
 
   return (
-    <div className="bg-[var(--bg-color-light)] text-gray-800">
-
-      <section className="bg-[var(--secondary-color)] text-white py-24 px-6 lg:px-20">
+    <div className="bg-[var(--bg-color-light)] text-gray-800 min-h-screen">
+      {/* Hero Section - Full Width */}
+      <section className="w-full bg-[var(--secondary-color)] text-white py-24 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             Terms and Definitions
           </h1>
-          <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-7">
+          <p className="text-lg md:text-xl text-gray-200 leading-7 max-w-3xl mx-auto">
             This page provides clear explanations of key terms used in the
             Technology Readiness Level (TRL) assessment.
           </p>
         </div>
       </section>
 
-      {/* search bar */}
-      <section className="py-10 px-6 lg:px-20">
-        <div className="max-w-4xl mx-auto">
-          <input
-            type="text"
-            placeholder="Search terms, definitions, or examples..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--secondary-color)]"
-          />
-        </div>
-      </section>
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-80 hidden lg:block sticky top-0 h-screen overflow-y-auto border-r border-gray-200 bg-white p-6">
+          <h2 className="text-2xl font-bold mb-6 text-[var(--secondary-color)]">
+            Categories
+          </h2>
+          <ul className="space-y-2">
+            {categories.map((category, idx) => (
+              <li key={idx}>
+                <button
+                  className="text-left w-full text-gray-700 hover:text-[var(--secondary-color)] font-medium"
+                  onClick={() => scrollToId(category.title)}
+                >
+                  {category.title}
+                </button>
+                <ul className="pl-4 mt-1 space-y-1">
+                  {category.sections.map((section, sidx) => (
+                    <li key={sidx}>
+                      <button
+                        className="text-left w-full text-sm text-gray-600 hover:text-[var(--secondary-color)]"
+                        onClick={() =>
+                          scrollToId(`${category.title}-${section.title}`)
+                        }
+                      >
+                        {section.title}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </aside>
 
-      {/* content */}
-      <section className="pb-24 px-6 lg:px-20">
-        <div className="max-w-6xl mx-auto space-y-20">
+        {/* Main Content */}
+        <main className="flex-1 px-6 lg:px-10 py-10 space-y-10">
+          {/* Search */}
+          <section className="max-w-4xl mx-auto py-10">
+            <input
+              type="text"
+              placeholder="Search terms, definitions, or examples..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--secondary-color)]"
+            />
+          </section>
 
-          {filteredCategories.length === 0 && (
-            <div className="text-center text-gray-600">
-              No matching terms found.
-            </div>
-          )}
+          {/* Terms */}
+          <section className="max-w-6xl mx-auto space-y-16">
+            {filteredCategories.length === 0 && (
+              <div className="text-center text-gray-600">
+                No matching terms found.
+              </div>
+            )}
 
-          {filteredCategories.map((category, index) => (
-            <div key={index} className="bg-white rounded-2xl shadow-md p-10">
-              <h2 className="text-3xl font-bold text-[var(--secondary-color)] mb-8">
-                {category.title}
-              </h2>
+            {filteredCategories.map((category, idx) => (
+              <div
+                key={idx}
+                ref={(el) => {
+                  refs.current[category.title] = el
+                }}
+                className="bg-white rounded-2xl shadow-md p-10"
+              >
+                <h2 className="text-3xl font-bold text-[var(--secondary-color)] mb-8">
+                  {category.title}
+                </h2>
 
-              {category.sections.map((section, idx) => (
-                <div key={idx} className="mb-10">
-                  <h3 className="text-xl font-semibold mb-4">
-                    {section.title}
-                  </h3>
-                  <p className="mb-6 leading-8 text-left">
-                    {section.definition}
-                  </p>
-
-                  <div className="bg-gray-50 p-6 rounded-xl">
-                    <p className="font-semibold mb-3">Examples:</p>
-                    <ul className="list-disc pl-6 space-y-1">
-                      {section.examples.map((example, exIndex) => (
-                        <li key={exIndex}>{example}</li>
-                      ))}
-                    </ul>
+                {category.sections.map((section, sidx) => (
+                  <div
+                    key={sidx}
+                    ref={(el) => {
+                      refs.current[`${category.title}-${section.title}`] = el
+                    }}
+                    className="mb-10"
+                  >
+                    <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
+                    <p className="mb-6 leading-7 text-left">{section.definition}</p>
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <p className="font-semibold mb-3">Examples:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        {section.examples.map((example, exIdx) => (
+                          <li key={exIdx}>{example}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ))}
-
-        </div>
-      </section>
+                ))}
+              </div>
+            ))}
+          </section>
+        </main>
+      </div>
     </div>
   )
 }

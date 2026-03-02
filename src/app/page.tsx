@@ -22,7 +22,7 @@ export default function Home() {
           <p>
             For now, visit:{" "}
             <a href="https://kmanejo.wixstudio.com/trlars" target="_blank">
-              TRACER
+              <u>TRACER</u>
             </a>
           </p>
         </div>
@@ -47,7 +47,7 @@ export default function Home() {
 //       <div className="max-w-7xl mx-auto w-full">
 //         <div className="max-w-2xl">
 
-//           <h1 className="text-4xl md:text-5xl font-bold leading-9 md:leading-12 mb-6 text-[var(--tertiary-color)]">
+//           <h1 className="text-4xl md:text-5xl font-bold leading-9 md:leading-12 mb-6 text-white">
 //             Technology Readiness Assessment for Commercialization Enhancement and Roadmapping
 //           </h1>
 
