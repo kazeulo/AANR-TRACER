@@ -12,11 +12,11 @@ export default function Disclaimer() {
   };
 
   return (
-    <div className="bg-[var(--bg-color-light)] min-h-screen py-10 px-6 lg:px-20 text-gray-800 flex flex-col justify-center">
+    <div className="h-[80vh] bg-[var(--bg-color-light)] min-h-screen py-10 px-6 lg:px-20 text-gray-800 flex flex-col justify-center">
       
       {/* ===== Heading ===== */}
       <section className="max-w-4xl mx-auto">
-        <h1 className="text-center text-4xl md:text-5xl font-bold text-[var(--secondary-color)] mb-12">
+        <h1 className="text-center text-4xl md:text-5xl font-bold text-[var(--secondary-color)] mb-14">
           DISCLAIMER
         </h1>
 

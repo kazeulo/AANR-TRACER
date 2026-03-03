@@ -8,14 +8,14 @@ export default function DataPrivacyNotice() {
   const router = useRouter();
 
   const handleProceed = () => {
-    router.push("/assessment/data-privacy");
+    router.push("/assessment/name");
   };
 
   return (
-    <div className="bg-[var(--bg-color-light)] min-h-screen py-10 px-6 lg:px-10 text-gray-800 flex flex-col justify-center">
+    <div className="h-[80vh] bg-[var(--bg-color-light)] py-20 px-6 lg:px-10 text-gray-800 flex flex-col justify-center">
       <section className="max-w-4xl mx-auto">
         {/* Title */}
-        <h1 className="text-center text-4xl md:text-5xl font-bold text-[var(--secondary-color)] mb-12">
+        <h1 className="text-center text-4xl md:text-5xl font-bold text-[var(--secondary-color)] mb-14">
           DATA PRIVACY STATEMENT
         </h1>
 
