@@ -39,10 +39,15 @@ export default function TechnologyTypePage() {
     loadCSV();
   }, []);
 
+  // const handleNext = () => {
+  //   if (!data.technologyType) return;
+  //   router.push("/assessment/questionnaire");
+  // };
+
   const handleNext = () => {
     if (!data.technologyType) return;
-    router.push("/assessment/questionnaire");
-  };
+    router.push("/assessment/description");
+  }
 
   return (
     <div className="h-[80vh] bg-[var(--bg-color-light)] py-20 px-6 lg:px-20 text-gray-800 flex flex-col justify-center">
@@ -81,7 +86,15 @@ export default function TechnologyTypePage() {
         </p>
 
         {/* Next Button */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-between mt-6">
+          {/* Previous Button */}
+          <button
+            onClick={() => router.push("/assessment/name")}
+            className="px-8 py-3 rounded-full font-semibold bg-red-900 border border-gray-400 text-white hover:bg-gray-100 transition"
+          >
+            Previous
+          </button>
+
           <button
             onClick={handleNext}
             disabled={!data.technologyType}
@@ -91,7 +104,7 @@ export default function TechnologyTypePage() {
                 : "bg-gray-400 text-gray-200 cursor-not-allowed"
               }`}
           >
-            Start Questionnaire
+            Next
           </button>
         </div>
 

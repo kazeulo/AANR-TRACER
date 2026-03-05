@@ -24,7 +24,7 @@ export default function TechnologyDescriptionPage() {
 
   const handleNext = () => {
     if (!data.technologyDescription.trim()) return;
-    router.push("/assessment/type");
+    router.push("/assessment/funding-source");
   };
 
   return (
@@ -54,8 +54,17 @@ export default function TechnologyDescriptionPage() {
           {wordCount} / {maxWords} words
         </p>
 
-        {/* Next Button */}
-        <div className="flex justify-center mt-6">
+        {/* Navigation Buttons */}
+        <div className="flex justify-between mt-6">
+          {/* Previous Button */}
+          <button
+            onClick={() => router.push("/assessment/name")}
+            className="px-8 py-3 rounded-full font-semibold bg-red-900 border border-gray-400 text-white hover:bg-gray-100 transition"
+          >
+            Previous
+          </button>
+
+          {/* Next Button */}
           <button
             onClick={handleNext}
             disabled={!data.technologyDescription.trim()}

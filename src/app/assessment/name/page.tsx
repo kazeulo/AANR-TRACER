@@ -9,7 +9,7 @@ export default function TechnologyNamePage() {
 
   const handleNext = () => {
     if (!data.technologyName.trim()) return;
-    router.push("/assessment/description");
+    router.push("/assessment/type");
   };
 
   return (

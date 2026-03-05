@@ -5,8 +5,9 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface AssessmentData {
   technologyName: string;
   technologyDescription: string;
+  fundingSource: string;
   technologyType: string;
-  answers: Record<string, boolean>; // store question id → checked
+  answers: Record<string, boolean>;
 }
 
 interface AssessmentContextType {
@@ -21,6 +22,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     technologyName: "",
     technologyDescription: "",
     technologyType: "",
+    fundingSource: "",
     answers: {},
   });
 

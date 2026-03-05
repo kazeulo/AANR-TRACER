@@ -56,7 +56,7 @@ export default function Home() {
 //           </p>
 
 //           <Link
-//             href="/assessment"
+//             href="assessment/disclaimer"
 //             className="inline-block px-8 py-3 
 //             bg-[var(--secondary-color)] 
 //             rounded-3xl font-semibold 
