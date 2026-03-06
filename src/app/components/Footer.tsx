@@ -51,8 +51,8 @@ export default function Footer() {
               className="footer-link">
                 User Guide
               </Link>
-            <Link href="/documentation" className="footer-link">
-              Documentation
+            <Link href="" className="footer-link">
+              Data Privary Statement
             </Link>
             <Link href="/support" className="footer-link">Support</Link>
           </div>

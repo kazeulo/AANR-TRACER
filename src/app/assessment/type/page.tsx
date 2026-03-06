@@ -39,11 +39,6 @@ export default function TechnologyTypePage() {
     loadCSV();
   }, []);
 
-  // const handleNext = () => {
-  //   if (!data.technologyType) return;
-  //   router.push("/assessment/questionnaire");
-  // };
-
   const handleNext = () => {
     if (!data.technologyType) return;
     router.push("/assessment/description");

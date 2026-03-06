@@ -5,14 +5,18 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface AssessmentData {
   technologyName: string;
   technologyDescription: string;
-  fundingSource: string;
   technologyType: string;
-  answers: Record<string, boolean>;
+  fundingSource: string;
+  answers: Record<string, boolean>; // store question id, checked
 }
 
 interface AssessmentContextType {
   data: AssessmentData;
-  updateData: (values: Partial<AssessmentData>) => void;
+  updateData: (newData: Partial<AssessmentData>) => void;
+  lastCategoryIndex: number;
+  setLastCategoryIndex: (index: number) => void;
+  lastPage: number;
+  setLastPage: (page: number) => void;
 }
 
 const AssessmentContext = createContext<AssessmentContextType | undefined>(undefined);
@@ -26,12 +30,25 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     answers: {},
   });
 
+  // ✅ Move these inside the provider
+  const [lastCategoryIndex, setLastCategoryIndex] = useState(0);
+  const [lastPage, setLastPage] = useState(0);
+
   const updateData = (values: Partial<AssessmentData>) => {
     setData((prev) => ({ ...prev, ...values }));
   };
 
   return (
-    <AssessmentContext.Provider value={{ data, updateData }}>
+    <AssessmentContext.Provider
+      value={{
+        data,
+        updateData,
+        lastCategoryIndex,
+        setLastCategoryIndex,
+        lastPage,
+        setLastPage,
+      }}
+    >
       {children}
     </AssessmentContext.Provider>
   );
