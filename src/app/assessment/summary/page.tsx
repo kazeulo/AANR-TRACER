@@ -50,7 +50,7 @@ export default function SummaryPage() {
   const handleSubmit = () => {
     console.log("Submitting assessment data:", data);
     alert("Assessment submitted successfully!");
-    router.push("/"); // Redirect after submission, to be edited
+    router.push("/assessment/results"); 
   };
 
   const handlePrevious = () => {

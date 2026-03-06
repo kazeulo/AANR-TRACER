@@ -2,12 +2,27 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
+// ─── IP Types ─────────────────────────────────────────────────────────────────
+
+export interface IPQuestionData {
+  initiated: "yes" | "no" | "trade_secret" | "";
+  selectedTypes: Record<string, boolean>;
+  typeStatuses: Record<string, string>;
+}
+
+export interface IPData {
+  [questionKey: string]: IPQuestionData;
+}
+
+// ─── Assessment Data ──────────────────────────────────────────────────────────
+
 interface AssessmentData {
   technologyName: string;
   technologyDescription: string;
   technologyType: string;
   fundingSource: string;
-  answers: Record<string, boolean>; // store question id, checked
+  answers: Record<string, boolean>;
+  ipData: IPData;
 }
 
 interface AssessmentContextType {
@@ -28,9 +43,9 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     technologyType: "",
     fundingSource: "",
     answers: {},
+    ipData: {},
   });
 
-  // ✅ Move these inside the provider
   const [lastCategoryIndex, setLastCategoryIndex] = useState(0);
   const [lastPage, setLastPage] = useState(0);
 
