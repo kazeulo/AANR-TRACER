@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-// ─── IP Types ─────────────────────────────────────────────────────────────────
+// Ip types
 
 export interface IPQuestionData {
   initiated: "yes" | "no" | "trade_secret" | "";
@@ -14,7 +14,7 @@ export interface IPData {
   [questionKey: string]: IPQuestionData;
 }
 
-// ─── Assessment Data ──────────────────────────────────────────────────────────
+// Assessment data
 
 interface AssessmentData {
   technologyName: string;

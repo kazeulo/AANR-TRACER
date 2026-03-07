@@ -52,11 +52,17 @@ function isIPAnsweredYes(label: string, ipEntry: IPQuestionData | undefined): bo
   }
 
   if (label === IP_FILED_LABEL) {
-    return Object.entries(ipEntry.selectedTypes).some(
+    // Types and their statuses are entered under the "IP Initiated" section.
+    // Filed counts as "yes" if at least ONE checked type has status Filed or Registered —
+    // even if other checked types are still Pending.
+    const initiatedEntry = ipEntry; // ipData[IP_FILED_LABEL] shares structure; but we
+    // actually need to read from the Initiated entry. This is handled in the caller
+    // by passing ipData[IP_INITIATED_LABEL] when label === IP_FILED_LABEL.
+    return Object.entries(initiatedEntry.selectedTypes ?? {}).some(
       ([ipType, checked]) =>
         checked &&
-        (ipEntry.typeStatuses[ipType] === "Filed" ||
-          ipEntry.typeStatuses[ipType] === "Registered")
+        (initiatedEntry.typeStatuses?.[ipType] === "Filed" ||
+          initiatedEntry.typeStatuses?.[ipType] === "Registered")
     );
   }
 
@@ -99,7 +105,9 @@ export function calculateTRL(
   // Build a unified answered-yes set
   const isAnsweredYes = (q: QuestionItem): boolean => {
     if (q.id === "ip-initiated") return isIPAnsweredYes(IP_INITIATED_LABEL, ipData[IP_INITIATED_LABEL]);
-    if (q.id === "ip-filed") return isIPAnsweredYes(IP_FILED_LABEL, ipData[IP_FILED_LABEL]);
+    // ip-filed: pass the Initiated entry so we read the same selectedTypes/typeStatuses
+    // the user filled in — at least one type must be Filed or Registered
+    if (q.id === "ip-filed") return isIPAnsweredYes(IP_FILED_LABEL, ipData[IP_INITIATED_LABEL]);
     return answers[q.id] === true;
   };
 
@@ -150,7 +158,7 @@ export function calculateTRL(
       ? questions.filter(q => q.trlLevel <= nextLevel && !isAnsweredYes(q))
       : [];
 
-  // ── Lacking for Achievable ─────────────────────────────────────────────────
+  // ── Lacking for Achievable 
   // All unanswered questions at levels 1..highestAchievableTRL
   const lackingForAchievable =
     highestAchievableTRL > highestCompletedTRL

@@ -103,7 +103,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
         onChange={e => setField("initiated", e.target.value)}
         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--secondary-color)] bg-white"
       >
-        <option value="">— Select an option —</option>
+        <option value="">Select an option </option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         <option value="trade_secret">IP is a Trade Secret</option>
@@ -139,7 +139,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
                       }
                       className="w-full max-w-xs border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--secondary-color)] bg-white"
                     >
-                      <option value="">— IP Protection Status —</option>
+                      <option value="">IP Protection Status </option>
                       {IP_STATUS_OPTIONS.map(opt => (
                         <option key={opt} value={opt}>{opt}</option>
                       ))}
@@ -152,7 +152,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
         </div>
       )}
 
-      {/* NO → message + regional contacts */}
+      {/* NO */}
       {current.initiated === "no" && (
         <div className="mt-5 p-4 bg-amber-50 border border-amber-200 rounded-lg text-sm space-y-3">
           <p className="font-medium text-amber-800">
@@ -175,7 +175,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
         </div>
       )}
 
-      {/* TRADE SECRET → acknowledgment */}
+      {/* TRADE SECRET */}
       {current.initiated === "trade_secret" && (
         <div className="mt-5 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">
           Your technology is protected as a <strong>Trade Secret</strong>. Ensure that appropriate
@@ -186,7 +186,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// Main page
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();

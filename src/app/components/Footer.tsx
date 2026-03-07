@@ -1,148 +1,167 @@
 import Link from "next/link";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-} from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer
-      className="text-white"
-      style={{ background: "var(--bg-gradient-darker)" }}
-    >
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <>
+      {/* Wave from page into footer */}
+      <svg
+        viewBox="0 0 1440 60"
+        preserveAspectRatio="none"
+        className="block w-full bg-[#f5f2ec]"
+      >
+        <path fill="#0a1f10" d="M0,30 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" />
+      </svg>
 
-        {/* Brand Section */}
-        <div className="mb-10">
-          <h2 className="text-4xl font-bold pb-4">
-            <span className="text-[var(--tertiary-color)]">AANR</span>
-            <span className="text-white"> TRACER</span>
-          </h2>
-          <p className="text-sm text-gray-200 max-w-md">
-            Technology Readiness Assessment for Commercialization Enhancement
-            and Roadmapping
-          </p>
-        </div>
+      <footer className="bg-[#0a1f10] text-white font-['DM_Sans',sans-serif]">
+        <div className="max-w-[1370px] mx-auto px-6 lg:px-[6vw]">
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+          {/* Brand + socials */}
+          <div className="flex flex-col md:flex-row justify-between items-start gap-6 py-12 border-b border-white/[0.07]">
 
-          {/* Quick Links */}
-          <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">Quick Links</h3>
-            <Link href="/" className="footer-link">Home</Link>
-            <Link href="/terms" className="footer-link">
-              Terms and Definitions
-            </Link>
-            <Link href="/about" className="footer-link">About</Link>
-            <Link href="/faq" className="footer-link">FAQ</Link>
+            <div className="max-w-sm">
+              <div className="font-['DM_Serif_Display',serif] text-[32px] leading-none tracking-tight mb-3">
+                AANR-<span className="text-[#4aa35a] italic">TRACER</span>
+              </div>
+              <p className="text-[13px] text-[#6b8a78] font-light leading-relaxed max-w-xs">
+                Technology Readiness Assessment for Commercialization Enhancement and Roadmapping — supporting AANR innovations from research to market.
+              </p>
+              <div className="inline-flex items-center gap-1.5 mt-5 text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] px-3 py-1.5 border border-[#4aa35a]/25 rounded-full bg-[#4aa35a]/[0.07]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+                PCAARRD · DOST
+              </div>
+
+              {/* Partner Logos */}
+              {/* <div className="mb-10 bg-white/30 backdrop-blur-lg rounded-xl px-4 py-3 w-full max-w-[700px]">
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <Image src="/img/logos/dost-logo.png" alt="DOST Logo" width={90} height={40} className="h-[30px] sm:h-[35px] w-auto object-contain" />
+                  <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD Logo" width={90} height={40} className="h-[30px] sm:h-[35px] w-auto object-contain" />
+                  <Image src="/img/logos/raise-logo.png" alt="RAISE Logo" width={120} height={40} className="h-[45px] sm:h-[45px] w-auto object-contain" />
+                  <Image src="/img/logos/agri-hub-logo.png" alt="Agri Hub Logo" width={90} height={40} className="h-[55px] sm:h-[55px] w-auto object-contain" />
+                  <Image src="/img/logos/upvisayas-logo.png" alt="UP Visayas Logo" width={90} height={40} className="h-[40px] sm:h-[40px] w-auto object-contain" />
+                  <Image src="/img/logos/ttbdo-logo.png" alt="TTBDO Logo" width={90} height={40} className="h-[40px] sm:h-[40px] w-auto object-contain" />
+                </div>
+              </div> */}
+            </div>
+
+            {/* Social icons */}
+            <div className="flex gap-2.5 items-center">
+              {[
+                { href: "https://facebook.com",  Icon: Facebook,  label: "Facebook"  },
+                { href: "https://twitter.com",   Icon: Twitter,   label: "Twitter"   },
+                { href: "https://instagram.com", Icon: Instagram, label: "Instagram" },
+                { href: "https://linkedin.com",  Icon: Linkedin,  label: "LinkedIn"  },
+              ].map(({ href, Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-[38px] h-[38px] rounded-[10px] bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-[#6b8a78] hover:bg-[#4aa35a]/15 hover:border-[#4aa35a]/30 hover:text-[#4aa35a] hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <Icon size={16} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Resources */}
-          <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">Resources</h3>
-            <Link 
-              href="https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
-              className="footer-link">
+          {/* Links grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 py-12 border-b border-white/[0.07]">
+
+            {/* Quick Links */}
+            <div>
+              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[#4aa35a] mb-5 pb-3 border-b border-[#4aa35a]/20">
+                Quick Links
+              </div>
+              {[
+                { href: "/",      label: "Home" },
+                { href: "/about", label: "About" },
+                { href: "/terms", label: "Terms and Definitions" },
+                { href: "/faq",   label: "FAQ" },
+              ].map(({ href, label }) => (
+                <Link key={href} href={href} className="block text-[13px] text-[#6b8a78] font-light mb-2.5 hover:text-white transition-colors w-fit">
+                  {label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Resources */}
+            <div>
+              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[#4aa35a] mb-5 pb-3 border-b border-[#4aa35a]/20">
+                Resources
+              </div>
+              <a
+                href="https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-[13px] text-[#6b8a78] font-light mb-2.5 hover:text-white transition-colors w-fit"
+              >
                 User Guide
+              </a>
+              <Link href="/privacy" className="block text-[13px] text-[#6b8a78] font-light mb-2.5 hover:text-white transition-colors w-fit">
+                Data Privacy Statement
               </Link>
-            <Link href="" className="footer-link">
-              Data Privary Statement
-            </Link>
-            <Link href="/support" className="footer-link">Support</Link>
-          </div>
+              <Link href="/support" className="block text-[13px] text-[#6b8a78] font-light mb-2.5 hover:text-white transition-colors w-fit">
+                Support
+              </Link>
+            </div>
 
-          {/* Contact / Location */}
-          <div className="flex flex-col gap-3">
-            <h3 className="font-semibold mb-2">Contact</h3>
+            {/* Contact */}
+            <div>
+              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[#4aa35a] mb-5 pb-3 border-b border-[#4aa35a]/20">
+                Contact
+              </div>
 
-            <a
-              href="mailto:aanrtracer@example.com"
-              className="flex items-center gap-2 footer-link"
-            >
-              <Mail size={16} />
-              aanrtracer@example.com
-            </a>
+              <a href="mailto:aanrtracer@example.com" className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light mb-3.5 hover:text-white transition-colors">
+                <span className="w-[30px] h-[30px] bg-[#4aa35a]/10 rounded-lg flex items-center justify-center text-[#4aa35a] flex-shrink-0">
+                  <Mail size={14} />
+                </span>
+                aanrtracer@example.com
+              </a>
 
-            <a
-              href="tel:+639123456789"
-              className="flex items-center gap-2 footer-link"
-            >
-              <Phone size={16} />
-              +63 912 345 6789
-            </a>
-
-            <a
-              href="https://www.google.com/maps/place/DOST+PCAARRD,+Jamboree+Rd,+Los+Ba%C3%B1os,+Laguna"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start gap-2 text-sm text-gray-300 hover:text-[var(--tertiary-color)] transition-colors duration-300"
-            >
-              <MapPin size={16} className="mt-1" />
-              <span>
-                DOST PCAARRD <br />
-                Jamboree Rd, Los Baños, Laguna
-              </span>
-            </a>
-          </div>
-
-          {/* Social Media */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-semibold mb-2">Follow Us</h3>
-
-            <div className="flex gap-4">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon hover:text-blue-500"
-              >
-                <Facebook size={20} />
+              <a href="tel:+639123456789" className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light mb-3.5 hover:text-white transition-colors">
+                <span className="w-[30px] h-[30px] bg-[#4aa35a]/10 rounded-lg flex items-center justify-center text-[#4aa35a] flex-shrink-0">
+                  <Phone size={14} />
+                </span>
+                +63 912 345 6789
               </a>
 
               <a
-                href="https://twitter.com"
+                href="https://www.google.com/maps/place/DOST+PCAARRD"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon hover:text-sky-400"
+                className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light hover:text-white transition-colors"
               >
-                <Twitter size={20} />
-              </a>
-
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon hover:text-pink-500"
-              >
-                <Instagram size={20} />
-              </a>
-
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon hover:text-blue-400"
-              >
-                <Linkedin size={20} />
+                <span className="w-[30px] h-[30px] bg-[#4aa35a]/10 rounded-lg flex items-center justify-center text-[#4aa35a] flex-shrink-0 mt-0.5">
+                  <MapPin size={14} />
+                </span>
+                <span>DOST PCAARRD<br />Jamboree Rd, Los Baños, Laguna</span>
               </a>
             </div>
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/20 my-10" />
+          {/* Bottom bar */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 py-6">
+            <p className="text-[12px] text-[#3d5c47] font-light">
+              © {new Date().getFullYear()} AANR-TRACER 
+            </p>
+            <div className="flex gap-5">
+              {[
+                { href: "/privacy", label: "Privacy Policy" },
+                { href: "/terms",   label: "Terms" },
+                { href: "/support", label: "Support" },
+              ].map(({ href, label }) => (
+                <Link key={href} href={href} className="text-[12px] text-[#3d5c47] hover:text-[#6b8a78] transition-colors">
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
 
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-300 gap-2">
-          <p>© {new Date().getFullYear()} AANR TRACER</p>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

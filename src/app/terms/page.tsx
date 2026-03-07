@@ -1,411 +1,182 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-
-const categories = [
-  {
-    title: "Food, Food Ingredients and Beverages",
-    sections: [
-      {
-        title: "Food Technology",
-        definition:
-          "Technologies that are related to processing, preservation, formulation, or enhancement of edible products derived from agricultural, aquatic, and natural resources. Included in the scope of this category are novel or value-added food products, primary and secondary food processing, food preservation and packaging solutions, and process optimization technologies.",
-        examples: [
-          "Vacuum-dried jackfruit",
-          "Saba banana, or malunggay chips",
-          "Smoked fish using improved or energy-efficient smoking kilns",
-          "Fermented cacao tablea or enhanced bagoong processing",
-          "Retort pouch ready-to-eat meals using local crops or fish",
-          "Root crop–based bakery products (e.g., ube bread, camote flour bread)",
-        ],
-      },
-      {
-        title: "Food Ingredients",
-        definition:
-          "Technologies that focuses on producing functional, nutritional, or flavor-enhancing components and its resulting products such as powders, extracts, isolates, and natural sweeteners derived from AANR resources. Included in this category are production, extraction, concentration, or modification of natural ingredients; powders, concentrates, isolates, or hydrolysates; functional ingredient development such as antioxidants, fibers, protein extracts; and enhancers of nutritional value, texture, stability, or sensory quality.",
-        examples: [
-          "Malunggay powder, turmeric powder, ube powder as natural colorants or fortifiers",
-          "Collagen or protein isolate from tilapia, shrimp, or other aquatic by-products",
-          "Cassava, taro, or sweet potato starch as binders and stabilizers",
-          "Coconut sugar, coco sap syrup, or natural sweeteners",
-          "Prebiotic fibers extracted from coconut husk or banana peel",
-        ],
-      },
-      {
-        title: "Beverages",
-        definition:
-          "Technology category covering the formulation, processing, and preservation of drinkable products for human consumption such as fruit-based beverages, functional drinks, fermented products, plant-based alternatives, and ready-to-drink products designed to ensure high quality, safety, and shelf stability.",
-        examples: [
-          "Calamansi, mango, or bignay juice concentrates",
-          "Moringa, turmeric-ginger, or coco-based functional drinks",
-          "Fermented fruit wines (duhat, bignay, tamarind)",
-          "Kombucha produced from locally sourced tea or botanicals",
-          "Coconut milk beverages and rice-based drink alternatives",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "Animal Feed, Feed Ingredients and Animal Nutrition",
-    sections: [
-      {
-        title: "Animal Feed",
-        definition:
-          "Technologies related to development, formulation, and processing of complete feeds that support the growth, health, and productivity of livestock, poultry, and aquatic species. It includes innovations in feed formulation, and processing methods to ensure quality and safety.",
-        examples: [
-          "Formulated extruded feeds for tilapia and bangus",
-          "Pelletized complete feeds for poultry or swine",
-          "Fermented complete feeds for ruminant",
-        ],
-      },
-      {
-        title: "Feed Ingredients",
-        definition:
-          "Technologies related to raw materials or functional components used in feed manufacturing, such as meal, pellets, concentrates, or additives and its corresponding process. These feed ingredients are sourced from crops, by-products, or aquatic resources used to enhance feed nutrition, digestibility, stability, or cost-efficiency.",
-        examples: [
-          "Black soldier fly larvae meal",
-          "Plant-based protein meals such as moringa leaf meal, and copra meal",
-          "Fish hydrolysates from processing by-products",
-          "Natural feed additives such as enzymes, probiotics, or phytogenic extracts",
-        ],
-      },
-      {
-        title: "Animal Nutrition",
-        definition:
-          "Technologies center on strategies and formulations that optimize nutrient delivery, improve animal health, and enhance performance across terrestrial and aquatic species. It includes nutritional supplements, probiotics for animals, and precision feeding approaches.",
-        examples: [
-          "Vitamin–mineral premixes tailored for specific species and growth stages",
-          "Probiotic and prebiotic supplements",
-          "Precision feeding strategies",
-          "Functional nutrition technologies",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "Agri-Aqua Machinery and Facility",
-    sections: [
-      {
-        title: "Agri-Aqua Machinery",
-        definition:
-          "Technologies related to the design, development, fabrication, and improvement of mechanical or electro-mechanical equipment used in agricultural and aquaculture operations. It includes machinery that enhances production efficiency, reduces labor requirements, supports postharvest activities, and improves overall productivity across crop, livestock, and aquatic systems.",
-        examples: [
-          "Crop machinery such as rice transplanters, corn shellers, mini-tillers, and mechanical dryers",
-          "Aquaculture machinery such as automatic fish feeders, aerators, water pumps, and seaweed dryers",
-          "Livestock equipment such as mechanical forage choppers and manure handling systems",
-          "Postharvest machinery such as seed cleaners, fruit graders, vacuum dryers, and feed pelletizers",
-          "Renewable-energy-based machines such as solar-powered irrigation pumps and solar dryers",
-        ],
-      },
-      {
-        title: "Agri-aqua Facility",
-        definition:
-          "Technologies related to the development, design, and improvement of physical structures, production systems, and controlled environments that support agricultural and aquaculture operations. These facilities enable efficient cultivation, rearing, processing, storage, and resource management.",
-        examples: [
-          "Controlled environment agriculture such as greenhouses, screen houses, hydroponics and aquaponics systems",
-          "Aquaculture structures such as floating cages, fish ponds, raceways, hatchery systems, and nursery tanks",
-          "Postharvest and processing facilities such as cold storage units, packing houses, slaughter facilities, and fish processing rooms",
-          "Waste management facilities such as composting structures and effluent treatment systems",
-          "Storage and handling such as grain silos, feed storage rooms, and climate-controlled warehouses",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "Agri-Aqua Device and Diagnostic Kits",
-    sections: [
-      {
-        title: "Agri-Aqua Device",
-        definition:
-          "Technologies related to the small-scale, portable, or non-motorized tools and instruments inculding its production process, used to support agricultural and aquaculture operations. These devices assist in measurement, monitoring, manual operations, environmental management, and process efficiency across crop, livestock, and aquatic systems.",
-        examples: [
-          "Hand-operated transplanting tools, seed meters, or soil moisture meters",
-          "Water quality monitoring devices such as DO meters and salinity testers",
-          "Simple sorting, grading, or measuring tools for crops or fish",
-          "Low-cost feeders, traps, flotation devices, and net systems for aquaculture",
-          "Portable sensors for temperature, humidity, or soil pH monitoring",
-        ],
-      },
-      {
-        title: "Diagnostic Kit",
-        definition:
-          "Technologies related to the development of rapid, accurate, and user-friendly tools for detecting diseases, contaminants, pathogens, or physiological conditions in animals, plants, and aquatic species. These kits support early detection, management decisions, and biosecurity efforts across AANR sectors.",
-        examples: [
-          "Rapid test kits for fish pathogens",
-          "Field test kits for livestock diseases",
-          "Plant disease diagnostic kits",
-          "Water quality test strips for ammonia, nitrate, or nitrite in aquaculture",
-          "Mycotoxin or pesticide residue testing kits for grains and produce",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "ICT (Apps and System involving IoT)",
-    sections: [
-      {
-        title: "ICT",
-        definition:
-          "ICT (Information and Communication Technology) technologies refer to the development and application of digital tools, software, systems, and IoT solutions that improve data management, decision-making, monitoring, and operational efficiency in agriculture, aquaculture, and natural resource management. This includes mobile and web applications, embedded systems, sensors, and connected networks for real-time monitoring and automation.",
-        examples: [
-          "Farm management systems and mobile apps for crop, livestock, or aquaculture operations",
-          "IoT-enabled sensors for soil moisture, temperature, water quality, or environmental monitoring",
-          "Automated feeding, aeration, or irrigation systems connected to cloud-based platforms",
-          "Decision-support systems for precision agriculture or aquaculture production",
-          "Market information, traceability, and inventory management platforms",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "New Plant Variety",
-    sections: [
-      {
-        title: "New Plant Variety",
-        definition:
-          "Technology related to the development, breeding, or genetic improvement of plants to produce varieties with enhanced traits such as higher yield, improved resistance to pests and diseases, better nutritional value, or adaptability to specific environments. This includes conventional breeding, mutation breeding, and modern biotechnology approaches applied to crops, fruits, ornamentals, and other plants.",
-        examples: [
-          "High-yielding rice or corn varieties adapted to local conditions",
-          "Disease-resistant banana, cacao, or tomato cultivars",
-          "Drought-tolerant or salt-tolerant vegetable varieties",
-          "Biofortified crops such as vitamin A-rich sweet potato or iron-rich rice",
-          "Ornamentals with improved color, fragrance, or shelf life",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "New Animal Breed (Aquatic and Terrestrial)",
-    sections: [
-      {
-        title: "New Animal Breed",
-        definition:
-          "Technologies related to the development, breeding, or genetic improvement of terrestrial and aquatic animals to produce breeds with enhanced traits such as higher productivity, disease resistance, environmental adaptability, or improved product quality. This includes selective breeding, hybridization, and modern biotechnological methods applied to livestock, poultry, and aquaculture species.",
-        examples: [
-          "High-yielding or fast-growing poultry breeds (e.g., native chicken improvement programs)",
-          "Disease-resistant or climate-adapted swine and cattle breeds",
-          "Enhanced milk, meat, or egg-producing livestock breeds",
-          "Improved tilapia, bangus, or shrimp strains for aquaculture",
-          "Ornamental fish or shellfish with better growth, coloration, or stress tolerance",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "Natural Resource–Derived Materials",
-    sections: [
-      {
-        title: "Natural Resource–Derived Materials",
-        definition:
-          "Technologies related to extraction, processing, modification, and application of materials derived from agricultural, aquatic, forest, mineral, and other natural resources. These technologies focus on transforming AANR-based raw materials into functional, sustainable, and value-added materials for industrial, construction, packaging, energy, and allied applications.",
-        examples: [
-          "Bio-based construction materials such as compressed earth blocks, rice husk ash–blended cement, bamboo panels",
-          "Natural fibers and composites such as abaca fiber composites, coconut coir boards, pineapple leaf fiber textiles",
-          "Biodegradable and bio-based materials such starch-based bioplastics from cassava and seaweed-based packaging films",
-          "Forest- and plant-derived materials such as engineered bamboo lumber, wood-plastic composites, and nipa shingles",
-          "Aquatic and marine resource materials such as chitosan from crustacean shells and calcium carbonate from seashell waste",
-          "Value-added by-product utilization such as biochar from agricultural waste and silica from rice husk",
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "Other TRL-Related Terms",
-    sections: [
-      {
-        title: "Alpha Testing",
-        definition:
-          "Alpha testing refers to the initial phase of system or product testing conducted internally by the development team or a limited group of users in a controlled environment. It aims to identify bugs, functional issues, and usability problems before releasing the product to external users.",
-        examples: [
-          "Internal testing of a farm management app by developers and staff before pilot release",
-          "Laboratory testing of a diagnostic kit prototype prior to field trials",
-        ],
-      },
-      {
-        title: "Beta Testing",
-        definition:
-          "Beta testing is the evaluation of a product or system by a limited group of external users under real-world conditions before full commercial launch. It focuses on gathering user feedback, identifying remaining issues, and validating performance in actual operating environments.",
-        examples: [
-          "Pilot deployment of an IoT irrigation system to selected farmers",
-          "Field trials of a new aquaculture feed formulation with partner farms",
-        ],
-      },
-      {
-        title: "Business Model Canvas",
-        definition:
-          "The Business Model Canvas is a strategic management tool used to describe, design, and analyze how an organization creates, delivers, and captures value. It consists of key components such as value propositions, customer segments, revenue streams, cost structure, key activities, key resources, key partners, and customer relationships.",
-        examples: [
-          "Mapping revenue streams for a technology licensing model",
-          "Identifying customer segments for a new diagnostic kit",
-        ],
-      },
-      {
-        title: "Freedom to Operate",
-        definition:
-          "Freedom to Operate (FTO) refers to the ability to commercialize a product, process, or technology without infringing on existing intellectual property rights such as patents. It involves conducting patent searches and legal assessments to determine whether a technology can be legally used, manufactured, or sold in a specific jurisdiction.",
-        examples: [
-          "Patent landscape analysis before commercializing a new bio-based material",
-          "Legal review prior to licensing an improved plant variety",
-        ],
-      },
-    ],
-  },
-]
+import { useState, useRef } from "react";
+import { categories } from "../utils/termsUtils";
 
 export default function Terms() {
-  const [search, setSearch] = useState("")
-  const refs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState(categories[0].title);
+  const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const scrollToId = (id: string) => {
-    refs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
+    setActiveCategory(id);
+    refs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
-  const filteredCategories = categories
-    .map((category) => {
-      const filteredSections = category.sections.filter((section) => {
-        const searchText = search.toLowerCase()
-        return (
-          category.title.toLowerCase().includes(searchText) ||
-          section.title.toLowerCase().includes(searchText) ||
-          section.definition.toLowerCase().includes(searchText) ||
-          section.examples.some((example) =>
-            example.toLowerCase().includes(searchText)
-          )
-        )
-      })
-      if (
-        category.title.toLowerCase().includes(search.toLowerCase()) ||
-        filteredSections.length > 0
-      ) {
-        return {
-          ...category,
-          sections: filteredSections,
-        }
-      }
-      return null
+  const filtered = categories
+    .map(cat => {
+      const q = search.toLowerCase();
+      const sections = cat.sections.filter(s =>
+        !q ||
+        cat.title.toLowerCase().includes(q) ||
+        s.title.toLowerCase().includes(q) ||
+        s.definition.toLowerCase().includes(q) ||
+        ('examples' in s && Array.isArray(s.examples) && s.examples.some(e => e.toLowerCase().includes(q)))
+      );
+      if (!q || cat.title.toLowerCase().includes(q) || sections.length > 0) return { ...cat, sections };
+      return null;
     })
-    .filter(
-      (category): category is {
-        title: string
-        sections: { title: string; definition: string; examples: string[] }[]
-      } => category !== null
-    )
+    .filter(Boolean) as typeof categories;
 
   return (
-    <div className="bg-[var(--bg-color-light)] text-gray-800 min-h-screen">
-      {/* Hero Section - Full Width */}
-      <section className="w-full bg-[var(--secondary-color)] text-white py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Terms and Definitions
+    <main className="font-['DM_Sans',sans-serif] bg-[#f5f2ec] text-[#1a1a1a] min-h-screen">
+
+      {/* ═══ HEADER ═══ */}
+      <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[80px] pb-[100px] overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
+        <div className="relative z-10 max-w-[1200px] mx-auto">
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+            PCAARRD · AANR-TRacer
+          </div>
+          <h1 className="font-['DM_Serif_Display',serif] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
+            Terms &amp; <em className="text-[#4aa35a]">Definitions</em>
           </h1>
-          <p className="text-lg md:text-xl text-gray-200 leading-7 max-w-3xl mx-auto">
-            This page provides clear explanations of key terms used in the
-            Technology Readiness Level (TRL) assessment.
+          <p className="text-[16px] text-[#94a3a0] font-light max-w-[500px] leading-[1.7]">
+            Clear explanations of technology types, assessment categories, and key terms used throughout the TRL assessment process.
           </p>
         </div>
       </section>
 
-      <div className="flex">
+      {/* Wave */}
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="block w-full bg-[#0f2e1a]">
+        <path fill="#1a3d26" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
+      </svg>
+
+      {/* ═══ SEARCH ═══ */}
+      <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-6">
+        <div className="max-w-[1200px] mx-auto relative">
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4a6657] pointer-events-none" width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8"/>
+            <path d="M16.5 16.5l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search terms, definitions, or examples…"
+            className="w-full pl-12 pr-20 py-3.5 bg-white/[0.07] border border-white/10 rounded-xl text-[14px] text-white placeholder-[#4a6657] font-light focus:outline-none focus:border-[#4aa35a]/50 focus:bg-white/10 transition-all"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-[#6b8a78] bg-white/10 hover:bg-white/20 hover:text-white px-2.5 py-1 rounded-md transition-colors"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Wave */}
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="block w-full bg-[#1a3d26]">
+        <path fill="#f5f2ec" d="M0,0 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" />
+      </svg>
+
+      {/* ═══ BODY ═══ */}
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] max-w-[1400px] mx-auto min-h-[calc(100vh-400px)]">
+
         {/* Sidebar */}
-        <aside className="w-80 hidden lg:block sticky top-0 h-screen overflow-y-auto border-r border-gray-200 bg-white p-6">
-          <h2 className="text-2xl font-bold mb-6 text-[var(--secondary-color)]">
-            Categories
-          </h2>
-          <ul className="space-y-2">
-            {categories.map((category, idx) => (
-              <li key={idx}>
-                <button
-                  className="text-left w-full text-gray-700 hover:text-[var(--secondary-color)] font-medium"
-                  onClick={() => scrollToId(category.title)}
-                >
-                  {category.title}
-                </button>
-                <ul className="pl-4 mt-1 space-y-1">
-                  {category.sections.map((section, sidx) => (
-                    <li key={sidx}>
-                      <button
-                        className="text-left w-full text-sm text-gray-600 hover:text-[var(--secondary-color)]"
-                        onClick={() =>
-                          scrollToId(`${category.title}-${section.title}`)
-                        }
-                      >
-                        {section.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+        <aside className="hidden lg:block sticky top-0 h-screen overflow-y-auto bg-white border-r border-[#ede9e0] py-8">
+          <div className="px-6 pb-5 mb-3 border-b border-[#f0ece3]">
+            <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[#94a3a0]">Browse Categories</div>
+          </div>
+          {categories.map(cat => (
+            <button
+              key={cat.title}
+              onClick={() => scrollToId(cat.title)}
+              className={`flex items-center gap-2.5 w-full px-6 py-2.5 border-l-2 text-left transition-all duration-200 ${
+                activeCategory === cat.title
+                  ? "border-[#4aa35a] bg-[#4aa35a]/[0.07]"
+                  : "border-transparent hover:bg-[#0f2e1a]/[0.04]"
+              }`}
+            >
+              <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-[14px] flex-shrink-0 ${
+                activeCategory === cat.title ? "bg-[#4aa35a]/15" : "bg-[#f5f2ec]"
+              }`}>{cat.icon}</span>
+              <span className={`text-[12px] leading-[1.3] ${
+                activeCategory === cat.title ? "text-[#0f2e1a] font-semibold" : "text-[#6b7a75] font-medium"
+              }`}>{cat.title}</span>
+            </button>
+          ))}
         </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 px-6 lg:px-10 py-10 space-y-10">
-          {/* Search */}
-          <section className="max-w-4xl mx-auto py-10">
-            <input
-              type="text"
-              placeholder="Search terms, definitions, or examples..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--secondary-color)]"
-            />
-          </section>
-
-          {/* Terms */}
-          <section className="max-w-6xl mx-auto space-y-16">
-            {filteredCategories.length === 0 && (
-              <div className="text-center text-gray-600">
-                No matching terms found.
-              </div>
-            )}
-
-            {filteredCategories.map((category, idx) => (
+        {/* Main */}
+        <main className="px-6 lg:px-12 py-14 max-w-[900px]">
+          {filtered.length === 0 ? (
+            <div className="text-center py-20 text-[#94a3a0] text-[15px] font-light">
+              <div className="text-[32px] mb-3">🔍</div>
+              No matching terms found for "<strong className="text-[#0f2e1a]">{search}</strong>"
+            </div>
+          ) : (
+            filtered.map(cat => (
               <div
-                key={idx}
-                ref={(el) => {
-                  refs.current[category.title] = el
-                }}
-                className="bg-white rounded-2xl shadow-md p-10"
+                key={cat.title}
+                className="mb-[72px] scroll-mt-10"
+                ref={el => { refs.current[cat.title] = el ?? null; }}
               >
-                <h2 className="text-3xl font-bold text-[var(--secondary-color)] mb-8">
-                  {category.title}
-                </h2>
+                {/* Category header */}
+                <div className="flex items-center gap-3.5 mb-8 pb-5 border-b border-[#ede9e0]">
+                  <div className="w-12 h-12 bg-[#0f2e1a] rounded-[14px] flex items-center justify-center text-[22px] flex-shrink-0">
+                    {cat.icon}
+                  </div>
+                  <h2 className="font-['DM_Serif_Display',serif] text-[26px] text-[#0f2e1a] tracking-tight leading-[1.2]">
+                    {cat.title}
+                  </h2>
+                </div>
 
-                {category.sections.map((section, sidx) => (
+                {/* Section cards */}
+                {cat.sections.map((section, i) => (
                   <div
-                    key={sidx}
-                    ref={(el) => {
-                      refs.current[`${category.title}-${section.title}`] = el
-                    }}
-                    className="mb-10"
+                    key={i}
+                    className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden mb-4 hover:shadow-[0_6px_24px_rgba(15,46,26,0.07)] transition-shadow duration-200"
                   >
-                    <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
-                    <p className="mb-6 leading-7 text-left">{section.definition}</p>
-                    <div className="bg-gray-50 p-6 rounded-xl">
-                      <p className="font-semibold mb-3">Examples:</p>
-                      <ul className="list-disc pl-6 space-y-1">
-                        {section.examples.map((example, exIdx) => (
-                          <li key={exIdx}>{example}</li>
-                        ))}
-                      </ul>
+                    {/* Card header */}
+                    <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec]">
+                      <span className="w-2 h-2 rounded-full bg-[#4aa35a] flex-shrink-0" />
+                      <span className="text-[17px] font-semibold text-[#0f2e1a]">{section.title}</span>
+                    </div>
+                    {/* Card body */}
+                    <div className="px-7 py-5">
+                      <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light mb-5">
+                        {section.definition}
+                      </p>
+                      {'examples' in section && section.examples && (
+                        <div className="bg-[#f8f6f1] rounded-[10px] px-5 py-4">
+                          <div className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-2.5">
+                            Examples
+                          </div>
+                          <ul className="flex flex-col gap-1.5">
+                            {section.examples.map((ex, j) => (
+                              <li key={j} className="flex items-start gap-2 text-[14px] text-[#5a6a65] font-light leading-[1.6]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a] flex-shrink-0 mt-[6px]" />
+                                {ex}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
-            ))}
-          </section>
+            ))
+          )}
         </main>
       </div>
-    </div>
-  )
+    </main>
+  );
 }
