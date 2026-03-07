@@ -6,16 +6,17 @@
 
 ## Overview
 
-**TRACER** is an assessment and recommendation-support tool designed to systematically evaluate the **Technology Readiness Level (TRL)** of innovations in the **Agriculture, Aquatic, and Natural Resources (AANR)** sector.
+**TRACER** is an assessment and recommendation-support tool designed by the DOST-PCAARRD, RAISE Western Visayas, and UPV TTBDO to systematically evaluate the **Technology Readiness Level (TRL)** of innovations in the **Agriculture, Aquatic, and Natural Resources (AANR)** sector.
 
 The platform applies a structured readiness assessment framework and generates **evidence-based, indicative recommendations** to support the progression of technologies from research and development toward adoption and utilization.
 
 Technologies are evaluated using defined criteria covering:
 
-- Technology development status
-- Intellectual property position
-- Technology transfer initiatives
-- Commercialization readiness
+- Technology Status
+- Market and Commercialization Status
+- Intellectual Property Protection Status
+- Industry Adoption Status
+- Regulatory Compliance Status
 
 This supports:
 
@@ -46,10 +47,27 @@ AANR-TRACER/
 ├── docs/
 ├── public/
 ├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── utils/
-│   └── styles/
+│   ├── app/
+│   │   ├── about/
+│   │   ├── assessment/
+│   │   │   ├── data-privacy/
+│   │   │   ├── description/
+│   │   │   ├── disclaimer/
+│   │   │   ├── funding-source/
+│   │   │   ├── name/
+│   │   │   ├── questionnaire/
+│   │   │   ├── results/
+│   │   │   ├── summary/
+│   │   │   ├── type/
+│   │   │   ├── AssessmentContext.tsx
+│   │   │   └── layout.tsx
+│   │   ├── components/
+│   │   ├── faq/
+│   │   ├── terms/
+│   │   └── utils/
+│   │       ├── layout.tsx
+│   │       └── page.tsx
+├── styles/
 ├── CHANGELOG.md
 ├── README.md
 ├── package.json
