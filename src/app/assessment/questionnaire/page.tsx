@@ -5,9 +5,16 @@ import Papa from "papaparse";
 import { useAssessment, IPData } from "../AssessmentContext";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
-import { IP_CATEGORY, IP_INITIATED_LABEL, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS, PLANT_ANIMAL_TYPES } from "../../utils/ipHelpers";
+import { 
+  PLANT_ANIMAL_TYPES, 
+  IP_INITIATED_LABEL, 
+  IP_TYPES, 
+  IP_STATUS_OPTIONS, 
+  REGION_CONTACTS, 
+  IP_CATEGORY,
+} from "../../utils/ipHelpers";
 
-// types
+// Types 
 
 interface Question {
   id: string;
@@ -18,7 +25,7 @@ interface Question {
   toolTip?: string;
 }
 
-// ip section
+// IP Section 
 
 interface IPSectionProps {
   label: string;
@@ -155,7 +162,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
   );
 }
 
-// main page
+// Main Page 
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();
@@ -166,6 +173,7 @@ export default function QuestionnairePage() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [openTooltips, setOpenTooltips] = useState<Record<string, boolean>>({});
 
   const questionsPerPage = 5;
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
@@ -256,6 +264,19 @@ export default function QuestionnairePage() {
 
   const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
 
+  // IP validation — block Next if "yes" but no type checked or any checked type missing a status
+  const ipBlocksNext = (() => {
+    if (!isIPCategory) return false;
+    const ipKey = IP_INITIATED_LABEL;
+    const current = data.ipData[ipKey] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
+    if (current.initiated !== "yes") return false;
+    const checkedTypes = Object.entries(current.selectedTypes)
+      .filter(([, v]) => v)
+      .map(([k]) => k);
+    if (checkedTypes.length === 0) return true;
+    return checkedTypes.some(t => !current.typeStatuses[t]);
+  })();
+
   // Progress
   const totalSteps = orderedCategories.reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
@@ -267,7 +288,7 @@ export default function QuestionnairePage() {
   }, 0) + currentPage;
   const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
 
-  // Loading
+  // ── Loading ──
   if (loading) {
     return (
       <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center">
@@ -283,7 +304,11 @@ export default function QuestionnairePage() {
     return (
       <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center px-6">
         <div className="text-center">
-          <div className="text-[32px] mb-3">🔍</div>
+          <div className="mb-3 w-12 h-12 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mx-auto">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
           <p className="text-[15px] text-[#4a5568] font-light">No questions available for the selected technology type.</p>
         </div>
       </div>
@@ -293,8 +318,8 @@ export default function QuestionnairePage() {
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a]">
 
-      {/*Sticky progress bar */}
-      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b border-[#ede9e0] px-6 lg:px-[6vw] py-4 shadow-sm">
+      {/* ── Sticky progress bar ── */}
+      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b border-[#ede9e0] px-6 lg:px-[6vw] py-3 shadow-sm">
         <div className="max-w-[860px] mx-auto">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[11px] font-semibold text-[#4aa35a] uppercase tracking-[1.5px] truncate mr-4">
@@ -334,6 +359,7 @@ export default function QuestionnairePage() {
         </div>
 
         {/* ── IP Category ── */}
+        <div style={{ minHeight: 420 }}>
         {isIPCategory ? (
           <div className="space-y-6">
             <IPSection
@@ -350,7 +376,6 @@ export default function QuestionnairePage() {
               return (
                 <label
                   key={q.id}
-                  title={q.toolTip ?? ""}
                   className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
                     checked
                       ? "bg-[#4aa35a]/[0.05] border-[#4aa35a]/40"
@@ -372,23 +397,38 @@ export default function QuestionnairePage() {
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
-                      {q.questionText}
-                    </span>
-                    {q.toolTip && (
-                      <p className="text-[12px] text-[#94a3a0] font-light mt-1">{q.toolTip}</p>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
+                        {q.questionText}
+                      </span>
+                      {q.toolTip && (
+                        <button
+                          type="button"
+                          onClick={e => { e.preventDefault(); setOpenTooltips(prev => ({ ...prev, [q.id]: !prev[q.id] })); }}
+                          className="flex-shrink-0 w-5 h-5 rounded-full border border-[#c8c3b8] bg-white hover:border-[#4aa35a] hover:bg-[#4aa35a]/10 flex items-center justify-center transition-colors mt-0.5"
+                          title="Show hint"
+                        >
+                          <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke={openTooltips[q.id] ? "#4aa35a" : "#94a3a0"} strokeWidth="2" strokeLinecap="round">
+                            <circle cx="8" cy="8" r="7"/>
+                            <path d="M8 7v5M8 5h.01"/>
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                    {q.toolTip && openTooltips[q.id] && (
+                      <p className="text-[12px] text-[#6b7a75] font-light mt-2 leading-relaxed bg-[#f8f6f1] border border-[#ede9e0] rounded-lg px-3 py-2">
+                        {q.toolTip}
+                      </p>
                     )}
                   </div>
 
-                  {/* TRL badge */}
-                  {/* <span className="flex-shrink-0 text-[10px] font-bold tracking-[1px] uppercase text-[#4aa35a] bg-[#4aa35a]/10 px-2 py-1 rounded-md self-start mt-0.5">
-                    TRL {q.trlLevel}
-                  </span> */}
                 </label>
               );
             })}
           </div>
         )}
+
+        </div>
 
         {/* ── Navigation ── */}
         <div className="flex items-center justify-between mt-10">
@@ -407,17 +447,33 @@ export default function QuestionnairePage() {
             Previous
           </button>
 
-          <button
-            onClick={handleNext}
-            className="inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold text-white bg-[#4aa35a] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
-          >
-            {isLastStep ? "Finish Assessment" : "Continue"}
-            <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </button>
+          <div className="flex flex-col items-end gap-2">
+            {ipBlocksNext && (
+              <p className="text-[12px] text-amber-600 font-light flex items-center gap-1.5">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+                  <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                  <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                Select at least one IP type and set its status to continue.
+              </p>
+            )}
+            <button
+              onClick={handleNext}
+              disabled={ipBlocksNext}
+              className={`inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold transition-all duration-300 ${
+                ipBlocksNext
+                  ? "text-white/60 bg-[#4aa35a]/40 cursor-not-allowed shadow-none"
+                  : "text-white bg-[#4aa35a] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)]"
+              }`}
+            >
+              {isLastStep ? "Finish Assessment" : "Continue"}
+              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </button>
+          </div>
         </div>
 
       </div>

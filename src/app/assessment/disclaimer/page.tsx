@@ -34,7 +34,7 @@ export default function Disclaimer() {
             </span>
           </div>
           <div className="px-7 py-10 flex flex-col gap-4">
-            <p className="text-[14px] text-[#4a5568] font-light leading-[1.85]">
+            <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light text-justify">
               This Technology Readiness Assessment for Commercialization Enhancement and Roadmapping (TRACER) Application is
               specifically designed for{" "}
               <strong className="text-[#0f2e1a] font-semibold italic">AANR technologies intended for commercialization</strong>.
@@ -44,7 +44,7 @@ export default function Disclaimer() {
               or misleading data entered into the system.
             </p>
             <div className="h-px bg-[#f0ece3]" />
-            <p className="text-[14px] text-[#4a5568] font-light leading-[1.85]">
+            <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light text-justify">
               Furthermore, the identified gaps and system-generated recommendations are produced through AI-driven analysis
               aligned with the TRL definitions referenced and made available on this website.
             </p>

@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { categories } from "../utils/faqUtils";
 
-// SVG Icon component
+// ─── SVG Icon component ───────────────────────────────────────────────────────
 
 function CategoryIcon({ name, size = 16, color = "#4aa35a" }: { name: string; size?: number; color?: string }) {
   const s = { width: size, height: size, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -14,7 +14,7 @@ function CategoryIcon({ name, size = 16, color = "#4aa35a" }: { name: string; si
   return null;
 }
 
-// Page 
+//  Page 
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<Record<string, number | null>>({});

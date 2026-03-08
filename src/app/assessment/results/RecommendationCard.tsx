@@ -187,7 +187,7 @@ function DoneState({
             TRL {achievableTRL}
           </span>
         </div>
-        {/* <button
+        <button
           onClick={onRegenerate}
           className="inline-flex items-center gap-1.5 text-[11px] text-[#94a3a0] hover:text-[#4aa35a] transition-colors font-medium"
           title="Regenerate"
@@ -199,7 +199,7 @@ function DoneState({
             <path d="M8 16H3v5" />
           </svg>
           Regenerate
-        </button> */}
+        </button>
       </div>
 
       {/* Action steps */}

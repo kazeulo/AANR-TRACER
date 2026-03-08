@@ -39,12 +39,12 @@ export default function DataPrivacyNotice() {
 
           {/* Card body */}
           <div className="px-7 py-8 space-y-5">
-            <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light">
+            <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light text-justify">
               No information disclosed, entered, or encoded by the user while using this application is stored on
               any platform, nor is it accessible to the application developer.
             </p>
             <div className="h-px bg-[#f0ece3]" />
-            <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light">
+            <p className="text-[15px] leading-[1.85] text-[#4a5568] font-light text-justify">
               Data storage occurs only if the user voluntarily chooses to download or send a copy of their responses
               to a specified email address for their own intended purpose. In such cases, the responsibility for
               saving and handling the data rests solely with the user.
