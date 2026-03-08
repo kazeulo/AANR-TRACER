@@ -3,6 +3,19 @@
 import { useState, useRef } from "react";
 import { categories } from "../utils/faqUtils";
 
+// SVG Icon component
+
+function CategoryIcon({ name, size = 16, color = "#4aa35a" }: { name: string; size?: number; color?: string }) {
+  const s = { width: size, height: size, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (name === "chat")      return <svg viewBox="0 0 24 24" style={s}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
+  if (name === "flask")     return <svg viewBox="0 0 24 24" style={s}><path d="M9 3h6M10 3v7l-4 9h12l-4-9V3"/><path d="M9 16h6"/></svg>;
+  if (name === "lightbulb") return <svg viewBox="0 0 24 24" style={s}><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 4 12.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2z"/></svg>;
+  if (name === "chart")     return <svg viewBox="0 0 24 24" style={s}><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>;
+  return null;
+}
+
+// Page 
+
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<Record<string, number | null>>({});
   const [activeCategory, setActiveCategory] = useState(categories[0].title);
@@ -63,9 +76,15 @@ export default function FAQ() {
                   : "bg-transparent text-[#6b7a75] border-transparent hover:bg-[#0f2e1a]/[0.05] hover:text-[#0f2e1a]"
               }`}
             >
-              <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-[14px] flex-shrink-0 ${
+              <span className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
                 activeCategory === cat.title ? "bg-[#4aa35a]/15" : "bg-[#f5f2ec]"
-              }`}>{cat.icon}</span>
+              }`}>
+                <CategoryIcon
+                  name={cat.icon}
+                  size={15}
+                  color={activeCategory === cat.title ? "#4aa35a" : "#6b7a75"}
+                />
+              </span>
               <span className="flex-1">{cat.title}</span>
               <span className={`text-[11px] ${activeCategory === cat.title ? "text-[#4aa35a] font-semibold" : "text-[#94a3a0]"}`}>
                 {cat.faqs.length}
@@ -84,8 +103,8 @@ export default function FAQ() {
             >
               {/* Group header */}
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-[#0f2e1a] rounded-[12px] flex items-center justify-center text-[18px] flex-shrink-0">
-                  {cat.icon}
+                <div className="w-10 h-10 bg-[#0f2e1a] rounded-[12px] flex items-center justify-center flex-shrink-0">
+                  <CategoryIcon name={cat.icon} size={18} color="#4aa35a" />
                 </div>
                 <h2 className="font-['DM_Serif_Display',serif] text-[24px] text-[#0f2e1a] tracking-tight">
                   {cat.title}

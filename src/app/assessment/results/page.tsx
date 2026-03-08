@@ -14,48 +14,56 @@ import QuestionGroup        from "./QuestionGroup";
 import AIRecommendationCard from "./RecommendationCard";
 import ExportModal          from "./ExportModal";
 
-// Congratulatory copy per TRL level
-
+// Congratulatory copy aligned with TRL labels
 const TRL_MESSAGES: Record<number, { headline: string; sub: string }> = {
   0: {
-    headline: "Every great technology starts here.",
-    sub: "Completing this assessment already puts you ahead. Use the gaps below as your starting point — the path to a market-ready technology begins with knowing exactly where you stand.",
+    headline: "Every great technology starts with an idea.",
+    sub: "Completing this assessment helps you understand where your technology stands. Use the results below as a roadmap to move from concept to real-world impact.",
   },
+
   1: {
-    headline: "You've identified a real problem worth solving.",
-    sub: "Reaching TRL 1 means your basic principles are observed and reported. That clarity of purpose is the seed of every breakthrough technology in the AANR sector.",
+    headline: "You've defined the concept and the market need.",
+    sub: "TRL 1 means you've identified the problem and clarified the opportunity your technology addresses. This clear direction is the foundation for meaningful innovation.",
   },
+
   2: {
-    headline: "Your technology concept is taking shape.",
-    sub: "TRL 2 means you've moved from observation to a formulated concept. That's meaningful scientific progress — and a foundation you can keep building on.",
+    headline: "Your design and prototype plan are taking shape.",
+    sub: "At TRL 2, you've translated your concept into an initial design or formulation and planned how the prototype will be built. You're moving from ideas toward tangible development.",
   },
+
   3: {
-    headline: "Proof of concept — that's a significant milestone.",
-    sub: "TRL 3 is where ideas prove their worth for the first time. You've demonstrated that your technology can work. That's the kind of result that attracts attention and support.",
+    headline: "Your prototype is being developed and tested.",
+    sub: "TRL 3 marks the stage where your prototype is built and evaluated in the laboratory. Early testing provides valuable insights that refine the technology and strengthen its potential.",
   },
+
   4: {
-    headline: "Lab-validated and ready to scale.",
-    sub: "Reaching TRL 4 means your technology has been validated in a controlled environment. You're building a solid, credible foundation that funding bodies and industry partners will take seriously.",
+    headline: "Your technology has passed controlled validation.",
+    sub: "At TRL 4, your prototype has been validated in controlled conditions and may be progressing toward intellectual property protection. This strengthens credibility and readiness for broader testing.",
   },
+
   5: {
-    headline: "Halfway there — and stronger for every step.",
-    sub: "TRL 5 is a major milestone. Your technology has been validated in a relevant environment. You're no longer in the early stages — you're in the stretch that separates ideas from real-world solutions.",
+    headline: "Pilot testing has begun with industry engagement.",
+    sub: "TRL 5 shows that your technology is moving beyond the lab into pilot testing with potential partners or stakeholders. Collaboration at this stage helps align your solution with real-world needs.",
   },
+
   6: {
-    headline: "Demonstrated in the real world. That's impressive.",
-    sub: "TRL 6 means your technology has been demonstrated in a relevant environment. That's the kind of progress that opens doors — to partnerships, to commercialization, to impact.",
+    headline: "Testing across locations prepares you for scale.",
+    sub: "At TRL 6, your technology is being evaluated in multiple environments while preparing for larger-scale deployment. This stage builds confidence that the solution can perform reliably in diverse settings.",
   },
+
   7: {
-    headline: "System prototype proven. The finish line is close.",
-    sub: "Reaching TRL 7 is a remarkable achievement. Your prototype has been demonstrated in an operational environment. Commercialization is no longer a distant goal — it's within reach.",
+    headline: "Industry validation and regulatory preparation are underway.",
+    sub: "TRL 7 indicates that your technology has been validated with industry partners and is progressing through regulatory processes. You're now approaching full operational readiness.",
   },
+
   8: {
-    headline: "Complete, qualified, and ready for the market.",
-    sub: "TRL 8 means your technology has been fully qualified. You've done the hard work that most technologies never reach. One final push stands between you and full deployment.",
+    headline: "Your technology is ready for commercial production.",
+    sub: "TRL 8 means the system has been finalized and qualified for market entry. Production processes, supply chains, and operational readiness are coming together.",
   },
+
   9: {
-    headline: "Full commercialization achieved. Congratulations!",
-    sub: "TRL 9 is the pinnacle of technology readiness. Your technology has proven itself in an operational environment and is ready for the market. This is an extraordinary achievement for the AANR sector.",
+    headline: "Your technology has reached full commercialization.",
+    sub: "TRL 9 represents the highest level of readiness. Your technology is deployed in the market and delivering real-world impact.",
   },
 };
 
@@ -302,13 +310,13 @@ export default function ResultsPage() {
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 pb-10">
           <button
-            onClick={() => router.push("/assessment/questionnaire")}
+            onClick={() => router.push("/")}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all duration-200"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M8 5H2M5 8L2 5l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            Back to Assessment
+            Back to Home
           </button>
 
           <button

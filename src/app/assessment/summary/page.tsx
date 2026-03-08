@@ -14,17 +14,81 @@ interface Question {
   category: string;
 }
 
+// ─── Confirmation Modal ───────────────────────────────────────────────────────
+
+function ConfirmSubmitModal({
+  onConfirm,
+  onCancel,
+}: {
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-[#0a1f10]/60 backdrop-blur-sm" onClick={onCancel} />
+
+      <div className="relative font-['DM_Sans',sans-serif] bg-white rounded-3xl shadow-2xl w-full max-w-[400px] z-10 overflow-hidden">
+
+        {/* Header strip */}
+        <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[#f8f6f1]">
+          <span className="w-2 h-2 rounded-full bg-[#4aa35a] flex-shrink-0" />
+          <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
+            Confirm Submission
+          </span>
+          <button
+            onClick={onCancel}
+            className="ml-auto w-7 h-7 rounded-full bg-[#ede9e0] hover:bg-[#e0dbd3] flex items-center justify-center text-[#6b7a75] transition-colors"
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="px-7 py-7">
+          <h2 className="font-['DM_Serif_Display',serif] text-[22px] text-[#0f2e1a] mb-2">
+            Ready to submit?
+          </h2>
+          <p className="text-[13px] text-[#8a9a94] font-light mb-7 leading-relaxed">
+            Your TRL score will be calculated from your answers. Make sure everything looks right before proceeding.
+          </p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={onCancel}
+              className="flex-1 px-4 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all"
+            >
+              Not yet
+            </button>
+            <button
+              onClick={onConfirm}
+              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-[14px] font-semibold text-white bg-[#4aa35a] shadow-[0_6px_24px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] transition-all"
+            >
+              Yes, submit
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+// ─── Main Page ────────────────────────────────────────────────────────────────
+
 export default function SummaryPage() {
   const { data, updateData, lastCategoryIndex, lastPage } = useAssessment();
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [questions, setQuestions]   = useState<Question[]>([]);
+  const [loading, setLoading]       = useState(true);
+  const [showConfirm, setShowConfirm] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const loadCSV = async () => {
-      const res = await fetch("/questions.csv");
+      const res     = await fetch("/questions.csv");
       const csvText = await res.text();
-      const result = Papa.parse<Omit<Question, "id">>(csvText, { header: true, skipEmptyLines: true });
+      const result  = Papa.parse<Omit<Question, "id">>(csvText, { header: true, skipEmptyLines: true });
       const filtered = result.data.filter(q => q.technologyType === data.technologyType);
       const withIds: Question[] = filtered.map((item, index) => ({ ...item, id: `${item.category}-${index}` }));
       setQuestions(withIds);
@@ -33,7 +97,8 @@ export default function SummaryPage() {
     loadCSV();
   }, [data.technologyType]);
 
-  const handleSubmit = () => {
+  const handleConfirmedSubmit = () => {
+    setShowConfirm(false);
     router.push("/assessment/results");
   };
 
@@ -49,7 +114,7 @@ export default function SummaryPage() {
   }
 
   const answeredCount = Object.values(data.answers).filter(Boolean).length;
-  const totalCount = questions.length;
+  const totalCount    = questions.length;
 
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-16">
@@ -71,18 +136,16 @@ export default function SummaryPage() {
 
         {/* Amber notice */}
         <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 mb-8">
-          <span className="text-amber-500 flex-shrink-0 mt-0.5">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-              <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5 text-amber-500">
+            <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
           <p className="text-[13px] text-amber-800 font-light leading-relaxed">
             Submitting will calculate your TRL score. Make sure all answers reflect your technology's current state.
           </p>
         </div>
 
-        {/* ── Technology Info Card ── */}
+        {/* Technology Info Card */}
         <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)] mb-6">
           <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[#f8f6f1]">
             <span className="w-2 h-2 rounded-full bg-[#4aa35a] flex-shrink-0" />
@@ -90,8 +153,6 @@ export default function SummaryPage() {
           </div>
 
           <div className="px-7 py-6 space-y-5">
-
-            {/* Technology Name */}
             <div>
               <label className="block text-[11px] font-bold tracking-[1.5px] uppercase text-[#94a3a0] mb-2">
                 Technology Name
@@ -104,7 +165,6 @@ export default function SummaryPage() {
               />
             </div>
 
-            {/* Technology Type */}
             <div>
               <label className="block text-[11px] font-bold tracking-[1.5px] uppercase text-[#94a3a0] mb-2">
                 Technology Type
@@ -129,7 +189,6 @@ export default function SummaryPage() {
               </div>
             </div>
 
-            {/* Funding Source */}
             <div>
               <label className="block text-[11px] font-bold tracking-[1.5px] uppercase text-[#94a3a0] mb-2">
                 Funding Source
@@ -152,11 +211,10 @@ export default function SummaryPage() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
-        {/* ── Answers summary ── */}
+        {/* Answers summary */}
         <div className="space-y-4 mb-10">
           {categoryOrder.map(category => {
             const categoryQuestions = questions.filter(q => q.category === category);
@@ -166,8 +224,6 @@ export default function SummaryPage() {
 
             return (
               <div key={category} className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,46,26,0.04)]">
-
-                {/* Category header */}
                 <div className="flex items-center justify-between gap-3 px-7 py-4 border-b border-[#f5f2ec] bg-[#f8f6f1]">
                   <div className="flex items-center gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#4aa35a] flex-shrink-0" />
@@ -178,7 +234,6 @@ export default function SummaryPage() {
                   </span>
                 </div>
 
-                {/* Questions */}
                 <ul className="px-7 py-4 space-y-2.5">
                   {categoryQuestions.map(q => {
                     const checked = data.answers[q.id] ?? false;
@@ -204,13 +259,12 @@ export default function SummaryPage() {
                     );
                   })}
                 </ul>
-
               </div>
             );
           })}
         </div>
 
-        {/* ── Navigation ── */}
+        {/* Navigation */}
         <div className="flex items-center justify-between">
           <button
             onClick={() => router.back()}
@@ -223,7 +277,7 @@ export default function SummaryPage() {
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={() => setShowConfirm(true)}
             className="inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold text-white bg-[#4aa35a] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
           >
             Submit Assessment
@@ -236,6 +290,14 @@ export default function SummaryPage() {
         </div>
 
       </div>
+
+      {/* Confirmation modal */}
+      {showConfirm && (
+        <ConfirmSubmitModal
+          onConfirm={handleConfirmedSubmit}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </main>
   );
 }

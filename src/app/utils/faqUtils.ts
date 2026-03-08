@@ -1,6 +1,6 @@
 export const categories = [
   {
-    title: "General Questions", icon: "💬",
+    title: "General Questions", icon: "chat",
     faqs: [
       { question: "What is the AANR TRACER Application?", answer: "The AANR Technology Readiness Assessment for Commercialization Enhancement and Roadmapping (TRACER) Application is a web-based assessment and recommendation-support tool designed to evaluate the Technology Readiness Level (TRL) of innovations in the Agriculture, Aquatic, and Natural Resources (AANR) sector. It helps users understand the maturity of their technology and identify next steps toward commercialization, adoption, or utilization." },
       { question: "Who can use the TRACER Application?", answer: "The application is intended for researchers and innovators in the AANR sector, technology transfer offices and commercialization units, academic, research, and government institutions, and organizations supporting innovation, incubation, and technology adoption." },
@@ -10,7 +10,7 @@ export const categories = [
     ],
   },
   {
-    title: "Technology Assessment", icon: "🔬",
+    title: "Technology Assessment", icon: "flask",
     faqs: [
       { question: "What types of technologies can be assessed?", answer: "AANR TRACER is suitable for technologies that fall under the Agriculture, Aquatic, and Natural Resources (AANR) sector and are intended for commercial purposes through modes such as licensing, joint venture, profit sharing, or buy-out." },
       { question: "How does TRACER determine the TRL?", answer: "The application uses a structured readiness assessment framework based on the NASA TRL scale, adapted for AANR technologies, the DOST–PCAARRD assessment framework, and expert experience in R&D and commercialization — reviewed by subject-matter experts and researchers across various commodities." },
@@ -20,14 +20,14 @@ export const categories = [
     ],
   },
   {
-    title: "Gaps and Recommendations", icon: "💡",
+    title: "Gaps and Recommendations", icon: "lightbulb",
     faqs: [
       { question: "How are gaps and recommendations generated?", answer: "Identified gaps and recommendations are produced through AI-driven analysis aligned with the structured readiness assessment framework. These recommendations are indicative and intended to support planning and decision-making." },
       { question: "Are the recommendations mandatory to follow?", answer: "No. The recommendations are not prescriptive or mandatory. They are provided as guidance to help users understand potential next steps and areas for improvement." },
     ],
   },
   {
-    title: "Data & Results", icon: "📊",
+    title: "Data & Results", icon: "chart",
     faqs: [
       { question: "Is my data saved in the system?", answer: "No. Data saving only occurs if the user opts to download the generated PDF or sends it via email. Assessment data is not stored server-side." },
       { question: "Can I download or export my assessment results?", answer: "Yes. The application allows users to download and export assessment summaries and results as a PDF file for internal use, reporting, or strategic planning." },

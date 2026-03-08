@@ -92,7 +92,7 @@ export default function HomePage() {
 
         {/* Glows */}
         <div className="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle,rgba(74,163,90,0.18) 0%,transparent 70%)" }} />
+          style={{ background: "radial-gradient(circle,rgba(50, 181, 74, 0.18) 0%,transparent 70%)" }} />
         <div className="absolute -bottom-[100px] left-[30%] w-[500px] h-[500px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(34,197,94,0.07) 0%,transparent 70%)" }} />
 
@@ -118,20 +118,6 @@ export default function HomePage() {
               <em className="text-[#4aa35a] italic">Commercialization</em>
               <br />Enhancement and Roadmapping
             </h1>
-
-            {/* AANR sector tags — with SVG icons */}
-            <div className="flex flex-wrap gap-2 mb-7">
-              {[
-                { Icon: IconWheat,    label: "Agriculture" },
-                { Icon: IconFish,     label: "Aquatic" },
-                { Icon: IconTree,     label: "Natural Resources" },
-              ].map(({ Icon, label }) => (
-                <span key={label} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#6b8a78] bg-white/[0.06] border border-white/[0.08] px-3 py-1.5 rounded-full">
-                  <Icon className="w-3 h-3" />
-                  {label}
-                </span>
-              ))}
-            </div>
 
             <p className="text-[15px] leading-[1.75] text-[#8a9a94] font-light mb-8 max-w-[420px]">
               Your guide in assessing the technical and commercial readiness of AANR technologies — from farm to market.
@@ -188,15 +174,15 @@ export default function HomePage() {
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-8">
         <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4">
           {[
-            { n: "9",  label: "TRL Levels",       Icon: IconBarChart },
+            { n: "9",  label: "TRL Levels",         Icon: IconBarChart },
             { n: "10", label: "Technology Types",  Icon: IconFlask },
             { n: "4",  label: "AANR Sub-Sectors",  Icon: IconLeaf },
             { n: "1",  label: "Clear Roadmap",     Icon: IconListCheck },
           ].map(({ n, label, Icon }) => (
             <div key={label} className="text-center px-6 border-r border-white/[0.08] last:border-r-0 flex flex-col items-center gap-1">
-              <Icon className="w-4 h-4 text-[#4aa35a]/60 mb-1" />
+              <Icon className="w-6 h-6 text-[#4aa35a]/60 mb-3" />
               <div className="font-['DM_Serif_Display',serif] text-[32px] text-[#4aa35a] leading-none">{n}</div>
-              <div className="text-[11px] text-[#6b8a78] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
+              <div className="text-[11px] text-[#6b987e] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
             </div>
           ))}
         </div>
@@ -283,6 +269,7 @@ export default function HomePage() {
               technology transfer and commercialization-readiness initiatives, thereby supporting informed decision-making, standardized
               documentation, and strategic planning across stages of technology maturation.
             </p>
+
           </div>
 
           {/* Image */}
