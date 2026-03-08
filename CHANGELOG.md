@@ -9,7 +9,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.0.0] - 2026-02-23
+## v1.0.0 – Platform Migration Release
+March 2026
+
 ### Added
-- Initial project setup with Next.js
-- Set up teaser page 
+- Migrated system from Wix platform to Next.js framework
+- Implemented modular React component architecture
+- Improved system performance and maintainability
+
+### Technical
+- TypeScript integration
+- Context-based state management
+- html2canvas + jsPDF for report generation

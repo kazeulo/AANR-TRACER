@@ -29,13 +29,13 @@ export default function FAQ() {
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
-            PCAARRD · AANR-TRacer
+            PCAARRD · AANR-TRACER
           </div>
           <h1 className="font-['DM_Serif_Display',serif] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
             Frequently Asked <em className="text-[#4aa35a]">Questions</em>
           </h1>
           <p className="text-[16px] text-[#94a3a0] font-light max-w-[500px] leading-[1.7]">
-            Everything you need to know about AANR TRacer — how it works, what to expect, and how to make the most of your assessment.
+            Everything you need to know about AANR TRACER — how it works, what to expect, and how to make the most of your assessment.
           </p>
         </div>
       </section>
