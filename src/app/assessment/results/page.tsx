@@ -233,13 +233,13 @@ export default function ResultsPage() {
         />
 
         {/* Step bar */}
-        {/* <div className="bg-white border border-[#ede9e0] rounded-2xl p-6 shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
+        <div className="bg-white border border-[#ede9e0] rounded-2xl p-6 shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
           <div className="flex items-center gap-2.5 mb-5">
             <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
             <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">Progress Overview</span>
           </div>
           <TRLStepBar completed={result.highestCompletedTRL} achievable={result.highestAchievableTRL} />
-        </div> */}
+        </div>
 
         {/* Score cards */}
         <ScoreCards

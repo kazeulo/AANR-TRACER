@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function TechnologyDescriptionPage() {
   const { data, updateData } = useAssessment();
   const router = useRouter();
-  const maxWords = 300;
+  const maxWords = 200;
 
   const [wordCount, setWordCount] = useState<number>(
     data.technologyDescription.trim()
