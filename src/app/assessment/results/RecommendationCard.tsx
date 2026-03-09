@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { QuestionItem } from "../../utils/trlCalculator";
-import { fetchRecommendation, parseRecommendationOutput, RecommendationInput } from "./fetchRecommendation";
+import { fetchRecommendation, parseRecommendationOutput, RecommendationInput } from "./FetchRecommendation";
 
 type Status = "idle" | "loading" | "done" | "error";
 
