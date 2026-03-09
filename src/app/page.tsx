@@ -239,12 +239,9 @@ export default function HomePage() {
       {/* ═══ ABOUT ═══ */}
       <section className="py-[100px] px-6 lg:px-[6vw] bg-white relative overflow-hidden">
 
-        <WaveRipple className="absolute top-8 right-0 w-[400px] text-[#4aa35a]/[0.05] pointer-events-none" />
-        <WaveRipple className="absolute bottom-8 left-0 w-[280px] text-[#4aa35a]/[0.04] pointer-events-none" />
-
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center relative z-10">
           <div>
-            <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[#4aa35a] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+            <span className="inline-block text-[11px] font-bold tracking-[3px] uppercase text-[#4aa35a] mb-4 pb-4 border-b-2 border-[#4aa35a]">
               About TRACER
             </span>
 
@@ -259,14 +256,14 @@ export default function HomePage() {
                 { Icon: IconFish,  label: "Aquatic" },
                 { Icon: IconTree,  label: "Natural Resources" },
               ].map(({ Icon, label }) => (
-                <div key={label} className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#4a5568] bg-[#f5f2ec] border border-[#ede9e0] px-3 py-1.5 rounded-full">
+                <div key={label} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#4a5568] bg-[#f5f2ec] border border-[#ede9e0] px-3 py-1.5 rounded-full">
                   <Icon className="w-3.5 h-3.5 text-[#4aa35a]" />
                   {label}
                 </div>
               ))}
             </div>
 
-            <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light mb-4">
+            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
               TRACER is a web-based assessment and recommendation-support tool designed to systematically evaluate the current development 
               status and commercialization preparedness of Agriculture, Aquatic, and Natural Resources (AANR) technologies. The platform applies 
               a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
@@ -278,7 +275,7 @@ export default function HomePage() {
               research and development toward adoption and utilization.
             </p>
 
-            <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light">
+            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light">
               The tool evaluates technologies by category using a defined set of criteria across key areas, including technology development status, 
               intellectual property position, market and pre-commercialization readiness initiatives, industry validation and adoption, and regulatory 
               compliance. In doing so, it supports informed decision-making, standardized documentation, and strategic planning across the various 

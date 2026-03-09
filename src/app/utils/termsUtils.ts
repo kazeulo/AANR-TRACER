@@ -1,3 +1,4 @@
+
 export const categories = [
   {
     title: "Food, Food Ingredients and Beverages", icon: "leaf",
@@ -54,7 +55,7 @@ export const categories = [
     ],
   },
   {
-    title: "TRACER Levels", icon: "book",
+    title: "TRACER Levels", icon: "bargraph",
     sections:[
       { title: "TRACER Level 1 - Concept & Market Definition",
         definition: "Concept clearly defined; prior art searched; potential users, beneficiaries, and industry relevance identified.",
@@ -86,7 +87,7 @@ export const categories = [
     ],
   },
   {
-    title: "Key terms", icon: "book",
+    title: "Other Key terms", icon: "book",
     sections: [
       { title: "Alpha Testing", 
         definition: "The initial phase of system or product testing conducted internally by the development team or a limited group of users in a controlled environment, aimed at identifying bugs, functional issues, and usability problems.", 
@@ -99,8 +100,6 @@ export const categories = [
       { title: "Pilot Scale or Scaled-up Pilot Production", 
         definition: "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage."},
       { title: "Potential Industry Partner", 
-        definition: "A potential industry partner is not limited to a company that will license the technology. It can be any industry willing to enter into an agreement, such as a Collaborative Research Agreement (CRA), Research Service Agreement (RSA), or Memorandum of Agreement (MOA) to test the technology at an industry scale or to help improve it for future large-scale production."},
-      { title: "Potential Industry Partner", definition: "A potential industry partner is not limited to a company that will license the technology. It can be any industry willing to enter into an agreement, such as a Collaborative Research Agreement (CRA), Research Service Agreement (RSA), or Memorandum of Agreement (MOA) to test the technology at an industry scale or to help improve it for future large-scale production."},
-    ],
+        definition: "A potential industry partner is not limited to a company that will license the technology. It can be any industry willing to enter into an agreement, such as a Collaborative Research Agreement (CRA), Research Service Agreement (RSA), or Memorandum of Agreement (MOA) to test the technology at an industry scale or to help improve it for future large-scale production."},    ],
   },
 ];

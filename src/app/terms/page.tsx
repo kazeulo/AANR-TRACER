@@ -14,6 +14,7 @@ function TermIcon({ name, size = 18, color = "#4aa35a" }: { name: string; size?:
   if (name === "animal")   return <svg viewBox="0 0 24 24" style={s}><path d="M19 9c0 4-2.5 7.4-6 8.7V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.3C7.5 16.4 5 13 5 9a7 7 0 0 1 14 0z"/><path d="M9 9h.01M15 9h.01"/></svg>;
   if (name === "tree")     return <svg viewBox="0 0 24 24" style={s}><path d="M12 22v-7"/><path d="M9 7 7 22h10L15 7"/><path d="M12 7c0 0-3-5 0-7 3 2 0 7 0 7z"/></svg>;
   if (name === "book")     return <svg viewBox="0 0 24 24" style={s}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>;
+  if (name === "bargraph") return <svg viewBox="0 0 24 24" style={s} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20V10" /><path d="M10 20V6" /><path d="M16 20V13" /><path d="M22 20H2" /></svg>;
   return null;
 }
 

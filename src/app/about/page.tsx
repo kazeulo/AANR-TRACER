@@ -52,7 +52,7 @@ export default function About() {
               A structured framework for technology maturation
             </h2>
 
-            <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light mb-4">
+            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
               TRACER is a web-based assessment and recommendation-support tool designed to systematically evaluate the current development 
               status and commercialization preparedness of Agriculture, Aquatic, and Natural Resources (AANR) technologies. The platform applies 
               a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
@@ -64,7 +64,7 @@ export default function About() {
               research and development toward adoption and utilization.
             </p>
 
-            <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light">
+            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light">
               The tool evaluates technologies by category using a defined set of criteria across key areas, including technology development status, 
               intellectual property position, market and pre-commercialization readiness initiatives, industry validation and adoption, and regulatory 
               compliance. In doing so, it supports informed decision-making, standardized documentation, and strategic planning across the various 
