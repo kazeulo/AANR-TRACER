@@ -29,7 +29,7 @@ export default function QuestionGroup({
 
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-7 py-5 border-b border-[#f5f2ec] bg-[#f8f6f1] hover:bg-[#f3efe8] transition-colors"
+        className="w-full flex items-center justify-between px-7 py-5 border-b border-[#f5f2ec] bg-white hover:bg-[#f8f6f1] transition-colors"
       >
         <div className="flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: accent }} />

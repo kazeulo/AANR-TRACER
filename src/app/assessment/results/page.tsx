@@ -302,13 +302,13 @@ export default function ResultsPage() {
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 pb-10">
           <button
-            onClick={() => router.push("/assessment/questionnaire")}
+            onClick={() => router.push("/")}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all duration-200"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M8 5H2M5 8L2 5l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            Back to Assessment
+            Back to Home
           </button>
 
           <button
