@@ -10,14 +10,103 @@ export interface RecommendationInput {
   lackingItems: QuestionItem[];
 }
 
-export async function fetchRecommendation({
-  technologyName,
-  technologyType,
-  technologyDescription,
-  completedTRL,
-  achievableTRL,
-  lackingItems,
-}: RecommendationInput): Promise<string> {
+export interface RecommendationItem {
+  title: string;
+  body: string;
+}
+
+export interface RecommendationOutput {
+  items: RecommendationItem[];
+  closing: string;
+}
+
+// Cache
+
+export function getCacheKey(input: Pick<RecommendationInput, "technologyName" | "technologyType" | "completedTRL" | "achievableTRL">): string {
+  return `aanr_rec_${input.technologyName}_${input.technologyType}_${input.completedTRL}_${input.achievableTRL}`;
+}
+
+export function getHeroCacheKey(input: Pick<RecommendationInput, "technologyName" | "technologyType" | "completedTRL">): string {
+  return `aanr_hero_${input.technologyName}_${input.technologyType}_${input.completedTRL}`;
+}
+
+function readCache<T>(key: string): T | null {
+  try { return JSON.parse(sessionStorage.getItem(key) ?? "null"); } catch { return null; }
+}
+
+function writeCache<T>(key: string, value: T): void {
+  try { sessionStorage.setItem(key, JSON.stringify(value)); } catch {}
+}
+
+export function getCached(key: string): RecommendationOutput | null {
+  return readCache<RecommendationOutput>(key);
+}
+
+export function setCache(key: string, value: RecommendationOutput): void {
+  writeCache(key, value);
+}
+
+// Hero message — Qwen 0.5B (fast, cheap)
+
+export async function fetchHeroMessage(input: Pick<
+  RecommendationInput,
+  "technologyName" | "technologyType" | "completedTRL"
+>): Promise<{ headline: string; sub: string }> {
+  const cacheKey = getHeroCacheKey(input);
+  const cached = readCache<{ headline: string; sub: string }>(cacheKey);
+  if (cached) return cached;
+
+  const { technologyName, technologyType, completedTRL } = input;
+
+  const systemPrompt =
+    `You are a warm, encouraging advisor for AANR technology developers in the Philippines. ` +
+    `Write short celebratory messages. Be specific to the TRL level achieved.`;
+
+  const userPrompt =
+    `Technology: ${technologyName || "an AANR technology"}\n` +
+    `Type: ${technologyType}\n` +
+    `Achieved TRL: ${completedTRL} — ${TRL_LABELS[completedTRL] ?? "Unknown"}\n\n` +
+    `Write exactly two parts separated by a blank line:\n` +
+    `1. One headline sentence (max 12 words) celebrating this TRL achievement.\n` +
+    `2. Two sentences (max 40 words total) explaining what this TRL means and motivating them to continue.\n` +
+    `No bullet points, numbers, or labels. Just the headline, a blank line, then the two sentences.`;
+
+  const res = await fetch("/api/recommend", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "small",
+      max_tokens: 120,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user",   content: userPrompt   },
+      ],
+    }),
+  });
+
+  if (!res.ok) throw new Error(`Hero fetch failed: ${res.status}`);
+
+  const data = await res.json();
+  const text: string = (data.completion ?? "").trim();
+  const parts = text.split(/\n\s*\n/).map((s: string) => s.trim()).filter(Boolean);
+
+  const result = {
+    headline: parts[0] ?? "",
+    sub:      parts.slice(1).join(" ").trim(),
+  };
+
+  writeCache(cacheKey, result);
+  return result;
+}
+
+export async function fetchRecommendation(
+  input: RecommendationInput
+): Promise<string> {
+  const {
+    technologyName, technologyType, technologyDescription,
+    completedTRL, achievableTRL, lackingItems,
+  } = input;
+
   const lackingList = lackingItems
     .slice(0, 10)
     .map((q, i) => `${i + 1}. ${q.questionText}`)
