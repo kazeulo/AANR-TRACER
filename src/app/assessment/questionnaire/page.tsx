@@ -5,14 +5,7 @@ import Papa from "papaparse";
 import { useAssessment, IPData } from "../AssessmentContext";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
-import { 
-  PLANT_ANIMAL_TYPES, 
-  IP_INITIATED_LABEL, 
-  IP_TYPES, 
-  IP_STATUS_OPTIONS, 
-  REGION_CONTACTS, 
-  IP_CATEGORY,
-} from "../../utils/ipHelpers";
+import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
 
 // Types 
 
@@ -24,6 +17,7 @@ interface Question {
   category: string;
   toolTip?: string;
 }
+
 
 // IP Section 
 
@@ -269,6 +263,7 @@ export default function QuestionnairePage() {
     if (!isIPCategory) return false;
     const ipKey = IP_INITIATED_LABEL;
     const current = data.ipData[ipKey] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
+    if (current.initiated === "") return true;
     if (current.initiated !== "yes") return false;
     const checkedTypes = Object.entries(current.selectedTypes)
       .filter(([, v]) => v)
@@ -288,7 +283,7 @@ export default function QuestionnairePage() {
   }, 0) + currentPage;
   const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
 
-  // ── Loading ──
+  // Loading 
   if (loading) {
     return (
       <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center">
@@ -318,7 +313,7 @@ export default function QuestionnairePage() {
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a]">
 
-      {/* ── Sticky progress bar ── */}
+      {/* Sticky progress bar */}
       <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b border-[#ede9e0] px-6 lg:px-[6vw] py-3 shadow-sm">
         <div className="max-w-[860px] mx-auto">
           <div className="flex items-center justify-between mb-1.5">
@@ -339,7 +334,7 @@ export default function QuestionnairePage() {
         </div>
       </div>
 
-      {/* ── Content ── */}
+      {/* Content */}
       <div className="max-w-[1000px] mx-auto px-6 lg:px-[6vw] pt-[110px] pb-24">
 
         {/* Category header */}
@@ -358,7 +353,7 @@ export default function QuestionnairePage() {
           )}
         </div>
 
-        {/* ── IP Category ── */}
+        {/* IP Category */}
         <div style={{ minHeight: 420 }}>
         {isIPCategory ? (
           <div className="space-y-6">
@@ -369,7 +364,7 @@ export default function QuestionnairePage() {
             />
           </div>
         ) : (
-          /* ── Regular Questions ── */
+          /* Regular Questions */
           <div className="space-y-3">
             {visibleQuestions.map(q => {
               const checked = data.answers[q.id] ?? false;
@@ -430,7 +425,7 @@ export default function QuestionnairePage() {
 
         </div>
 
-        {/* ── Navigation ── */}
+        {/* Navigation */}
         <div className="flex items-center justify-between mt-10">
           <button
             onClick={handlePrev}
@@ -454,7 +449,11 @@ export default function QuestionnairePage() {
                   <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                   <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                Select at least one IP type and set its status to continue.
+                {(() => {
+                  const current = data.ipData[IP_INITIATED_LABEL] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
+                  if (current.initiated === "") return "Please answer the IP initiation question to continue.";
+                  return "Select at least one IP type and set its status to continue.";
+                })()}
               </p>
             )}
             <button

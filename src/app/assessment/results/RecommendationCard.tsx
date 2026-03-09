@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { QuestionItem } from "../../utils/trlCalculator";
-import { fetchRecommendation, parseRecommendationOutput, RecommendationInput } from "./FetchRecommendation";
+import { fetchRecommendation, parseRecommendationOutput, RecommendationInput } from "./fetchRecommendation";
+
 type Status = "idle" | "loading" | "done" | "error";
 
 interface ParsedOutput {
@@ -9,8 +10,8 @@ interface ParsedOutput {
 }
 
 export default function AIRecommendationCard(props: RecommendationInput) {
-  const [status, setStatus]   = useState<Status>("idle");
-  const [output, setOutput]   = useState<ParsedOutput>({ items: [], closing: "" });
+  const [status,   setStatus]   = useState<Status>("idle");
+  const [output,   setOutput]   = useState<ParsedOutput>({ items: [], closing: "" });
   const [errorMsg, setErrorMsg] = useState<string>("");
 
   const generate = async () => {
@@ -36,7 +37,7 @@ export default function AIRecommendationCard(props: RecommendationInput) {
           Your Next Steps
         </span>
         <span className="ml-auto text-[10px] font-medium text-[#94a3a0] bg-[#f0ece3] px-2 py-0.5 rounded-full">
-          AI-powered · Llama 3.1
+          AI-powered · gpt-4o-mini
         </span>
       </div>
 
@@ -59,13 +60,7 @@ export default function AIRecommendationCard(props: RecommendationInput) {
 
 // States 
 
-function IdleState({
-  onGenerate,
-  lackingCount,
-}: {
-  onGenerate: () => void;
-  lackingCount: number;
-}) {
+function IdleState({ onGenerate, lackingCount }: { onGenerate: () => void; lackingCount: number }) {
   return (
     <div className="flex flex-col items-center text-center py-6 gap-5">
       <div className="w-14 h-14 rounded-2xl bg-[#4aa35a]/[0.07] flex items-center justify-center">
@@ -75,9 +70,7 @@ function IdleState({
         </svg>
       </div>
       <div>
-        <p className="text-[15px] font-semibold text-[#0f2e1a] mb-2">
-          Not sure what to do next?
-        </p>
+        <p className="text-[15px] font-semibold text-[#0f2e1a] mb-2">Not sure what to do next?</p>
         <p className="text-[13px] text-[#8a9a94] font-light max-w-sm leading-relaxed">
           We'll turn your{" "}
           <span className="font-semibold text-[#4a5568]">
@@ -147,7 +140,7 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
   );
 }
 
-// Coverts markdown into <strong> spans for display */
+// Converts bold markdown into <strong> spans
 function renderMarkdown(text: string): React.ReactNode {
   const parts = text.split(/\*\*(.*?)\*\*/g);
   return parts.map((part, i) =>
@@ -170,13 +163,10 @@ function DoneState({
 }) {
   return (
     <div>
-
       {/* Sub-header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <span className="text-[12px] text-[#6b7a75] font-light">
-            To go from
-          </span>
+          <span className="text-[12px] text-[#6b7a75] font-light">To go from</span>
           <span className="text-[12px] font-bold text-[#0f2e1a] bg-[#f0ece3] px-2.5 py-1 rounded-full">
             TRL {completedTRL}
           </span>
@@ -209,7 +199,6 @@ function DoneState({
             <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#4aa35a] text-white text-[12px] font-bold flex items-center justify-center mt-0.5">
               {i + 1}
             </span>
-            {/* <p className="text-[14px] text-[#4a5568] leading-relaxed flex-1">{item}</p> */}
             <p className="text-[14px] text-[#4a5568] leading-relaxed flex-1">{renderMarkdown(item)}</p>
           </li>
         ))}
@@ -235,7 +224,6 @@ function DoneState({
           AI-generated guidance. Validate with a technology transfer specialist before major decisions.
         </p>
       </div>
-
     </div>
   );
 }

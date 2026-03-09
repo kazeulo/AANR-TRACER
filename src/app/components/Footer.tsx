@@ -9,7 +9,7 @@ export default function Footer() {
       <svg
         viewBox="0 0 1440 60"
         preserveAspectRatio="none"
-        className="block w-full bg-[#f5f2ec]"
+        className="block w-full bg-[#f5f2ec] -mb-px"
       >
         <path fill="#0a1f10" d="M0,30 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" />
       </svg>
@@ -31,18 +31,6 @@ export default function Footer() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
                 PCAARRD · DOST
               </div>
-
-              {/* Partner Logos */}
-              {/* <div className="mb-10 bg-white/30 backdrop-blur-lg rounded-xl px-4 py-3 w-full max-w-[700px]">
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                  <Image src="/img/logos/dost-logo.png" alt="DOST Logo" width={90} height={40} className="h-[30px] sm:h-[35px] w-auto object-contain" />
-                  <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD Logo" width={90} height={40} className="h-[30px] sm:h-[35px] w-auto object-contain" />
-                  <Image src="/img/logos/raise-logo.png" alt="RAISE Logo" width={120} height={40} className="h-[45px] sm:h-[45px] w-auto object-contain" />
-                  <Image src="/img/logos/agri-hub-logo.png" alt="Agri Hub Logo" width={90} height={40} className="h-[55px] sm:h-[55px] w-auto object-contain" />
-                  <Image src="/img/logos/upvisayas-logo.png" alt="UP Visayas Logo" width={90} height={40} className="h-[40px] sm:h-[40px] w-auto object-contain" />
-                  <Image src="/img/logos/ttbdo-logo.png" alt="TTBDO Logo" width={90} height={40} className="h-[40px] sm:h-[40px] w-auto object-contain" />
-                </div>
-              </div> */}
             </div>
 
             {/* Social icons */}

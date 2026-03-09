@@ -39,9 +39,9 @@ export default function Header() {
           {/* Brand */}
           <Link
             href="/"
-            className="font-['DM_Serif_Display'] text-[24px] text-white tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
+            className="font-['DM_Serif_Display'] text-[24px] text-white text-bold tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
           >
-            AANR-<span className="text-[#4aa35a] italic">TRACER</span>
+            AANR-<span className="text-[#4aa35a] italic ">TRACER</span>
           </Link>
 
           {/* Desktop links */}
@@ -62,12 +62,12 @@ export default function Header() {
           </div>
 
           {/* Desktop CTA */}
-          {/* <Link
+          <Link
             href="/assessment/disclaimer"
             className="hidden md:inline-flex items-center text-[13px] font-semibold text-white bg-[#4aa35a] px-5 py-2.5 rounded-full flex-shrink-0 shadow-[0_4px_16px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(74,163,90,0.45)] transition-all duration-200"
           >
             Start Assessment
-          </Link> */}
+          </Link>
 
           {/* Hamburger */}
           <button

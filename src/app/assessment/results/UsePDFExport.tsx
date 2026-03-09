@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import type { JSX } from "react";
 import { TRLResult, QuestionItem } from "../../utils/trlCalculator";
 
-/* Types */
+/* ─── Types ───────────────────────────────────────── */
 
 export interface ExportFormData {
   name: string;
@@ -11,7 +11,7 @@ export interface ExportFormData {
   organization: string;
 }
 
-/* TRL Maps */
+/* ─── TRL Maps ────────────────────────────────────── */
 
 export const TRL_LABELS: Record<number, string> = {
   1: "Concept & Market Definition",
@@ -59,17 +59,89 @@ export function usePDFExport() {
           backgroundColor: "#ffffff",
         });
 
-        const imgData = canvas.toDataURL("image/png");
-        const pdf     = new jsPDF({ orientation: "portrait", unit: "px", format: "a4" });
-        const pageW   = pdf.internal.pageSize.getWidth();
-        const pageH   = pdf.internal.pageSize.getHeight();
-        const imgH    = (canvas.height * pageW) / canvas.width;
+        const pdf   = new jsPDF({ orientation: "portrait", unit: "px", format: "a4" });
+        const pageW = pdf.internal.pageSize.getWidth();
+        const pageH = pdf.internal.pageSize.getHeight();
 
-        let y = 0;
-        while (y < imgH) {
-          if (y > 0) pdf.addPage();
-          pdf.addImage(imgData, "PNG", 0, -y, pageW, imgH);
-          y += pageH;
+        const marginTop    = 48;
+        const marginBottom = 40;
+        const contentH     = pageH - marginTop - marginBottom;
+
+        const scale = pageW / canvas.width;
+        const totalH = canvas.height * scale;
+
+        const container  = pdfRef.current!;
+        const containerTop = container.getBoundingClientRect().top;
+
+        const allEls = Array.from(container.querySelectorAll<HTMLElement>(
+          "div, p, span, img, hr"
+        ));
+
+        // bottom positions in pdf px, sorted ascending
+        const breakCandidates = allEls
+          .map(el => {
+            const r = el.getBoundingClientRect();
+            return (r.bottom - containerTop);
+          })
+          .filter(y => y > 0 && y < totalH)
+          .sort((a, b) => a - b);
+
+        // Build actual page break positions: for each page, find the largest
+        // safe break point that fits within contentH of where the page starts
+        const pageBreaks: number[] = [0]; // srcY positions in pdf px
+        while (true) {
+          const pageStart = pageBreaks[pageBreaks.length - 1];
+          const idealEnd  = pageStart + contentH;
+          if (idealEnd >= totalH) break;
+
+          // Find the last safe candidate that fits before idealEnd
+          // Leave a small buffer (8px) so the cut isn't right at the element edge
+          const safeBreak = breakCandidates
+            .filter(y => y > pageStart + 20 && y <= idealEnd - 8)
+            .pop(); // largest value that fits
+
+          pageBreaks.push(safeBreak ?? idealEnd); // fallback to hard cut if no candidate
+        }
+
+        // Render each page slice 
+        const offscreen = document.createElement("canvas");
+        offscreen.width = canvas.width;
+
+        for (let i = 0; i < pageBreaks.length; i++) {
+
+          const startPdfY = pageBreaks[i];
+          const endPdfY   = pageBreaks[i + 1] ?? totalH;
+
+          const slicePdfH = endPdfY - startPdfY;
+
+          // convert pdf units → canvas pixels
+          const startPx   = startPdfY / scale;
+          const slicePxH  = slicePdfH / scale;
+
+          offscreen.height = Math.ceil(slicePxH);
+
+          const ctx = offscreen.getContext("2d")!;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, offscreen.width, offscreen.height);
+
+          ctx.drawImage(
+            canvas,
+            0, startPx,
+            canvas.width, slicePxH,
+            0, 0,
+            canvas.width, slicePxH
+          );
+
+          if (i > 0) pdf.addPage();
+
+          pdf.addImage(
+            offscreen.toDataURL("image/png"),
+            "PNG",
+            0,
+            marginTop,
+            pageW,
+            slicePdfH
+          );
         }
 
         const safeName = exportForm.name.replace(/\s+/g, "_").toLowerCase();
@@ -89,7 +161,7 @@ export function usePDFExport() {
   return { pdfRef, exporting, exportForm, triggerExport };
 }
 
-/* Design tokens */
+/* Design tokens  */
 
 // A4 at 96 dpi ≈ 794px wide
 // Margins: 72px left/right (≈ 1 inch), 64px top/bottom
@@ -97,7 +169,7 @@ const FONT  = "'Calibri', 'Gill Sans', 'Trebuchet MS', Arial, sans-serif";
 const ML    = 72;   // margin left  (px)
 const MR    = 72;   // margin right (px)
 const MT    = 60;   // margin top
-const MB    = 60;   // margin bottom
+const MB    = 60;  // margin bottom — increased to prevent content clipping
 const INNER = 794 - ML - MR; // usable width
 
 const t = {
@@ -106,13 +178,13 @@ const t = {
     boxSizing: "border-box" as const,
     backgroundColor: "#ffffff",
     fontFamily: FONT,
-    paddingTop: MT,
-    paddingBottom: MB,
+    paddingTop: 0,
+    paddingBottom: 0,
     paddingLeft: ML,
     paddingRight: MR,
     color: "#111",
-    fontSize: 11,
-    lineHeight: 1.55,
+    fontSize: 12,
+    lineHeight: 1.6,
   } as React.CSSProperties,
 
   hr: {
@@ -128,7 +200,7 @@ const t = {
   } as React.CSSProperties,
 
   sectionLabel: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: 700 as const,
     textTransform: "uppercase" as const,
     letterSpacing: 1.2,
@@ -140,13 +212,13 @@ const t = {
   fieldRow: {
     display: "flex",
     gap: 0,
-    marginBottom: 3,
-    fontSize: 11,
+    marginBottom: 4,
+    fontSize: 12,
   } as React.CSSProperties,
 
   fieldKey: {
     fontWeight: 700 as const,
-    minWidth: 170,
+    minWidth: 180,
     color: "#333",
   } as React.CSSProperties,
 
@@ -156,7 +228,7 @@ const t = {
   } as React.CSSProperties,
 
   trlLevelLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 700 as const,
     color: "#333",
     marginTop: 12,
@@ -214,7 +286,7 @@ function QuestionSection({ title, questions }: { title: string; questions: Quest
           {byLevel[level].map(q => (
             <div key={q.id} style={t.bulletRow}>
               <div style={t.bulletDot} />
-              <span style={{ fontSize: 11, color: "#222", lineHeight: 1.55 }}>{q.questionText}</span>
+              <span style={{ fontSize: 12, color: "#222", lineHeight: 1.6 }}>{q.questionText}</span>
             </div>
           ))}
         </div>
@@ -231,36 +303,38 @@ export function PDFContent({ result, techName, techType, techDescription, form }
   return (
     <div style={t.page}>
 
-      {/* ── Header: logo left, PCAARRD info right ── */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+      {/* ── Header: logo + agency name, right-aligned as a group ── */}
+      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 14, marginBottom: 20 }}>
 
-        <img
-          src="/img/logos/dost-pcaarrd-logo.png"
-          alt="DOST-PCAARRD"
-          style={{ height: 56, width: "auto", objectFit: "contain" }}
-          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-        />
-
-        {/* Right-aligned agency info */}
-        <div style={{ textAlign: "right", fontFamily: FONT, lineHeight: 1.5 }}>
-          <div style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.8 }}>
+        {/* Agency text — right-aligned */}
+        <div style={{ fontFamily: FONT, lineHeight: 1.5, textAlign: "right" }}>
+          <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.8 }}>
             DOST-PCAARRD
           </div>
-          <div style={{ fontSize: 10, color: "#444", marginTop: 2 }}>
+          <div style={{ fontSize: 11, color: "#444", marginTop: 2 }}>
             Philippine Council for Agriculture, Aquatic
           </div>
-          <div style={{ fontSize: 10, color: "#444" }}>
+          <div style={{ fontSize: 11, color: "#444" }}>
             and Natural Resources Research and Development
           </div>
-          <div style={{ fontSize: 10, color: "#444", marginTop: 2 }}>
+          <div style={{ fontSize: 11, color: "#444", marginTop: 2 }}>
             Los Baños, Laguna, Philippines
           </div>
         </div>
+
+        {/* Logo — right of the agency name */}
+        <img
+          src="/img/logos/dost-pcaarrd-logo.png"
+          alt="DOST-PCAARRD"
+          style={{ height: 56, width: "auto", objectFit: "contain", flexShrink: 0 }}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+        />
       </div>
 
+      {/* Thick rule below header */}
       <div style={t.hrThick} />
 
-      {/* ── Report title — left aligned ── */}
+      {/* Report title — left aligned */}
       <div style={{ marginBottom: 18 }}>
         <div style={{
           fontFamily: FONT,
@@ -336,11 +410,34 @@ export function PDFContent({ result, techName, techType, techDescription, form }
       {/* ── Assessment Results ── */}
       <div style={t.sectionLabel}>Assessment Results</div>
       <div style={t.hr} />
-      <div style={t.fieldRow}>
-        <span style={t.fieldKey}>Highest Completed TRL:</span>
-        <span style={{ ...t.fieldVal, fontWeight: 700 }}>
-          TRL {highestCompletedTRL} — {TRL_LABELS[highestCompletedTRL] ?? "—"}
-        </span>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        border: "1.5px solid #2d7a3a",
+        borderRadius: 6,
+        padding: "10px 14px",
+        marginBottom: 8,
+      }}>
+        <div style={{
+          fontWeight: 700,
+          fontSize: 20,
+          color: "#2d7a3a",
+          lineHeight: 1.2,
+          letterSpacing: 0.5,
+          flexShrink: 0,
+          minWidth: 60,
+        }}>
+          TRL {highestCompletedTRL}
+        </div>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, color: "#2d7a3a", marginBottom: 2 }}>
+            Highest Completed TRL
+          </div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#111" }}>
+            {TRL_LABELS[highestCompletedTRL] ?? "—"}
+          </div>
+        </div>
       </div>
       {hasGap && (
         <div style={t.fieldRow}>
@@ -385,6 +482,9 @@ export function PDFContent({ result, techName, techType, techDescription, form }
         <span>AANR-TRacer · DOST-PCAARRD</span>
         <span>This report is system-generated and for reference purposes only.</span>
       </div>
+
+      {/* Bottom spacer — ensures last line has breathing room before pdf margin */}
+      <div style={{ height: 24 }} />
 
     </div>
   );

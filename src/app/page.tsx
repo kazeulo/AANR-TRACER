@@ -275,7 +275,7 @@ export default function HomePage() {
           {/* Image */}
           <div className="relative">
             {/* Rice stalk cluster beside image */}
-            <div className="absolute -left-7 bottom-[12%] flex gap-1 pointer-events-none z-20">
+            <div className="absolute -left-20 bottom-[12%] flex gap-1 pointer-events-none z-20">
               <RiceStalk className="w-[16px] text-[#4aa35a]/25 -rotate-6" />
               <RiceStalk className="w-[20px] text-[#4aa35a]/35" />
               <RiceStalk className="w-[14px] text-[#4aa35a]/20 rotate-8" />
