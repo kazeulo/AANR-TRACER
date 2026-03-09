@@ -14,60 +14,54 @@ import QuestionGroup        from "./QuestionGroup";
 import AIRecommendationCard from "./RecommendationCard";
 import ExportModal          from "./ExportModal";
 
-// Congratulatory copy aligned with TRL labels
+// ─── Congratulatory copy per TRL level ───────────────────────────────────────
+
+// ─── Hardcoded TRL messages ───────────────────────────────────────────────────
+
 const TRL_MESSAGES: Record<number, { headline: string; sub: string }> = {
   0: {
     headline: "Every great technology starts with an idea.",
     sub: "Completing this assessment helps you understand where your technology stands. Use the results below as a roadmap to move from concept to real-world impact.",
   },
-
   1: {
     headline: "You've defined the concept and the market need.",
     sub: "TRL 1 means you've identified the problem and clarified the opportunity your technology addresses. This clear direction is the foundation for meaningful innovation.",
   },
-
   2: {
     headline: "Your design and prototype plan are taking shape.",
     sub: "At TRL 2, you've translated your concept into an initial design or formulation and planned how the prototype will be built. You're moving from ideas toward tangible development.",
   },
-
   3: {
     headline: "Your prototype is being developed and tested.",
     sub: "TRL 3 marks the stage where your prototype is built and evaluated in the laboratory. Early testing provides valuable insights that refine the technology and strengthen its potential.",
   },
-
   4: {
     headline: "Your technology has passed controlled validation.",
     sub: "At TRL 4, your prototype has been validated in controlled conditions and may be progressing toward intellectual property protection. This strengthens credibility and readiness for broader testing.",
   },
-
   5: {
     headline: "Pilot testing has begun with industry engagement.",
     sub: "TRL 5 shows that your technology is moving beyond the lab into pilot testing with potential partners or stakeholders. Collaboration at this stage helps align your solution with real-world needs.",
   },
-
   6: {
     headline: "Testing across locations prepares you for scale.",
     sub: "At TRL 6, your technology is being evaluated in multiple environments while preparing for larger-scale deployment. This stage builds confidence that the solution can perform reliably in diverse settings.",
   },
-
   7: {
     headline: "Industry validation and regulatory preparation are underway.",
     sub: "TRL 7 indicates that your technology has been validated with industry partners and is progressing through regulatory processes. You're now approaching full operational readiness.",
   },
-
   8: {
     headline: "Your technology is ready for commercial production.",
     sub: "TRL 8 means the system has been finalized and qualified for market entry. Production processes, supply chains, and operational readiness are coming together.",
   },
-
   9: {
     headline: "Your technology has reached full commercialization.",
     sub: "TRL 9 represents the highest level of readiness. Your technology is deployed in the market and delivering real-world impact.",
   },
 };
 
-// Congratulatory Hero 
+// ─── Congratulatory Hero ──────────────────────────────────────────────────────
 
 function CongratulatoryHero({
   trl,
@@ -78,8 +72,8 @@ function CongratulatoryHero({
   technologyName: string;
   completedColor: string;
 }) {
-  const msg   = TRL_MESSAGES[trl] ?? TRL_MESSAGES[0];
   const isTL9 = trl === 9;
+  const msg   = TRL_MESSAGES[trl] ?? TRL_MESSAGES[0];
 
   return (
     <div className="relative rounded-2xl overflow-hidden"
@@ -120,7 +114,7 @@ function CongratulatoryHero({
           >
             <span className="text-[9px] font-bold tracking-[2px] uppercase text-white/40 leading-none mb-0.5">TRL</span>
             <span
-              className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
+              className="font-[\'DM_Serif_Display\',serif] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
               {trl === 0 ? "—" : trl}
@@ -144,7 +138,7 @@ function CongratulatoryHero({
             </span>
           </div>
 
-          <h2 className="font-['DM_Serif_Display',serif] text-[clamp(18px,2.4vw,26px)] text-white leading-[1.25] tracking-tight mb-2">
+          <h2 className="font-[\'DM_Serif_Display\',serif] text-[clamp(18px,2.4vw,26px)] text-white leading-[1.25] tracking-tight mb-2">
             {msg.headline}
           </h2>
 
@@ -168,15 +162,15 @@ function CongratulatoryHero({
   );
 }
 
-// Main Page
+// ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function ResultsPage() {
   const { data } = useAssessment();
   const router   = useRouter();
 
-  const [result, setResult]       = useState<TRLResult | null>(null);
-  const [loading, setLoading]     = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [result, setResult]           = useState<TRLResult | null>(null);
+  const [loading, setLoading]         = useState(true);
+  const [showModal, setShowModal]     = useState(false);
 
   const { pdfRef, exporting, exportForm, triggerExport } = usePDFExport();
 
@@ -239,13 +233,13 @@ export default function ResultsPage() {
         />
 
         {/* Step bar */}
-        <div className="bg-white border border-[#ede9e0] rounded-2xl p-6 shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
+        {/* <div className="bg-white border border-[#ede9e0] rounded-2xl p-6 shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
           <div className="flex items-center gap-2.5 mb-5">
             <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
             <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">Progress Overview</span>
           </div>
           <TRLStepBar completed={result.highestCompletedTRL} achievable={result.highestAchievableTRL} />
-        </div>
+        </div> */}
 
         {/* Score cards */}
         <ScoreCards
@@ -265,17 +259,16 @@ export default function ResultsPage() {
           />
         )}
 
-        {/* AI Recommendations */}
-        {result.highestCompletedTRL < 9 && (
-          <AIRecommendationCard
-            technologyName={data.technologyName}
-            technologyType={data.technologyType}
-            technologyDescription={data.technologyDescription ?? ""}
-            completedTRL={result.highestCompletedTRL}
-            achievableTRL={result.highestAchievableTRL}
-            lackingItems={lackingForAI}
-          />
-        )}
+        {/* AI Recommendations — always shown */}
+        <AIRecommendationCard
+          technologyName={data.technologyName}
+          technologyType={data.technologyType}
+          technologyDescription={data.technologyDescription ?? ""}
+          completedTRL={result.highestCompletedTRL}
+          achievableTRL={result.highestAchievableTRL}
+          lackingItems={lackingForAI}
+
+        />
 
         {/* Detailed breakdown */}
         <div>
@@ -296,27 +289,27 @@ export default function ResultsPage() {
                 accent="#3b82f6"
                 defaultOpen={true}
               />
-            ) : (
+            ) : result.lackingForNextLevel.length > 0 ? (
               <QuestionGroup
                 title={`Lacking for Next Level (TRL ${result.highestCompletedTRL + 1})`}
                 questions={result.lackingForNextLevel}
                 accent="#f97316"
                 defaultOpen={true}
               />
-            )}
+            ) : null}
           </div>
         </div>
 
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 pb-10">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/assessment/questionnaire")}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all duration-200"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M8 5H2M5 8L2 5l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            Back to Home
+            Back to Assessment
           </button>
 
           <button
