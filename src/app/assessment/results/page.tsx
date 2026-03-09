@@ -7,7 +7,6 @@ import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
 import { usePDFExport, PDFContent, TRL_COLORS, TRL_LABELS } from "./UsePDFExport";
 
-import TRLStepBar           from "./TRLStepBar";
 import ScoreCards           from "./ScoreCards";
 import AchievableBanner     from "./AchievableBanner";
 import QuestionGroup        from "./QuestionGroup";
@@ -129,16 +128,25 @@ function CongratulatoryHero({
 
         {/* Message */}
         <div className="flex-1 min-w-0">
-          <div className="inline-flex items-center gap-1.5 mb-3 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08]">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-            <span className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
-              {isTL9 ? "Maximum Readiness Reached" : "Assessment Complete"}
-            </span>
+          {/* TRL announcement */}
+          <div className="mb-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] mb-2">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <span className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
+                {isTL9 ? "Maximum Readiness Reached" : "Assessment Complete"}
+              </span>
+            </div>
+            <p className="font-[\'DM_Serif_Display\',serif] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
+              {trl === 0
+                ? "Your technology is at the starting line."
+                : <>Your technology is at <span style={{ color: completedColor }}>TRL {trl}</span>.</>
+              }
+            </p>
           </div>
 
-          <h2 className="font-[\'DM_Serif_Display\',serif] text-[clamp(18px,2.4vw,26px)] text-white leading-[1.25] tracking-tight mb-2">
+          <h2 className="font-[\'DM_Serif_Display\',serif] text-[clamp(14px,1.8vw,18px)] text-white/70 leading-[1.3] tracking-tight mb-2 font-normal italic">
             {msg.headline}
           </h2>
 
@@ -231,15 +239,6 @@ export default function ResultsPage() {
           technologyName={data.technologyName}
           completedColor={completedColor}
         />
-
-        {/* Step bar */}
-        <div className="bg-white border border-[#ede9e0] rounded-2xl p-6 shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
-          <div className="flex items-center gap-2.5 mb-5">
-            <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
-            <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">Progress Overview</span>
-          </div>
-          <TRLStepBar completed={result.highestCompletedTRL} achievable={result.highestAchievableTRL} />
-        </div>
 
         {/* Score cards */}
         <ScoreCards

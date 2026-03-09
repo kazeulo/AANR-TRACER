@@ -1,4 +1,5 @@
 import { TRL_LABELS } from "./UsePDFExport";
+import TRLStepBar from "./TRLStepBar";
 
 interface ScoreCardsProps {
   completedTRL: number;
@@ -18,14 +19,13 @@ export default function ScoreCards({
   return (
     <div className="space-y-3">
 
-      {/* ── Secondary: Achievable (only shown when there's a gap) ── */}
+      {/* Secondary: Achievable (only shown when there's a gap) */}
       {hasGap && (
         <div className="bg-white border border-[#ede9e0] rounded-2xl px-8 py-6 shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
 
             {/* Icon + number */}
             <div className="flex-shrink-0 flex items-center gap-3">
-              {/* Upward arrow icon */}
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ backgroundColor: `${achievableColor}15` }}
@@ -74,28 +74,13 @@ export default function ScoreCards({
 
           </div>
 
-          {/* Progress comparison bar */}
-          <div className="mt-5 space-y-2">
-            <div className="flex items-center gap-3">
-              <span className="text-[11px] text-[#94a3a0] w-20 flex-shrink-0">Current</span>
-              <div className="flex-1 h-2 bg-[#f0ece3] rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full"
-                  style={{ width: `${(completedTRL / 9) * 100}%`, backgroundColor: completedColor }}
-                />
-              </div>
-              <span className="text-[11px] font-bold text-[#4a5568] w-6 text-right">{completedTRL}</span>
+          {/* Step bar */}
+          <div className="bg-white  rounded-2xl p-6">
+            <div className="flex items-center gap-2.5 mb-5">
+              <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
+              <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">Progress Overview</span>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-[11px] text-[#94a3a0] w-20 flex-shrink-0">Achievable</span>
-              <div className="flex-1 h-2 bg-[#f0ece3] rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full"
-                  style={{ width: `${(achievableTRL / 9) * 100}%`, backgroundColor: achievableColor }}
-                />
-              </div>
-              <span className="text-[11px] font-bold text-[#4a5568] w-6 text-right">{achievableTRL}</span>
-            </div>
+            <TRLStepBar completed={completedTRL} achievable={achievableTRL} />
           </div>
         </div>
       )}
