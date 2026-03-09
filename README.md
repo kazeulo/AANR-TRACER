@@ -50,7 +50,7 @@ This supports:
 ## Project Structure
 
 ```
-AANR-TRacer/
+AANR-TRACER/
 ├── docs/                          # Project documentation
 ├── public/
 │   ├── questions.csv              # TRL question bank
