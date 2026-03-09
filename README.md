@@ -1,16 +1,22 @@
-# AANR TRACER
+# AANR-TRACER
 
-**Technology Readiness Assessment for Commercialization Enhancement and Roadmapping**
+**AANR Technology Readiness Assessment for Commercialization and Evaluation Report**
+
+> Developed by **DOST-PCAARRD**, RAISE Western Visayas, and UPV TTBDO
+
+---
+
+![AANR-TRACER Preview](public/img/website-preview.png)
 
 ---
 
 ## Overview
 
-**TRACER** is an assessment and recommendation-support tool designed by the DOST-PCAARRD, RAISE Western Visayas, and UPV TTBDO to systematically evaluate the **Technology Readiness Level (TRL)** of innovations in the **Agriculture, Aquatic, and Natural Resources (AANR)** sector.
+**AANR-TRACER** is a web-based assessment platform that evaluates the **Technology Readiness Level (TRL)** of innovations in the **Agriculture, Aquatic, and Natural Resources (AANR)** sector.
 
-The platform applies a structured readiness assessment framework and generates **evidence-based, indicative recommendations** to support the progression of technologies from research and development toward adoption and utilization.
+The platform applies a structured, multi-step questionnaire and generates **evidence-based, AI-powered recommendations** to support the progression of technologies from research and development toward adoption and commercialization.
 
-Technologies are evaluated using defined criteria covering:
+Technologies are evaluated across five categories:
 
 - Technology Status
 - Market and Commercialization Status
@@ -20,61 +26,89 @@ Technologies are evaluated using defined criteria covering:
 
 This supports:
 
-- Informed decision-making
-- Standardized documentation
+- Standardized TRL evaluation across the AANR sector
+- Informed decision-making for researchers and technology managers
 - Strategic planning across stages of technology maturation
+- Formal PDF reporting for documentation and funding decisions
 
 ---
 
 ## Tech Stack
 
-- **Next.js** – Frontend and server rendering
-- **Express.js** – Backend API
-- **Hugging Face** - AI-powered recommendations
-  - meta-llama/Llama-3.1-8B-Instruct
-
----
-
-## Documentation
-
-Detailed documentation is available in: `docs/`
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v3 |
+| AI Recommendations | OpenAI API (`gpt-4o-mini`) |
+| PDF Export | html2canvas + jsPDF |
+| State Management | React Context API |
+| Data | CSV-based question bank (PapaParse) |
 
 ---
 
 ## Project Structure
+
 ```
-AANR-TRACER/
-├── docs/
+AANR-TRacer/
+├── docs/                          # Project documentation
 ├── public/
+│   ├── questions.csv              # TRL question bank
+│   └── img/logos/                 # Brand assets
 ├── src/
 │   ├── app/
 │   │   ├── about/
-│   │   ├── assessment/
-│   │   │   ├── data-privacy/
-│   │   │   ├── description/
-│   │   │   ├── disclaimer/
-│   │   │   ├── funding-source/
-│   │   │   ├── name/
-│   │   │   ├── questionnaire/
-│   │   │   ├── results/
-│   │   │   ├── summary/
-│   │   │   ├── type/
-│   │   │   ├── AssessmentContext.tsx
-│   │   │   └── layout.tsx
-│   │   ├── components/
 │   │   ├── faq/
 │   │   ├── terms/
-│   │   └── utils/
-│   │       ├── layout.tsx
-│   │       └── page.tsx
-├── styles/
+│   │   ├── api/
+│   │   │   └── recommend/         # OpenAI proxy route
+│   │   ├── assessment/
+│   │   │   ├── disclaimer/
+│   │   │   ├── data-privacy/
+│   │   │   ├── name/
+│   │   │   ├── type/
+│   │   │   ├── description/
+│   │   │   ├── funding-source/
+│   │   │   ├── questionnaire/
+│   │   │   ├── summary/
+│   │   │   ├── results/           # Results + AI recommendations
+│   │   │   ├── AssessmentContext.tsx
+│   │   │   └── layout.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── Header.tsx
+│   │   └── Footer.tsx
+│   └── utils/
+│       ├── trlCalculator.ts
+│       ├── helperConstants.ts
+│       ├── ipHelpers.ts
+│       ├── levelsDescription.ts
+│       ├── faqUtils.ts
+│       └── termsUtils.ts
 ├── CHANGELOG.md
 ├── README.md
 ├── package.json
 └── next.config.ts
 ```
+
+---
+
+## Assessment Flow
+
+```
+Disclaimer → Data Privacy → Technology Name → Technology Type
+→ Description → Funding Source → Questionnaire → Summary → Results
+```
+
+---
+
+## Documentation
+
+Full technical documentation is available in [`docs/`](docs/).
+
 ---
 
 ## Changelog
 
-Version history is available in: `CHANGELOG.md`
+Version history is available in [`CHANGELOG.md`](CHANGELOG.md).

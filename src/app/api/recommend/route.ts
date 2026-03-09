@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-const MODEL_LARGE    = "gpt-4o-mini";  // action steps
-const MODEL_SMALL    = "gpt-4o-mini";  // 
+const MODEL_LARGE    = "gpt-4o-mini"; 
+const MODEL_SMALL    = "gpt-4o-mini";
 
 export async function POST(req: NextRequest) {
   if (!OPENAI_API_KEY) {
