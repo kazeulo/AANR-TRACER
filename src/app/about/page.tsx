@@ -53,16 +53,22 @@ export default function About() {
             </h2>
 
             <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light mb-4">
-              TRACER is an assessment and recommendation-support tool designed to systematically evaluate the Technology Readiness Level (TRL)
-              of innovations in the Agriculture, Aquatic, and Natural Resources (AANR) sector. The platform applies a structured readiness
-              assessment framework and generates evidence-based, indicative recommendations to support the progression of technologies from
+              TRACER is a web-based assessment and recommendation-support tool designed to systematically evaluate the current development 
+              status and commercialization preparedness of Agriculture, Aquatic, and Natural Resources (AANR) technologies. The platform applies 
+              a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
+              European Commission TRL, DOST VI and TAPI TRL Assessment Form, and the DOST–PCAARRD assessment framework for research, tailored 
+              for applicability to AANR technologies and incorporating commercialization requirements for technologies generated using government 
+              funds. The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
+              Member Institutions (CMIs) under the RAISE Program and technical experts of different divisions of DOST-PCAARRD. Using this structured 
+              framework, TRACER generates evidence-based and AI-driven indicative recommendations to support the progression of technologies from 
               research and development toward adoption and utilization.
             </p>
 
             <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light">
-              Technologies are evaluated using defined criteria covering technology development status, intellectual property position, and
-              technology transfer and commercialization-readiness initiatives, thereby supporting informed decision-making, standardized
-              documentation, and strategic planning across stages of technology maturation.
+              The tool evaluates technologies by category using a defined set of criteria across key areas, including technology development status, 
+              intellectual property position, market and pre-commercialization readiness initiatives, industry validation and adoption, and regulatory 
+              compliance. In doing so, it supports informed decision-making, standardized documentation, and strategic planning across the various 
+              stages of technology maturation and commercialization.
             </p>
 
           </div>

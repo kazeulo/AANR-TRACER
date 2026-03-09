@@ -35,7 +35,7 @@ export default function Terms() {
         cat.title.toLowerCase().includes(q) ||
         s.title.toLowerCase().includes(q) ||
         s.definition.toLowerCase().includes(q) ||
-        s.examples.some(e => e.toLowerCase().includes(q))
+        s.examples?.some(e => e.toLowerCase().includes(q))
       );
       if (!q || cat.title.toLowerCase().includes(q) || sections.length > 0) return { ...cat, sections };
       return null;
@@ -172,19 +172,26 @@ export default function Terms() {
                       <p className="text-[14px] leading-[1.85] text-[#4a5568] font-light mb-5">
                         {section.definition}
                       </p>
-                      <div className="bg-[#f8f6f1] rounded-[10px] px-5 py-4">
-                        <div className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-2.5">
-                          Examples
+                      
+                      {section.examples && section.examples.length > 0 && (
+                        <div className="bg-[#f8f6f1] rounded-[10px] px-5 py-4">
+                          <div className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-2.5">
+                            Examples
+                          </div>
+
+                          <ul className="flex flex-col gap-1.5">
+                            {section.examples.map((ex, j) => (
+                              <li
+                                key={j}
+                                className="flex items-start gap-2 text-[13px] text-[#5a6a65] font-light leading-[1.6]"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a] flex-shrink-0 mt-[6px]" />
+                                {ex}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        <ul className="flex flex-col gap-1.5">
-                          {section.examples.map((ex, j) => (
-                            <li key={j} className="flex items-start gap-2 text-[13px] text-[#5a6a65] font-light leading-[1.6]">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a] flex-shrink-0 mt-[6px]" />
-                              {ex}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      )}
                     </div>
                   </div>
                 ))}

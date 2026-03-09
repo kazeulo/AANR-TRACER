@@ -102,21 +102,21 @@ export default function Footer() {
                 Contact
               </div>
 
-              <a href="mailto:aanrtracer@example.com" className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light mb-3.5 hover:text-white transition-colors">
+              <a href="ttbdo.upvisayas@up.edu.ph" className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light mb-3.5 hover:text-white transition-colors">
                 <span className="w-[30px] h-[30px] bg-[#4aa35a]/10 rounded-lg flex items-center justify-center text-[#4aa35a] flex-shrink-0">
                   <Mail size={14} />
                 </span>
-                aanrtracer@example.com
+                ttbdo.upvisayas@up.edu.ph
               </a>
 
-              <a href="tel:+639123456789" className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light mb-3.5 hover:text-white transition-colors">
+              <a className="flex items-start gap-2.5 text-[13px] text-[#6b8a78] font-light mb-3.5 hover:text-white transition-colors">
                 <span className="w-[30px] h-[30px] bg-[#4aa35a]/10 rounded-lg flex items-center justify-center text-[#4aa35a] flex-shrink-0">
                   <Phone size={14} />
                 </span>
-                +63 912 345 6789
+                09054439916
               </a>
 
-              <a
+              {/* <a
                 href="https://www.google.com/maps/place/DOST+PCAARRD"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -126,7 +126,7 @@ export default function Footer() {
                   <MapPin size={14} />
                 </span>
                 <span>DOST PCAARRD<br />Jamboree Rd, Los Baños, Laguna</span>
-              </a>
+              </a> */}
             </div>
           </div>
 

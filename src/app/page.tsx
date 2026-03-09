@@ -1,37 +1,4 @@
-// import  Header  from "./components/Header";
-// import '../styles/teaser.css';
-
-// export default function Home() {
-//   return (
-//     // ===== TEASER =====
-//     <div>
-//       <main className="teaser">
-//         <div className="bubbles">
-//           <span></span>
-//           <span></span>
-//           <span></span>
-//           <span></span>
-//           <span></span>
-//           <span></span>
-//         </div>
-
-//         <div className="teaser-content">
-//           <h1>Coming Soon.</h1>
-//           <p>We’re building something great.</p>
-
-//           <p>
-//             For now, visit:{" "}
-//             <a href="https://kmanejo.wixstudio.com/trlars" target="_blank">
-//               <u>TRACER</u>
-//             </a>
-//           </p>
-//         </div>
-
-//       </main>
-//     </div>
-//   );
-// }
-
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { trlLevels } from "./utils/helperConstants";
@@ -55,6 +22,7 @@ import {
   IconListCheck,
   IconBarChart
 } from "./utils/decorativeIcons"
+import { useState } from "react";
 
 const steps = [
   {
@@ -77,7 +45,61 @@ const steps = [
   },
 ];
 
-// Main Component 
+// Interactive Tech Type Grid
+
+function TechTypeGrid() {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {aanrTypes.map(({ Icon, label, sub, definition }) => {
+        const isOpen = expanded === label;
+        return (
+          <button
+            key={label}
+            onClick={() => setExpanded(isOpen ? null : label)}
+            className={`bg-white border rounded-2xl px-5 py-5 flex flex-col items-start text-left gap-2.5 transition-all duration-200 group w-full
+              ${isOpen
+                ? "border-[#4aa35a]/40 shadow-[0_6px_24px_rgba(15,46,26,0.10)]"
+                : "border-[#ede9e0] hover:border-[#4aa35a]/30 hover:shadow-[0_6px_20px_rgba(15,46,26,0.07)]"
+              }`}
+          >
+            {/* Top row */}
+            <div className="flex items-center gap-3 w-full">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors
+                ${isOpen ? "bg-[#4aa35a]/[0.10]" : "bg-[#f5f2ec] group-hover:bg-[#4aa35a]/[0.08]"}`}
+              >
+                <Icon className="w-5 h-5 text-[#4aa35a]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[12px] font-semibold text-[#0f2e1a] leading-snug">{label}</div>
+                <div className="text-[10px] text-[#94a3a0] font-light leading-tight mt-0.5">{sub}</div>
+              </div>
+              {/* Chevron */}
+              <svg
+                width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke={isOpen ? "#4aa35a" : "#94a3a0"} strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round"
+                className={`flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+
+            {/* Expanded definition */}
+            {isOpen && (
+              <p className="text-[12px] text-[#6b8a78] font-light leading-relaxed border-t border-[#f0ece3] pt-3 w-full">
+                {definition}
+              </p>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function HomePage() {
   return (
@@ -92,16 +114,16 @@ export default function HomePage() {
 
         {/* Glows */}
         <div className="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle,rgba(50, 181, 74, 0.18) 0%,transparent 70%)" }} />
+          style={{ background: "radial-gradient(circle,rgba(74,163,90,0.18) 0%,transparent 70%)" }} />
         <div className="absolute -bottom-[100px] left-[30%] w-[500px] h-[500px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(34,197,94,0.07) 0%,transparent 70%)" }} />
 
         {/* Decorative motifs */}
-        <RiceStalk className="absolute left-[4%] bottom-[18%] w-[22px] text-[#4aa35a]/[0.08] pointer-events-none hidden lg:block" />
-        <RiceStalk className="absolute left-[7%] bottom-[14%] w-[16px] text-[#4aa35a]/[0.06] pointer-events-none hidden lg:block" />
-        <LeafSprig className="absolute left-[2%] top-[32%] w-[35px] text-[#4aa35a]/[0.10] pointer-events-none hidden lg:block" />
-        <FishDecor className="absolute right-[4%] bottom-[28%] w-[70px] text-[#4aa35a]/[0.10] pointer-events-none hidden lg:block" />
-        <WaveRipple className="absolute bottom-[80px] left-0 w-full text-[#4aa35a]/[0.06] pointer-events-none" />
+        <RiceStalk className="absolute left-[4%] bottom-[18%] w-[22px] text-[#4aa35a]/20 pointer-events-none hidden lg:block" />
+        <RiceStalk className="absolute left-[7%] bottom-[14%] w-[16px] text-[#4aa35a]/15 pointer-events-none hidden lg:block" />
+        <LeafSprig className="absolute left-[2%] top-[32%] w-[35px] text-[#4aa35a]/10 pointer-events-none hidden lg:block" />
+        <FishDecor className="absolute right-[4%] bottom-[28%] w-[70px] text-[#4aa35a]/10 pointer-events-none hidden lg:block" />
+        <WaveRipple className="absolute bottom-[90px] left-0 w-[340px] text-[#4aa35a]/15 pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-[60px] items-center">
 
@@ -119,20 +141,20 @@ export default function HomePage() {
               <br />Enhancement and Roadmapping
             </h1>
 
-            <p className="text-[15px] leading-[1.75] text-[#8a9a94] font-light mb-8 max-w-[420px]">
-              Your guide in assessing the technical and commercial readiness of AANR technologies.
+            <p className="text-[15px] leading-[1.75] text-[#8a9a94] font-light mb-6 max-w-[420px]">
+              Your guide in assessing the technical and commercial readiness of AANR technologies — from farm to market.
             </p>
 
             {/* Partner Logos */}
-            <div className="mb-10 bg-white/[0.5] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
+            <div className="mb-10 bg-white/[0.4] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
               <div className="text-[9px] font-bold tracking-[2px] uppercase text-[#4a6657] mb-2 text-center">In partnership with</div>
               <div className="flex flex-wrap items-center justify-center gap-3">
-                <Image src="/img/logos/dost-logo.png" alt="DOST" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-100 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-100 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/raise-logo.png" alt="RAISE" width={120} height={40} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-100 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/agri-hub-logo.png" alt="Agri Hub" width={90} height={40} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-100 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/upvisayas-logo.png" alt="UP Visayas" width={90} height={40} className="h-[38px] w-auto object-contain opacity-100 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/ttbdo-logo.png" alt="TTBDO" width={90} height={40} className="h-[38px] w-auto object-contain opacity-100 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/dost-logo.png" alt="DOST" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/raise-logo.png" alt="RAISE" width={120} height={40} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/agri-hub-logo.png" alt="Agri Hub" width={90} height={40} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/upvisayas-logo.png" alt="UP Visayas" width={90} height={40} className="h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/ttbdo-logo.png" alt="TTBDO" width={90} height={40} className="h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
               </div>
             </div>
 
@@ -151,7 +173,7 @@ export default function HomePage() {
 
           {/* Right — TRL scale */}
           <div className="hidden lg:flex flex-col gap-2.5">
-            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[#4a6657] mb-2">TRL Scale</div>
+            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[#4a6657] mb-2">TRACER Scale</div>
             {trlLevels.map(({ n, label, w, color }) => (
               <div key={n} className="flex items-center gap-3">
                 <span className="text-[11px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
@@ -170,25 +192,25 @@ export default function HomePage() {
         </svg>
       </section>
 
-      {/* STATS STRIP */}
+      {/* ═══ STATS STRIP ═══ */}
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-8">
         <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4">
           {[
-            { n: "9",  label: "TRL Levels",         Icon: IconBarChart },
-            { n: "10", label: "Technology Types",  Icon: IconFlask },
+            { n: "9",  label: "TRL Levels",       Icon: IconBarChart },
+            { n: "9",  label: "Technology Types",  Icon: IconFlask },
             { n: "4",  label: "AANR Sub-Sectors",  Icon: IconLeaf },
             { n: "1",  label: "Clear Roadmap",     Icon: IconListCheck },
           ].map(({ n, label, Icon }) => (
             <div key={label} className="text-center px-6 border-r border-white/[0.08] last:border-r-0 flex flex-col items-center gap-1">
-              <Icon className="w-6 h-6 text-[#4aa35a]/60 mb-3" />
+              <Icon className="w-4 h-4 text-[#4aa35a]/60 mb-1" />
               <div className="font-['DM_Serif_Display',serif] text-[32px] text-[#4aa35a] leading-none">{n}</div>
-              <div className="text-[11px] text-[#6b987e] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
+              <div className="text-[11px] text-[#6b8a78] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* AANR SECTOR SHOWCASE */}
+      {/* ═══ AANR SECTOR SHOWCASE ═══ */}
       <section className="py-[80px] px-6 lg:px-[6vw] bg-[#f5f2ec] relative overflow-hidden">
 
         {/* Subtle dot grid bg */}
@@ -210,24 +232,11 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {aanrTypes.map(({ Icon, label, sub }) => (
-              <div
-                key={label + sub}
-                className="bg-white border border-[#ede9e0] rounded-2xl px-4 py-5 flex flex-col items-center text-center gap-2.5 hover:border-[#4aa35a]/30 hover:shadow-[0_6px_20px_rgba(15,46,26,0.07)] transition-all duration-200 group"
-              >
-                <div className="w-10 h-10 bg-[#f5f2ec] group-hover:bg-[#4aa35a]/[0.08] rounded-xl flex items-center justify-center transition-colors">
-                  <Icon className="w-5 h-5 text-[#4aa35a]" />
-                </div>
-                <div className="text-[12px] font-semibold text-[#0f2e1a] leading-snug">{label}</div>
-                <div className="text-[10px] text-[#94a3a0] font-light leading-tight">{sub}</div>
-              </div>
-            ))}
-          </div>
+          <TechTypeGrid />
         </div>
       </section>
 
-      {/* ABOUT */}
+      {/* ═══ ABOUT ═══ */}
       <section className="py-[100px] px-6 lg:px-[6vw] bg-white relative overflow-hidden">
 
         <WaveRipple className="absolute top-8 right-0 w-[400px] text-[#4aa35a]/[0.05] pointer-events-none" />
@@ -258,24 +267,29 @@ export default function HomePage() {
             </div>
 
             <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light mb-4">
-              TRACER is an assessment and recommendation-support tool designed to systematically evaluate the Technology Readiness Level (TRL)
-              of innovations in the Agriculture, Aquatic, and Natural Resources (AANR) sector. The platform applies a structured readiness
-              assessment framework and generates evidence-based, indicative recommendations to support the progression of technologies from
+              TRACER is a web-based assessment and recommendation-support tool designed to systematically evaluate the current development 
+              status and commercialization preparedness of Agriculture, Aquatic, and Natural Resources (AANR) technologies. The platform applies 
+              a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
+              European Commission TRL, DOST VI and TAPI TRL Assessment Form, and the DOST–PCAARRD assessment framework for research, tailored 
+              for applicability to AANR technologies and incorporating commercialization requirements for technologies generated using government 
+              funds. The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
+              Member Institutions (CMIs) under the RAISE Program and technical experts of different divisions of DOST-PCAARRD. Using this structured 
+              framework, TRACER generates evidence-based and AI-driven indicative recommendations to support the progression of technologies from 
               research and development toward adoption and utilization.
             </p>
 
             <p className="text-justify text-[15px] leading-[1.85] text-[#4a5568] font-light">
-              Technologies are evaluated using defined criteria covering technology development status, intellectual property position, and
-              technology transfer and commercialization-readiness initiatives, thereby supporting informed decision-making, standardized
-              documentation, and strategic planning across stages of technology maturation.
+              The tool evaluates technologies by category using a defined set of criteria across key areas, including technology development status, 
+              intellectual property position, market and pre-commercialization readiness initiatives, industry validation and adoption, and regulatory 
+              compliance. In doing so, it supports informed decision-making, standardized documentation, and strategic planning across the various 
+              stages of technology maturation and commercialization.
             </p>
-
           </div>
 
           {/* Image */}
           <div className="relative">
             {/* Rice stalk cluster beside image */}
-            <div className="absolute -left-20 bottom-[12%] flex gap-1 pointer-events-none z-20">
+            <div className="absolute -left-7 bottom-[12%] flex gap-1 pointer-events-none z-20">
               <RiceStalk className="w-[16px] text-[#4aa35a]/25 -rotate-6" />
               <RiceStalk className="w-[20px] text-[#4aa35a]/35" />
               <RiceStalk className="w-[14px] text-[#4aa35a]/20 rotate-8" />
@@ -295,7 +309,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* ═══ HOW IT WORKS ═══ */}
       <section className="relative py-[100px] px-6 lg:px-[6vw] bg-[#0f2e1a] overflow-hidden">
 
         <div className="absolute inset-0 pointer-events-none"
@@ -303,7 +317,7 @@ export default function HomePage() {
 
         {/* Decorative motifs */}
         <FishDecor className="absolute right-[4%] top-[12%] w-[80px] text-[#4aa35a]/[0.08] pointer-events-none hidden lg:block" />
-        <FishDecor className="absolute right-[14%] top-[22%] w-[50px] text-[#4aa35a]/[0.06] pointer-events-none hidden lg:block" style={{ transform: "scaleX(-1)" }} />
+        <FishDecor className="absolute right-[14%] top-[22%] w-[50px] text-[#4aa35a]/[0.06] pointer-events-none hidden lg:block" />
         <LeafSprig className="absolute left-[2%] bottom-[14%] w-[55px] text-[#4aa35a]/[0.08] pointer-events-none hidden lg:block" />
         <RiceStalk className="absolute left-[7%] bottom-[10%] w-[20px] text-[#4aa35a]/[0.12] pointer-events-none hidden lg:block" />
         <WaveRipple className="absolute bottom-[80px] left-0 w-full text-[#4aa35a]/[0.06] pointer-events-none" />
@@ -320,8 +334,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {steps.map(({ n, Icon, title, desc }) => (
-              <div key={n} className="bg-white/[0.05] border border-white/[0.05] hover:bg-white/[0.06] hover:border-[#4aa35a]/20 transition-all duration-300 rounded-2xl p-8">
-                <div className="font-['DM_Serif_Display',serif] text-[54px] text-[#4aa35a] leading-none mb-5 tracking-[-2px]">
+              <div key={n} className="bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-[#4aa35a]/20 transition-all duration-300 rounded-2xl p-8">
+                <div className="font-['DM_Serif_Display',serif] text-[54px] text-[#4aa35a]/25 leading-none mb-5 tracking-[-2px]">
                   {n}
                 </div>
                 <div className="w-10 h-10 rounded-[10px] bg-[#4aa35a]/12 flex items-center justify-center mb-5">
@@ -339,7 +353,7 @@ export default function HomePage() {
         </svg>
       </section>
 
-      {/* MAP */}
+      {/* ═══ MAP ═══ */}
       <section className="py-[100px] px-6 lg:px-[6vw] bg-[#f5f2ec]">
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-10">

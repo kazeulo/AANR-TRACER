@@ -1,4 +1,4 @@
-// Sector SVG Icons 
+// ─── Sector SVG Icons ─────────────────────────────────────────────────────────
 
 export function IconWheat({ className }: { className?: string }) {
   return (
@@ -106,7 +106,7 @@ export function IconPackage({ className }: { className?: string }) {
   );
 }
 
-// Decorative SVG Motifs 
+// ─── Decorative SVG Motifs ────────────────────────────────────────────────────
 
 export function RiceStalk({ className }: { className?: string }) {
   return (
@@ -142,9 +142,9 @@ export function LeafSprig({ className }: { className?: string }) {
   );
 }
 
-export function FishDecor({ className, style }: { className?: string; style?: React.CSSProperties }) {
+export function FishDecor({ className }: { className?: string }) {
   return (
-    <svg className={className} style={style} viewBox="0 0 90 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={className} viewBox="0 0 90 45" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 22.5 C12 22.5 0 12 0 22.5 C0 33 12 22.5 12 22.5Z" fill="currentColor" opacity="0.8" />
       <ellipse cx="50" cy="22.5" rx="34" ry="15" fill="currentColor" opacity="0.9" />
       <circle cx="75" cy="18" r="3" fill="white" opacity="0.5" />
@@ -154,22 +154,67 @@ export function FishDecor({ className, style }: { className?: string; style?: Re
   );
 }
 
-// AANR Technology Types
+// AANR Technology Types 
 
 export const aanrTypes = [
-  { Icon: IconWheat,    label: "New Plant Variety",        sub: "Conventional" },
-  { Icon: IconDna,      label: "New Plant Variety",        sub: "Gene-Edited & GM" },
-  { Icon: IconFish,     label: "New Animal Breed",         sub: "Aquatic & Terrestrial" },
-  { Icon: IconPackage,  label: "Food Products",            sub: "Processed & Value-added" },
-  { Icon: IconCog,      label: "Machinery",                sub: "Equipment & Tools" },
-  { Icon: IconSeedling, label: "Bioproducts",              sub: "Biologicals & Inputs" },
-  { Icon: IconChip,     label: "ICT Systems",              sub: "Apps & IoT" },
-  { Icon: IconTree,     label: "Forest Products",          sub: "Natural Resources" },
-  { Icon: IconDroplets, label: "Aquatic Resources",        sub: "Marine & Freshwater" },
-  { Icon: IconFlask,    label: "Research Technology",      sub: "Lab & Field Methods" },
+  {
+    Icon: IconPackage,
+    label: "Food, Food Ingredients and Beverages",
+    sub: "Processed & Value-added",
+    definition: "Processed foods, functional ingredients, and beverages to improve safety, nutrition, quality, and value for human consumption.",
+  },
+  {
+    Icon: IconSeedling,
+    label: "Animal Feed, Feed Ingredients and Animal Nutrition",
+    sub: "Livestock, Poultry & Aquaculture",
+    definition: "Feeds, feed ingredients, and nutritional products that improve the health, growth, and performance of livestock, poultry, and aquaculture species.",
+  },
+  {
+    Icon: IconFlask,
+    label: "Fertilizer and Pesticide",
+    sub: "Organic & Bio-based Products",
+    definition: "Nutrient and crop-protection products to improve soil fertility, plant health, and protection against pests, diseases, and weeds.",
+  },
+  {
+    Icon: IconCog,
+    label: "Agri-Aqua Machinery and Facility",
+    sub: "Equipment & Infrastructure",
+    definition: "Mechanical equipment and physical facilities that support production, environmental control, processing, and storage in agriculture and aquaculture systems.",
+  },
+  {
+    Icon: IconDna,
+    label: "Agri-Aqua Device and Diagnostic Kits",
+    sub: "Tools & Rapid Testing",
+    definition: "Portable tools and rapid testing kits technologies used for measurement, monitoring, manual operations, and disease or contaminant detection in agriculture, livestock, and aquaculture systems.",
+  },
+  {
+    Icon: IconChip,
+    label: "ICT (Apps and System involving IoT)",
+    sub: "Digital & Automation Solutions",
+    definition: "Digital applications, software systems, and IoT solutions that enhance monitoring, decision-making, automation, and data management in agriculture, aquaculture, and natural resource sectors.",
+  },
+  {
+    Icon: IconWheat,
+    label: "New Plant Variety",
+    sub: "Breeding & Genetic Improvement",
+    definition: "Development, breeding, or genetic improvement of plant varieties with improved traits such as higher yield, stress tolerance, disease resistance, or enhanced nutritional and aesthetic qualities.",
+  },
+  {
+    Icon: IconFish,
+    label: "New Animal Breed (Aquatic and Terrestrial)",
+    sub: "Aquatic & Terrestrial Animals",
+    definition: "Development, breeding, or genetic improvement of terrestrial and aquatic animals with improved traits such as growth rate, disease resistance, environmental adaptability, or enhanced product quality.",
+  },
+  {
+    Icon: IconTree,
+    label: "Natural Resource–Derived Materials",
+    sub: "Industrial & Functional Applications",
+    definition: "Converted agricultural, aquatic, forestry, mineral, and other natural resources into functional materials for industrial, construction, packaging, and related applications.",
+  },
 ];
 
 // How it works 
+
 export function IconListCheck({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
