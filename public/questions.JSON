@@ -1,0 +1,2848 @@
+{
+  "Agri-Aqua Device and Diagnostic Kits": {
+    "1": [
+      {
+        "id": "Technology_Status-0",
+        "questionText": "Concept Development Completed or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-1",
+        "questionText": "Potential End-users or Target Beneficiaries and Potential Industry Relevance Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-2",
+        "questionText": "Initial Prototype of Device or Diagnostic Kit Created",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-3",
+        "questionText": "First Prototype or Kit Tested for Basic Functions",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-4",
+        "questionText": "Preliminary Assessment of User Requirements and Operational Feasibility",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-5",
+        "questionText": "Working Prototype/Device Refined for Usability, Accuracy, and/or Portability",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-6",
+        "questionText": "Tested for Sensitivity, Specificity, or Measurement Accuracy Under Laboratory Conditions",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-7",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-8",
+        "questionText": "Device/Kit Validated with Positive Result Under Laboratory or Controlled Field Conditions",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-9",
+        "questionText": "Analytical Performance Confirmed (i.e.: Detection Limits, Repeatability, or Reliability)",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-10",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-11",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Market_and_Commercialization_Status-12",
+        "questionText": "Device/Kit Tested Under Pilot-scale or Semi-field Conditions",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-13",
+        "questionText": "User Manual for the Use of Device/Kit Established",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-14",
+        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-15",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-16",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Industry_Adoption_Status-17",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-18",
+        "questionText": "Device Performance Tested in Multiple Locations",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-19",
+        "questionText": "Production/Fabrication/Assembly Manual Established for Scalable Manufacturing",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-20",
+        "questionText": "Successful Industry Validation and Replication of Device/Kit",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-21",
+        "questionText": "Standardized Protocol/Manual for Industry-scale Production/Fabrication/Assembly of Device/Kit",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-22",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-23",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-24",
+        "questionText": "Technology Commercialization Plan Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-25",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-26",
+        "questionText": "Processing of Requirements for Bureau of Animal Industry (BAI) or Bureau of Fisheries and Aquatic Resources (BFAR) or third-party Validation Initiated",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-27",
+        "questionText": "Device/kit ready for commercial-scale production (replicable without error)",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-28",
+        "questionText": "BAI/BFAR/Third-party Validated",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-29",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-30",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-31",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-32",
+        "questionText": "Technology Fully Commercialized/Device or Kit Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "Agri-Aqua Machinery and Facility": {
+    "1": [
+      {
+        "id": "Technology_Status-33",
+        "questionText": "Concept Development Completed or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-34",
+        "questionText": "Potential End-users or Target Beneficiaries and Potential Industry Relevance Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-35",
+        "questionText": "Blueprint or Design of the Machine/Facility Completed",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-36",
+        "questionText": "First Prototype Created",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-37",
+        "questionText": "Initial Assessment on the Potential User",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-38",
+        "questionText": "Working Prototype Created",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-39",
+        "questionText": "Prototype Tested for Basic Operational Capability",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-40",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-41",
+        "questionText": "Successfully Operated Under Laboratory-Scale or Controlled Conditions",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-42",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-43",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-44",
+        "questionText": "Machine/Facility Stable During Pilot-Scale Operation",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-45",
+        "questionText": "Operation Manual for the Use of Machinery/Facility Established",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-46",
+        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-47",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-48",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Industry_Adoption_Status-49",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-50",
+        "questionText": "Multi-location Testing Conducted",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-51",
+        "questionText": "Production or Fabrication Manual, or Technical Drawing or Plan Established",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-52",
+        "questionText": "Processing of Requirements for Agricultural Machinery Testing and Evaluation Center (AMTEC) Certification Initiated",
+        "trlLevel": 6,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-53",
+        "questionText": "Successful Industry Testing and Validation",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-54",
+        "questionText": "First Replication Achieved",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-55",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-56",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-57",
+        "questionText": "AMTEC Certification Secured",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-58",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-59",
+        "questionText": "IP Valuation Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-60",
+        "questionText": "Technology Commercialization Plan Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-61",
+        "questionText": "Ready for Commercial-Scale Production (Replicable/ Operational Without Error)",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-62",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-63",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-64",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-65",
+        "questionText": "Technology Fully Commercialized/Machine or Facility Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "Animal Feed, Feed Ingredients and Animal Nutrition": {
+    "1": [
+      {
+        "id": "Technology_Status-66",
+        "questionText": "Concept Development Completed or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-67",
+        "questionText": "Potential End-users or Target Beneficiaries and Potential Industry Relevance Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-68",
+        "questionText": "Initial Experiments Conducted in Laboratory (Benchscale)",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-69",
+        "questionText": "Initial Formulation Created",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-70",
+        "questionText": "Initial Assessment on the Potential User",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-71",
+        "questionText": "Feeding Trial Experiments with Target Animals Conducted",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-72",
+        "questionText": "Formulation Optimized Based on Initial Results of Feeding Trial (check if not applicable)",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-73",
+        "questionText": "Proximate Analysis Conducted",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-74",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-75",
+        "questionText": "Proximate Analysis on Nutritional Adequacy Confirmed",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-76",
+        "questionText": "Passed Toxicity Evaluation",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-77",
+        "questionText": "Storage Stability Established",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-78",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-79",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-80",
+        "questionText": "Product Formulation for Scaled-up Pilot Production Created",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-81",
+        "questionText": "Pilot Scale-based Manual of Production Created",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-82",
+        "questionText": "Product Promotion and Packaging using Basic Technology Profile Conducted (i.e.: Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-83",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-84",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Technology_Status-85",
+        "questionText": "Product Tested for Scaled-up Pilot Production",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-86",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-87",
+        "questionText": "First Industry-scale Production Initiated",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-88",
+        "questionText": "Initial Market Tests Conducted (i.e.: in Trade Shows, Limited Release)",
+        "trlLevel": 6,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-89",
+        "questionText": "Successful Validation of Industry-scale Production",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-90",
+        "questionText": "Standardized Manual for Industry-scale Production Established",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-91",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-92",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-93",
+        "questionText": "IP Valuation Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-94",
+        "questionText": "Technology Commercialization Plan Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-95",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-96",
+        "questionText": "Processing of Requirements for Bureau of Animal Industry (BAI) or Food and Drug Administration (FDA) Approval/Certification Initiated",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-97",
+        "questionText": "Product Ready for Full-scale Commercial Production (Replicable Without Error)",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-98",
+        "questionText": "BAI/FDA Approval or Certification Obtained",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-99",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-100",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-101",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-102",
+        "questionText": "Technology Fully Commercialized/Product Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "Fertilizer and Pesticide (including Organic and Bio-based Products)": {
+    "1": [
+      {
+        "id": "Technology_Status-103",
+        "questionText": "Concept Development Completed or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-104",
+        "questionText": "Potential End-users or Target Beneficiaries and Potential Industry Relevance Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-105",
+        "questionText": "Initial Experiments Conducted in Laboratory (Benchscale)",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-106",
+        "questionText": "Initial Formulation Created",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-107",
+        "questionText": "Initial Assessment on the Potential User",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-108",
+        "questionText": "Formulated Product Initially Tested Under Laboratory Conditions (Efficacy, Stability, Compatibility)",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-109",
+        "questionText": "Formulation Optimized Based on Initial Response of the Experimental Subject",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-110",
+        "questionText": "Toxicity Test Conducted",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-111",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-112",
+        "questionText": "Positive Experimental Results on Product Efficacy Under Controlled Conditions Obtained",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-113",
+        "questionText": "Passed Toxicity Evaluation",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-114",
+        "questionText": "Shelf Stability Established",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-115",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-116",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-117",
+        "questionText": "Product Formulation for Scaled-up Pilot Production Created",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-118",
+        "questionText": "Pilot Scale-based Manual of Production Created",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-119",
+        "questionText": "Product Promotion and Packaging using Basic Technology Profile Conducted (i.e.: Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-120",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-121",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Technology_Status-122",
+        "questionText": "Product Tested for Scaled-up Pilot Production",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-123",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-124",
+        "questionText": "First Industry-scale Production Initiated",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-125",
+        "questionText": "Initial Market Tests Conducted (i.e.: in Trade Shows, Limited Release)",
+        "trlLevel": 6,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-126",
+        "questionText": "Successful Validation of Industry-scale Production",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-127",
+        "questionText": "Standardized Manual for Industry-scale Production Established",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-128",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-129",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-130",
+        "questionText": "IP Valuation Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-131",
+        "questionText": "Technology Commercialization Plan Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-132",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-133",
+        "questionText": "Processing of Requirements for Fertilizer and Pesticide Authority (FPA) or Bureau of Agriculture and Fisheries Standards (BAFS) Approval/Certification Initiated",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-134",
+        "questionText": "Product Ready for Full-scale Commercial Production (Replicable Without Error)",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-135",
+        "questionText": "FPA/BAFS Registered",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-136",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-137",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-138",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-139",
+        "questionText": "Technology Fully Commercialized/Product Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "Food, Food Ingredients and Beverages": {
+    "1": [
+      {
+        "id": "Technology_Status-140",
+        "questionText": "Concept Development Completed or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-141",
+        "questionText": "Potential End-users or Target Beneficiaries and Potential Industry Relevance Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-142",
+        "questionText": "Initial Experiments Conducted in Laboratory (Benchscale)",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-143",
+        "questionText": "First Prototype/Formulation Created for Sensory Analysis",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-144",
+        "questionText": "Internal/Preliminary Sensory Screening Conducted",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-145",
+        "questionText": "Initial Assessment on the Potential User",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-146",
+        "questionText": "Formulation for Highest Sensory Acceptability Optimized",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-147",
+        "questionText": "Proximate Analysis Conducted to Assess Chemical Properties",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-148",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-149",
+        "questionText": "Product Validated Through Target Consumer Sensory Testing",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-150",
+        "questionText": "Positive Proximate Analysis Confirmed",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-151",
+        "questionText": "Shelf-life Established At least Under Laboratory Conditions",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-152",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-153",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-154",
+        "questionText": "Product Formulation for Scaled-up Pilot Production Created",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-155",
+        "questionText": "Pilot Scale-based Manual of Production Created",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-156",
+        "questionText": "Product Promotion and Packaging using Basic Technology Profile Conducted (i.e.: Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-157",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-158",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Technology_Status-159",
+        "questionText": "Product Tested for Scaled-up Pilot Production",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-160",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-161",
+        "questionText": "Allergen Profiling/Screening Conducted",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-162",
+        "questionText": "First Industry-scale Production Initiated",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-163",
+        "questionText": "Initial Market Tests Conducted (i.e.: in Trade Shows, Limited Release)",
+        "trlLevel": 6,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-164",
+        "questionText": "Successful Validation of Industry-scale Production",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-165",
+        "questionText": "Standardized Manual for Industry-scale Production Established",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-166",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-167",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-168",
+        "questionText": "IP Valuation Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-169",
+        "questionText": "Technology Commercialization Plan Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-170",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-171",
+        "questionText": "Processing of Requirements for Food and Drug Administration (FDA) Approval/Certification Initiated",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-172",
+        "questionText": "Product Ready for Full-scale Commercial Production (Replicable Without Error)",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-173",
+        "questionText": "FDA Approval/Certification Obtained",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-174",
+        "questionText": "HACCP/HALAL Certified (if Necessary/Check if Not Applicable)",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-175",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-176",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-177",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-178",
+        "questionText": "Technology Fully Commercialized/Product Commercially Available to Consumers",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "ICT (Apps and System involving IoT)": {
+    "1": [
+      {
+        "id": "Technology_Status-179",
+        "questionText": "Concept Development or Breeding Objectives Identified or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-180",
+        "questionText": "Potential End-users and Target Markets Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-181",
+        "questionText": "System Design Formulated",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-182",
+        "questionText": "Initial Coding Completed",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-183",
+        "questionText": "Initial Assessment of Potential User Requirements and Usability",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-184",
+        "questionText": "Source Code Completed",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-185",
+        "questionText": "Working System/Application Developed (Integrated Prototype)",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-186",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-187",
+        "questionText": "Alpha Testing Successfully Conducted",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": "Internal testing for functionality, performance, and bug identification"
+      },
+      {
+        "id": "Market_and_Commercialization_Status-188",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-189",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-190",
+        "questionText": "Beta testing successfully conducted with select external users",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-191",
+        "questionText": "User feedback incorporated to improve system usability, reliability, and performance",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-192",
+        "questionText": "User Guide/manual for system created",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-193",
+        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-194",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-195",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Industry_Adoption_Status-196",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-197",
+        "questionText": "System/Application Deployed for Initial Industry Use",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-198",
+        "questionText": "Core System Stable in Limited Commercial Operations",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-199",
+        "questionText": "System Stable in Industry-scale Operations (Stable Release)",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-200",
+        "questionText": "Scalable Architecture Validated Under Real-world Usage",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-201",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-202",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-203",
+        "questionText": "IP Valuation Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-204",
+        "questionText": "Technology Commercialization Plan Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-205",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-206",
+        "questionText": "Processing of Requirements for Data Privacy, Cybersecurity, or Applicable ICT Regulations Approval/Certification Initiated",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-207",
+        "questionText": "System/Application Ready for Full-scale Commercial Operation (Replicable Without Error)",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-208",
+        "questionText": "Data Privacy, Cybersecurity, or applicable ICT regulations Approval/Certification Secured",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-209",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-210",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-211",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-212",
+        "questionText": "System/Application Fully Commercialized and Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "Natural Resource–Derived Materials": {
+    "1": [
+      {
+        "id": "Technology_Status-213",
+        "questionText": "Material Concept Identified from AANR Resources or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-214",
+        "questionText": "Potential Material Properties Identified",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-215",
+        "questionText": "Potential End-users or Target Beneficiaries and Potential Industry Relevance Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-216",
+        "questionText": "Material Formulation or Composition Defined",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-217",
+        "questionText": "Intended Application Identified (e.g., Construction, Packaging, Handicrafts)",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-218",
+        "questionText": "Initial Laboratory Scale Processing Method Proposed",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-219",
+        "questionText": "Preliminary Assessment of Potential User",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-220",
+        "questionText": "Laboratory-scale Sample Produced",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-221",
+        "questionText": "Preliminary Testing Conducted (e.g.: Tensile Strength, Density, Absorption)",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-222",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-223",
+        "questionText": "Repeatable Laboratory-scale Production Achieved",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-224",
+        "questionText": "Standard Laboratory Tests Completed (e.g., ASTM/ISO-aligned methods)",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-225",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-226",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-227",
+        "questionText": "Pilot-scale Material Production Conducted",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-228",
+        "questionText": "Performance Tested Under Simulated or Relevant Conditions",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-229",
+        "questionText": "Initial Cost and Raw Material Availability Assessed",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-230",
+        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-231",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-232",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Technology_Status-233",
+        "questionText": "Prototype Material or Product Fabricated",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-234",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-235",
+        "questionText": "Demonstrated Performance in Intended Application (e.g.: Wall Panel, Packaging Unit)",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-236",
+        "questionText": "Preliminary User or Industry Feedback Obtained",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-237",
+        "questionText": "Field Testing Completed (e.g.: Construction Site, Packaging Trial)",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-238",
+        "questionText": "Standardized Production Protocol/Manual Established",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-239",
+        "questionText": "Submitted for Applicable Standards Assessment",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-240",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-241",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-242",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-243",
+        "questionText": "IP Valuation",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-244",
+        "questionText": "Technology Commercialization Plan",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-245",
+        "questionText": "Final Material Specification Established",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-246",
+        "questionText": "Regulatory or Standards Compliance Completed",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-247",
+        "questionText": "Scaled-up Production/Process Validated",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-248",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-249",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-250",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-251",
+        "questionText": "Material Commercially Produced/Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "New Animal Breed (Aquatic and Terrestrial)": {
+    "1": [
+      {
+        "id": "Technology_Status-252",
+        "questionText": "Concept Development or Breeding Objectives Identified",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-253",
+        "questionText": "Potential End-users and Target Markets Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-254",
+        "questionText": "Parent Animals with Desirable Traits Selected",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-255",
+        "questionText": "Genetics, Lineage, and Breeding Foundation Reviewed",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-256",
+        "questionText": "Target Traits for Improvement Identified",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-257",
+        "questionText": "Preliminary Assessment of Market Demand for Target Traits",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-258",
+        "questionText": "Initial Crosses, Selective Breeding, or Genetic Modification Conducted",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-259",
+        "questionText": "Progeny Produced and Screened for Presence of Target Traits",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-260",
+        "questionText": "Breeding Events Documented",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-261",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-262",
+        "questionText": "Progeny Raised Under Controlled Conditions (Hatchery, Nursery, Farm, or Experimental Facility)",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-263",
+        "questionText": "Target Traits Confirmed in Progeny (Growth, Disease Resistance, Environmental Tolerance)",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-264",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-265",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-266",
+        "questionText": "Stable Lines/Strain or Family Groups Selected",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-267",
+        "questionText": "Preliminary Field Trials Conducted in Controlled Farm/Aquaculture Plots",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-268",
+        "questionText": "Data Collected for Growth, Survivability, Product Quality, and Adaptability",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-269",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-270",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Industry_Adoption_Status-271",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-272",
+        "questionText": "Multi-location Trials Conducted Across Diverse Environmental Conditions",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-273",
+        "questionText": "Engagement with Farms/Aquaculture Operators for Breeding and Performance Testing",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-274",
+        "questionText": "Industry Feedback Collected",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-275",
+        "questionText": "Regulatory Preparation for Breed Registration or Approval Initiated",
+        "trlLevel": 6,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Industry_Adoption_Status-276",
+        "questionText": "Protocols Standardized for Propagation of New Breed/Strain",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-277",
+        "questionText": "Engagement with Breeding Partners or Commercial Operators",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-278",
+        "questionText": "Processing of Requirements for Bureau of Animal Industry (BAI) or Philippine Carabao Center (PCC) or National Dairy Authority (NDA) Approval/Certification Initiated",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-279",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-280",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-281",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-282",
+        "questionText": "IP Valuation",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-283",
+        "questionText": "Technology Commercialization Plan",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-284",
+        "questionText": "Stable and Consistent Breeding Achieved at Industry Scale",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-285",
+        "questionText": "BAI/PCC/NDA Approval/Certification Secured",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-286",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-287",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-288",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-289",
+        "questionText": "New Animal Breed Fully Commercialized/Breed Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "New Plant Variety (Conventional)": {
+    "1": [
+      {
+        "id": "Technology_Status-290",
+        "questionText": "Concept Development or Breeding Objectives Identified or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-291",
+        "questionText": "Potential End-users and Target Markets Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": "Already identified who will benefit or who will use the developed technology (farmers, aquaculture operators, extension workers, laboratories, etc.)"
+      },
+      {
+        "id": "Technology_Status-292",
+        "questionText": "Bioinformatic Analysis of Gene Function/In-silico Studies Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-293",
+        "questionText": "Germplasm Collected",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-294",
+        "questionText": "Marker Developed/Gene Identified",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-295",
+        "questionText": "Molecular Construct Planned (CRISPR, RNAi)",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-296",
+        "questionText": "Preliminary Market Requirements Considered (Trait Relevance, Consumer/End-user Needs)",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-297",
+        "questionText": "Genetic Modification Designs Developed (CRISPR/RNAi Constructs)",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-298",
+        "questionText": "Transformation or Gene Editing in Laboratory or Growth Chamber Conducted",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-299",
+        "questionText": "Institutional Biosafety Committee (IBC) Approval Initiated",
+        "trlLevel": 3,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-300",
+        "questionText": "Reassess Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Technology_Status-301",
+        "questionText": "Edited/Modified Plant Regenerated",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-302",
+        "questionText": "Target Traits Confirmed via Sequencing, PCR, or Marker Analysis",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-303",
+        "questionText": "Preliminary Phenotyping under Greenhouse Conducted",
+        "trlLevel": 4,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-304",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-305",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-306",
+        "questionText": "Edited/Modified Lines Evaluated in Greenhouse or Actual Field Plots",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-307",
+        "questionText": "Agronomic and Phenotypic Data Collected",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-308",
+        "questionText": "Applied for Regulatory Status Confirmation (RSC) to Department of Agriculture-Bureau of Plant Industry (DA-BPI)",
+        "trlLevel": 5,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-309",
+        "questionText": "Processing of DA-BPI Biosafety Permit for Confined Field Trials Initiated",
+        "trlLevel": 5,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-310",
+        "questionText": "Contained Field Trial/Confined Test for GM Crops Conducted",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-311",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-312",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Industry_Adoption_Status-313",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-314",
+        "questionText": "Biosafety Permit Secured",
+        "trlLevel": 6,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-315",
+        "questionText": "Multi-location Confined Field Trials Conducted",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-316",
+        "questionText": "Engagement with Seed Growers for Seed Multiplication Tests",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-317",
+        "questionText": "Industry Feedback Collected",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-318",
+        "questionText": "Regulatory Preparation for Variety Registration Initiated",
+        "trlLevel": 6,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-319",
+        "questionText": "Seed Materials Production Protocol Standardized for Commercial Adoption",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-320",
+        "questionText": "Submitted to National Seed Industry Council (NSIC) or Department of Agriculture-Bureau of Plant Industry (DA-BPI) for Variety Testing",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-321",
+        "questionText": "Submitted for Distinctness, Uniformity, Stability, (DUS) Testing (if Plant Variety Protection-eligible)",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-322",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-323",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-324",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-325",
+        "questionText": "IP Valuation",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-326",
+        "questionText": "Technology Commercialization Plan",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-327",
+        "questionText": "Stable and Consistent Seed Production at Industry Scale Achieved",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-328",
+        "questionText": "Variety Officially Registered and Released",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-329",
+        "questionText": "Seed Certification Obtained",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-330",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-331",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-332",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-333",
+        "questionText": "New Plant Variety Fully Commercialized/Variety Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  },
+  "New Plant Variety (Gene-Edited and GM)": {
+    "1": [
+      {
+        "id": "Technology_Status-334",
+        "questionText": "Concept Development or Breeding Objectives Identified or Prior Art Search Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-335",
+        "questionText": "Potential End-users and Target Markets Identified",
+        "trlLevel": 1,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-336",
+        "questionText": "Bioinformatic Analysis of Gene Function/In-silico Studies Conducted",
+        "trlLevel": 1,
+        "category": "Technology Status",
+        "toolTip": ""
+      }
+    ],
+    "2": [
+      {
+        "id": "Technology_Status-337",
+        "questionText": "Germplasm Collected",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-338",
+        "questionText": "Marker Developed/Gene Identified",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-339",
+        "questionText": "Molecular Construct Planned (CRISPR, RNAi)",
+        "trlLevel": 2,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-340",
+        "questionText": "Preliminary Market Requirements Considered (Trait Relevance, Consumer/End-user Needs)",
+        "trlLevel": 2,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "3": [
+      {
+        "id": "Technology_Status-341",
+        "questionText": "Genetic Modification Designs Developed (CRISPR/RNAi Constructs)",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-342",
+        "questionText": "Transformation or Gene Editing in Laboratory or Growth Chamber Conducted",
+        "trlLevel": 3,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-343",
+        "questionText": "Institutional Biosafety Committee (IBC) Approval Initiated",
+        "trlLevel": 3,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-344",
+        "questionText": "Reasses Industry Relevance",
+        "trlLevel": 3,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "4": [
+      {
+        "id": "Regulatory_Compliance_Status-345",
+        "questionText": "Edited/Modified Plant Regenerated",
+        "trlLevel": 4,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-346",
+        "questionText": "Target Traits Confirmed via Sequencing, PCR, or Marker Analysis",
+        "trlLevel": 4,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-347",
+        "questionText": "Preliminary Phenotyping under Greenhouse Conducted",
+        "trlLevel": 4,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-348",
+        "questionText": "Market Viability Assessed using At least Secondary Data",
+        "trlLevel": 4,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-349",
+        "questionText": "Potential Industry Partner for Industry Testing Identified",
+        "trlLevel": 4,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "Technology_Status-350",
+        "questionText": "Edited/Modified Lines Evaluated in Greenhouse or Actual Field Plots",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-351",
+        "questionText": "Agronomic and Phenotypic Data Collected",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-352",
+        "questionText": "Applied for Regulatory Status Confirmation (RSC) to Department of Agriculture-Bureau of Plant Industry (DA-BPI)",
+        "trlLevel": 5,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-353",
+        "questionText": "Procesing of DA-BPI Biosafety Permit for Confined Field Trials Initiated",
+        "trlLevel": 5,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-354",
+        "questionText": "Contained Field Trial/Confined Test for GM Crops Conducted",
+        "trlLevel": 5,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-355",
+        "questionText": "Initial Meeting with Potential Industry Partners",
+        "trlLevel": 5,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-356",
+        "questionText": "Initial Business Model Canvas (BMC) Accomplished",
+        "trlLevel": 5,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "6": [
+      {
+        "id": "Industry_Adoption_Status-357",
+        "questionText": "Agreement with Industry Partners for Product Testing Secured",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-358",
+        "questionText": "Biosfatey Permit Secured",
+        "trlLevel": 6,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Technology_Status-359",
+        "questionText": "Multi-location Confined Field Trials Conducted",
+        "trlLevel": 6,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-360",
+        "questionText": "Engagement with Seed Growers for Seed Multiplication Tests",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-361",
+        "questionText": "Industry Feedback Collected",
+        "trlLevel": 6,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-362",
+        "questionText": "Regulatory Preparation for Variety Registration Initiated",
+        "trlLevel": 6,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      }
+    ],
+    "7": [
+      {
+        "id": "Technology_Status-363",
+        "questionText": "Seed Materials Production Protocol Standardized for Commercial Adoption",
+        "trlLevel": 7,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-364",
+        "questionText": "Submitted to National Seed Industry Council (NSIC) or Department of Agriculture-Bureau of Plant Industry (DA-BPI) for Variety Testing",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-365",
+        "questionText": "Submitted for Distinctness, Uniformity, Stability, (DUS) Testing (if Plant Variety Protection-eligible)",
+        "trlLevel": 7,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-366",
+        "questionText": "Letter of Intent for Licensing Secured",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-367",
+        "questionText": "Technology Licensing Terms Undergoing Negotiation",
+        "trlLevel": 7,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-368",
+        "questionText": "Freedom to Operate (FTO) Report Prepared",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-369",
+        "questionText": "IP Valuation",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-370",
+        "questionText": "Technology Commercialization Plan",
+        "trlLevel": 7,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "8": [
+      {
+        "id": "Technology_Status-371",
+        "questionText": "Stable and Consistent Seed Production at Industry Scale Achieved",
+        "trlLevel": 8,
+        "category": "Technology Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-372",
+        "questionText": "Variety Officially Registered and Released",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Regulatory_Compliance_Status-373",
+        "questionText": "Seed Certification Obtained",
+        "trlLevel": 8,
+        "category": "Regulatory Compliance Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Industry_Adoption_Status-374",
+        "questionText": "Technology Licensing Terms Negotiated",
+        "trlLevel": 8,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-375",
+        "questionText": "Fairness Opinion Review Requested",
+        "trlLevel": 8,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ],
+    "9": [
+      {
+        "id": "Industry_Adoption_Status-376",
+        "questionText": "Technology Licensing Agreement Signed",
+        "trlLevel": 9,
+        "category": "Industry Adoption Status",
+        "toolTip": ""
+      },
+      {
+        "id": "Market_and_Commercialization_Status-377",
+        "questionText": "New Plant Variety Fully Commercialized/Variety Commercially Available to Target Users",
+        "trlLevel": 9,
+        "category": "Market and Commercialization Status",
+        "toolTip": ""
+      }
+    ]
+  }
+}

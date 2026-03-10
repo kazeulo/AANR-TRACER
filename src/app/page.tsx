@@ -142,7 +142,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-[15px] leading-[1.75] text-[#8a9a94] font-light mb-6 max-w-[420px]">
-              Your guide in assessing the technical and commercial readiness of AANR technologies — from farm to market.
+              Your guide in evaluating the technical and commercial readiness of AANR technologies.
             </p>
 
             {/* Partner Logos */}

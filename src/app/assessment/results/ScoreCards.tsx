@@ -7,6 +7,7 @@ interface ScoreCardsProps {
   completedColor:  string;
   achievableColor: string;
   lackingCount:    number;
+  pendingCount?:   number;
 }
 
 export default function ScoreCards({
@@ -15,8 +16,10 @@ export default function ScoreCards({
   completedColor,
   achievableColor,
   lackingCount,
+  pendingCount = 0,
 }: ScoreCardsProps) {
   const gap = achievableTRL - completedTRL;
+  const atNineWithPending = completedTRL === 9 && pendingCount > 0;
 
   return (
     <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
@@ -43,6 +46,8 @@ export default function ScoreCards({
           <p className="text-[12px] text-[#94a3a0] font-light leading-relaxed mt-0.5">
             {completedTRL === 0
               ? "No TRL level has been fully satisfied yet."
+              : completedTRL === 9 && pendingCount > 0
+              ? `Amazing work reaching TRACER Level 9! You're almost there — just ${pendingCount} item${pendingCount !== 1 ? "s" : ""} left to fully solidify your commercialization journey.`
               : completedTRL === 9
               ? "Your technology has reached full commercial deployment."
               : `All criteria for TRACER Level ${completedTRL} and below have been met.`}
@@ -119,6 +124,26 @@ export default function ScoreCards({
               {lackingCount} item{lackingCount !== 1 ? "s" : ""}
             </span>{" "}
             in your action steps to unlock your full potential.
+          </p>
+        </div>
+      )}
+
+      {/* ── At TRL 9 with pending items notice ── */}
+      {atNineWithPending && (
+        <div className="mx-6 mb-6 px-5 py-4 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-3">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706"
+            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          <p className="text-[12px] text-amber-800 font-light leading-relaxed">
+            You've reached{" "}
+            <span className="font-semibold">TRACER Level 9</span> — an outstanding achievement! A few finishing touches remain:{" "}
+            <span className="font-semibold">
+              {pendingCount} item{pendingCount !== 1 ? "s" : ""}
+            </span>{" "}
+            still to wrap up. Check your action steps below — you're closer than ever to full commercialization.
           </p>
         </div>
       )}

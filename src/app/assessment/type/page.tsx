@@ -3,15 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { useEffect, useState } from "react";
-import Papa from "papaparse";
-
-interface Question {
-  questionText: string;
-  trlLevel: string;
-  technologyType: string;
-  category: string;
-  toolTip?: string;
-}
 
 export default function TechnologyTypePage() {
   const { data, updateData } = useAssessment();
@@ -19,21 +10,19 @@ export default function TechnologyTypePage() {
   const [technologyTypes, setTechnologyTypes] = useState<string[]>([]);
 
   useEffect(() => {
-    const loadCSV = async () => {
-      const res = await fetch("/questions.csv");
-      const csvText = await res.text();
-      const result = Papa.parse<Question>(csvText, { header: true, skipEmptyLines: true });
-      const types = Array.from(new Set(result.data.map(q => q.technologyType))).filter(Boolean);
-      setTechnologyTypes(types);
+    const loadTypes = async () => {
+      const res = await fetch("/questions.json");
+      const grouped: Record<string, unknown> = await res.json();
+      setTechnologyTypes(Object.keys(grouped));
     };
-    loadCSV();
+    loadTypes();
   }, []);
 
   const isValid = !!data.technologyType;
 
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
-      <div className="max-w-[760px] mx-auto w-full">
+      <div className="max-w-[600px] mx-auto w-full">
 
         {/* Eyebrow */}
         <div className="flex justify-center mb-8">

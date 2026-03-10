@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Papa from "papaparse";
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
@@ -75,7 +74,7 @@ function PageLoader() {
   );
 }
 
-// Hero 
+// ─── Hero
 
 function CongratulatoryHero({
   trl,
@@ -184,7 +183,7 @@ function CongratulatoryHero({
                     Your technology is at{" "}
                     <span style={{ color: completedColor }}>TRACER Level {trl}</span>
                     {tracerLabel && (
-                      <span className="text-white/60 font-normal">: {tracerLabel}</span>
+                      <span className="text-white/60 font-normal"> — {tracerLabel}</span>
                     )}
                   </>
                 }
@@ -213,7 +212,7 @@ function CongratulatoryHero({
 
           {/* AI explanation */}
           {header?.explanation && (
-            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[600px]">
+            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[520px]">
               {header.explanation}
             </p>
           )}
@@ -231,7 +230,7 @@ function CongratulatoryHero({
   );
 }
 
-// Main page 
+// ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function ResultsPage() {
   const { data } = useAssessment();
@@ -252,29 +251,27 @@ export default function ResultsPage() {
 
   useEffect(() => {
     const run = async () => {
-      // 1. Parse CSV + calculate TRL
-      const res     = await fetch("/questions.csv");
-      const csvText = await res.text();
-      const parsed  = Papa.parse<{
+      // 1. Load pre-grouped JSON + flatten to QuestionItem[]
+      const res = await fetch("/questions.json");
+      const grouped: Record<string, Record<string, {
+        id: string;
         questionText: string;
-        trlLevel: string;
-        technologyType: string;
+        trlLevel: number;
         category: string;
-      }>(csvText, { header: true, skipEmptyLines: true });
+        toolTip: string;
+      }[]>> = await res.json();
 
-      const questions: QuestionItem[] = parsed.data
-        .filter(q => q.technologyType === data.technologyType)
-        .map((q, i) => ({
-          id:           `${q.category}-${i}`,
-          questionText: q.questionText,
-          trlLevel:     parseInt(q.trlLevel, 10),
-          category:     q.category,
-        }));
+      const byLevel = grouped[data.technologyType] ?? {};
+      const questions: QuestionItem[] = Object.values(byLevel).flat();
 
       const result = calculateTRL(questions, data.answers, data.ipData, data.technologyType);
 
+      // When achievable === 9, completed is promoted to 9 in the calculator.
+      // Still pass any lacking items to AI so it can give sustaining/completion steps.
       const gap          = result.highestAchievableTRL - result.highestCompletedTRL;
-      const lackingForAI = gap > 0 ? result.lackingForAchievable : result.lackingForNextLevel;
+      const lackingForAI = result.lackingForAchievable.length > 0
+        ? result.lackingForAchievable
+        : result.lackingForNextLevel;
 
       const aiInput: RecommendationInput = {
         technologyName:        data.technologyName,
@@ -365,6 +362,7 @@ export default function ResultsPage() {
           completedColor={completedColor}
           achievableColor={achievableColor}
           lackingCount={result.lackingForAchievable.length}
+          pendingCount={result.highestCompletedTRL === 9 ? result.lackingForAchievable.length : 0}
         />
 
         {/* AI action steps — pre-fetched, passed as prop */}

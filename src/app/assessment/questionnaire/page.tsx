@@ -1,23 +1,23 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Papa from "papaparse";
 import { useAssessment, IPData } from "../AssessmentContext";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
 import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
+
+const questionsCache: Record<string, Record<string, Question[]>> = {};
 
 // Types 
 
 interface Question {
   id: string;
   questionText: string;
-  trlLevel: string;
+  trlLevel: number;
   technologyType: string;
   category: string;
   toolTip?: string;
 }
-
 
 // IP Section 
 
@@ -173,18 +173,48 @@ export default function QuestionnairePage() {
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
 
   useEffect(() => {
-    const loadCSV = async () => {
-      const res = await fetch("/questions.csv");
-      const csvText = await res.text();
-      const result = Papa.parse<Omit<Question, "id">>(csvText, { header: true, skipEmptyLines: true });
-      const filtered = result.data.filter(q => q.technologyType === data.technologyType);
-      const withIds: Question[] = filtered.map((item, index) => ({ ...item, id: `${item.category}-${index}` }));
+    if (!data.technologyType) return;
+
+    // Restore position from context — runs on every render but is instant
+    if (lastCategoryIndex >= 0 && lastPage >= 0 && orderedCategories.length > 0) {
+      setCurrentCategoryIndex(Math.min(lastCategoryIndex, orderedCategories.length - 1));
+      setCurrentPage(lastPage);
+    }
+  }, [lastCategoryIndex, lastPage, orderedCategories.length]);
+
+  useEffect(() => {
+    if (!data.technologyType) return;
+
+    // Return immediately from cache if already loaded for this type
+    if (questionsCache[data.technologyType]) {
+      const groupedData = questionsCache[data.technologyType];
+      const ordered = categoryOrder.filter(
+        cat => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
+      );
+      setGrouped(groupedData);
+      setOrderedCategories(ordered);
+      setCurrentCategoryIndex(Math.min(lastCategoryIndex, ordered.length - 1));
+      setCurrentPage(lastPage);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    const loadQuestions = async () => {
+      const res = await fetch("/questions.json");
+      const allGrouped: Record<string, Record<string, Question[]>> = await res.json();
+
+      const byLevel = allGrouped[data.technologyType] ?? {};
+      const flat: Question[] = Object.values(byLevel).flat();
 
       const groupedData: Record<string, Question[]> = {};
-      withIds.forEach(q => {
+      flat.forEach(q => {
         if (!groupedData[q.category]) groupedData[q.category] = [];
         groupedData[q.category].push(q);
       });
+
+      // Store in module cache for instant reuse
+      questionsCache[data.technologyType] = groupedData;
 
       const ordered = categoryOrder.filter(
         cat => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
@@ -192,19 +222,13 @@ export default function QuestionnairePage() {
 
       setGrouped(groupedData);
       setOrderedCategories(ordered);
-
-      if (lastCategoryIndex < ordered.length && lastPage >= 0) {
-        setCurrentCategoryIndex(lastCategoryIndex);
-        setCurrentPage(lastPage);
-      } else {
-        setCurrentCategoryIndex(0);
-        setCurrentPage(0);
-      }
+      setCurrentCategoryIndex(Math.min(lastCategoryIndex, ordered.length - 1));
+      setCurrentPage(lastPage);
       setLoading(false);
     };
 
-    if (data.technologyType) { setLoading(true); loadCSV(); }
-  }, [data.technologyType, lastCategoryIndex, lastPage]);
+    loadQuestions();
+  }, [data.technologyType]);
 
   const currentCategory = orderedCategories[currentCategoryIndex] ?? "";
   const isIPCategory = currentCategory === IP_CATEGORY;
@@ -258,7 +282,7 @@ export default function QuestionnairePage() {
 
   const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
 
-  // IP validation — block Next if "yes" but no type checked or any checked type missing a status
+  // IP validation
   const ipBlocksNext = (() => {
     if (!isIPCategory) return false;
     const ipKey = IP_INITIATED_LABEL;
@@ -283,7 +307,7 @@ export default function QuestionnairePage() {
   }, 0) + currentPage;
   const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
 
-  // Loading 
+  // Loading
   if (loading) {
     return (
       <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center">
@@ -368,6 +392,7 @@ export default function QuestionnairePage() {
           <div className="space-y-3">
             {visibleQuestions.map(q => {
               const checked = data.answers[q.id] ?? false;
+              const tooltipOpen = openTooltips[q.id] ?? false;
               return (
                 <label
                   key={q.id}
@@ -396,24 +421,46 @@ export default function QuestionnairePage() {
                       <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
                         {q.questionText}
                       </span>
+
+                      {/* Tooltip toggle — plus/minus */}
                       {q.toolTip && (
                         <button
                           type="button"
-                          onClick={e => { e.preventDefault(); setOpenTooltips(prev => ({ ...prev, [q.id]: !prev[q.id] })); }}
-                          className="flex-shrink-0 w-5 h-5 rounded-full border border-[#c8c3b8] bg-white hover:border-[#4aa35a] hover:bg-[#4aa35a]/10 flex items-center justify-center transition-colors mt-0.5"
-                          title="Show hint"
+                          onClick={e => {
+                            e.preventDefault();
+                            setOpenTooltips(prev => ({ ...prev, [q.id]: !prev[q.id] }));
+                          }}
+                          className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
+                            tooltipOpen
+                              ? "bg-[#4aa35a] border-[#4aa35a]"
+                              : "bg-white border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[#4aa35a]/10"
+                          }`}
+                          title={tooltipOpen ? "Hide hint" : "Show hint"}
                         >
-                          <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke={openTooltips[q.id] ? "#4aa35a" : "#94a3a0"} strokeWidth="2" strokeLinecap="round">
-                            <circle cx="8" cy="8" r="7"/>
-                            <path d="M8 7v5M8 5h.01"/>
+                          {/* Plus when closed, minus when open */}
+                          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
+                            stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8"
+                            strokeLinecap="round">
+                            <line x1="4" y1="1" x2="4" y2="7" className={`transition-all duration-200 ${tooltipOpen ? "opacity-0" : "opacity-100"}`} />
+                            <line x1="1" y1="4" x2="7" y2="4" />
                           </svg>
                         </button>
                       )}
                     </div>
-                    {q.toolTip && openTooltips[q.id] && (
-                      <p className="text-[12px] text-[#6b7a75] font-light mt-2 leading-relaxed bg-[#f8f6f1] border border-[#ede9e0] rounded-lg px-3 py-2">
-                        {q.toolTip}
-                      </p>
+
+                    {/* Tooltip body */}
+                    {q.toolTip && tooltipOpen && (
+                      <div className="mt-2.5 flex items-start gap-2 bg-[#f8f6f1] border border-[#ede9e0] rounded-xl px-3.5 py-2.5">
+                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
+                          stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round"
+                          className="flex-shrink-0 mt-[1px]">
+                          <circle cx="8" cy="8" r="7"/>
+                          <path d="M8 7v4M8 5h.01"/>
+                        </svg>
+                        <p className="text-[12px] text-[#6b7a75] font-light leading-relaxed">
+                          {q.toolTip}
+                        </p>
+                      </div>
                     )}
                   </div>
 
@@ -422,7 +469,6 @@ export default function QuestionnairePage() {
             })}
           </div>
         )}
-
         </div>
 
         {/* Navigation */}

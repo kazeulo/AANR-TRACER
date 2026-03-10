@@ -90,7 +90,7 @@ function buildIPQuestions(technologyType: string): QuestionItem[] {
   ];
 }
 
-// Main Calculator 
+// ─── Main Calculator ──────────────────────────────────────────────────────────
 
 export function calculateTRL(
   allQuestions: QuestionItem[],      // all questions for the selected technology type (from CSV)
@@ -121,7 +121,7 @@ export function calculateTRL(
   const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
   const maxLevel = Math.max(...levels);
 
-  // Highest Completed TRL 
+  // ── Highest Completed TRL ──────────────────────────────────────────────────
   // Find the highest level N such that ALL questions at levels 1..N are answered yes
   let highestCompletedTRL = 0;
   for (const level of levels) {
@@ -135,7 +135,7 @@ export function calculateTRL(
     }
   }
 
-  // Highest Achievable TRL
+  // ── Highest Achievable TRL ─────────────────────────────────────────────────
   // Find the highest level where at least one question was answered yes
   let highestAchievableTRL = highestCompletedTRL;
   for (const level of [...levels].reverse()) {
@@ -147,10 +147,10 @@ export function calculateTRL(
     }
   }
 
-  // Completed Questions
+  // ── Completed Questions ────────────────────────────────────────────────────
   const completedQuestions = questions.filter(q => isAnsweredYes(q));
 
-  // Lacking for Next Level 
+  // ── Lacking for Next Level ─────────────────────────────────────────────────
   // All unanswered questions at levels 1..(highestCompletedTRL + 1)
   const nextLevel = highestCompletedTRL + 1;
   const lackingForNextLevel =
@@ -158,12 +158,20 @@ export function calculateTRL(
       ? questions.filter(q => q.trlLevel <= nextLevel && !isAnsweredYes(q))
       : [];
 
-  // Lacking for Achievable 
+  // ── Lacking for Achievable ─────────────────────────────────────────────────
   // All unanswered questions at levels 1..highestAchievableTRL
   const lackingForAchievable =
     highestAchievableTRL > highestCompletedTRL
       ? questions.filter(q => q.trlLevel <= highestAchievableTRL && !isAnsweredYes(q))
       : [];
+
+  // Special rule: if achievable is 9, promote completed to 9
+  // but preserve lacking items so the results page can still show them
+  if (highestAchievableTRL === 9 && highestCompletedTRL < 9) {
+    highestCompletedTRL = 9;
+    // lackingForAchievable already contains the unanswered items up to level 9
+    // — keep them so the UI can show "you're at 9 but still have X items pending"
+  }
 
   return {
     highestCompletedTRL,
