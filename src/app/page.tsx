@@ -147,7 +147,7 @@ export default function HomePage() {
 
             {/* Partner Logos */}
             <div className="mb-10 bg-white/[0.5] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
-              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[#183e25] mb-2 text-center">A Collaboration Project by</div>
+              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[#183e25] mb-2 text-center">A Collaborative Project by</div>
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <Image src="/img/logos/dost-logo.png" alt="DOST" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
                 <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
