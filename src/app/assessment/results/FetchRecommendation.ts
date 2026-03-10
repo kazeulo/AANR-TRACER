@@ -1,5 +1,9 @@
-import { QuestionItem } from "../../utils/trlCalculator";
-import { TRL_LABELS } from "./UsePDFExport";
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface LackingItem {
+  trlLevel: number;
+  questionText: string;
+}
 
 export interface RecommendationInput {
   technologyName: string;
@@ -7,225 +11,262 @@ export interface RecommendationInput {
   technologyDescription: string;
   completedTRL: number;
   achievableTRL: number;
-  lackingItems: QuestionItem[];
+  lackingItems: LackingItem[];
 }
 
-export interface RecommendationItem {
-  title: string;
-  body: string;
+/** AI-generated header content */
+export interface AIHeader {
+  headline: string;
+  explanation: string;
 }
 
-export interface RecommendationOutput {
-  items: RecommendationItem[];
+export interface ActionStep {
+  action: string;
+  detail: string;
+}
+
+export interface RoadmapGroup {
+  trlLevel: number;
+  steps: ActionStep[];
+}
+
+export interface AISteps {
+  roadmap: RoadmapGroup[];
   closing: string;
 }
 
-// Cache
+// ─── Constants ────────────────────────────────────────────────────────────────
 
-export function getCacheKey(input: Pick<RecommendationInput, "technologyName" | "technologyType" | "completedTRL" | "achievableTRL">): string {
-  return `aanr_rec_${input.technologyName}_${input.technologyType}_${input.completedTRL}_${input.achievableTRL}`;
+export const TRL_LABELS: Record<number, string> = {
+  0: "Not Yet Assessed",
+  1: "Basic Research",
+  2: "Technology Concept",
+  3: "Experimental Proof-of-Concept",
+  4: "Laboratory Validation",
+  5: "Relevant Environment Validation",
+  6: "Relevant Environment Demonstration",
+  7: "Operational Environment Demonstration",
+  8: "System Complete & Qualified",
+  9: "Full Commercial Deployment",
+};
+
+export const TRL_COLORS: Record<number, string> = {
+  0: "#94a3b8",
+  1: "#6366f1",
+  2: "#8b5cf6",
+  3: "#ec4899",
+  4: "#f97316",
+  5: "#eab308",
+  6: "#84cc16",
+  7: "#22c55e",
+  8: "#14b8a6",
+  9: "#4aa35a",
+};
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function formatLacking(items: LackingItem[]): string {
+  return items.map(i => `- [TRACER Level ${i.trlLevel}] ${i.questionText}`).join("\n");
 }
 
-export function getHeroCacheKey(input: Pick<RecommendationInput, "technologyName" | "technologyType" | "completedTRL">): string {
-  return `aanr_hero_${input.technologyName}_${input.technologyType}_${input.completedTRL}`;
+function groupKeys(items: LackingItem[]): string {
+  return [...new Set(items.map(i => i.trlLevel))]
+    .sort((a, b) => a - b)
+    .join(", ");
 }
 
-function readCache<T>(key: string): T | null {
-  try { return JSON.parse(sessionStorage.getItem(key) ?? "null"); } catch { return null; }
+function stepsKey(input: RecommendationInput): string {
+  return `tracer_steps_${input.completedTRL}_${input.achievableTRL}_${input.technologyName}`;
 }
 
-function writeCache<T>(key: string, value: T): void {
-  try { sessionStorage.setItem(key, JSON.stringify(value)); } catch {}
-}
-
-export function getCached(key: string): RecommendationOutput | null {
-  return readCache<RecommendationOutput>(key);
-}
-
-export function setCache(key: string, value: RecommendationOutput): void {
-  writeCache(key, value);
-}
-
-// Hero message — Qwen 0.5B (fast, cheap)
-
-export async function fetchHeroMessage(input: Pick<
-  RecommendationInput,
-  "technologyName" | "technologyType" | "completedTRL"
->): Promise<{ headline: string; sub: string }> {
-  const cacheKey = getHeroCacheKey(input);
-  const cached = readCache<{ headline: string; sub: string }>(cacheKey);
-  if (cached) return cached;
-
-  const { technologyName, technologyType, completedTRL } = input;
-
-  const systemPrompt =
-    `You are a warm, encouraging advisor for AANR technology developers in the Philippines. ` +
-    `Write short celebratory messages. Be specific to the TRL level achieved.`;
-
-  const userPrompt =
-    `Technology: ${technologyName || "an AANR technology"}\n` +
-    `Type: ${technologyType}\n` +
-    `Achieved TRL: ${completedTRL} — ${TRL_LABELS[completedTRL] ?? "Unknown"}\n\n` +
-    `Write exactly two parts separated by a blank line:\n` +
-    `1. One headline sentence (max 12 words) celebrating this TRL achievement.\n` +
-    `2. Two sentences (max 40 words total) explaining what this TRL means and motivating them to continue.\n` +
-    `No bullet points, numbers, or labels. Just the headline, a blank line, then the two sentences.`;
-
+async function callProxy(
+  messages: { role: string; content: string }[],
+  maxTokens = 600
+): Promise<string> {
   const res = await fetch("/api/recommend", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "small",
-      max_tokens: 120,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user",   content: userPrompt   },
-      ],
-    }),
+    body: JSON.stringify({ model: "large", max_tokens: maxTokens, messages }),
   });
-
-  if (!res.ok) throw new Error(`Hero fetch failed: ${res.status}`);
-
+  if (!res.ok) throw new Error(`Request failed ${res.status}: ${await res.text()}`);
   const data = await res.json();
-  const text: string = (data.completion ?? "").trim();
-  const parts = text.split(/\n\s*\n/).map((s: string) => s.trim()).filter(Boolean);
+  if (data.error) throw new Error(data.error);
+  return (data.completion ?? "").replace(/```json|```/g, "").trim();
+}
 
-  const result = {
-    headline: parts[0] ?? "",
-    sub:      parts.slice(1).join(" ").trim(),
-  };
+// ─── Header fetch ─────────────────────────────────────────────────────────────
 
-  writeCache(cacheKey, result);
+export async function fetchHeader(
+  input: RecommendationInput,
+  officialDescription?: { title: string; description: string } | null
+): Promise<AIHeader> {
+  const headerKey = `tracer_header_${input.technologyName}_${input.technologyType}_${input.completedTRL}`;
+  try {
+    const cached = sessionStorage.getItem(headerKey);
+    if (cached) return JSON.parse(cached) as AIHeader;
+  } catch { /* unavailable */ }
+
+  const trlLabel = TRL_LABELS[input.completedTRL] ?? "";
+  const officialBlock = officialDescription
+    ? `\n\nOFFICIAL TRACER LEVEL DEFINITION (use this as the factual basis — do not contradict it):\nTitle: ${officialDescription.title}\nDescription: ${officialDescription.description}`
+    : "";
+
+  const raw = await callProxy([
+    {
+      role: "system",
+      content: `You are a warm, motivational TRACER advisor for AANR technology developers in the Philippines. Respond ONLY with valid JSON. No markdown, no extra text.`,
+    },
+    {
+      role: "user",
+      content: `CONTEXT:
+- Technology Name: ${input.technologyName}
+- Technology Domain: ${input.technologyType}
+- Developer's Description: ${input.technologyDescription}
+- Current TRACER Level: ${input.completedTRL} (${trlLabel})${input.completedTRL === 9 ? "\n- This is the highest possible TRACER Level — fully commercialised." : ""}${officialBlock}
+
+INSTRUCTIONS:
+1. headline: One short punchy warm sentence (max 12 words) celebrating what reaching TRACER Level ${input.completedTRL} means for this specific technology. Do NOT start with "Congratulations". Be specific to the technology name and domain.
+2. explanation: 2-3 plain-language sentences grounded in the official TRACER Level definition above — what this level means for their specific technology and its end users, personalised to the developer's description. Be encouraging and concrete. Do not copy the official definition verbatim; rephrase it naturally with their technology in mind.
+
+Return ONLY:
+{
+  "headline": "<short warm sentence>",
+  "explanation": "<2-3 sentences>"
+}`,
+    },
+  ], 300);
+
+  try {
+    const result = JSON.parse(raw) as AIHeader;
+    try { sessionStorage.setItem(headerKey, JSON.stringify(result)); } catch { /* quota */ }
+    return result;
+  } catch {
+    throw new Error("Could not parse header response.");
+  }
+}
+
+// ─── Steps fetch ──────────────────────────────────────────────────────────────
+
+export async function fetchSteps(input: RecommendationInput): Promise<AISteps> {
+  const key = stepsKey(input);
+
+  try {
+    const cached = sessionStorage.getItem(key);
+    if (cached) return JSON.parse(cached) as AISteps;
+  } catch { /* unavailable */ }
+
+  const raw = await callProxy([
+    {
+      role: "system",
+      content: `You are a warm, motivational TRACER advisor for AANR technologies in the Philippines. Respond ONLY with valid JSON. No markdown, no extra text.`,
+    },
+    {
+      role: "user",
+      content: buildStepsPrompt(input),
+    },
+  ], 1600);
+
+  let result: AISteps;
+  try {
+    result = JSON.parse(raw) as AISteps;
+  } catch {
+    throw new Error("Could not parse steps response. Please try again.");
+  }
+
+  try {
+    sessionStorage.setItem(key, JSON.stringify(result));
+  } catch { /* quota exceeded */ }
+
   return result;
 }
 
-export async function fetchRecommendation(
-  input: RecommendationInput
-): Promise<string> {
-  const {
-    technologyName, technologyType, technologyDescription,
-    completedTRL, achievableTRL, lackingItems,
-  } = input;
+// ─── Prompt builder ───────────────────────────────────────────────────────────
 
-  const lackingList = lackingItems
-    .slice(0, 10)
-    .map((q, i) => `${i + 1}. ${q.questionText}`)
-    .join("\n");
+const STEPS_SCHEMA = `Return ONLY this JSON (no markdown):
+{
+  "roadmap": [
+    {
+      "trlLevel": <number>,
+      "steps": [
+        {
+          "action": "<imperative verb phrase: Develop / Conduct / Identify / Build / Establish...>",
+          "detail": "<2-3 sentences: what to do specifically, why it matters, and how to get started or who to involve>"
+        }
+      ]
+    }
+  ],
+  "closing": "<1-2 warm, congratulatory and motivational sentences acknowledging how far they have come and encouraging them to keep going>"
+}`;
 
-  const systemPrompt =
-    `You are a friendly and encouraging Technology Readiness Level (TRL) advisor for AANR ` +
-    `(Agriculture, Aquatic, and Natural Resources) technologies in the Philippines. ` +
-    `Your job is to help technology developers understand exactly what they need to do next in plain, simple language. ` +
-    `Be warm, clear, and motivating. Avoid jargon. Always make the developer feel their progress is meaningful.`;
+function buildStepsPrompt(i: RecommendationInput): string {
+  const trlLabel    = TRL_LABELS[i.completedTRL]  ?? "";
+  const techContext = `- Technology Name: ${i.technologyName}\n- Technology Domain: ${i.technologyType}\n- Description: ${i.technologyDescription}`;
 
-  const userPrompt =
-    `A technology developer has just completed their TRL self-assessment. Here are the details:\n\n` +
-    `Technology name: ${technologyName || "their AANR technology"}\n` +
-    `Technology type: ${technologyType}\n` +
-    `Description: ${technologyDescription || "Not provided"}\n` +
-    `Current TRL: ${completedTRL} — ${TRL_LABELS[completedTRL] ?? "Unknown"}\n` +
-    `Target TRL: ${achievableTRL} — ${TRL_LABELS[achievableTRL] ?? "Unknown"}\n\n` +
-    `The following items are what they still need to accomplish to reach TRL ${achievableTRL}:\n` +
-    `${lackingList || "No specific gaps identified."}\n\n` +
-    `For each gap above, write one actionable step using EXACTLY this format:\n` +
-    `[Number]. [Action Title]: [1–2 sentences]\n\n` +
-    `Rules:\n` +
-    `- The Action Title must be a short imperative phrase (3–6 words) that turns the gap directly into a task. ` +
-    `Convert the gap name into an action — e.g. "System Design Formulated" → "Design a Formulated System".\n` +
-    `- After the colon, write 1–2 plain sentences of specific guidance: what to do, how to start, or who to involve.\n` +
-    `- Do not add extra labels, headers, or commentary between steps.\n\n` +
-    `After all numbered steps, leave a blank line then write a short 1–2 sentence closing message ` +
-    `acknowledging their progress and motivating them to keep going.`;
+  // TRL 9, fully commercialised with no lacking items — guide for sustaining & scaling
+  if (i.completedTRL === 9 && i.lackingItems.length === 0) {
+    return `CONTEXT:
+${techContext}
+- Current TRACER Level: 9 (${TRL_LABELS[9]}) — the highest possible level. This technology is fully commercialised.
 
-  const response = await fetch("/api/recommend", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      max_tokens: 800,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user",   content: userPrompt   },
-      ],
-    }),
-  });
+INSTRUCTIONS:
+This technology has reached full commercial deployment. Provide 3-5 forward-looking action steps grouped under TRACER Level 9 that help the developer:
+- Sustain and grow commercial operations
+- Expand market reach (new regions, user segments, or export opportunities)
+- Strengthen IP portfolio and licensing strategies
+- Pursue continuous improvement and next-generation R&D
+- Engage with policy, standards bodies, or industry associations
 
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    throw new Error(err.error ?? `Server error ${response.status}`);
+Each step must have:
+- action: a clear imperative verb phrase
+- detail: 2-3 sentences — what to do specifically, why it matters, and a concrete starting point
+
+Also write a short warm closing message celebrating this milestone.
+
+${STEPS_SCHEMA}`;
   }
 
-  const data = await response.json();
-  const raw: string = (data.completion ?? "").trim();
-  if (!raw) throw new Error("No valid response from AI.");
-  return raw;
-}
+  // TRL 9 with outstanding items
+  if (i.completedTRL === 9) {
+    return `CONTEXT:
+${techContext}
+- Current TRACER Level: 9 (${TRL_LABELS[9]}) — commercialised but with outstanding actions
+- Outstanding actions:
+${formatLacking(i.lackingItems)}
 
-// Parser
+INSTRUCTIONS: Group by TRACER Level (${groupKeys(i.lackingItems)}). Rewrite each as a specific imperative + 2-3 sentence detail on what to do and why it matters. Then add 3 forward-looking sustaining steps under TRACER Level 9. Write a warm closing message.
 
-function parseStepsOutput(text: string): RecommendationOutput {
-  const lines = text.split("\n").map(l => l.trim());
-  const rawItems: string[] = [];
-  const closingLines: string[] = [];
-  let current = "";
-
-  for (const line of lines) {
-    if (!line) {
-      if (current) { rawItems.push(current.trim()); current = ""; }
-      continue;
-    }
-    if (/^\d+[\.\)]/.test(line)) {
-      if (current) rawItems.push(current.trim());
-      current = line.replace(/^\d+[\.\)]\s*/, "");
-    } else if (current) {
-      current += " " + line;
-    } else {
-      closingLines.push(line);
-    }
+${STEPS_SCHEMA}`;
   }
-  if (current) rawItems.push(current.trim());
 
-  const items: RecommendationItem[] = rawItems
-    .filter(r => r.length > 5)
-    .map(r => {
-      const colonIdx = r.indexOf(":");
-      if (colonIdx > 0 && colonIdx < 80) {
-        return { title: r.slice(0, colonIdx).trim(), body: r.slice(colonIdx + 1).trim() };
-      }
-      return { title: "", body: r };
-    });
+  // TRL 0 — just starting
+  if (i.completedTRL === 0) {
+    return `CONTEXT:
+${techContext}
+- Current TRACER Level: 0 — beginning of the journey
+- Highest Achievable TRACER Level: ${i.achievableTRL}
+- Steps needed:
+${formatLacking(i.lackingItems)}
 
-  return { items, closing: closingLines.join(" ").trim() };
-}
+INSTRUCTIONS: Group by TRACER Level (${groupKeys(i.lackingItems)}). Rewrite each as a clear imperative + 2-3 sentence detail explaining what to do, why it matters, and how to get started. Tone: warm, encouraging, practical.
 
-// Legacy string-based parser (used by AIRecommendationCard) 
-
-export function parseRecommendationOutput(text: string): {
-  items: string[];
-  closing: string;
-} {
-  const lines = text.split("\n").map(l => l.trim());
-  const items: string[] = [];
-  const closingLines: string[] = [];
-  let current = "";
-
-  for (const line of lines) {
-    if (!line) {
-      if (current) { items.push(current.trim()); current = ""; }
-      continue;
-    }
-    if (/^\d+[\.\)]/.test(line)) {
-      if (current) items.push(current.trim());
-      current = line.replace(/^\d+[\.\)]\s*/, "");
-    } else if (current) {
-      current += " " + line;
-    } else {
-      closingLines.push(line);
-    }
+${STEPS_SCHEMA}`;
   }
-  if (current) items.push(current.trim());
 
-  return {
-    items: items.filter(i => i.length > 5),
-    closing: closingLines.join(" ").trim(),
-  };
+  // General case
+  return `CONTEXT:
+${techContext}
+- Current TRACER Level: ${i.completedTRL} (${trlLabel})
+- Highest Achievable TRACER Level: ${i.achievableTRL} (${TRL_LABELS[i.achievableTRL] ?? ""})
+- Actions needed to reach TRACER Level ${i.achievableTRL}:
+${formatLacking(i.lackingItems)}
+
+INSTRUCTIONS:
+Group ALL actions by TRACER Level (${groupKeys(i.lackingItems)}). For each item:
+- action: rewrite as a specific imperative ("Develop...", "Conduct...", "Identify...", "Establish...")
+- detail: 2-3 sentences — what specifically to do, why it matters for reaching TRACER Level ${i.achievableTRL}, and a concrete first step or who to involve
+
+Do not invent actions beyond those listed. Tone: warm, professional, encouraging.
+Write a closing message congratulating them on their progress and motivating them to continue.
+
+${STEPS_SCHEMA}`;
 }

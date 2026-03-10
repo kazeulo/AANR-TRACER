@@ -5,100 +5,136 @@ import Papa from "papaparse";
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
-import { usePDFExport, PDFContent, TRL_COLORS, TRL_LABELS } from "./UsePDFExport";
+import { usePDFExport, PDFContent } from "./UsePDFExport";
+import { getTracerInfo, TracerLevelInfo } from "../../utils/TRACERdescriptions";
+import { getTracerLabel } from "./Levelsdescription";
+import {
+  fetchHeader,
+  fetchSteps,
+  AIHeader,
+  AISteps,
+  RecommendationInput,
+  TRL_COLORS,
+  TRL_LABELS,
+} from "./FetchRecommendation";
 
 import ScoreCards           from "./ScoreCards";
-import AchievableBanner     from "./AchievableBanner";
 import QuestionGroup        from "./QuestionGroup";
 import AIRecommendationCard from "./RecommendationCard";
 import ExportModal          from "./ExportModal";
 
-// ─── Congratulatory copy per TRL level ───────────────────────────────────────
+// Full-page loading screen
 
-// ─── Hardcoded TRL messages ───────────────────────────────────────────────────
+function PageLoader() {
+  const messages = [
+    "Calculating your TRACER Level score…",
+    "Analysing your assessment answers…",
+    "Generating your personalised results…",
+    "Preparing your action steps…",
+    "Almost ready…",
+  ];
+  const [idx, setIdx] = useState(0);
 
-const TRL_MESSAGES: Record<number, { headline: string; sub: string }> = {
-  0: {
-    headline: "Every great technology starts with an idea.",
-    sub: "Completing this assessment helps you understand where your technology stands. Use the results below as a roadmap to move from concept to real-world impact.",
-  },
-  1: {
-    headline: "You've defined the concept and the market need.",
-    sub: "TRL 1 means you've identified the problem and clarified the opportunity your technology addresses. This clear direction is the foundation for meaningful innovation.",
-  },
-  2: {
-    headline: "Your design and prototype plan are taking shape.",
-    sub: "At TRL 2, you've translated your concept into an initial design or formulation and planned how the prototype will be built. You're moving from ideas toward tangible development.",
-  },
-  3: {
-    headline: "Your prototype is being developed and tested.",
-    sub: "TRL 3 marks the stage where your prototype is built and evaluated in the laboratory. Early testing provides valuable insights that refine the technology and strengthen its potential.",
-  },
-  4: {
-    headline: "Your technology has passed controlled validation.",
-    sub: "At TRL 4, your prototype has been validated in controlled conditions and may be progressing toward intellectual property protection. This strengthens credibility and readiness for broader testing.",
-  },
-  5: {
-    headline: "Pilot testing has begun with industry engagement.",
-    sub: "TRL 5 shows that your technology is moving beyond the lab into pilot testing with potential partners or stakeholders. Collaboration at this stage helps align your solution with real-world needs.",
-  },
-  6: {
-    headline: "Testing across locations prepares you for scale.",
-    sub: "At TRL 6, your technology is being evaluated in multiple environments while preparing for larger-scale deployment. This stage builds confidence that the solution can perform reliably in diverse settings.",
-  },
-  7: {
-    headline: "Industry validation and regulatory preparation are underway.",
-    sub: "TRL 7 indicates that your technology has been validated with industry partners and is progressing through regulatory processes. You're now approaching full operational readiness.",
-  },
-  8: {
-    headline: "Your technology is ready for commercial production.",
-    sub: "TRL 8 means the system has been finalized and qualified for market entry. Production processes, supply chains, and operational readiness are coming together.",
-  },
-  9: {
-    headline: "Your technology has reached full commercialization.",
-    sub: "TRL 9 represents the highest level of readiness. Your technology is deployed in the market and delivering real-world impact.",
-  },
-};
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => Math.min(i + 1, messages.length - 1)), 1800);
+    return () => clearInterval(t);
+  }, []);
 
-// ─── Congratulatory Hero ──────────────────────────────────────────────────────
+  return (
+    <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center px-6">
+      <div className="flex flex-col items-center gap-6 max-w-xs text-center">
+
+        {/* Spinner ring */}
+        <div className="relative w-16 h-16">
+          <div className="absolute inset-0 rounded-full border-2 border-[#4aa35a]/15" />
+          <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#4aa35a] animate-spin" />
+          <div className="absolute inset-[6px] rounded-full bg-[#4aa35a]/[0.06] flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
+              strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 20V10" /><path d="M18 20V4" /><path d="M6 20v-4" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Step dots */}
+        <div className="flex gap-1.5">
+          {messages.map((_, i) => (
+            <span
+              key={i}
+              className="w-1.5 h-1.5 rounded-full transition-all duration-500"
+              style={{ backgroundColor: i <= idx ? "#4aa35a" : "#d1d5db" }}
+            />
+          ))}
+        </div>
+
+        <p className="text-[13px] text-[#6b7a75] font-light transition-all duration-500">
+          {messages[idx]}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Hero 
 
 function CongratulatoryHero({
   trl,
   technologyName,
+  technologyType,
   completedColor,
+  header,
+  tracerLabel,
 }: {
   trl: number;
   technologyName: string;
+  technologyType: string;
   completedColor: string;
+  header: AIHeader;
+  tracerLabel: string;
 }) {
-  const isTL9 = trl === 9;
-  const msg   = TRL_MESSAGES[trl] ?? TRL_MESSAGES[0];
+  const isTRL9 = trl === 9;
 
   return (
-    <div className="relative rounded-2xl overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0f2e1a 0%, #1a3d26 100%)" }}>
-
+    <div
+      className="relative rounded-2xl overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #0f2e1a 0%, #1a3d26 100%)" }}
+    >
       {/* Grid overlay */}
-      <div className="absolute inset-0 pointer-events-none"
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px)",
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px)",
           backgroundSize: "40px 40px",
-        }} />
+        }}
+      />
 
-      {/* Radial glow behind TRL number */}
-      <div className="absolute top-0 right-0 w-[320px] h-[320px] pointer-events-none"
-        style={{ background: `radial-gradient(circle, ${completedColor}20 0%, transparent 65%)` }} />
+      {/* Glow */}
+      <div
+        className="absolute top-0 right-0 w-[320px] h-[320px] pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${completedColor}20 0%, transparent 65%)` }}
+      />
 
-      {/* Scattered dots for TRL 9 */}
-      {isTL9 && (
+      {/* TRL9 dots */}
+      {isTRL9 && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {([
-            [8, null, 14, 0.5], [22, null, 28, 0.35], [62, null, 8, 0.45],
-            [78, null, 20, 0.3], [null, 10, 18, 0.5], [null, 6, 52, 0.4],
-            [null, 16, 78, 0.55],
-          ] as [number|null, number|null, number, number][]).map(([l, r, t, o], i) => (
-            <span key={i} className="absolute w-1 h-1 rounded-full bg-[#4aa35a]"
-              style={{ top: `${t}%`, left: l != null ? `${l}%` : undefined, right: r != null ? `${r}%` : undefined, opacity: o }} />
+          {(
+            [
+              [8,  null, 14, 0.50], [22, null, 28, 0.35], [62, null,  8, 0.45],
+              [78, null, 20, 0.30], [null, 10, 18, 0.50], [null,  6, 52, 0.40],
+              [null, 16, 78, 0.55],
+            ] as [number | null, number | null, number, number][]
+          ).map(([l, r, t, o], i) => (
+            <span
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-[#4aa35a]"
+              style={{
+                top:   `${t}%`,
+                left:  l != null ? `${l}%` : undefined,
+                right: r != null ? `${r}%` : undefined,
+                opacity: o,
+              }}
+            />
           ))}
         </div>
       )}
@@ -113,7 +149,7 @@ function CongratulatoryHero({
           >
             <span className="text-[9px] font-bold tracking-[2px] uppercase text-white/40 leading-none mb-0.5">TRL</span>
             <span
-              className="font-[\'DM_Serif_Display\',serif] text-[46px] leading-none"
+              className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
               {trl === 0 ? "—" : trl}
@@ -126,102 +162,181 @@ function CongratulatoryHero({
           )}
         </div>
 
-        {/* Message */}
+        {/* Text */}
         <div className="flex-1 min-w-0">
-          {/* TRL announcement */}
+
+          {/* Badge pill + TRL line */}
           <div className="mb-3">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] mb-2">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+                stroke="#4aa35a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
               <span className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
-                {isTL9 ? "Maximum Readiness Reached" : "Assessment Complete"}
+                {isTRL9 ? "Maximum Readiness Reached" : "Assessment Complete"}
               </span>
             </div>
-            <p className="font-[\'DM_Serif_Display\',serif] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
+            <p className="font-['DM_Serif_Display',serif] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
               {trl === 0
                 ? "Your technology is at the starting line."
-                : <>Your technology is at <span style={{ color: completedColor }}>TRL {trl}</span>.</>
-              }
+                : <>
+                    Your technology is at{" "}
+                    <span style={{ color: completedColor }}>TRACER Level {trl}</span>
+                    {tracerLabel && (
+                      <span className="text-white/60 font-normal">: {tracerLabel}</span>
+                    )}
+                  </>
+                }
             </p>
           </div>
 
-          <h2 className="font-[\'DM_Serif_Display\',serif] text-[clamp(14px,1.8vw,18px)] text-white/70 leading-[1.3] tracking-tight mb-2 font-normal italic">
-            {msg.headline}
-          </h2>
+          {/* Tech identity */}
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            {technologyName && (
+              <span className="text-[12px] font-semibold text-[#4aa35a]">{technologyName}</span>
+            )}
+            {technologyName && technologyType && (
+              <span className="text-white/20 text-[12px]">·</span>
+            )}
+            {technologyType && (
+              <span className="text-[11px] text-white/40 font-light">{technologyType}</span>
+            )}
+          </div>
 
-          {technologyName && (
-            <p className="text-[12px] font-semibold text-[#4aa35a] mb-2 truncate">
-              {technologyName}
-            </p>
+          {/* AI headline */}
+          {header?.headline && (
+            <h2 className="font-['DM_Serif_Display',serif] text-[clamp(14px,1.8vw,18px)] text-white/80 leading-[1.3] tracking-tight font-normal italic mb-2">
+              {header.headline}
+            </h2>
           )}
 
-          <p className="text-[13px] text-white/55 font-light leading-relaxed max-w-[500px]">
-            {msg.sub}
-          </p>
+          {/* AI explanation */}
+          {header?.explanation && (
+            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[600px]">
+              {header.explanation}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Wave bottom */}
-      <svg className="absolute bottom-[-1px] left-0 w-full pointer-events-none" viewBox="0 0 860 24" preserveAspectRatio="none">
+      {/* Wave */}
+      <svg
+        className="absolute bottom-[-1px] left-0 w-full pointer-events-none"
+        viewBox="0 0 860 24" preserveAspectRatio="none"
+      >
         <path fill="#f5f2ec" d="M0,12 C215,24 645,0 860,12 L860,24 L0,24 Z" />
       </svg>
     </div>
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// Main page 
 
 export default function ResultsPage() {
   const { data } = useAssessment();
   const router   = useRouter();
 
-  const [result, setResult]           = useState<TRLResult | null>(null);
-  const [loading, setLoading]         = useState(true);
-  const [showModal, setShowModal]     = useState(false);
+  // Everything loads together before page shows
+  type PageData = {
+    result: TRLResult;
+    header: AIHeader;
+    steps:  AISteps;
+    stepsError?: string;
+  };
+
+  const [pageData,   setPageData]   = useState<PageData | null>(null);
+  const [showModal,  setShowModal]  = useState(false);
 
   const { pdfRef, exporting, exportForm, triggerExport } = usePDFExport();
 
   useEffect(() => {
     const run = async () => {
+      // 1. Parse CSV + calculate TRL
       const res     = await fetch("/questions.csv");
       const csvText = await res.text();
       const parsed  = Papa.parse<{
-        questionText: string; trlLevel: string;
-        technologyType: string; category: string;
+        questionText: string;
+        trlLevel: string;
+        technologyType: string;
+        category: string;
       }>(csvText, { header: true, skipEmptyLines: true });
 
       const questions: QuestionItem[] = parsed.data
         .filter(q => q.technologyType === data.technologyType)
         .map((q, i) => ({
-          id: `${q.category}-${i}`,
+          id:           `${q.category}-${i}`,
           questionText: q.questionText,
-          trlLevel: parseInt(q.trlLevel, 10),
-          category: q.category,
+          trlLevel:     parseInt(q.trlLevel, 10),
+          category:     q.category,
         }));
 
-      const calc = calculateTRL(questions, data.answers, data.ipData, data.technologyType);
-      setResult(calc);
-      setLoading(false);
+      const result = calculateTRL(questions, data.answers, data.ipData, data.technologyType);
+
+      const gap          = result.highestAchievableTRL - result.highestCompletedTRL;
+      const lackingForAI = gap > 0 ? result.lackingForAchievable : result.lackingForNextLevel;
+
+      const aiInput: RecommendationInput = {
+        technologyName:        data.technologyName,
+        technologyType:        data.technologyType,
+        technologyDescription: data.technologyDescription ?? "",
+        completedTRL:          result.highestCompletedTRL,
+        achievableTRL:         result.highestAchievableTRL,
+        lackingItems:          lackingForAI.map(q => ({
+          trlLevel:     q.trlLevel,
+          questionText: q.questionText,
+        })),
+      };
+
+      // 2. Look up official description to ground the AI header
+      const officialInfo = getTracerInfo(data.technologyType, result.highestCompletedTRL);
+
+      // 3. Fire header + steps in parallel
+      const [headerResult, stepsResult] = await Promise.allSettled([
+        fetchHeader(aiInput, officialInfo),
+        fetchSteps(aiInput),
+      ]);
+
+      const header: AIHeader =
+        headerResult.status === "fulfilled"
+          ? headerResult.value
+          : { headline: officialInfo?.title ?? "", explanation: officialInfo?.description ?? "" };
+
+      const steps: AISteps | null =
+        stepsResult.status === "fulfilled" ? stepsResult.value : null;
+
+      const stepsError =
+        stepsResult.status === "rejected"
+          ? (stepsResult.reason instanceof Error ? stepsResult.reason.message : "Unknown error")
+          : undefined;
+
+      setPageData({ result, header, steps: steps ?? { roadmap: [], closing: "" }, stepsError });
     };
+
     run();
   }, [data]);
 
-  if (loading || !result) {
-    return (
-      <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 rounded-full border-2 border-[#4aa35a]/30 border-t-[#4aa35a] animate-spin" />
-          <p className="text-[14px] text-[#94a3a0] font-light">Calculating your TRL…</p>
-        </div>
-      </div>
-    );
-  }
+  // Show full-page loader until everything is ready
+  if (!pageData) return <PageLoader />;
+
+  const { result, header, steps, stepsError } = pageData;
 
   const completedColor  = TRL_COLORS[result.highestCompletedTRL]  ?? "#94a3b8";
   const achievableColor = TRL_COLORS[result.highestAchievableTRL] ?? "#4aa35a";
   const gap             = result.highestAchievableTRL - result.highestCompletedTRL;
   const lackingForAI    = gap > 0 ? result.lackingForAchievable : result.lackingForNextLevel;
+
+  const aiInput: RecommendationInput = {
+    technologyName:        data.technologyName,
+    technologyType:        data.technologyType,
+    technologyDescription: data.technologyDescription ?? "",
+    completedTRL:          result.highestCompletedTRL,
+    achievableTRL:         result.highestAchievableTRL,
+    lackingItems:          lackingForAI.map(q => ({
+      trlLevel:     q.trlLevel,
+      questionText: q.questionText,
+    })),
+  };
 
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-16">
@@ -233,40 +348,30 @@ export default function ResultsPage() {
           Assessment Results
         </div>
 
-        {/* Congratulatory hero */}
+        {/* Hero — AI header already resolved */}
         <CongratulatoryHero
           trl={result.highestCompletedTRL}
           technologyName={data.technologyName}
+          technologyType={data.technologyType}
           completedColor={completedColor}
+          header={header}
+          tracerLabel={getTracerLabel(data.technologyType, result.highestCompletedTRL)}
         />
 
-        {/* Score cards */}
+        {/* ScoreCards + achievable gap combined */}
         <ScoreCards
           completedTRL={result.highestCompletedTRL}
           achievableTRL={result.highestAchievableTRL}
           completedColor={completedColor}
           achievableColor={achievableColor}
+          lackingCount={result.lackingForAchievable.length}
         />
 
-        {/* Achievable banner */}
-        {gap > 0 && (
-          <AchievableBanner
-            completedTRL={result.highestCompletedTRL}
-            achievableTRL={result.highestAchievableTRL}
-            lackingItems={result.lackingForAchievable}
-            achievableColor={achievableColor}
-          />
-        )}
-
-        {/* AI Recommendations — always shown */}
+        {/* AI action steps — pre-fetched, passed as prop */}
         <AIRecommendationCard
-          technologyName={data.technologyName}
-          technologyType={data.technologyType}
-          technologyDescription={data.technologyDescription ?? ""}
-          completedTRL={result.highestCompletedTRL}
-          achievableTRL={result.highestAchievableTRL}
-          lackingItems={lackingForAI}
-
+          {...aiInput}
+          initialSteps={steps}
+          initialError={stepsError}
         />
 
         {/* Detailed breakdown */}
@@ -283,14 +388,14 @@ export default function ResultsPage() {
             />
             {result.lackingForAchievable.length > 0 ? (
               <QuestionGroup
-                title={`Lacking to Reach Highest Achievable (TRL ${result.highestAchievableTRL})`}
+                title={`Lacking to Reach Highest Achievable (TRACER Level ${result.highestAchievableTRL})`}
                 questions={result.lackingForAchievable}
                 accent="#3b82f6"
                 defaultOpen={true}
               />
             ) : result.lackingForNextLevel.length > 0 ? (
               <QuestionGroup
-                title={`Lacking for Next Level (TRL ${result.highestCompletedTRL + 1})`}
+                title={`Lacking for Next Level (TRACER Level ${result.highestCompletedTRL + 1})`}
                 questions={result.lackingForNextLevel}
                 accent="#f97316"
                 defaultOpen={true}
@@ -299,7 +404,7 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        {/* Actions */}
+        {/* Action buttons */}
         <div className="flex flex-wrap items-center gap-3 pb-10">
           <button
             onClick={() => router.push("/")}

@@ -58,7 +58,11 @@ export default function About() {
               a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
               European Commission TRL, DOST VI and TAPI TRL Assessment Form, and the DOST–PCAARRD assessment framework for research, tailored 
               for applicability to AANR technologies and incorporating commercialization requirements for technologies generated using government 
-              funds. The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
+              funds. 
+            </p>
+
+            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
+              The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
               Member Institutions (CMIs) under the RAISE Program and technical experts of different divisions of DOST-PCAARRD. Using this structured 
               framework, TRACER generates evidence-based and AI-driven indicative recommendations to support the progression of technologies from 
               research and development toward adoption and utilization.

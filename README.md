@@ -2,7 +2,7 @@
 
 **AANR Technology Readiness Assessment for Commercialization and Evaluation Report**
 
-> Developed by **DOST-PCAARRD**, RAISE Western Visayas, and UPV TTBDO
+> Developed by DOST-PCAARRD, RAISE Western Visayas, and UPV TTBDO
 
 ---
 

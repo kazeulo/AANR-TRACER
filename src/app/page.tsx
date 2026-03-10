@@ -146,8 +146,8 @@ export default function HomePage() {
             </p>
 
             {/* Partner Logos */}
-            <div className="mb-10 bg-white/[0.4] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
-              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[#4a6657] mb-2 text-center">In partnership with</div>
+            <div className="mb-10 bg-white/[0.5] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
+              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[#183e25] mb-2 text-center">A Collaboration Project by</div>
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <Image src="/img/logos/dost-logo.png" alt="DOST" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
                 <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
@@ -269,7 +269,11 @@ export default function HomePage() {
               a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
               European Commission TRL, DOST VI and TAPI TRL Assessment Form, and the DOST–PCAARRD assessment framework for research, tailored 
               for applicability to AANR technologies and incorporating commercialization requirements for technologies generated using government 
-              funds. The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
+              funds. 
+            </p>
+
+            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
+              The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
               Member Institutions (CMIs) under the RAISE Program and technical experts of different divisions of DOST-PCAARRD. Using this structured 
               framework, TRACER generates evidence-based and AI-driven indicative recommendations to support the progression of technologies from 
               research and development toward adoption and utilization.
