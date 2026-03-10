@@ -172,7 +172,7 @@ export const aanrTypes = [
   {
     Icon: IconFlask,
     label: "Fertilizer and Pesticide",
-    sub: "Organic & Bio-based Products",
+    sub: "Inorganic, Organic & Bio-based Products",
     definition: "Nutrient and crop-protection products to improve soil fertility, plant health, and protection against pests, diseases, and weeds.",
   },
   {
@@ -196,13 +196,13 @@ export const aanrTypes = [
   {
     Icon: IconWheat,
     label: "New Plant Variety",
-    sub: "Breeding & Genetic Improvement",
+    sub: "Trait & Genetic Improvement",
     definition: "Development, breeding, or genetic improvement of plant varieties with improved traits such as higher yield, stress tolerance, disease resistance, or enhanced nutritional and aesthetic qualities.",
   },
   {
     Icon: IconFish,
     label: "New Animal Breed (Aquatic and Terrestrial)",
-    sub: "Aquatic & Terrestrial Animals",
+    sub: "Breeding and Genetic Improvement",
     definition: "Development, breeding, or genetic improvement of terrestrial and aquatic animals with improved traits such as growth rate, disease resistance, environmental adaptability, or enhanced product quality.",
   },
   {

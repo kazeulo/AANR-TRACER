@@ -29,7 +29,7 @@ const steps = [
     n: "01",
     Icon: IconSeedling,
     title: "Select Your Technology Type",
-    desc: "Choose from 10 AANR technology categories — from new plant varieties and food products to ICT systems and agricultural machinery.",
+    desc: "Choose from 9 AANR technology categories — from new plant varieties and food products to ICT systems and agricultural machinery.",
   },
   {
     n: "02",
@@ -99,7 +99,7 @@ function TechTypeGrid() {
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// ─── Main Component 
 
 export default function HomePage() {
   return (
