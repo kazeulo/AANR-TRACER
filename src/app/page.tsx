@@ -246,7 +246,7 @@ export default function HomePage() {
             </span>
 
             <h2 className="font-['DM_Serif_Display',serif] text-[clamp(28px,3vw,40px)] text-[#0f2e1a] leading-[1.15] tracking-tight mb-6">
-              A structured framework for technology maturation
+              A structured framework for technology maturation and commercialization
             </h2>
 
             {/* Sector chips with icons */}

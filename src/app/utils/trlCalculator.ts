@@ -147,10 +147,10 @@ export function calculateTRL(
     }
   }
 
-  // ── Completed Questions ────────────────────────────────────────────────────
+  // Completed Questions
   const completedQuestions = questions.filter(q => isAnsweredYes(q));
 
-  // ── Lacking for Next Level ─────────────────────────────────────────────────
+  //  Lacking for Next Level 
   // All unanswered questions at levels 1..(highestCompletedTRL + 1)
   const nextLevel = highestCompletedTRL + 1;
   const lackingForNextLevel =
@@ -158,7 +158,7 @@ export function calculateTRL(
       ? questions.filter(q => q.trlLevel <= nextLevel && !isAnsweredYes(q))
       : [];
 
-  // ── Lacking for Achievable ─────────────────────────────────────────────────
+  // Lacking for Achievable
   // All unanswered questions at levels 1..highestAchievableTRL
   const lackingForAchievable =
     highestAchievableTRL > highestCompletedTRL
