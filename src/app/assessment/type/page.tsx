@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { useEffect, useState } from "react";
+import { getQuestionsJSON } from "../../utils/questionsCache";
 
 export default function TechnologyTypePage() {
   const { data, updateData } = useAssessment();
@@ -11,8 +12,7 @@ export default function TechnologyTypePage() {
 
   useEffect(() => {
     const loadTypes = async () => {
-      const res = await fetch("/questions.json");
-      const grouped: Record<string, unknown> = await res.json();
+      const grouped = await getQuestionsJSON();
       setTechnologyTypes(Object.keys(grouped));
     };
     loadTypes();

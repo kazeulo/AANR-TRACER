@@ -8,34 +8,34 @@ import { usePDFExport, PDFContent } from "./UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/TRACERdescriptions";
 import { getTracerLabel } from "./Levelsdescription";
 import {
-  fetchHeader,
-  fetchSteps,
+  fetchRecommendation,
+  AIResult,
   AIHeader,
-  AISteps,
   RecommendationInput,
   TRL_COLORS,
   TRL_LABELS,
 } from "./FetchRecommendation";
 
+import { getQuestionsJSON } from "../../utils/questionsCache";
 import ScoreCards           from "./ScoreCards";
 import QuestionGroup        from "./QuestionGroup";
 import AIRecommendationCard from "./RecommendationCard";
 import ExportModal          from "./ExportModal";
 
-// Full-page loading screen
+// ─── Skeleton shimmer ─────────────────────────────────────────────────────────
 
 function PageLoader() {
-  const messages = [
+  const steps = [
     "Calculating your TRACER Level score…",
     "Analysing your assessment answers…",
-    "Generating your personalised results…",
-    "Preparing your action steps…",
+    "Generating your personalised roadmap…",
+    "Preparing your commercialization steps…",
     "Almost ready…",
   ];
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIdx(i => Math.min(i + 1, messages.length - 1)), 1800);
+    const t = setInterval(() => setIdx(i => Math.min(i + 1, steps.length - 1)), 1800);
     return () => clearInterval(t);
   }, []);
 
@@ -43,7 +43,7 @@ function PageLoader() {
     <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center px-6">
       <div className="flex flex-col items-center gap-6 max-w-xs text-center">
 
-        {/* Spinner ring */}
+        {/* Spinner */}
         <div className="relative w-16 h-16">
           <div className="absolute inset-0 rounded-full border-2 border-[#4aa35a]/15" />
           <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#4aa35a] animate-spin" />
@@ -55,26 +55,24 @@ function PageLoader() {
           </div>
         </div>
 
-        {/* Step dots */}
+        {/* Progress dots */}
         <div className="flex gap-1.5">
-          {messages.map((_, i) => (
-            <span
-              key={i}
-              className="w-1.5 h-1.5 rounded-full transition-all duration-500"
-              style={{ backgroundColor: i <= idx ? "#4aa35a" : "#d1d5db" }}
-            />
+          {steps.map((_, i) => (
+            <span key={i} className="w-1.5 h-1.5 rounded-full transition-all duration-500"
+              style={{ backgroundColor: i <= idx ? "#4aa35a" : "#d1d5db" }} />
           ))}
         </div>
 
         <p className="text-[13px] text-[#6b7a75] font-light transition-all duration-500">
-          {messages[idx]}
+          {steps[idx]}
         </p>
       </div>
     </div>
   );
 }
 
-// ─── Hero
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
 
 function CongratulatoryHero({
   trl,
@@ -88,7 +86,7 @@ function CongratulatoryHero({
   technologyName: string;
   technologyType: string;
   completedColor: string;
-  header: AIHeader;
+  header: AIHeader | null;   // null while AI is loading
   tracerLabel: string;
 }) {
   const isTRL9 = trl === 9;
@@ -203,19 +201,26 @@ function CongratulatoryHero({
             )}
           </div>
 
-          {/* AI headline */}
-          {header?.headline && (
+          {/* AI headline — skeleton while loading */}
+          {header === null ? (
+            <div className="h-5 w-64 rounded-md bg-white/10 animate-pulse mb-2" />
+          ) : header.headline ? (
             <h2 className="font-['DM_Serif_Display',serif] text-[clamp(14px,1.8vw,18px)] text-white/80 leading-[1.3] tracking-tight font-normal italic mb-2">
               {header.headline}
             </h2>
-          )}
+          ) : null}
 
-          {/* AI explanation */}
-          {header?.explanation && (
+          {/* AI explanation — skeleton while loading */}
+          {header === null ? (
+            <div className="space-y-1.5">
+              <div className="h-3 w-full max-w-[480px] rounded bg-white/10 animate-pulse" />
+              <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
+            </div>
+          ) : header.explanation ? (
             <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[520px]">
               {header.explanation}
             </p>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -236,42 +241,23 @@ export default function ResultsPage() {
   const { data } = useAssessment();
   const router   = useRouter();
 
-  // Everything loads together before page shows
-  type PageData = {
-    result: TRLResult;
-    header: AIHeader;
-    steps:  AISteps;
-    stepsError?: string;
-  };
+  // Score data — available almost instantly (local calculation)
+  type ScoreData = { result: TRLResult; aiInput: RecommendationInput; officialInfo: ReturnType<typeof getTracerInfo> };
+  const [scoreData,  setScoreData]  = useState<ScoreData | null>(null);
 
-  const [pageData,   setPageData]   = useState<PageData | null>(null);
+  // AI data — arrives as one combined response
+  const [aiResult,   setAiResult]   = useState<AIResult | null>(null);
+  const [aiError,    setAiError]    = useState<string | undefined>();
+
   const [showModal,  setShowModal]  = useState(false);
-
   const { pdfRef, exporting, exportForm, triggerExport } = usePDFExport();
 
   useEffect(() => {
     const run = async () => {
-      // 1. Load pre-grouped JSON + flatten to QuestionItem[]
-      const res = await fetch("/questions.json");
-      const grouped: Record<string, Record<string, {
-        id: string;
-        questionText: string;
-        trlLevel: number;
-        category: string;
-        toolTip: string;
-      }[]>> = await res.json();
-
-      const byLevel = grouped[data.technologyType] ?? {};
-      const questions: QuestionItem[] = Object.values(byLevel).flat();
-
-      const result = calculateTRL(questions, data.answers, data.ipData, data.technologyType);
-
-      // When achievable === 9, completed is promoted to 9 in the calculator.
-      // Still pass any lacking items to AI so it can give sustaining/completion steps.
-      const gap          = result.highestAchievableTRL - result.highestCompletedTRL;
-      const lackingForAI = result.lackingForAchievable.length > 0
-        ? result.lackingForAchievable
-        : result.lackingForNextLevel;
+      // ── Step 1: load questions (cached after first visit) + calculate score ──
+      const allGrouped = await getQuestionsJSON() as Record<string, Record<string, QuestionItem[]>>;
+      const questions  = Object.values(allGrouped[data.technologyType] ?? {}).flat() as QuestionItem[];
+      const result     = calculateTRL(questions, data.answers, data.ipData, data.technologyType);
 
       const aiInput: RecommendationInput = {
         technologyName:        data.technologyName,
@@ -279,61 +265,45 @@ export default function ResultsPage() {
         technologyDescription: data.technologyDescription ?? "",
         completedTRL:          result.highestCompletedTRL,
         achievableTRL:         result.highestAchievableTRL,
-        lackingItems:          lackingForAI.map(q => ({
+        lackingItems:          result.lackingToLevel9.map(q => ({
           trlLevel:     q.trlLevel,
           questionText: q.questionText,
         })),
       };
-
-      // 2. Look up official description to ground the AI header
       const officialInfo = getTracerInfo(data.technologyType, result.highestCompletedTRL);
 
-      // 3. Fire header + steps in parallel
-      const [headerResult, stepsResult] = await Promise.allSettled([
-        fetchHeader(aiInput, officialInfo),
-        fetchSteps(aiInput),
-      ]);
+      // ── Step 2: fetch AI — wait for it before showing the page ───────────
+      let aiResult: AIResult;
+      try {
+        aiResult = await fetchRecommendation(aiInput, officialInfo);
+      } catch (err) {
+        // AI failed — fall back to official description, show empty roadmap
+        aiResult = {
+          header: {
+            headline:    officialInfo?.title ?? "",
+            explanation: officialInfo?.description ?? "",
+          },
+          steps: { roadmap: [], closing: "" },
+        };
+        setAiError(err instanceof Error ? err.message : "Unknown error");
+      }
 
-      const header: AIHeader =
-        headerResult.status === "fulfilled"
-          ? headerResult.value
-          : { headline: officialInfo?.title ?? "", explanation: officialInfo?.description ?? "" };
-
-      const steps: AISteps | null =
-        stepsResult.status === "fulfilled" ? stepsResult.value : null;
-
-      const stepsError =
-        stepsResult.status === "rejected"
-          ? (stepsResult.reason instanceof Error ? stepsResult.reason.message : "Unknown error")
-          : undefined;
-
-      setPageData({ result, header, steps: steps ?? { roadmap: [], closing: "" }, stepsError });
+      // ── Step 3: everything ready — reveal the page at once ───────────────
+      setScoreData({ result, aiInput, officialInfo });
+      setAiResult(aiResult);
     };
 
     run();
   }, [data]);
 
-  // Show full-page loader until everything is ready
-  if (!pageData) return <PageLoader />;
+  // Show loader until both score + AI are ready
+  if (!scoreData || !aiResult) return <PageLoader />;
 
-  const { result, header, steps, stepsError } = pageData;
+  const { result, aiInput, officialInfo } = scoreData;
 
   const completedColor  = TRL_COLORS[result.highestCompletedTRL]  ?? "#94a3b8";
   const achievableColor = TRL_COLORS[result.highestAchievableTRL] ?? "#4aa35a";
   const gap             = result.highestAchievableTRL - result.highestCompletedTRL;
-  const lackingForAI    = gap > 0 ? result.lackingForAchievable : result.lackingForNextLevel;
-
-  const aiInput: RecommendationInput = {
-    technologyName:        data.technologyName,
-    technologyType:        data.technologyType,
-    technologyDescription: data.technologyDescription ?? "",
-    completedTRL:          result.highestCompletedTRL,
-    achievableTRL:         result.highestAchievableTRL,
-    lackingItems:          lackingForAI.map(q => ({
-      trlLevel:     q.trlLevel,
-      questionText: q.questionText,
-    })),
-  };
 
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-16">
@@ -345,13 +315,13 @@ export default function ResultsPage() {
           Assessment Results
         </div>
 
-        {/* Hero — AI header already resolved */}
+        {/* Hero — AI header streams in, falls back to skeleton until ready */}
         <CongratulatoryHero
           trl={result.highestCompletedTRL}
           technologyName={data.technologyName}
           technologyType={data.technologyType}
           completedColor={completedColor}
-          header={header}
+          header={aiResult?.header ?? null}
           tracerLabel={getTracerLabel(data.technologyType, result.highestCompletedTRL)}
         />
 
@@ -365,11 +335,11 @@ export default function ResultsPage() {
           pendingCount={result.highestCompletedTRL === 9 ? result.lackingForAchievable.length : 0}
         />
 
-        {/* AI action steps — pre-fetched, passed as prop */}
+        {/* AI roadmap — single fetch, passed as prop */}
         <AIRecommendationCard
           {...aiInput}
-          initialSteps={steps}
-          initialError={stepsError}
+          initialSteps={aiResult?.steps ?? null}
+          initialError={aiError}
         />
 
         {/* Detailed breakdown */}

@@ -9,7 +9,7 @@ import {
   TRL_LABELS,
 } from "./FetchRecommendation";
 
-// ─── Markdown bold renderer ───────────────────────────────────────────────────
+// Markdown bold renderer 
 function Md({ text }: { text: string }) {
   const parts = text.split(/\*\*(.*?)\*\*/g);
   return (
@@ -23,7 +23,7 @@ function Md({ text }: { text: string }) {
   );
 }
 
-// ─── Roadmap renderer ─────────────────────────────────────────────────────────
+// Roadmap renderer 
 function RoadmapSteps({
   roadmap,
   closing,
@@ -72,7 +72,7 @@ function RoadmapSteps({
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[11px] font-bold tracking-[1.5px] uppercase leading-none" style={{ color }}>
-                      TRACER Level {group.trlLevel}
+                      Advancing towards TRACER Level {group.trlLevel}
                     </span>
                     <span className="text-[10.5px] text-[#94a3a0] leading-none mt-0.5">{label}</span>
                   </div>
@@ -130,7 +130,7 @@ function RoadmapSteps({
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// Main component 
 interface Props extends RecommendationInput {
   initialSteps: AISteps | null;
   initialError?: string;
@@ -142,16 +142,19 @@ export default function AIRecommendationCard({
   ...input
 }: Props) {
   type Status = "done" | "error" | "loading";
+
+  // Parent always waits for AI before rendering this card, so initialSteps
+  // is always populated on mount. Internal state is only needed for Regenerate.
   const [status, setStatus] = useState<Status>(
-    initialError ? "error" : initialSteps ? "done" : "error"
+    initialError ? "error" : initialSteps ? "done" : "loading"
   );
   const [steps,  setSteps]  = useState<AISteps | null>(initialSteps);
-  const [errMsg, setErrMsg] = useState(initialError ?? "Could not load action steps.");
+  const [errMsg, setErrMsg] = useState(initialError ?? "");
 
   const reload = (clearCache = false) => {
     if (clearCache) {
       try {
-        const key = `tracer_steps_${input.completedTRL}_${input.achievableTRL}_${input.technologyName}`;
+        const key = `tracer_v4_${input.completedTRL}_${input.technologyName}_${input.technologyType}`;
         sessionStorage.removeItem(key);
       } catch { /* ignore */ }
     }
@@ -170,10 +173,10 @@ export default function AIRecommendationCard({
       <div className="flex items-center gap-2.5 px-7 py-4 border-b border-[#f0ede6] bg-[#f8f6f1]">
         <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
         <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
-          Action Steps
+          Commercialization Roadmap
         </span>
         <span className="ml-auto text-[10px] text-[#94a3a0] bg-[#f0ece3] px-2 py-0.5 rounded-full font-medium">
-          AI-powered
+          AI-powered action steps
         </span>
       </div>
 
@@ -210,17 +213,17 @@ export default function AIRecommendationCard({
       </div>
 
       {/* Footer */}
-      {/* <div className="px-7 pb-5 flex items-center justify-between gap-2">
+      <div className="px-7 pb-5 flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3a0"
             strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" />
           </svg>
           <p className="text-[10.5px] text-[#94a3a0] font-light">
-            AI-generated. Validate with a technology transfer specialist.
+            AI-generated. For further assistance, contact your regional Technology Transfer Specialist.
           </p>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

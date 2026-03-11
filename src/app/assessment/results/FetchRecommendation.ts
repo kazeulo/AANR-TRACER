@@ -1,4 +1,4 @@
-// Types 
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface LackingItem {
   trlLevel: number;
@@ -40,7 +40,7 @@ export interface AIResult {
   steps: AISteps;
 }
 
-// Constants
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 export const TRL_LABELS: Record<number, string> = {
   0: "Not Yet Assessed",
@@ -68,7 +68,7 @@ export const TRL_COLORS: Record<number, string> = {
   9: "#4aa35a",
 };
 
-// Helpers
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function formatLacking(items: LackingItem[]): string {
   return items.map(i => `- [TRACER Level ${i.trlLevel}] ${i.questionText}`).join("\n");
@@ -81,12 +81,12 @@ function groupKeys(items: LackingItem[]): string {
 }
 
 function cacheKey(input: RecommendationInput): string {
-  return `tracer_v3_${input.completedTRL}_${input.technologyName}_${input.technologyType}`;
+  return `tracer_v4_${input.completedTRL}_${input.technologyName}_${input.technologyType}`;
 }
 
 async function callProxy(
   messages: { role: string; content: string }[],
-  maxTokens = 2800
+  maxTokens = 2000
 ): Promise<string> {
   const res = await fetch("/api/recommend", {
     method: "POST",
@@ -99,29 +99,29 @@ async function callProxy(
   return (data.completion ?? "").replace(/```json|```/g, "").trim();
 }
 
-// Combined schema 
+// ─── Combined schema ──────────────────────────────────────────────────────────
 
 const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
 {
   "header": {
-    "headline": "<one short warm sentence, max 12 words, celebrating their TRACER Level — do NOT start with Congratulations>",
-    "explanation": "<2-3 plain-language sentences grounded in the official level definition, personalised to this technology and its end users>"
+    "headline": "<one short warm sentence, max 10 words, celebrating their TRACER Level — do NOT start with Congratulations>",
+    "explanation": "<1-2 sentences grounded in the official level definition, personalised to this technology>"
   },
   "roadmap": [
     {
       "trlLevel": <number>,
       "steps": [
         {
-          "action": "<the requirement text copied EXACTLY as provided — do not rephrase or shorten>",
-          "detail": "<2-3 sentences: what exactly to do to accomplish this, why it matters for commercialization, and a concrete first step or who to involve>"
+          "action": "<requirement text copied EXACTLY as provided>",
+          "detail": "<2 sentence: the most important concrete action to accomplish this>"
         }
       ]
     }
   ],
-  "closing": "<1-2 warm sentences acknowledging their current progress and motivating them toward full commercialization>"
+  "closing": "<2 warm sentence motivating them toward full commercialization>"
 }`;
 
-// Prompt builder 
+// ─── Prompt builder ───────────────────────────────────────────────────────────
 
 function buildPrompt(
   i: RecommendationInput,
@@ -134,32 +134,21 @@ function buildPrompt(
     ? `\n\nOFFICIAL TRACER LEVEL ${i.completedTRL} DEFINITION (use as factual basis for the header explanation — do not contradict it):\nTitle: ${officialDescription.title}\nDescription: ${officialDescription.description}`
     : "";
 
-  // TRL 9 fully done — sustain & scale
+  // ── TRL 9 fully done — sustain & scale ──────────────────────────────────
   if (i.completedTRL === 9 && i.lackingItems.length === 0) {
     return `CONTEXT:
 ${techContext}
-- Current TRACER Level: 9 (${TRL_LABELS[9]}) — fully commercialised.${officialBlock}
+- TRACER Level: 9 — fully commercialised.${officialBlock}
 
 INSTRUCTIONS:
-
-HEADER:
-Write a headline (max 12 words) and a 2-3 sentence explanation celebrating full commercialisation, grounded in the official definition above.
-
-ROADMAP:
-Provide 4-5 forward-looking sustaining steps grouped under TRACER Level 9:
-- Expand market reach (new regions, user segments, or export opportunities)
-- Strengthen IP portfolio and licensing strategies
-- Pursue continuous improvement and next-generation R&D
-- Engage with policy bodies, standards bodies, or industry associations
-- Build long-term partnerships and supply chain resilience
-Each step: action = clear imperative verb phrase. detail = 2-3 sentences on what to do, why it matters, and a concrete starting point.
-
-CLOSING: A warm message celebrating this milestone.
+HEADER: headline (max 10 words) + 1-2 sentence explanation grounded in the official definition.
+ROADMAP: 4-5 sustaining steps under TRACER Level 9 (expand markets, IP, R&D, partnerships, policy). Each step: action = imperative phrase, detail = 1 concrete sentence.
+CLOSING: 1 warm sentence.
 
 ${COMBINED_SCHEMA}`;
   }
 
-  // All other cases — full roadmap to Level 9 
+  // ── All other cases — full roadmap to Level 9 ────────────────────────────
   const allLevels = groupKeys(i.lackingItems);
 
   return `CONTEXT:
@@ -171,28 +160,19 @@ UNMET REQUIREMENTS (grouped by TRACER Level):
 ${formatLacking(i.lackingItems)}
 
 INSTRUCTIONS:
-
-HEADER:
-1. headline: One short punchy warm sentence (max 12 words) celebrating what reaching TRACER Level ${i.completedTRL} means for this specific technology. Do NOT start with "Congratulations". Be specific to the technology name and domain.
-2. explanation: 2-3 plain-language sentences grounded in the official TRACER Level definition above — personalised to this technology and its end users. Do not copy the definition verbatim.
-
+HEADER: headline (max 10 words, no "Congratulations", specific to this technology) + 1-2 sentence explanation grounded in the official definition.
 ROADMAP:
-Produce a complete roadmap of every step needed to reach TRACER Level 9.
-1. Group ALL items by TRACER Level (${allLevels}). Each level = one entry in the roadmap array.
-2. For EACH item listed above, create exactly one step:
-   - action: copy the requirement text EXACTLY as written — do not shorten, rephrase, or summarize.
-   - detail: 2-3 sentences — what exactly to do, why it matters for commercialization, and a concrete first step or who to involve.
-3. Every requirement must appear as its own step. Do not merge, skip, or combine any.
-4. Do NOT invent requirements beyond those listed.
-5. Levels already completed (≤ ${i.completedTRL}) must NOT appear in the roadmap.
-
-CLOSING: 1-2 warm sentences acknowledging current progress and motivating toward full commercialization.
-Tone throughout: warm, professional, practical.
+Produce a complete roadmap to TRACER Level 9.
+1. Group ALL items by TRACER Level (${allLevels}). Each level = one roadmap entry.
+2. For EACH item, one step: action = exact requirement text, detail = 2 concrete sentence.
+3. Every requirement = its own step. Do not merge or skip any.
+4. Do NOT invent requirements. Completed levels (≤ ${i.completedTRL}) must NOT appear.
+CLOSING: 1 warm sentence.
 
 ${COMBINED_SCHEMA}`;
 }
 
-// Single combined fetch
+// ─── Single combined fetch ────────────────────────────────────────────────────
 
 export async function fetchRecommendation(
   input: RecommendationInput,
@@ -215,7 +195,7 @@ export async function fetchRecommendation(
       role: "user",
       content: buildPrompt(input, officialDescription),
     },
-  ], 2800);
+  ], 1600);
 
   let parsed: { header: AIHeader; roadmap: RoadmapGroup[]; closing: string };
   try {
@@ -236,7 +216,7 @@ export async function fetchRecommendation(
   return result;
 }
 
-// Legacy exports (kept so existing imports don't break) 
+// ─── Legacy exports (kept so existing imports don't break) ────────────────────
 // These are thin wrappers that call fetchRecommendation internally.
 // Remove once all callers are migrated to fetchRecommendation directly.
 

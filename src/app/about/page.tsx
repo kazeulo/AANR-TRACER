@@ -102,15 +102,15 @@ export default function About() {
             How <span className="text-[#4aa35a] italic">TRACER</span> works
           </h2>
           <p className="text-[15px] text-[#6b8a78] font-light max-w-[520px] leading-[1.7] mb-14">
-            A four-step process that takes you from raw innovation to a documented, actionable TRL assessment report.
+            A four-step process that takes you from raw innovation to a documented, actionable TRACER assessment report.
           </p>
 
           <div className="flex flex-col gap-px bg-white/[0.04] rounded-[20px] overflow-hidden">
             {[
               { icon: "clipboard", title: "Answer Targeted Questions",       body: "Complete a detailed questionnaire covering all critical aspects of technology readiness — development progress, intellectual property status, market potential, regulatory compliance, and industry adoption. Each question is designed to pinpoint the specific stage and maturity of your innovation." },
-              { icon: "calc", title: "Automated TRL Calculation",            body: "Based on your responses, the tool automatically calculates your Technology Readiness Level (TRL). The platform requires that all relevant readiness criteria at each level be fully satisfied before advancing — providing a precise, reliable measure of your technology's maturity." },
-              { icon: "lightbulb", title: "Personalized Recommendations",    body: "After the assessment, you receive a clear, actionable report highlighting your current TRL and the key steps to move forward. Recommendations are tailored to your technology type and target users, ensuring guidance is practical and relevant to your specific context." },
-              { icon: "file", title: "Report Generation and Download",       body: "TRACER automatically generates a formal TRL Assessment Report summarizing your technology details, assessment results, and required steps to reach the next level. Download it as a professionally formatted PDF for documentation, funding proposals, or project planning." },
+              { icon: "calc", title: "Automated TRACER Levels Calculation",  body: "Based on your responses, the tool automatically calculates your Technology readiness based on TRACER scale. The platform requires that all relevant readiness criteria at each level be fully satisfied before advancing — providing a precise, reliable measure of your technology's maturity." },
+              { icon: "lightbulb", title: "Personalized Recommendations",    body: "After the assessment, you receive a clear, actionable report highlighting your current TRACER Level and the key steps to move forward. Recommendations are tailored to your technology type and target users, ensuring guidance is practical and relevant to your specific context." },
+              { icon: "file", title: "Report Generation and Download",       body: "TRACER automatically generates a formal TRACER Assessment Report summarizing your technology details, assessment results, and required steps to reach the next level. Download it as a professionally formatted PDF for documentation, funding proposals, or project planning." },
             ].map(({ icon, title, body }, i) => (
               <div key={i} className="grid grid-cols-[80px_1fr] bg-white/[0.02] hover:bg-white/[0.05] transition-colors">
                 {/* Left */}
