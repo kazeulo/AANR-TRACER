@@ -340,6 +340,7 @@ export default function ResultsPage() {
         <CategoryAnalysis
           completedQuestions={result.completedQuestions}
           lackingToLevel9={result.lackingToLevel9}
+          completedTRL={result.highestCompletedTRL}
         />
 
         {/* AI roadmap — single fetch, passed as prop */}
