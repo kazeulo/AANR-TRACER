@@ -191,7 +191,7 @@ export default function HomePage() {
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-8">
         <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4">
           {[
-            { n: "9",  label: "TRL Levels",        Icon: IconBarChart },
+            { n: "9",  label: "TRACER Levels",        Icon: IconBarChart },
             { n: "9",  label: "Technology Types",  Icon: IconFlask },
             { n: "3",  label: "AANR Sub-Sectors",  Icon: IconLeaf },
             { n: "1",  label: "Clear Roadmap",     Icon: IconListCheck },
