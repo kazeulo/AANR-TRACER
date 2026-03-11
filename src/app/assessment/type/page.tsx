@@ -22,7 +22,7 @@ export default function TechnologyTypePage() {
 
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
-      <div className="max-w-[600px] mx-auto w-full">
+      <div className="max-w-[760px] mx-auto w-full">
 
         {/* Eyebrow */}
         <div className="flex justify-center mb-8">
