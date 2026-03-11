@@ -33,7 +33,7 @@ export default function DataPrivacyNotice() {
           <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[var(--color-bg-subtle)]">
             <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
             <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">
-              AANR-TRacer · Data Privacy Notice
+              AANR-TRACER · Data Privacy Notice
             </span>
           </div>
 

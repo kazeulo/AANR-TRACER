@@ -60,7 +60,7 @@ export default function AchievableBanner({
               <strong className="text-[var(--color-text-gray)] font-semibold">
                 {lackingItems.length} item{lackingItems.length !== 1 ? "s" : ""}
               </strong>{" "}
-              below to fully reach your highest achievable level.
+              below to fully reach your highest potential readiness level.
             </p>
           </div>
         </div>

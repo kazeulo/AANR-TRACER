@@ -30,7 +30,7 @@ export default function ScoreCards({
         {/* Completed */}
         <div className="px-7 py-7 flex flex-col gap-2">
           <p className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)]">
-            Highest Completed TRL
+            Highest Completed TRACER Level
           </p>
           <div className="flex items-end gap-3 leading-none">
             <span
@@ -58,7 +58,7 @@ export default function ScoreCards({
         {gap > 0 && (
           <div className="px-7 py-7 flex flex-col gap-2 bg-[#f8faf9]">
             <p className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)]">
-              Highest Achievable TRL
+              Highest Potential TRACER Level
             </p>
             <div className="flex items-end gap-3 leading-none">
               <span
