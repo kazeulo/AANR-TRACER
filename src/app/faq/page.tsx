@@ -31,7 +31,7 @@ export default function FAQ() {
   };
 
   return (
-    <main className="font-['DM_Sans',sans-serif] bg-[#f5f2ec] text-[#1a1a1a]">
+    <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* ═══ HEADER ═══ */}
       <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[80px] pb-[100px] overflow-hidden">
@@ -40,14 +40,14 @@ export default function FAQ() {
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             PCAARRD · AANR-TRACER
           </div>
-          <h1 className="font-['DM_Serif_Display',serif] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
-            Frequently Asked <em className="text-[#4aa35a]">Questions</em>
+          <h1 className="font-[var(--font-heading)] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
+            Frequently Asked <em className="text-[var(--color-accent)]">Questions</em>
           </h1>
-          <p className="text-[16px] text-[#94a3a0] font-light max-w-[500px] leading-[1.7]">
+          <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
             Everything you need to know about AANR TRACER — how it works, what to expect, and how to make the most of your assessment.
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function FAQ() {
 
         {/* Sidebar */}
         <aside className="hidden lg:block sticky top-[72px]">
-          <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[#94a3a0] mb-4 pb-3 border-b border-[#e5e1d8]">
+          <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-text-faintest)] mb-4 pb-3 border-b border-[var(--color-border-input)]">
             Categories
           </div>
           {categories.map(cat => (
@@ -72,12 +72,12 @@ export default function FAQ() {
               onClick={() => scrollToCategory(cat.title)}
               className={`flex items-center gap-2.5 w-full px-3.5 py-3 rounded-[10px] text-[14px] font-medium text-left mb-0.5 border transition-all duration-200 ${
                 activeCategory === cat.title
-                  ? "bg-[#4aa35a]/10 text-[#0f2e1a] border-[#4aa35a]/25 font-semibold"
-                  : "bg-transparent text-[#6b7a75] border-transparent hover:bg-[#0f2e1a]/[0.05] hover:text-[#0f2e1a]"
+                  ? "bg-[var(--color-accent)]/10 text-[var(--color-primary)] border-[#4aa35a]/25 font-semibold"
+                  : "bg-transparent text-[#6b7a75] border-transparent hover:bg-[#0f2e1a]/[0.05] hover:text-[var(--color-primary)]"
               }`}
             >
               <span className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                activeCategory === cat.title ? "bg-[#4aa35a]/15" : "bg-[#f5f2ec]"
+                activeCategory === cat.title ? "bg-[var(--color-accent)]/15" : "bg-[var(--color-bg)]"
               }`}>
                 <CategoryIcon
                   name={cat.icon}
@@ -86,7 +86,7 @@ export default function FAQ() {
                 />
               </span>
               <span className="flex-1">{cat.title}</span>
-              <span className={`text-[11px] ${activeCategory === cat.title ? "text-[#4aa35a] font-semibold" : "text-[#94a3a0]"}`}>
+              <span className={`text-[11px] ${activeCategory === cat.title ? "text-[var(--color-accent)] font-semibold" : "text-[var(--color-text-faintest)]"}`}>
                 {cat.faqs.length}
               </span>
             </button>
@@ -106,7 +106,7 @@ export default function FAQ() {
                 <div className="w-10 h-10 bg-[#0f2e1a] rounded-[12px] flex items-center justify-center flex-shrink-0">
                   <CategoryIcon name={cat.icon} size={18} color="#4aa35a" />
                 </div>
-                <h2 className="font-['DM_Serif_Display',serif] text-[24px] text-[#0f2e1a] tracking-tight">
+                <h2 className="font-[var(--font-heading)] text-[24px] text-[var(--color-primary)] tracking-tight">
                   {cat.title}
                 </h2>
                 <div className="flex-1 h-px bg-[#e5e1d8]" />
@@ -121,18 +121,18 @@ export default function FAQ() {
                     className={`mb-2 rounded-[14px] border overflow-hidden transition-all duration-200 ${
                       isOpen
                         ? "border-[#4aa35a]/30 shadow-[0_4px_20px_rgba(74,163,90,0.08)]"
-                        : "border-[#ede9e0] hover:shadow-[0_4px_20px_rgba(15,46,26,0.06)]"
-                    } bg-white`}
+                        : "border-[var(--color-border)] hover:shadow-[0_4px_20px_rgba(15,46,26,0.06)]"
+                    } bg-[var(--color-bg-card)]`}
                   >
                     <button
                       onClick={() => toggleFAQ(cat.title, fidx)}
                       className="w-full flex items-center justify-between px-6 py-5 text-left gap-4"
                     >
-                      <span className={`text-[15px] leading-[1.4] ${isOpen ? "text-[#0f2e1a] font-semibold" : "text-[#1a1a1a] font-medium"}`}>
+                      <span className={`text-[15px] leading-[1.4] ${isOpen ? "text-[var(--color-primary)] font-semibold" : "text-[var(--color-text)] font-medium"}`}>
                         {faq.question}
                       </span>
                       <span className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-250 ${
-                        isOpen ? "bg-[#4aa35a] text-white rotate-180" : "bg-[#f5f2ec] text-[#94a3a0]"
+                        isOpen ? "bg-[var(--color-accent)] text-white rotate-180" : "bg-[var(--color-bg)] text-[var(--color-text-faintest)]"
                       }`}>
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                           <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

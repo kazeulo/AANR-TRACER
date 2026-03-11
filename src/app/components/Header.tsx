@@ -41,7 +41,7 @@ export default function Header() {
             href="/"
             className="font-['DM_Serif_Display'] text-[24px] text-white text-bold tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
           >
-            AANR-<span className="text-[#4aa35a] italic ">TRACER</span>
+            AANR-<span className="text-[var(--color-accent)] italic ">TRACER</span>
           </Link>
 
           {/* Desktop links */}
@@ -52,8 +52,8 @@ export default function Header() {
                 href={href}
                 className={`text-[14px] font-medium px-3.5 py-2 rounded-lg transition-all duration-200 whitespace-nowrap ${
                   pathname === href
-                    ? "text-[#4aa35a] bg-[#4aa35a]/10"
-                    : "text-white/60 hover:text-white hover:bg-white/[0.07]"
+                    ? "text-[var(--color-accent)] bg-[var(--color-accent)]/10"
+                    : "text-white/60 hover:text-white hover:bg-[var(--color-bg-card)]/[0.07]"
                 }`}
               >
                 {label}
@@ -64,7 +64,7 @@ export default function Header() {
           {/* Desktop CTA */}
           <Link
             href="/assessment/disclaimer"
-            className="hidden md:inline-flex items-center text-[13px] font-semibold text-white bg-[#4aa35a] px-5 py-2.5 rounded-full flex-shrink-0 shadow-[0_4px_16px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(74,163,90,0.45)] transition-all duration-200"
+            className="hidden md:inline-flex items-center text-[13px] font-semibold text-white bg-[var(--color-accent)] px-5 py-2.5 rounded-full flex-shrink-0 shadow-[0_4px_16px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(74,163,90,0.45)] transition-all duration-200"
           >
             Start Assessment
           </Link>
@@ -73,11 +73,11 @@ export default function Header() {
           <button
             onClick={() => setIsOpen(o => !o)}
             aria-label="Toggle menu"
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-[10px] bg-white/[0.07] border border-white/10 gap-[5px] hover:bg-white/[0.12] transition-colors flex-shrink-0"
+            className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-[10px] bg-[var(--color-bg-card)]/[0.07] border border-white/10 gap-[5px] hover:bg-[var(--color-bg-card)]/[0.12] transition-colors flex-shrink-0"
           >
-            <span className={`block w-[18px] h-[1.5px] bg-white rounded-full transition-all duration-300 origin-center ${isOpen ? "translate-y-[6.5px] rotate-45" : ""}`} />
-            <span className={`block w-[18px] h-[1.5px] bg-white rounded-full transition-all duration-300 ${isOpen ? "opacity-0 scale-x-0" : ""}`} />
-            <span className={`block w-[18px] h-[1.5px] bg-white rounded-full transition-all duration-300 origin-center ${isOpen ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
+            <span className={`block w-[18px] h-[1.5px] bg-[var(--color-bg-card)] rounded-full transition-all duration-300 origin-center ${isOpen ? "translate-y-[6.5px] rotate-45" : ""}`} />
+            <span className={`block w-[18px] h-[1.5px] bg-[var(--color-bg-card)] rounded-full transition-all duration-300 ${isOpen ? "opacity-0 scale-x-0" : ""}`} />
+            <span className={`block w-[18px] h-[1.5px] bg-[var(--color-bg-card)] rounded-full transition-all duration-300 origin-center ${isOpen ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
           </button>
         </div>
 
@@ -94,18 +94,18 @@ export default function Header() {
                 href={href}
                 className={`flex items-center justify-between text-sm font-medium px-4 py-3.5 rounded-[10px] transition-all duration-200 ${
                   pathname === href
-                    ? "bg-[#4aa35a]/10 text-[#4aa35a] font-semibold"
-                    : "text-white/60 hover:bg-white/[0.06] hover:text-white"
+                    ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold"
+                    : "text-white/60 hover:bg-[var(--color-bg-card)]/[0.06] hover:text-white"
                 }`}
               >
                 <span>{label}</span>
-                <span className={`text-xs ${pathname === href ? "text-[#4aa35a]" : "text-white/30"}`}>›</span>
+                <span className={`text-xs ${pathname === href ? "text-[var(--color-accent)]" : "text-white/30"}`}>›</span>
               </Link>
             ))}
-            <div className="h-px bg-white/[0.05] my-2" />
+            <div className="h-px bg-[var(--color-bg-card)]/[0.05] my-2" />
             <Link
               href="/assessment/disclaimer"
-              className="flex items-center justify-center text-sm font-semibold text-white bg-[#4aa35a] px-4 py-3.5 rounded-[10px] hover:bg-[#3d8f4c] transition-colors mt-1"
+              className="flex items-center justify-center text-sm font-semibold text-white bg-[var(--color-accent)] px-4 py-3.5 rounded-[10px] hover:bg-[var(--color-accent-hover)] transition-colors mt-1"
             >
               Start Assessment →
             </Link>

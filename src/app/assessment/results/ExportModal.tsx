@@ -26,8 +26,8 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
   };
 
   const inputClass = (key: keyof ExportFormData) =>
-    `w-full appearance-none bg-[#f8f6f1] border rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all ${
-      errors[key] ? "border-red-300 bg-red-50" : "border-[#e5e1d8]"
+    `w-full appearance-none bg-[var(--color-bg-subtle)] border rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all ${
+      errors[key] ? "border-red-300 bg-red-50" : "border-[var(--color-border-input)]"
     }`;
 
   return (
@@ -37,12 +37,12 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
         onClick={() => !exporting && onClose()}
       />
 
-      <div className="relative font-['DM_Sans',sans-serif] bg-white rounded-3xl shadow-2xl w-full max-w-[440px] z-10 overflow-hidden">
+      <div className="relative font-[var(--font-body)] bg-[var(--color-bg-card)] rounded-3xl shadow-2xl w-full max-w-[440px] z-10 overflow-hidden">
 
         {/* Modal header strip */}
-        <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[#f8f6f1]">
-          <span className="w-2 h-2 rounded-full bg-[#4aa35a] flex-shrink-0" />
-          <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">Export Results</span>
+        <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[var(--color-bg-subtle)]">
+          <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
+          <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">Export Results</span>
           <button
             onClick={() => !exporting && onClose()}
             className="ml-auto w-7 h-7 rounded-full bg-[#ede9e0] hover:bg-[#e0dbd3] flex items-center justify-center text-[#6b7a75] transition-colors"
@@ -54,8 +54,8 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
         </div>
 
         <div className="px-7 py-7">
-          <h2 className="font-['DM_Serif_Display',serif] text-[22px] text-[#0f2e1a] mb-1">Export as PDF</h2>
-          <p className="text-[13px] text-[#8a9a94] font-light mb-7">
+          <h2 className="font-[var(--font-heading)] text-[22px] text-[var(--color-primary)] mb-1">Export as PDF</h2>
+          <p className="text-[13px] text-[var(--color-text-faint)] font-light mb-7">
             Your details will be included in the report header.
           </p>
 
@@ -85,14 +85,14 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
           <div className="flex gap-3">
             <button
               onClick={() => !exporting && onClose()}
-              className="flex-1 px-4 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all"
+              className="flex-1 px-4 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-[var(--color-bg-card)] border border-[var(--color-border-input)] hover:border-[#0f2e1a]/30 hover:text-[var(--color-primary)] transition-all"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
               disabled={exporting}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-[14px] font-semibold text-white bg-[#4aa35a] shadow-[0_6px_24px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] disabled:opacity-60 disabled:shadow-none transition-all"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-[14px] font-semibold text-white bg-[var(--color-accent)] shadow-[0_6px_24px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] disabled:opacity-60 disabled:shadow-none transition-all"
             >
               {exporting ? (
                 <>
@@ -132,7 +132,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-[11px] font-bold tracking-[1.5px] uppercase text-[#94a3a0] mb-2">
+      <label className="block text-[11px] font-bold tracking-[1.5px] uppercase text-[var(--color-text-faintest)] mb-2">
         {label}{" "}
         {required
           ? <span className="text-red-400">*</span>
@@ -143,8 +143,8 @@ function Field({
         value={form[id]}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full appearance-none bg-[#f8f6f1] border rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all ${
-          errors[id] ? "border-red-300 bg-red-50" : "border-[#e5e1d8]"
+        className={`w-full appearance-none bg-[var(--color-bg-subtle)] border rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all ${
+          errors[id] ? "border-red-300 bg-red-50" : "border-[var(--color-border-input)]"
         }`}
       />
       {errors[id] && <p className="text-[12px] text-red-400 mt-1">{errors[id]}</p>}

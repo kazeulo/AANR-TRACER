@@ -16,7 +16,7 @@ function Md({ text }: { text: string }) {
     <>
       {parts.map((p, i) =>
         i % 2 === 1
-          ? <strong key={i} className="font-semibold text-[#0f2e1a]">{p}</strong>
+          ? <strong key={i} className="font-semibold text-[var(--color-primary)]">{p}</strong>
           : <span key={i}>{p}</span>
       )}
     </>
@@ -45,10 +45,10 @@ function RoadmapSteps({
             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
           </svg>
-          <span className="text-[11px] font-semibold text-[#0f2e1a]">{technologyName}</span>
+          <span className="text-[11px] font-semibold text-[var(--color-primary)]">{technologyName}</span>
         </div>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#4aa35a]/[0.07] border border-[#4aa35a]/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--color-accent)]/[0.07] border border-[#4aa35a]/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
           <span className="text-[11px] font-medium text-[#2d6e3a]">{technologyType}</span>
         </div>
       </div>
@@ -74,7 +74,7 @@ function RoadmapSteps({
                     <span className="text-[11px] font-bold tracking-[1.5px] uppercase leading-none" style={{ color }}>
                       Advancing towards TRACER Level {group.trlLevel}
                     </span>
-                    <span className="text-[10.5px] text-[#94a3a0] leading-none mt-0.5">{label}</span>
+                    <span className="text-[10.5px] text-[var(--color-text-faintest)] leading-none mt-0.5">{label}</span>
                   </div>
                 </div>
 
@@ -89,7 +89,7 @@ function RoadmapSteps({
                         {si + 1}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-[13.5px] font-semibold text-[#0f2e1a] leading-snug mb-1.5">
+                        <p className="text-[13.5px] font-semibold text-[var(--color-primary)] leading-snug mb-1.5">
                           <Md text={step.action} />
                         </p>
                         <p className="text-[12.5px] text-[#6b7a75] leading-relaxed">
@@ -104,7 +104,7 @@ function RoadmapSteps({
           })}
         </div>
       ) : (
-        <p className="text-[13px] text-[#94a3a0] font-light py-2">
+        <p className="text-[13px] text-[var(--color-text-faintest)] font-light py-2">
           No outstanding action steps found.
         </p>
       )}
@@ -113,7 +113,7 @@ function RoadmapSteps({
       {closing && (
         <div className="mt-8 pt-6 border-t border-[#f0ece3]">
           <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-gradient-to-r from-[#0f2e1a]/[0.04] to-[#4aa35a]/[0.04] border border-[#4aa35a]/20">
-            <div className="w-8 h-8 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div className="w-8 h-8 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -167,15 +167,15 @@ export default function AIRecommendationCard({
   };
 
   return (
-    <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
+    <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
 
       {/* Card header */}
-      <div className="flex items-center gap-2.5 px-7 py-4 border-b border-[#f0ede6] bg-[#f8f6f1]">
-        <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
-        <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
+      <div className="flex items-center gap-2.5 px-7 py-4 border-b border-[#f0ede6] bg-[var(--color-bg-subtle)]">
+        <span className="w-2 h-2 rounded-full bg-[var(--color-accent)]" />
+        <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">
           Commercialization Roadmap
         </span>
-        <span className="ml-auto text-[10px] text-[#94a3a0] bg-[#f0ece3] px-2 py-0.5 rounded-full font-medium">
+        <span className="ml-auto text-[10px] text-[var(--color-text-faintest)] bg-[#f0ece3] px-2 py-0.5 rounded-full font-medium">
           AI-powered action steps
         </span>
       </div>
@@ -185,17 +185,17 @@ export default function AIRecommendationCard({
         {status === "loading" && (
           <div className="flex flex-col items-center py-8 gap-3">
             <div className="w-7 h-7 rounded-full border-2 border-[#4aa35a]/30 border-t-[#4aa35a] animate-spin" />
-            <p className="text-[12px] text-[#94a3a0]">Preparing your action steps…</p>
+            <p className="text-[12px] text-[var(--color-text-faintest)]">Preparing your action steps…</p>
           </div>
         )}
 
         {status === "error" && (
           <div className="flex flex-col items-center py-6 gap-3 text-center">
-            <p className="text-[13px] font-semibold text-[#0f2e1a]">Could not load action steps</p>
-            <p className="text-[12px] text-[#94a3a0]">{errMsg}</p>
+            <p className="text-[13px] font-semibold text-[var(--color-primary)]">Could not load action steps</p>
+            <p className="text-[12px] text-[var(--color-text-faintest)]">{errMsg}</p>
             <button
               onClick={() => reload(true)}
-              className="px-5 py-2 rounded-full text-[12px] font-medium text-[#4aa35a] border border-[#4aa35a]/30 hover:bg-[#4aa35a]/[0.06] transition-colors"
+              className="px-5 py-2 rounded-full text-[12px] font-medium text-[var(--color-accent)] border border-[#4aa35a]/30 hover:bg-[var(--color-accent)]/[0.06] transition-colors"
             >
               Retry
             </button>
@@ -219,7 +219,7 @@ export default function AIRecommendationCard({
             strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" />
           </svg>
-          <p className="text-[10.5px] text-[#94a3a0] font-light">
+          <p className="text-[10.5px] text-[var(--color-text-faintest)] font-light">
             AI-generated. For further assistance, contact your regional Technology Transfer Specialist.
           </p>
         </div>

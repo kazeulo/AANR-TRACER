@@ -51,29 +51,29 @@ function TechTypeGrid() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 items-start">
       {aanrTypes.map(({ Icon, label, sub, definition }) => {
         const isOpen = expanded === label;
         return (
           <button
             key={label}
             onClick={() => setExpanded(isOpen ? null : label)}
-            className={`bg-white border rounded-2xl px-5 py-5 flex flex-col items-start text-left gap-2.5 transition-all duration-200 group w-full
+            className={`bg-[var(--color-bg-card)] border rounded-2xl px-5 py-5 flex flex-col items-start text-left gap-2.5 transition-all duration-200 group w-full h-fit
               ${isOpen
                 ? "border-[#4aa35a]/40 shadow-[0_6px_24px_rgba(15,46,26,0.10)]"
-                : "border-[#ede9e0] hover:border-[#4aa35a]/30 hover:shadow-[0_6px_20px_rgba(15,46,26,0.07)]"
+                : "border-[var(--color-border)] hover:border-[#4aa35a] hover:shadow-[0_6px_20px_rgba(15,46,26,0.07)]"
               }`}
           >
             {/* Top row */}
             <div className="flex items-center gap-3 w-full">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors
-                ${isOpen ? "bg-[#4aa35a]/[0.10]" : "bg-[#f5f2ec] group-hover:bg-[#4aa35a]/[0.08]"}`}
+                ${isOpen ? "bg-[var(--color-accent)]/[0.10]" : "bg-[var(--color-bg)] group-hover:bg-[var(--color-accent)]/[0.08]"}`}
               >
-                <Icon className="w-5 h-5 text-[#4aa35a]" />
+                <Icon className="w-5 h-5 text-[var(--color-accent)]" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[12px] font-semibold text-[#0f2e1a] leading-snug">{label}</div>
-                <div className="text-[10px] text-[#94a3a0] font-light leading-tight mt-0.5">{sub}</div>
+                <div className="text-[13px] font-semibold text-[var(--color-primary)] leading-snug">{label}</div>
+                <div className="text-[11px] text-[var(--color-text-faintest)] font-light leading-tight mt-1">{sub}</div>
               </div>
               {/* Chevron */}
               <svg
@@ -88,7 +88,7 @@ function TechTypeGrid() {
 
             {/* Expanded definition */}
             {isOpen && (
-              <p className="text-[12px] text-[#6b8a78] font-light leading-relaxed border-t border-[#f0ece3] pt-3 w-full">
+              <p className="text-[12px] text-[var(--color-text)] font-light leading-relaxed border-t border-[#f0ece3] pt-3 w-full">
                 {definition}
               </p>
             )}
@@ -103,7 +103,7 @@ function TechTypeGrid() {
 
 export default function HomePage() {
   return (
-    <main className="font-['DM_Sans',sans-serif] bg-[#f5f2ec] text-[#1a1a1a]">
+    <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-screen flex items-center bg-[#0f2e1a] overflow-hidden px-6 lg:px-[6vw] pt-[60px] pb-[120px]">
@@ -119,30 +119,30 @@ export default function HomePage() {
           style={{ background: "radial-gradient(circle,rgba(34,197,94,0.07) 0%,transparent 70%)" }} />
 
         {/* Decorative motifs */}
-        <RiceStalk className="absolute left-[4%] bottom-[18%] w-[22px] text-[#4aa35a]/20 pointer-events-none hidden lg:block" />
-        <RiceStalk className="absolute left-[7%] bottom-[14%] w-[16px] text-[#4aa35a]/15 pointer-events-none hidden lg:block" />
-        <LeafSprig className="absolute left-[2%] top-[32%] w-[35px] text-[#4aa35a]/10 pointer-events-none hidden lg:block" />
-        <FishDecor className="absolute right-[4%] bottom-[28%] w-[70px] text-[#4aa35a]/10 pointer-events-none hidden lg:block" />
-        <WaveRipple className="absolute bottom-[90px] left-0 w-full text-[#4aa35a]/15 pointer-events-none" />
+        <RiceStalk className="absolute left-[4%] bottom-[18%] w-[22px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <RiceStalk className="absolute left-[7%] bottom-[14%] w-[16px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <LeafSprig className="absolute left-[2%] top-[32%] w-[35px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <FishDecor className="absolute right-[4%] bottom-[28%] w-[70px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <WaveRipple className="absolute bottom-[90px] left-0 w-full text-[var(--color-accent-15)] pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-[60px] items-center">
 
           {/* Left */}
           <div>
-            <h1 className="font-['DM_Serif_Display',serif] text-[clamp(38px,4.2vw,52px)] leading-[1.1] text-white mb-5 tracking-tight">
+            <h1 className="font-[var(--font-heading)] text-[clamp(38px,4.2vw,52px)] leading-[1.1] text-white mb-5 tracking-tight">
               Technology Readiness<br />
               Assessment for{" "}
-              <em className="text-[#4aa35a] italic">Commercialization</em>
+              <em className="text-[var(--color-accent)] italic">Commercialization</em>
               <br />Enhancement and Roadmapping
             </h1>
 
-            <p className="text-[15px] leading-[1.75] text-[#8a9a94] font-light mb-6 max-w-[420px]">
+            <p className="text-[15px] leading-[1.75] text-[var(--color-text-faint)] font-light mb-6 max-w-[420px]">
               Your guide in evaluating the technical and commercial readiness of AANR technologies.
             </p>
 
             {/* Partner Logos */}
-            <div className="mb-10 bg-white/[0.5] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
-              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[#183e25] mb-2 text-center">A Collaborative Project by</div>
+            <div className="mb-10 bg-[var(--white-35)] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
+              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[var(--color-text-heading)] mb-2 text-center">A Collaborative Project by</div>
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <Image src="/img/logos/dost-logo.png" alt="DOST" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
                 <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
@@ -155,10 +155,10 @@ export default function HomePage() {
 
             <Link
               href="/assessment/disclaimer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[#4aa35a] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
             >
               Start Your Assessment
-              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+              <span className="w-5 h-5 rounded-full bg-[var(--color-bg-card)]/20 flex items-center justify-center">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -168,14 +168,14 @@ export default function HomePage() {
 
           {/* Right — TRL scale */}
           <div className="hidden lg:flex flex-col gap-2.5">
-            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[#4a6657] mb-2">TRACER Scale</div>
+            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--white-35)] mb-2">TRACER Scale</div>
             {trlLevels.map(({ n, label, w, color }) => (
               <div key={n} className="flex items-center gap-3">
                 <span className="text-[11px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
-                <div className="flex-1 h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
+                <div className="flex-1 h-1.5 bg-[var(--white-15)] rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${w} ${color}`} />
                 </div>
-                <span className="text-[12px] text-[#4a6657] w-[160px] flex-shrink-0">{label}</span>
+                <span className="text-[12px] text-[var(--white-35)] w-[160px] flex-shrink-0">{label}</span>
               </div>
             ))}
           </div>
@@ -191,22 +191,22 @@ export default function HomePage() {
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-8">
         <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4">
           {[
-            { n: "9",  label: "TRACER Levels",        Icon: IconBarChart },
+            { n: "9",  label: "TRACER Levels",     Icon: IconBarChart },
             { n: "9",  label: "Technology Types",  Icon: IconFlask },
             { n: "3",  label: "AANR Sub-Sectors",  Icon: IconLeaf },
             { n: "1",  label: "Clear Roadmap",     Icon: IconListCheck },
           ].map(({ n, label, Icon }) => (
             <div key={label} className="text-center px-6 border-r border-white/[0.08] last:border-r-0 flex flex-col items-center gap-1">
-              <Icon className="w-4 h-4 text-[#4aa35a]/60 mb-1" />
-              <div className="font-['DM_Serif_Display',serif] text-[32px] text-[#4aa35a] leading-none">{n}</div>
-              <div className="text-[11px] text-[#6b8a78] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
+              <Icon className="w-5 h-5 text-[var(--color-accent)] mb-3" />
+              <div className="font-[var(--font-heading)] text-[32px] text-[var(--color-accent)] leading-none">{n}</div>
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ═══ AANR SECTOR SHOWCASE ═══ */}
-      <section className="py-[80px] px-6 lg:px-[6vw] bg-[#f5f2ec] relative overflow-hidden">
+      <section className="py-[80px] px-6 lg:px-[6vw] bg-[var(--color-bg)] relative overflow-hidden">
 
         {/* Subtle dot grid bg */}
         <div className="absolute inset-0 pointer-events-none"
@@ -215,14 +215,14 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto relative z-10">
           <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-10">
             <div>
-              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[#4aa35a] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
                 Covered Technologies
               </span>
-              <h2 className="font-['DM_Serif_Display',serif] text-[clamp(28px,3vw,38px)] text-[#0f2e1a] tracking-tight leading-snug">
-                Built for the <em className="text-[#4aa35a]">AANR Sector</em>
+              <h2 className="font-[var(--font-heading)] text-[clamp(28px,3vw,38px)] text-[var(--color-primary)] tracking-tight leading-snug">
+                Built for the <em className="text-[var(--color-accent)]">AANR Sector</em>
               </h2>
             </div>
-            <p className="text-[13px] text-[#8a9a94] font-light max-w-[260px] leading-relaxed">
+            <p className="text-[13px] text-[var(--color-text-faint)] font-light max-w-[260px] leading-relaxed">
               TRACER covers the full breadth of Agriculture, Aquatic, and Natural Resources innovations.
             </p>
           </div>
@@ -232,15 +232,15 @@ export default function HomePage() {
       </section>
 
       {/* ═══ ABOUT ═══ */}
-      <section className="py-[100px] px-6 lg:px-[6vw] bg-white relative overflow-hidden">
+      <section className="py-[100px] px-6 lg:px-[6vw] bg-[var(--color-bg-card)] relative overflow-hidden">
 
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center relative z-10">
           <div>
-            <span className="inline-block text-[11px] font-bold tracking-[3px] uppercase text-[#4aa35a] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+            <span className="inline-block text-[11px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
               About TRACER
             </span>
 
-            <h2 className="font-['DM_Serif_Display',serif] text-[clamp(28px,3vw,40px)] text-[#0f2e1a] leading-[1.15] tracking-tight mb-6">
+            <h2 className="font-[var(--font-heading)] text-[clamp(28px,3vw,40px)] text-[var(--color-primary)] leading-[1.15] tracking-tight mb-6">
               A structured framework for technology maturation and commercialization
             </h2>
 
@@ -251,14 +251,14 @@ export default function HomePage() {
                 { Icon: IconFish,  label: "Aquatic" },
                 { Icon: IconTree,  label: "Natural Resources" },
               ].map(({ Icon, label }) => (
-                <div key={label} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#4a5568] bg-[#f5f2ec] border border-[#ede9e0] px-3 py-1.5 rounded-full">
-                  <Icon className="w-3.5 h-3.5 text-[#4aa35a]" />
+                <div key={label} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[var(--color-text-gray)] bg-[var(--color-bg)] border border-[var(--color-border)] px-3 py-1.5 rounded-full">
+                  <Icon className="w-3.5 h-3.5 text-[var(--color-accent)]" />
                   {label}
                 </div>
               ))}
             </div>
 
-            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
+            <p className="text-justify text-[14px] leading-[1.85] text-[var(--color-text-gray)] font-light mb-4">
               TRACER is a web-based assessment and recommendation-support tool designed to systematically evaluate the current development 
               status and commercialization preparedness of Agriculture, Aquatic, and Natural Resources (AANR) technologies. The platform applies 
               a structured readiness assessment framework adapted from established tools such as the NASA Technology Readiness Level (TRL), 
@@ -267,14 +267,14 @@ export default function HomePage() {
               funds. 
             </p>
 
-            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
+            <p className="text-justify text-[14px] leading-[1.85] text-[var(--color-text-gray)] font-light mb-4">
               The tool has been reviewed and enhanced by experts, technology generators, and technology transfer officers from Consortium 
               Member Institutions (CMIs) under the RAISE Program and technical experts of different divisions of DOST-PCAARRD. Using this structured 
               framework, TRACER generates evidence-based and AI-driven indicative recommendations to support the progression of technologies from 
               research and development toward adoption and utilization.
             </p>
 
-            <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light">
+            <p className="text-justify text-[14px] leading-[1.85] text-[var(--color-text-gray)] font-light">
               The tool evaluates technologies by category using a defined set of criteria across key areas, including technology development status, 
               intellectual property position, market and pre-commercialization readiness initiatives, industry validation and adoption, and regulatory 
               compliance. In doing so, it supports informed decision-making, standardized documentation, and strategic planning across the various 
@@ -286,9 +286,9 @@ export default function HomePage() {
           <div className="relative">
             {/* Rice stalk cluster beside image */}
             <div className="absolute -left-7 bottom-[12%] flex gap-1 pointer-events-none z-20">
-              <RiceStalk className="w-[16px] text-[#4aa35a]/25 -rotate-6" />
-              <RiceStalk className="w-[20px] text-[#4aa35a]/35" />
-              <RiceStalk className="w-[14px] text-[#4aa35a]/20 rotate-8" />
+              <RiceStalk className="w-[16px] text-[var(--color-accent)]/25 -rotate-6" />
+              <RiceStalk className="w-[20px] text-[var(--color-accent)]/35" />
+              <RiceStalk className="w-[14px] text-[var(--color-accent)]/20 rotate-8" />
             </div>
 
             <div className="absolute -top-4 -left-4 right-4 bottom-4 border-2 border-[#4aa35a] rounded-[20px] z-0" />
@@ -298,8 +298,8 @@ export default function HomePage() {
               className="relative z-10 w-full rounded-2xl object-cover shadow-[0_24px_64px_rgba(15,46,26,0.2)]"
             />
             <div className="absolute -bottom-5 -right-5 z-20 bg-[#0f2e1a] text-white px-5 py-4 rounded-2xl text-center shadow-[0_12px_32px_rgba(15,46,26,0.3)]">
-              <div className="font-['DM_Serif_Display',serif] text-[18px] text-[#4aa35a] leading-none">PCAARRD</div>
-              <div className="text-[10px] text-[#6b8a78] uppercase tracking-[1px] mt-1">Los Baños, Laguna</div>
+              <div className="font-[var(--font-heading)] text-[18px] text-[var(--color-accent)] leading-none">PCAARRD</div>
+              <div className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-[1px] mt-1">Los Baños, Laguna</div>
             </div>
           </div>
         </div>
@@ -312,33 +312,33 @@ export default function HomePage() {
           style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
         {/* Decorative motifs */}
-        <FishDecor className="absolute right-[4%] top-[12%] w-[80px] text-[#4aa35a]/[0.08] pointer-events-none hidden lg:block" />
-        <FishDecor className="absolute right-[14%] top-[22%] w-[50px] text-[#4aa35a]/[0.06] pointer-events-none hidden lg:block" />
-        <LeafSprig className="absolute left-[2%] bottom-[14%] w-[55px] text-[#4aa35a]/[0.08] pointer-events-none hidden lg:block" />
-        <RiceStalk className="absolute left-[7%] bottom-[10%] w-[20px] text-[#4aa35a]/[0.12] pointer-events-none hidden lg:block" />
-        <WaveRipple className="absolute bottom-[80px] left-0 w-full text-[#4aa35a]/[0.06] pointer-events-none" />
+        <FishDecor className="absolute right-[4%] top-[12%] w-[80px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <FishDecor className="absolute right-[14%] top-[22%] w-[50px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <LeafSprig className="absolute left-[2%] bottom-[14%] w-[55px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <RiceStalk className="absolute left-[7%] bottom-[10%] w-[20px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
+        <WaveRipple className="absolute bottom-[80px] left-0 w-full text-[var(--color-accent-15)] pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <div className="mb-14">
-            <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[#4aa35a] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+            <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
               Process
             </span>
-            <h2 className="font-['DM_Serif_Display',serif] text-[clamp(30px,3vw,42px)] text-white tracking-tight">
-              How <span className="text-[#4aa35a] italic">TRACER</span> works
+            <h2 className="font-[var(--font-heading)] text-[clamp(30px,3vw,42px)] text-white tracking-tight">
+              How <span className="text-[var(--color-accent)] italic">TRACER</span> works
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {steps.map(({ n, Icon, title, desc }) => (
-              <div key={n} className="bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-[#4aa35a]/20 transition-all duration-300 rounded-2xl p-8">
-                <div className="font-['DM_Serif_Display',serif] text-[54px] text-[#4aa35a]/25 leading-none mb-5 tracking-[-2px]">
+              <div key={n} className="bg-[var(--white-10)] border border-[var(--white-35)] hover:bg-[var(--white-10) hover:border-[#4aa35a]/20 transition-all duration-300 rounded-2xl p-8">
+                <div className="font-[var(--font-heading)] text-[54px] text-[var(--color-accent)] leading-none mb-5 tracking-[-2px]">
                   {n}
                 </div>
-                <div className="w-10 h-10 rounded-[10px] bg-[#4aa35a]/12 flex items-center justify-center mb-5">
-                  <Icon className="w-[18px] h-[18px] text-[#4aa35a]" />
+                <div className="w-10 h-10 rounded-[10px] bg-[var(--color-accent)]/12 flex items-center justify-center mb-5">
+                  <Icon className="w-[18px] h-[18px] text-[var(--color-accent)]" />
                 </div>
                 <div className="text-[15px] font-semibold text-white mb-3 leading-snug">{title}</div>
-                <p className="text-[13px] leading-[1.75] text-[#6b8a78] font-light">{desc}</p>
+                <p className="text-[13px] leading-[1.75] text-[var(--color-text-muted)] font-light">{desc}</p>
               </div>
             ))}
           </div>
@@ -350,18 +350,18 @@ export default function HomePage() {
       </section>
 
       {/* ═══ MAP ═══ */}
-      <section className="py-[100px] px-6 lg:px-[6vw] bg-[#f5f2ec]">
+      <section className="py-[100px] px-6 lg:px-[6vw] bg-[var(--color-bg)]">
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-10">
             <div>
-              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[#4aa35a] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
                 Find Us
               </span>
-              <h2 className="font-['DM_Serif_Display',serif] text-[clamp(28px,2.5vw,38px)] text-[#0f2e1a] tracking-tight">
+              <h2 className="font-[var(--font-heading)] text-[clamp(28px,2.5vw,38px)] text-[var(--color-primary)] tracking-tight">
                 Visit DOST PCAARRD
               </h2>
             </div>
-            <div className="text-[13px] text-[#8a9a94] md:text-right leading-[1.6] font-light">
+            <div className="text-[13px] text-[var(--color-text-faint)] md:text-right leading-[1.6] font-light">
               DOST-PCAARRD, Los Baños<br />Laguna, Philippines 4030
             </div>
           </div>

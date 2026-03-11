@@ -29,7 +29,7 @@ export default function TRLStepBar({ completed, achievable }: TRLStepBarProps) {
                   border: isAchievable ? "1.5px solid #4aa35a55" : "none",
                 }}
               />
-              <span className="text-[9px] font-bold text-[#94a3a0]">{level}</span>
+              <span className="text-[9px] font-bold text-[var(--color-text-faintest)]">{level}</span>
             </div>
           );
         })}
@@ -41,7 +41,7 @@ export default function TRLStepBar({ completed, achievable }: TRLStepBarProps) {
           { color: "#bbf7d0", label: "Achievable", style: { border: "1px solid #4aa35a55" } },
           { color: "#e5e1d8", label: "Not reached", style: {} },
         ].map(({ color, label, style }) => (
-          <span key={label} className="flex items-center gap-1.5 text-[11px] text-[#94a3a0]">
+          <span key={label} className="flex items-center gap-1.5 text-[11px] text-[var(--color-text-faintest)]">
             <span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: color, ...style }} />
             {label}
           </span>

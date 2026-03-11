@@ -59,12 +59,12 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
   };
 
   return (
-    <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,46,26,0.05)]">
+    <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,46,26,0.05)]">
 
       {/* Card header */}
-      <div className="flex items-center gap-2.5 px-6 py-4 border-b border-[#f5f2ec] bg-[#f8f6f1]">
-        <span className="w-2 h-2 rounded-full bg-[#4aa35a] flex-shrink-0" />
-        <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">{label}</span>
+      <div className="flex items-center gap-2.5 px-6 py-4 border-b border-[#f5f2ec] bg-[var(--color-bg-subtle)]">
+        <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
+        <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">{label}</span>
       </div>
 
       <div className="px-6 py-6">
@@ -74,14 +74,14 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
           <select
             value={current.initiated}
             onChange={e => setField("initiated", e.target.value)}
-            className="w-full appearance-none bg-[#f8f6f1] border border-[#e5e1d8] rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
+            className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
           >
             <option value="">Select an option…</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
             <option value="trade_secret">IP is a Trade Secret</option>
           </select>
-          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#94a3a0]">
+          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -91,7 +91,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
         {/* YES → IP type checkboxes */}
         {current.initiated === "yes" && (
           <div className="space-y-3">
-            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#94a3a0] mb-3">
+            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-3">
               Select IP Protection Type(s)
             </p>
             {IP_TYPES.map(ipType => {
@@ -102,7 +102,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
                     <div className="relative flex-shrink-0">
                       <input type="checkbox" checked={isChecked} onChange={() => handleTypeToggle(ipType)} className="peer sr-only" />
                       <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-                        isChecked ? "bg-[#4aa35a] border-[#4aa35a]" : "bg-white border-[#c8c3b8] group-hover:border-[#4aa35a]/60"
+                        isChecked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8] group-hover:border-[#4aa35a]/60"
                       }`}>
                         {isChecked && (
                           <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -111,7 +111,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
                         )}
                       </div>
                     </div>
-                    <span className={`text-[14px] font-light leading-snug transition-colors ${isChecked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568]"}`}>
+                    <span className={`text-[14px] font-light leading-snug transition-colors ${isChecked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)]"}`}>
                       {ipType}
                     </span>
                   </label>
@@ -120,12 +120,12 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
                       <select
                         value={current.typeStatuses[ipType] ?? ""}
                         onChange={e => setField("typeStatuses", { ...current.typeStatuses, [ipType]: e.target.value })}
-                        className="w-full max-w-xs appearance-none bg-[#f8f6f1] border border-[#e5e1d8] rounded-xl px-4 py-2.5 text-[13px] text-[#4a5568] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-8"
+                        className="w-full max-w-xs appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-2.5 text-[13px] text-[var(--color-text-gray)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-8"
                       >
                         <option value="">IP Protection Status…</option>
                         {IP_STATUS_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                       </select>
-                      <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3a0]">
+                      <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
                         <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                           <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -152,7 +152,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
                 <div key={r.label} className="flex items-baseline gap-1.5 text-[12px]">
                   <span className="font-medium text-amber-800 flex-shrink-0">{r.label}</span>
                   <span className="text-amber-600">–</span>
-                  <a href={`mailto:${r.email}`} className="text-[#4aa35a] hover:underline underline-offset-2 truncate">{r.email}</a>
+                  <a href={`mailto:${r.email}`} className="text-[var(--color-accent)] hover:underline underline-offset-2 truncate">{r.email}</a>
                 </div>
               ))}
             </div>
@@ -187,23 +187,23 @@ function DropdownQuestion({
   const showContact = selected?.contactLabel;
 
   return (
-    <div className="bg-white border-2 border-[#ede9e0] rounded-2xl overflow-hidden transition-all duration-200">
+    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <p className="text-[14px] text-[#4a5568] font-light leading-relaxed mb-3">
+        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
           {q.questionText}
         </p>
         <div className="relative">
           <select
             value={value ?? ""}
             onChange={e => onChange(e.target.value)}
-            className="w-full appearance-none bg-[#f8f6f1] border border-[#e5e1d8] rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
+            className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
           >
             <option value="">Select an option…</option>
             {q.options?.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#94a3a0]">
+          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -236,9 +236,9 @@ function MultiConditionalQuestion({
   const noOption  = q.options?.find(o => o.action === "contacts");
 
   return (
-    <div className="bg-white border-2 border-[#ede9e0] rounded-2xl overflow-hidden transition-all duration-200">
+    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <p className="text-[14px] text-[#4a5568] font-light leading-relaxed mb-3">
+        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
           {q.questionText}
         </p>
 
@@ -247,14 +247,14 @@ function MultiConditionalQuestion({
           <select
             value={value.selection}
             onChange={e => onSelectionChange(e.target.value)}
-            className="w-full appearance-none bg-[#f8f6f1] border border-[#e5e1d8] rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
+            className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
           >
             <option value="">Select an option…</option>
             {q.options?.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#94a3a0]">
+          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -271,19 +271,19 @@ function MultiConditionalQuestion({
         {/* Yes → checklist of sub-items */}
         {value.selection === "yes" && yesOption?.items && (
           <div className="space-y-2.5 mt-1">
-            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#94a3a0] mb-2">
+            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
               Select all that apply
             </p>
             {yesOption.items.map(item => {
               const checked = value.checkedItems.includes(item);
               return (
                 <label key={item} className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
-                  checked ? "bg-[#4aa35a]/[0.05] border-[#4aa35a]/40" : "bg-[#f8f6f1] border-[#e5e1d8] hover:border-[#4aa35a]/30"
+                  checked ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40" : "bg-[var(--color-bg-subtle)] border-[var(--color-border-input)] hover:border-[#4aa35a]/30"
                 }`}>
                   <div className="relative flex-shrink-0 mt-0.5">
                     <input type="checkbox" checked={checked} onChange={() => onItemToggle(item)} className="peer sr-only" />
                     <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-                      checked ? "bg-[#4aa35a] border-[#4aa35a]" : "bg-white border-[#c8c3b8]"
+                      checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
                     }`}>
                       {checked && (
                         <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -292,7 +292,7 @@ function MultiConditionalQuestion({
                       )}
                     </div>
                   </div>
-                  <span className={`text-[13px] leading-relaxed ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
+                  <span className={`text-[13px] leading-relaxed ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
                     {item}
                   </span>
                 </label>
@@ -492,10 +492,10 @@ export default function QuestionnairePage() {
   // Loading
   if (loading) {
     return (
-      <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center">
+      <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 rounded-full border-2 border-[#4aa35a]/30 border-t-[#4aa35a] animate-spin" />
-          <p className="text-[14px] text-[#94a3a0] font-light">Loading assessment…</p>
+          <p className="text-[14px] text-[var(--color-text-faintest)] font-light">Loading assessment…</p>
         </div>
       </div>
     );
@@ -503,37 +503,37 @@ export default function QuestionnairePage() {
 
   if (orderedCategories.length === 0) {
     return (
-      <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center px-6">
+      <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
         <div className="text-center">
-          <div className="mb-3 w-12 h-12 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mx-auto">
+          <div className="mb-3 w-12 h-12 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center mx-auto">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
           </div>
-          <p className="text-[15px] text-[#4a5568] font-light">No questions available for the selected technology type.</p>
+          <p className="text-[15px] text-[var(--color-text-gray)] font-light">No questions available for the selected technology type.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a]">
+    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* Sticky progress bar */}
-      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b border-[#ede9e0] px-6 lg:px-[6vw] py-3 shadow-sm">
+      <div className="fixed top-[72px] left-0 right-0 z-40 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] px-6 lg:px-[6vw] py-3 shadow-sm">
         <div className="max-w-[860px] mx-auto">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[11px] font-semibold text-[#4aa35a] uppercase tracking-[1.5px] truncate mr-4">
+            <span className="text-[11px] font-semibold text-[var(--color-accent)] uppercase tracking-[1.5px] truncate mr-4">
               {currentCategory}
             </span>
-            <span className="text-[11px] text-[#94a3a0] font-light flex-shrink-0">
+            <span className="text-[11px] text-[var(--color-text-faintest)] font-light flex-shrink-0">
               Category {currentCategoryIndex + 1} of {orderedCategories.length}
               {!isIPCategory && ` · Page ${currentPage + 1} of ${totalPages}`}
             </span>
           </div>
           <div className="h-1 bg-[#e5e1d8] rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#4aa35a] rounded-full transition-all duration-500"
+              className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
@@ -545,15 +545,15 @@ export default function QuestionnairePage() {
 
         {/* Category header */}
         <div className="mb-10">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] mb-4 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             Assessment · Category {currentCategoryIndex + 1}
           </div>
-          <h1 className="font-['DM_Serif_Display',serif] text-[clamp(24px,3.5vw,36px)] text-[#0f2e1a] leading-tight tracking-tight mb-3">
+          <h1 className="font-[var(--font-heading)] text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             {currentCategory}
           </h1>
           {categoryDescriptions[currentCategory] && (
-            <p className="text-[14px] text-[#8a9a94] font-light leading-relaxed max-w-2xl">
+            <p className="text-[14px] text-[var(--color-text-faint)] font-light leading-relaxed max-w-2xl">
               {categoryDescriptions[currentCategory]}
             </p>
           )}
@@ -621,14 +621,14 @@ export default function QuestionnairePage() {
                   key={q.id}
                   className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
                     checked
-                      ? "bg-[#4aa35a]/[0.05] border-[#4aa35a]/40"
-                      : "bg-white border-[#ede9e0] hover:border-[#4aa35a]/25 hover:bg-[#4aa35a]/[0.02]"
+                      ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40"
+                      : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
                   }`}
                 >
                   <div className="relative flex-shrink-0 mt-0.5">
                     <input type="checkbox" checked={checked} onChange={() => handleCheckbox(q.id)} className="peer sr-only" />
                     <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-                      checked ? "bg-[#4aa35a] border-[#4aa35a]" : "bg-white border-[#c8c3b8]"
+                      checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
                     }`}>
                       {checked && (
                         <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -640,7 +640,7 @@ export default function QuestionnairePage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
-                      <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
+                      <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
                         {q.questionText}
                       </span>
                       {q.toolTip && (
@@ -652,8 +652,8 @@ export default function QuestionnairePage() {
                           }}
                           className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
                             tooltipOpen
-                              ? "bg-[#4aa35a] border-[#4aa35a]"
-                              : "bg-white border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[#4aa35a]/10"
+                              ? "bg-[var(--color-accent)] border-[#4aa35a]"
+                              : "bg-[var(--color-bg-card)] border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[var(--color-accent)]/10"
                           }`}
                           title={tooltipOpen ? "Hide hint" : "Show hint"}
                         >
@@ -667,7 +667,7 @@ export default function QuestionnairePage() {
                       )}
                     </div>
                     {q.toolTip && tooltipOpen && (
-                      <div className="mt-2.5 flex items-start gap-2 bg-[#f8f6f1] border border-[#ede9e0] rounded-xl px-3.5 py-2.5">
+                      <div className="mt-2.5 flex items-start gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl px-3.5 py-2.5">
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
                           stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round"
                           className="flex-shrink-0 mt-[1px]">
@@ -694,8 +694,8 @@ export default function QuestionnairePage() {
             disabled={isPrevDisabled}
             className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium transition-all duration-200 ${
               isPrevDisabled
-                ? "text-[#c8c3b8] bg-white border border-[#e5e1d8] cursor-not-allowed"
-                : "text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a]"
+                ? "text-[#c8c3b8] bg-[var(--color-bg-card)] border border-[var(--color-border-input)] cursor-not-allowed"
+                : "text-[#6b7a75] bg-[var(--color-bg-card)] border border-[var(--color-border-input)] hover:border-[#0f2e1a]/30 hover:text-[var(--color-primary)]"
             }`}
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -724,12 +724,12 @@ export default function QuestionnairePage() {
               disabled={blocksNext}
               className={`inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold transition-all duration-300 ${
                 blocksNext
-                  ? "text-white/60 bg-[#4aa35a]/40 cursor-not-allowed shadow-none"
-                  : "text-white bg-[#4aa35a] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)]"
+                  ? "text-white/60 bg-[var(--color-accent)]/40 cursor-not-allowed shadow-none"
+                  : "text-white bg-[var(--color-accent)] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)]"
               }`}
             >
               {isLastStep ? "Finish Assessment" : "Continue"}
-              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+              <span className="w-5 h-5 rounded-full bg-[var(--color-bg-card)]/20 flex items-center justify-center">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

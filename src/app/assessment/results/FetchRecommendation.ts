@@ -99,7 +99,7 @@ async function callProxy(
   return (data.completion ?? "").replace(/```json|```/g, "").trim();
 }
 
-// ─── Combined schema ──────────────────────────────────────────────────────────
+// Combined schema 
 
 const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
 {
@@ -121,7 +121,7 @@ const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
   "closing": "<2 warm sentence motivating them toward full commercialization>"
 }`;
 
-// ─── Prompt builder ───────────────────────────────────────────────────────────
+// Prompt builder 
 
 function buildPrompt(
   i: RecommendationInput,
@@ -134,7 +134,7 @@ function buildPrompt(
     ? `\n\nOFFICIAL TRACER LEVEL ${i.completedTRL} DEFINITION (use as factual basis for the header explanation — do not contradict it):\nTitle: ${officialDescription.title}\nDescription: ${officialDescription.description}`
     : "";
 
-  // ── TRL 9 fully done — sustain & scale ──────────────────────────────────
+  // TRL 9 fully done — sustain & scale 
   if (i.completedTRL === 9 && i.lackingItems.length === 0) {
     return `CONTEXT:
 ${techContext}
@@ -148,7 +148,7 @@ CLOSING: 1 warm sentence.
 ${COMBINED_SCHEMA}`;
   }
 
-  // ── All other cases — full roadmap to Level 9 ────────────────────────────
+  // All other cases — full roadmap to Level 9 
   const allLevels = groupKeys(i.lackingItems);
 
   return `CONTEXT:
@@ -172,7 +172,7 @@ CLOSING: 1 warm sentence.
 ${COMBINED_SCHEMA}`;
 }
 
-// ─── Single combined fetch ────────────────────────────────────────────────────
+// Single combined fetch
 
 export async function fetchRecommendation(
   input: RecommendationInput,
@@ -216,7 +216,7 @@ export async function fetchRecommendation(
   return result;
 }
 
-// ─── Legacy exports (kept so existing imports don't break) ────────────────────
+// Legacy exports (kept so existing imports don't break)
 // These are thin wrappers that call fetchRecommendation internally.
 // Remove once all callers are migrated to fetchRecommendation directly.
 

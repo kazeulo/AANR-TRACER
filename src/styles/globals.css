@@ -1,22 +1,232 @@
-/* General styling & global reset */
+
+/* ─── Google Fonts ───────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
+
+/* ─── Tailwind directives ─────────────────────────────────────────────────── */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design tokens ──────────────────────────────────────────────────────── */
 :root {
-  --primary-font: 'Montserrat', sans-serif;
 
-  --primary-color: #0f2e1a;
-  --secondary-color: #4aa35a;
-  --tertiary-color: #bafe8c;
+  /* Fonts */
+  --font-heading: 'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
 
-  --bg-color-light: #F7F7F7; 
-  --text-color: #111111;
+  /* Brand greens */
+  --color-primary:       #0f2e1a;   /* dark forest — hero bg, headings */
+  --color-primary-mid:   #1a3d26;   /* mid green — hero gradient */
+  --color-primary-deep:  #0a1f10;   /* footer bg */
+  --color-accent:        #4aa35a;   /* action green — buttons, tags, accents */
+  --color-accent-hover:  #3d8f4c;   /* accent on hover */
+  --color-accent-dark:   #2d6e3a;   /* accent text on light bg */
 
-  --bg-gradient: linear-gradient(
-    to right,
-    var(--primary-color),
-    var(--secondary-color),
-    var(--tertiary-color)
-  );
+  /* Accent tints (for backgrounds / borders) */
+  --color-accent-08:     rgba(74, 163, 90, 0.08);
+  --color-accent-15:     rgba(74, 163, 90, 0.15);
+  --color-accent-20:     rgba(74, 163, 90, 0.20);
+  --color-accent-30:     rgba(74, 163, 90, 0.30);
+  --color-accent-35:     rgba(74, 163, 90, 0.35);
+
+  /* Motifs */
+  --color-accent-15: rgba(74, 163, 90, 0.10);
+
+  /* Backgrounds */
+  --color-bg:            #f5f2ec;   /* warm off-white — page background */
+  --color-bg-card:       #ffffff;   /* card / surface */
+  --color-bg-subtle:     #f8f6f1;   /* card header strip */
+  --color-bg-input:      #f8f6f1;   /* input fields */
+
+  /* whites with opacity */
+  --white-10:    rgba(255,255,255, 0.1);
+  --white-15:   rgba(255,255,255, 0.15);
+  --white-35:   rgba(255,255,255, 0.35);
+
+  /* Borders */
+  --color-border:        #ede9e0;   /* default card border */
+  --color-border-input:  #e5e1d8;   /* input border */
+  --color-border-subtle: #f0ece3;   /* inner dividers */
+
+  /* Text */
+  --color-text:          #1a1a1a;   /* primary body text */
+  --color-text-heading:  #0f2e1a;   /* dark headings */
+  --color-text-gray:     #343b46;
+  --color-text-muted:    #84b798;   /* muted body copy */
+  --color-text-faint:    #8a9a94;   /* placeholder / helper text */
+  --color-text-faintest: #94a3a0;   /* timestamps, meta */
+  --color-text-disabled: #b0a99e;   /* unchecked items, disabled */
+
+  /* Semantic */
+  --color-success:       #4aa35a;
+  --color-warning:       #f59e0b;   /* amber */
+  --color-warning-bg:    #fffbeb;
+  --color-warning-border:#fde68a;
+  --color-warning-text:  #92400e;
+  --color-error:         #ef4444;
+
+  /* Shadows */
+  --shadow-card:         0 4px 24px rgba(15, 46, 26, 0.06);
+  --shadow-card-sm:      0 2px 12px rgba(15, 46, 26, 0.04);
+  --shadow-btn:          0 8px 32px rgba(74, 163, 90, 0.35);
+  --shadow-btn-hover:    0 12px 40px rgba(74, 163, 90, 0.45);
+  --shadow-btn-sm:       0 6px 24px rgba(74, 163, 90, 0.35);
+
+  /* Radii */
+  --radius-sm:   0.5rem;    /* 8px  — tags, pills */
+  --radius-md:   0.75rem;   /* 12px — inputs */
+  --radius-lg:   1rem;      /* 16px — small cards */
+  --radius-xl:   1.25rem;   /* 20px — cards */
+  --radius-2xl:  1.5rem;    /* 24px — large cards */
+  --radius-full: 9999px;    /* pills / buttons */
+
+  /* Transitions */
+  --transition-fast:   150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow:   300ms ease;
+}
+
+/* ─── Base styles ────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-text-heading);
+  }
+
+  /* Smooth scrolling */
+  * {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus rings */
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ─── Reusable component classes ─────────────────────────────────────────── */
+@layer components {
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full
+           text-[15px] font-semibold text-white transition-all duration-300;
+    background-color: var(--color-accent);
+    box-shadow: var(--shadow-btn);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    box-shadow: var(--shadow-btn-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:disabled {
+    background-color: #c8c3b8;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full
+           text-[14px] font-medium transition-all duration-200;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border-input);
+  }
+  .btn-secondary:hover {
+    border-color: rgba(15, 46, 26, 0.3);
+    color: var(--color-primary);
+  }
+
+  /* ── Cards ── */
+  .card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .card-header {
+    @apply flex items-center gap-2.5 px-7 py-5;
+    border-bottom: 1px solid var(--color-bg);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .card-header-dot {
+    @apply w-2 h-2 rounded-full flex-shrink-0;
+    background-color: var(--color-accent);
+  }
+
+  .card-header-label {
+    @apply text-[11px] font-bold tracking-[2px] uppercase;
+    color: var(--color-accent);
+  }
+
+  /* ── Inputs ── */
+  .input {
+    @apply w-full px-4 py-3 text-[14px] font-light transition-all;
+    background-color: var(--color-bg-input);
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+  }
+  .input::placeholder {
+    color: var(--color-text-faintest);
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-15);
+  }
+
+  /* ── Tags / Pills ── */
+  .tag-accent {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full
+           text-[11px] font-semibold tracking-[2px] uppercase;
+    color: var(--color-accent);
+    background-color: var(--color-accent-08);
+    border: 1px solid var(--color-accent-30);
+  }
+
+  /* ── Eyebrow label (used across all pages) ── */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase
+           px-3.5 py-1.5 rounded-full;
+    color: var(--color-accent);
+    background-color: var(--color-accent-08);
+    border: 1px solid var(--color-accent-30);
+  }
+
+  /* ── Section heading ── */
+  .section-heading {
+    font-family: var(--font-heading);
+    @apply text-[clamp(28px,4vw,42px)] leading-tight tracking-tight;
+    color: var(--color-text-heading);
+  }
+
+  /* ── Warning / amber notice ── */
+  .notice-amber {
+    @apply flex items-start gap-3 px-5 py-4 rounded-xl;
+    background-color: var(--color-warning-bg);
+    border: 1px solid var(--color-warning-border);
+  }
+
+  /* ── Spinner ── */
+  .spinner {
+    @apply w-10 h-10 rounded-full border-2 animate-spin;
+    border-color: rgba(74, 163, 90, 0.3);
+    border-top-color: var(--color-accent);
+  }
 }

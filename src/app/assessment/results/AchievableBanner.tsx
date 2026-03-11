@@ -25,11 +25,11 @@ export default function AchievableBanner({
   const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
 
   return (
-    <div className="bg-white border-2 border-[#4aa35a]/20 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
+    <div className="bg-[var(--color-bg-card)] border-2 border-[#4aa35a]/20 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
 
-      <div className="px-7 py-6 bg-[#4aa35a]/[0.04]">
+      <div className="px-7 py-6 bg-[var(--color-accent)]/[0.04]">
         <div className="flex items-start gap-4">
-          <div className="w-11 h-11 rounded-[12px] bg-[#4aa35a]/10 flex items-center justify-center flex-shrink-0">
+          <div className="w-11 h-11 rounded-[12px] bg-[var(--color-accent)]/10 flex items-center justify-center flex-shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z" />
               <path d="M2 17l10 5 10-5" />
@@ -38,10 +38,10 @@ export default function AchievableBanner({
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-1">
+            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)] mb-1">
               Potential Identified
             </p>
-            <p className="text-[15px] font-semibold text-[#0f2e1a] leading-snug">
+            <p className="text-[15px] font-semibold text-[var(--color-primary)] leading-snug">
               Currently at{" "}
               <span className="font-black" style={{ color: TRL_COLORS[completedTRL] ?? "#64748b" }}>
                 TRL {completedTRL}
@@ -55,9 +55,9 @@ export default function AchievableBanner({
               </span>{" "}
               <span className="font-normal text-[#6b7a75]">({TRL_LABELS[achievableTRL]})</span>.
             </p>
-            <p className="text-[13px] text-[#8a9a94] font-light mt-1.5">
+            <p className="text-[13px] text-[var(--color-text-faint)] font-light mt-1.5">
               Complete the{" "}
-              <strong className="text-[#4a5568] font-semibold">
+              <strong className="text-[var(--color-text-gray)] font-semibold">
                 {lackingItems.length} item{lackingItems.length !== 1 ? "s" : ""}
               </strong>{" "}
               below to fully reach your highest achievable level.
@@ -67,7 +67,7 @@ export default function AchievableBanner({
 
         <button
           onClick={() => setOpen(o => !o)}
-          className="mt-5 w-full flex items-center justify-between text-[13px] font-semibold px-4 py-3 rounded-xl bg-[#4aa35a]/10 text-[#4aa35a] hover:bg-[#4aa35a]/15 transition-colors"
+          className="mt-5 w-full flex items-center justify-between text-[13px] font-semibold px-4 py-3 rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] hover:bg-[var(--color-accent)]/15 transition-colors"
         >
           <span>{open ? "Hide" : "Show"} what you need to complete</span>
           <svg
@@ -90,7 +90,7 @@ export default function AchievableBanner({
                 >
                   TRL {level}
                 </span>
-                <span className="text-[12px] text-[#94a3a0] font-light">{TRL_LABELS[level]}</span>
+                <span className="text-[12px] text-[var(--color-text-faintest)] font-light">{TRL_LABELS[level]}</span>
                 <span className="text-[11px] text-[#c8c3b8] ml-auto">
                   {byLevel[level].length} item{byLevel[level].length !== 1 ? "s" : ""}
                 </span>
@@ -99,9 +99,9 @@ export default function AchievableBanner({
                 {byLevel[level].map(q => (
                   <li
                     key={q.id}
-                    className="flex items-start gap-3 text-[13px] text-[#4a5568] font-light leading-relaxed"
+                    className="flex items-start gap-3 text-[13px] text-[var(--color-text-gray)] font-light leading-relaxed"
                   >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#4aa35a] flex-shrink-0" />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
                     {q.questionText}
                   </li>
                 ))}

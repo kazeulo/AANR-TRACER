@@ -25,11 +25,11 @@ export default function QuestionGroup({
   const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
 
   return (
-    <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,46,26,0.04)]">
+    <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,46,26,0.04)]">
 
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-7 py-5 border-b border-[#f5f2ec] bg-white hover:bg-[#f8f6f1] transition-colors"
+        className="w-full flex items-center justify-between px-7 py-5 border-b border-[#f5f2ec] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] transition-colors"
       >
         <div className="flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: accent }} />
@@ -63,13 +63,13 @@ export default function QuestionGroup({
                 >
                   TRL {level}
                 </span>
-                <span className="text-[12px] text-[#94a3a0] font-light">{TRL_LABELS[level]}</span>
+                <span className="text-[12px] text-[var(--color-text-faintest)] font-light">{TRL_LABELS[level]}</span>
               </div>
               <ul className="space-y-2.5">
                 {byLevel[level].map(q => (
                   <li
                     key={q.id}
-                    className="flex items-start gap-3 text-[13px] text-[#4a5568] font-light leading-relaxed"
+                    className="flex items-start gap-3 text-[13px] text-[var(--color-text-gray)] font-light leading-relaxed"
                   >
                     <span
                       className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"

@@ -22,7 +22,7 @@ import QuestionGroup        from "./QuestionGroup";
 import AIRecommendationCard from "./RecommendationCard";
 import ExportModal          from "./ExportModal";
 
-// ─── Skeleton shimmer ─────────────────────────────────────────────────────────
+// Skeleton shimmer
 
 function PageLoader() {
   const steps = [
@@ -40,14 +40,14 @@ function PageLoader() {
   }, []);
 
   return (
-    <div className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] flex items-center justify-center px-6">
+    <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
       <div className="flex flex-col items-center gap-6 max-w-xs text-center">
 
         {/* Spinner */}
         <div className="relative w-16 h-16">
           <div className="absolute inset-0 rounded-full border-2 border-[#4aa35a]/15" />
           <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#4aa35a] animate-spin" />
-          <div className="absolute inset-[6px] rounded-full bg-[#4aa35a]/[0.06] flex items-center justify-center">
+          <div className="absolute inset-[6px] rounded-full bg-[var(--color-accent)]/[0.06] flex items-center justify-center">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
               strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 20V10" /><path d="M18 20V4" /><path d="M6 20v-4" />
@@ -72,7 +72,7 @@ function PageLoader() {
 }
 
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
+// Hero
 
 function CongratulatoryHero({
   trl,
@@ -124,7 +124,7 @@ function CongratulatoryHero({
           ).map(([l, r, t, o], i) => (
             <span
               key={i}
-              className="absolute w-1 h-1 rounded-full bg-[#4aa35a]"
+              className="absolute w-1 h-1 rounded-full bg-[var(--color-accent)]"
               style={{
                 top:   `${t}%`,
                 left:  l != null ? `${l}%` : undefined,
@@ -146,7 +146,7 @@ function CongratulatoryHero({
           >
             <span className="text-[9px] font-bold tracking-[2px] uppercase text-white/40 leading-none mb-0.5">TRL</span>
             <span
-              className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
+              className="font-[var(--font-heading)] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
               {trl === 0 ? "—" : trl}
@@ -164,17 +164,17 @@ function CongratulatoryHero({
 
           {/* Badge pill + TRL line */}
           <div className="mb-3">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] mb-2">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--color-bg-card)]/[0.05] border border-white/[0.08] mb-2">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
                 stroke="#4aa35a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
-              <span className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
+              <span className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">
                 {isTRL9 ? "Maximum Readiness Reached" : "Assessment Complete"}
               </span>
             </div>
-            <p className="font-['DM_Serif_Display',serif] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
+            <p className="font-[var(--font-heading)] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
               {trl === 0
                 ? "Your technology is at the starting line."
                 : <>
@@ -191,7 +191,7 @@ function CongratulatoryHero({
           {/* Tech identity */}
           <div className="flex flex-wrap items-center gap-2 mb-3">
             {technologyName && (
-              <span className="text-[12px] font-semibold text-[#4aa35a]">{technologyName}</span>
+              <span className="text-[12px] font-semibold text-[var(--color-accent)]">{technologyName}</span>
             )}
             {technologyName && technologyType && (
               <span className="text-white/20 text-[12px]">·</span>
@@ -203,9 +203,9 @@ function CongratulatoryHero({
 
           {/* AI headline — skeleton while loading */}
           {header === null ? (
-            <div className="h-5 w-64 rounded-md bg-white/10 animate-pulse mb-2" />
+            <div className="h-5 w-64 rounded-md bg-[var(--color-bg-card)]/10 animate-pulse mb-2" />
           ) : header.headline ? (
-            <h2 className="font-['DM_Serif_Display',serif] text-[clamp(14px,1.8vw,18px)] text-white/80 leading-[1.3] tracking-tight font-normal italic mb-2">
+            <h2 className="font-[var(--font-heading)] text-[clamp(14px,1.8vw,18px)] text-white/80 leading-[1.3] tracking-tight font-normal italic mb-2">
               {header.headline}
             </h2>
           ) : null}
@@ -213,8 +213,8 @@ function CongratulatoryHero({
           {/* AI explanation — skeleton while loading */}
           {header === null ? (
             <div className="space-y-1.5">
-              <div className="h-3 w-full max-w-[480px] rounded bg-white/10 animate-pulse" />
-              <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
+              <div className="h-3 w-full max-w-[480px] rounded bg-[var(--color-bg-card)]/10 animate-pulse" />
+              <div className="h-3 w-4/5 max-w-[380px] rounded bg-[var(--color-bg-card)]/10 animate-pulse" />
             </div>
           ) : header.explanation ? (
             <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[520px]">
@@ -235,7 +235,7 @@ function CongratulatoryHero({
   );
 }
 
-// ─── Main page ────────────────────────────────────────────────────────────────
+// Main page
 
 export default function ResultsPage() {
   const { data } = useAssessment();
@@ -288,7 +288,7 @@ export default function ResultsPage() {
         setAiError(err instanceof Error ? err.message : "Unknown error");
       }
 
-      // ── Step 3: everything ready — reveal the page at once ───────────────
+      // Step 3: everything ready — reveal the page at once
       setScoreData({ result, aiInput, officialInfo });
       setAiResult(aiResult);
     };
@@ -306,12 +306,12 @@ export default function ResultsPage() {
   const gap             = result.highestAchievableTRL - result.highestCompletedTRL;
 
   return (
-    <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-16">
+    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-16">
       <div className="max-w-[860px] mx-auto space-y-6">
 
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+        <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
           Assessment Results
         </div>
 
@@ -344,8 +344,8 @@ export default function ResultsPage() {
 
         {/* Detailed breakdown */}
         <div>
-          <h2 className="font-['DM_Serif_Display',serif] text-[22px] text-[#0f2e1a] mb-4">
-            Detailed <em className="text-[#4aa35a]">Breakdown</em>
+          <h2 className="font-[var(--font-heading)] text-[22px] text-[var(--color-primary)] mb-4">
+            Detailed <em className="text-[var(--color-accent)]">Breakdown</em>
           </h2>
           <div className="space-y-3">
             <QuestionGroup
@@ -376,7 +376,7 @@ export default function ResultsPage() {
         <div className="flex flex-wrap items-center gap-3 pb-10">
           <button
             onClick={() => router.push("/")}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all duration-200"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-[var(--color-bg-card)] border border-[var(--color-border-input)] hover:border-[#0f2e1a]/30 hover:text-[var(--color-primary)] transition-all duration-200"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M8 5H2M5 8L2 5l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -386,10 +386,10 @@ export default function ResultsPage() {
 
           <button
             onClick={() => setShowModal(true)}
-            className="inline-flex items-center gap-3 px-8 py-3 rounded-full text-[14px] font-semibold text-white bg-[#4aa35a] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 transition-all duration-300"
+            className="inline-flex items-center gap-3 px-8 py-3 rounded-full text-[14px] font-semibold text-white bg-[var(--color-accent)] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 transition-all duration-300"
           >
             Export as PDF
-            <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-[var(--color-bg-card)]/20 flex items-center justify-center">
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                 <path d="M5 1v6M2 5l3 3 3-3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
