@@ -123,17 +123,12 @@ export default function HomePage() {
         <RiceStalk className="absolute left-[7%] bottom-[14%] w-[16px] text-[#4aa35a]/15 pointer-events-none hidden lg:block" />
         <LeafSprig className="absolute left-[2%] top-[32%] w-[35px] text-[#4aa35a]/10 pointer-events-none hidden lg:block" />
         <FishDecor className="absolute right-[4%] bottom-[28%] w-[70px] text-[#4aa35a]/10 pointer-events-none hidden lg:block" />
-        <WaveRipple className="absolute bottom-[90px] left-0 w-[340px] text-[#4aa35a]/15 pointer-events-none" />
+        <WaveRipple className="absolute bottom-[90px] left-0 w-full text-[#4aa35a]/15 pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-[60px] items-center">
 
           {/* Left */}
           <div>
-            <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] mb-6 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a] animate-pulse" />
-              PCAARRD · AANR Sector
-            </div>
-
             <h1 className="font-['DM_Serif_Display',serif] text-[clamp(38px,4.2vw,52px)] leading-[1.1] text-white mb-5 tracking-tight">
               Technology Readiness<br />
               Assessment for{" "}
@@ -196,9 +191,9 @@ export default function HomePage() {
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-8">
         <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4">
           {[
-            { n: "9",  label: "TRL Levels",       Icon: IconBarChart },
+            { n: "9",  label: "TRL Levels",        Icon: IconBarChart },
             { n: "9",  label: "Technology Types",  Icon: IconFlask },
-            { n: "4",  label: "AANR Sub-Sectors",  Icon: IconLeaf },
+            { n: "3",  label: "AANR Sub-Sectors",  Icon: IconLeaf },
             { n: "1",  label: "Clear Roadmap",     Icon: IconListCheck },
           ].map(({ n, label, Icon }) => (
             <div key={label} className="text-center px-6 border-r border-white/[0.08] last:border-r-0 flex flex-col items-center gap-1">

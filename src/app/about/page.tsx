@@ -49,7 +49,7 @@ export default function About() {
             </span>
 
             <h2 className="font-['DM_Serif_Display',serif] text-[clamp(30px,3vw,42px)] text-[#0f2e1a] leading-[1.15] tracking-tight mb-7">
-              A structured framework for technology maturation
+              A structured framework for technology maturation and commercialization
             </h2>
 
             <p className="text-justify text-[14px] leading-[1.85] text-[#4a5568] font-light mb-4">
