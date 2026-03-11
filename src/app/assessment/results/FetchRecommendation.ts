@@ -86,7 +86,7 @@ function cacheKey(input: RecommendationInput): string {
 
 async function callProxy(
   messages: { role: string; content: string }[],
-  maxTokens = 2000
+  maxTokens = 2100
 ): Promise<string> {
   const res = await fetch("/api/recommend", {
     method: "POST",
@@ -105,7 +105,7 @@ const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
 {
   "header": {
     "headline": "<one short warm sentence, max 10 words, celebrating their TRACER Level — do NOT start with Congratulations>",
-    "explanation": "<1-2 sentences grounded in the official level definition, personalised to this technology>"
+    "explanation": "<1-3 sentences grounded in the official level definition, personalised to this technology>"
   },
   "roadmap": [
     {
@@ -113,12 +113,12 @@ const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
       "steps": [
         {
           "action": "<requirement text copied EXACTLY as provided>",
-          "detail": "<2 sentence: the most important concrete action to accomplish this>"
+          "detail": "<2 sentences: the most important concrete action to accomplish this>"
         }
       ]
     }
   ],
-  "closing": "<2 warm sentence motivating them toward full commercialization>"
+  "closing": "<2 warm sentences motivating them toward full commercialization>"
 }`;
 
 // Prompt builder 
