@@ -1,8 +1,10 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
+import { AnswerValue } from "../utils/trlCalculator";
+export type { AnswerValue, MultiConditionalAnswer, DropdownAnswer } from "../utils/trlCalculator";
 
-// Ip types
+//n IP Types 
 
 export interface IPQuestionData {
   initiated: "yes" | "no" | "trade_secret" | "";
@@ -14,14 +16,14 @@ export interface IPData {
   [questionKey: string]: IPQuestionData;
 }
 
-// Assessment data
+// Assessment Data 
 
 interface AssessmentData {
   technologyName: string;
   technologyDescription: string;
   technologyType: string;
   fundingSource: string;
-  answers: Record<string, boolean>;
+  answers: Record<string, AnswerValue>;
   ipData: IPData;
 }
 

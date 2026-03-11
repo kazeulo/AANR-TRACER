@@ -1,4 +1,4 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types 
 
 export interface LackingItem {
   trlLevel: number;
@@ -14,7 +14,6 @@ export interface RecommendationInput {
   lackingItems: LackingItem[];
 }
 
-/** AI-generated header content */
 export interface AIHeader {
   headline: string;
   explanation: string;
@@ -35,7 +34,13 @@ export interface AISteps {
   closing: string;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+/** Combined response — single AI call returns both */
+export interface AIResult {
+  header: AIHeader;
+  steps: AISteps;
+}
+
+// Constants
 
 export const TRL_LABELS: Record<number, string> = {
   0: "Not Yet Assessed",
@@ -63,7 +68,7 @@ export const TRL_COLORS: Record<number, string> = {
   9: "#4aa35a",
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function formatLacking(items: LackingItem[]): string {
   return items.map(i => `- [TRACER Level ${i.trlLevel}] ${i.questionText}`).join("\n");
@@ -75,13 +80,13 @@ function groupKeys(items: LackingItem[]): string {
     .join(", ");
 }
 
-function stepsKey(input: RecommendationInput): string {
-  return `tracer_steps_${input.completedTRL}_${input.achievableTRL}_${input.technologyName}`;
+function cacheKey(input: RecommendationInput): string {
+  return `tracer_v3_${input.completedTRL}_${input.technologyName}_${input.technologyType}`;
 }
 
 async function callProxy(
   messages: { role: string; content: string }[],
-  maxTokens = 600
+  maxTokens = 2800
 ): Promise<string> {
   const res = await fetch("/api/recommend", {
     method: "POST",
@@ -94,22 +99,112 @@ async function callProxy(
   return (data.completion ?? "").replace(/```json|```/g, "").trim();
 }
 
-// ─── Header fetch ─────────────────────────────────────────────────────────────
+// Combined schema 
 
-export async function fetchHeader(
+const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
+{
+  "header": {
+    "headline": "<one short warm sentence, max 12 words, celebrating their TRACER Level — do NOT start with Congratulations>",
+    "explanation": "<2-3 plain-language sentences grounded in the official level definition, personalised to this technology and its end users>"
+  },
+  "roadmap": [
+    {
+      "trlLevel": <number>,
+      "steps": [
+        {
+          "action": "<the requirement text copied EXACTLY as provided — do not rephrase or shorten>",
+          "detail": "<2-3 sentences: what exactly to do to accomplish this, why it matters for commercialization, and a concrete first step or who to involve>"
+        }
+      ]
+    }
+  ],
+  "closing": "<1-2 warm sentences acknowledging their current progress and motivating them toward full commercialization>"
+}`;
+
+// Prompt builder 
+
+function buildPrompt(
+  i: RecommendationInput,
+  officialDescription?: { title: string; description: string } | null
+): string {
+  const trlLabel    = TRL_LABELS[i.completedTRL] ?? "";
+  const techContext = `- Technology Name: ${i.technologyName}\n- Technology Domain: ${i.technologyType}\n- Developer's Description: ${i.technologyDescription}`;
+
+  const officialBlock = officialDescription
+    ? `\n\nOFFICIAL TRACER LEVEL ${i.completedTRL} DEFINITION (use as factual basis for the header explanation — do not contradict it):\nTitle: ${officialDescription.title}\nDescription: ${officialDescription.description}`
+    : "";
+
+  // TRL 9 fully done — sustain & scale
+  if (i.completedTRL === 9 && i.lackingItems.length === 0) {
+    return `CONTEXT:
+${techContext}
+- Current TRACER Level: 9 (${TRL_LABELS[9]}) — fully commercialised.${officialBlock}
+
+INSTRUCTIONS:
+
+HEADER:
+Write a headline (max 12 words) and a 2-3 sentence explanation celebrating full commercialisation, grounded in the official definition above.
+
+ROADMAP:
+Provide 4-5 forward-looking sustaining steps grouped under TRACER Level 9:
+- Expand market reach (new regions, user segments, or export opportunities)
+- Strengthen IP portfolio and licensing strategies
+- Pursue continuous improvement and next-generation R&D
+- Engage with policy bodies, standards bodies, or industry associations
+- Build long-term partnerships and supply chain resilience
+Each step: action = clear imperative verb phrase. detail = 2-3 sentences on what to do, why it matters, and a concrete starting point.
+
+CLOSING: A warm message celebrating this milestone.
+
+${COMBINED_SCHEMA}`;
+  }
+
+  // All other cases — full roadmap to Level 9 
+  const allLevels = groupKeys(i.lackingItems);
+
+  return `CONTEXT:
+${techContext}
+- Current TRACER Level: ${i.completedTRL}${i.completedTRL > 0 ? ` (${trlLabel})` : " — beginning of the journey"}
+- Goal: TRACER Level 9 — Full Commercialization${officialBlock}
+
+UNMET REQUIREMENTS (grouped by TRACER Level):
+${formatLacking(i.lackingItems)}
+
+INSTRUCTIONS:
+
+HEADER:
+1. headline: One short punchy warm sentence (max 12 words) celebrating what reaching TRACER Level ${i.completedTRL} means for this specific technology. Do NOT start with "Congratulations". Be specific to the technology name and domain.
+2. explanation: 2-3 plain-language sentences grounded in the official TRACER Level definition above — personalised to this technology and its end users. Do not copy the definition verbatim.
+
+ROADMAP:
+Produce a complete roadmap of every step needed to reach TRACER Level 9.
+1. Group ALL items by TRACER Level (${allLevels}). Each level = one entry in the roadmap array.
+2. For EACH item listed above, create exactly one step:
+   - action: copy the requirement text EXACTLY as written — do not shorten, rephrase, or summarize.
+   - detail: 2-3 sentences — what exactly to do, why it matters for commercialization, and a concrete first step or who to involve.
+3. Every requirement must appear as its own step. Do not merge, skip, or combine any.
+4. Do NOT invent requirements beyond those listed.
+5. Levels already completed (≤ ${i.completedTRL}) must NOT appear in the roadmap.
+
+CLOSING: 1-2 warm sentences acknowledging current progress and motivating toward full commercialization.
+Tone throughout: warm, professional, practical.
+
+${COMBINED_SCHEMA}`;
+}
+
+// Single combined fetch
+
+export async function fetchRecommendation(
   input: RecommendationInput,
   officialDescription?: { title: string; description: string } | null
-): Promise<AIHeader> {
-  const headerKey = `tracer_header_${input.technologyName}_${input.technologyType}_${input.completedTRL}`;
-  try {
-    const cached = sessionStorage.getItem(headerKey);
-    if (cached) return JSON.parse(cached) as AIHeader;
-  } catch { /* unavailable */ }
+): Promise<AIResult> {
+  const key = cacheKey(input);
 
-  const trlLabel = TRL_LABELS[input.completedTRL] ?? "";
-  const officialBlock = officialDescription
-    ? `\n\nOFFICIAL TRACER LEVEL DEFINITION (use this as the factual basis — do not contradict it):\nTitle: ${officialDescription.title}\nDescription: ${officialDescription.description}`
-    : "";
+  // Check cache first
+  try {
+    const cached = sessionStorage.getItem(key);
+    if (cached) return JSON.parse(cached) as AIResult;
+  } catch { /* unavailable */ }
 
   const raw = await callProxy([
     {
@@ -118,60 +213,21 @@ export async function fetchHeader(
     },
     {
       role: "user",
-      content: `CONTEXT:
-- Technology Name: ${input.technologyName}
-- Technology Domain: ${input.technologyType}
-- Developer's Description: ${input.technologyDescription}
-- Current TRACER Level: ${input.completedTRL} (${trlLabel})${input.completedTRL === 9 ? "\n- This is the highest possible TRACER Level — fully commercialised." : ""}${officialBlock}
-
-INSTRUCTIONS:
-1. headline: One short punchy warm sentence (max 12 words) celebrating what reaching TRACER Level ${input.completedTRL} means for this specific technology. Do NOT start with "Congratulations". Be specific to the technology name and domain.
-2. explanation: 2-3 plain-language sentences grounded in the official TRACER Level definition above — what this level means for their specific technology and its end users, personalised to the developer's description. Be encouraging and concrete. Do not copy the official definition verbatim; rephrase it naturally with their technology in mind.
-
-Return ONLY:
-{
-  "headline": "<short warm sentence>",
-  "explanation": "<2-3 sentences>"
-}`,
+      content: buildPrompt(input, officialDescription),
     },
-  ], 300);
+  ], 2800);
 
+  let parsed: { header: AIHeader; roadmap: RoadmapGroup[]; closing: string };
   try {
-    const result = JSON.parse(raw) as AIHeader;
-    try { sessionStorage.setItem(headerKey, JSON.stringify(result)); } catch { /* quota */ }
-    return result;
+    parsed = JSON.parse(raw);
   } catch {
-    throw new Error("Could not parse header response.");
+    throw new Error("Could not parse AI response. Please try again.");
   }
-}
 
-// ─── Steps fetch ──────────────────────────────────────────────────────────────
-
-export async function fetchSteps(input: RecommendationInput): Promise<AISteps> {
-  const key = stepsKey(input);
-
-  try {
-    const cached = sessionStorage.getItem(key);
-    if (cached) return JSON.parse(cached) as AISteps;
-  } catch { /* unavailable */ }
-
-  const raw = await callProxy([
-    {
-      role: "system",
-      content: `You are a warm, motivational TRACER advisor for AANR technologies in the Philippines. Respond ONLY with valid JSON. No markdown, no extra text.`,
-    },
-    {
-      role: "user",
-      content: buildStepsPrompt(input),
-    },
-  ], 1600);
-
-  let result: AISteps;
-  try {
-    result = JSON.parse(raw) as AISteps;
-  } catch {
-    throw new Error("Could not parse steps response. Please try again.");
-  }
+  const result: AIResult = {
+    header: parsed.header,
+    steps:  { roadmap: parsed.roadmap, closing: parsed.closing },
+  };
 
   try {
     sessionStorage.setItem(key, JSON.stringify(result));
@@ -180,93 +236,19 @@ export async function fetchSteps(input: RecommendationInput): Promise<AISteps> {
   return result;
 }
 
-// ─── Prompt builder ───────────────────────────────────────────────────────────
+// Legacy exports (kept so existing imports don't break) 
+// These are thin wrappers that call fetchRecommendation internally.
+// Remove once all callers are migrated to fetchRecommendation directly.
 
-const STEPS_SCHEMA = `Return ONLY this JSON (no markdown):
-{
-  "roadmap": [
-    {
-      "trlLevel": <number>,
-      "steps": [
-        {
-          "action": "<imperative verb phrase: Develop / Conduct / Identify / Build / Establish...>",
-          "detail": "<2-3 sentences: what to do specifically, why it matters, and how to get started or who to involve>"
-        }
-      ]
-    }
-  ],
-  "closing": "<1-2 warm, congratulatory and motivational sentences acknowledging how far they have come and encouraging them to keep going>"
-}`;
+export async function fetchHeader(
+  input: RecommendationInput,
+  officialDescription?: { title: string; description: string } | null
+): Promise<AIHeader> {
+  const result = await fetchRecommendation(input, officialDescription);
+  return result.header;
+}
 
-function buildStepsPrompt(i: RecommendationInput): string {
-  const trlLabel    = TRL_LABELS[i.completedTRL]  ?? "";
-  const techContext = `- Technology Name: ${i.technologyName}\n- Technology Domain: ${i.technologyType}\n- Description: ${i.technologyDescription}`;
-
-  // TRL 9, fully commercialised with no lacking items — guide for sustaining & scaling
-  if (i.completedTRL === 9 && i.lackingItems.length === 0) {
-    return `CONTEXT:
-${techContext}
-- Current TRACER Level: 9 (${TRL_LABELS[9]}) — the highest possible level. This technology is fully commercialised.
-
-INSTRUCTIONS:
-This technology has reached full commercial deployment. Provide 3-5 forward-looking action steps grouped under TRACER Level 9 that help the developer:
-- Sustain and grow commercial operations
-- Expand market reach (new regions, user segments, or export opportunities)
-- Strengthen IP portfolio and licensing strategies
-- Pursue continuous improvement and next-generation R&D
-- Engage with policy, standards bodies, or industry associations
-
-Each step must have:
-- action: a clear imperative verb phrase
-- detail: 2-3 sentences — what to do specifically, why it matters, and a concrete starting point
-
-Also write a short warm closing message celebrating this milestone.
-
-${STEPS_SCHEMA}`;
-  }
-
-  // TRL 9 with outstanding items
-  if (i.completedTRL === 9) {
-    return `CONTEXT:
-${techContext}
-- Current TRACER Level: 9 (${TRL_LABELS[9]}) — commercialised but with outstanding actions
-- Outstanding actions:
-${formatLacking(i.lackingItems)}
-
-INSTRUCTIONS: Group by TRACER Level (${groupKeys(i.lackingItems)}). Rewrite each as a specific imperative + 2-3 sentence detail on what to do and why it matters. Then add 3 forward-looking sustaining steps under TRACER Level 9. Write a warm closing message.
-
-${STEPS_SCHEMA}`;
-  }
-
-  // TRL 0 — just starting
-  if (i.completedTRL === 0) {
-    return `CONTEXT:
-${techContext}
-- Current TRACER Level: 0 — beginning of the journey
-- Highest Achievable TRACER Level: ${i.achievableTRL}
-- Steps needed:
-${formatLacking(i.lackingItems)}
-
-INSTRUCTIONS: Group by TRACER Level (${groupKeys(i.lackingItems)}). Rewrite each as a clear imperative + 2-3 sentence detail explaining what to do, why it matters, and how to get started. Tone: warm, encouraging, practical.
-
-${STEPS_SCHEMA}`;
-  }
-
-  // General case
-  return `CONTEXT:
-${techContext}
-- Current TRACER Level: ${i.completedTRL} (${trlLabel})
-- Highest Achievable TRACER Level: ${i.achievableTRL} (${TRL_LABELS[i.achievableTRL] ?? ""})
-- Actions needed to reach TRACER Level ${i.achievableTRL}:
-${formatLacking(i.lackingItems)}
-
-INSTRUCTIONS:
-Group ALL actions by TRACER Level (${groupKeys(i.lackingItems)}). For each item:
-- action: rewrite as a specific imperative ("Develop...", "Conduct...", "Identify...", "Establish...")
-- detail: 2-3 sentences — what specifically to do, why it matters for reaching TRACER Level ${i.achievableTRL}, and a concrete first step or who to involve
-
-Do not invent actions beyond those listed. Tone: warm, professional, encouraging.
-Write a closing message congratulating them on their progress and motivating them to continue.
-
-${STEPS_SCHEMA}`;
+export async function fetchSteps(input: RecommendationInput): Promise<AISteps> {
+  const result = await fetchRecommendation(input);
+  return result.steps;
 }

@@ -1,14 +1,27 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useAssessment, IPData } from "../AssessmentContext";
+import { useAssessment, IPData, AnswerValue } from "../AssessmentContext";
+import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
 import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
+import { getQuestionsJSON } from "../../utils/questionsCache";
 
+// Module-level cache — shared with ResultsPage so the JSON is only ever
+// fetched once per browser session, regardless of which page loads first.
 const questionsCache: Record<string, Record<string, Question[]>> = {};
 
 // Types 
+
+interface DropdownOption {
+  label: string;
+  value: string;
+  trlSatisfied?: number | null;
+  contactLabel?: string;
+  action?: string;
+  items?: string[];
+}
 
 interface Question {
   id: string;
@@ -17,6 +30,8 @@ interface Question {
   technologyType: string;
   category: string;
   toolTip?: string;
+  type?: "checkbox" | "dropdown" | "multi-conditional";
+  options?: DropdownOption[];
 }
 
 // IP Section 
@@ -156,6 +171,147 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
   );
 }
 
+
+// ─── Dropdown Question ────────────────────────────────────────────────────────
+
+function DropdownQuestion({
+  q,
+  value,
+  onChange,
+}: {
+  q: Question;
+  value: string | null;
+  onChange: (val: string) => void;
+}) {
+  const selected = q.options?.find(o => o.value === value);
+  const showContact = selected?.contactLabel;
+
+  return (
+    <div className="bg-white border-2 border-[#ede9e0] rounded-2xl overflow-hidden transition-all duration-200">
+      <div className="p-5">
+        <p className="text-[14px] text-[#4a5568] font-light leading-relaxed mb-3">
+          {q.questionText}
+        </p>
+        <div className="relative">
+          <select
+            value={value ?? ""}
+            onChange={e => onChange(e.target.value)}
+            className="w-full appearance-none bg-[#f8f6f1] border border-[#e5e1d8] rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
+          >
+            <option value="">Select an option…</option>
+            {q.options?.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#94a3a0]">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
+        {showContact && (
+          <div className="mt-3 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-[12px] text-amber-800 font-light leading-relaxed">
+            {selected?.contactLabel}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Multi-Conditional Question ───────────────────────────────────────────────
+
+function MultiConditionalQuestion({
+  q,
+  value,
+  onSelectionChange,
+  onItemToggle,
+}: {
+  q: Question;
+  value: MultiConditionalAnswer;
+  onSelectionChange: (sel: string) => void;
+  onItemToggle: (item: string) => void;
+}) {
+  const yesOption = q.options?.find(o => o.action === "checklist");
+  const noOption  = q.options?.find(o => o.action === "contacts");
+
+  return (
+    <div className="bg-white border-2 border-[#ede9e0] rounded-2xl overflow-hidden transition-all duration-200">
+      <div className="p-5">
+        <p className="text-[14px] text-[#4a5568] font-light leading-relaxed mb-3">
+          {q.questionText}
+        </p>
+
+        {/* Top-level selection */}
+        <div className="relative mb-4">
+          <select
+            value={value.selection}
+            onChange={e => onSelectionChange(e.target.value)}
+            className="w-full appearance-none bg-[#f8f6f1] border border-[#e5e1d8] rounded-xl px-4 py-3 text-[14px] text-[#1a1a1a] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
+          >
+            <option value="">Select an option…</option>
+            {q.options?.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#94a3a0]">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
+
+        {/* No → show contact info */}
+        {value.selection === "no" && noOption?.contactLabel && (
+          <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-[12px] text-amber-800 font-light leading-relaxed">
+            {noOption.contactLabel}
+          </div>
+        )}
+
+        {/* Yes → checklist of sub-items */}
+        {value.selection === "yes" && yesOption?.items && (
+          <div className="space-y-2.5 mt-1">
+            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#94a3a0] mb-2">
+              Select all that apply
+            </p>
+            {yesOption.items.map(item => {
+              const checked = value.checkedItems.includes(item);
+              return (
+                <label key={item} className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
+                  checked ? "bg-[#4aa35a]/[0.05] border-[#4aa35a]/40" : "bg-[#f8f6f1] border-[#e5e1d8] hover:border-[#4aa35a]/30"
+                }`}>
+                  <div className="relative flex-shrink-0 mt-0.5">
+                    <input type="checkbox" checked={checked} onChange={() => onItemToggle(item)} className="peer sr-only" />
+                    <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
+                      checked ? "bg-[#4aa35a] border-[#4aa35a]" : "bg-white border-[#c8c3b8]"
+                    }`}>
+                      {checked && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                          <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
+                    </div>
+                  </div>
+                  <span className={`text-[13px] leading-relaxed ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
+                    {item}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Exempt */}
+        {value.selection === "exempt" && (
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-[13px] text-blue-800 font-light leading-relaxed">
+            This requirement is exempted for privately funded technologies.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // Main Page 
 
 export default function QuestionnairePage() {
@@ -201,8 +357,7 @@ export default function QuestionnairePage() {
 
     setLoading(true);
     const loadQuestions = async () => {
-      const res = await fetch("/questions.json");
-      const allGrouped: Record<string, Record<string, Question[]>> = await res.json();
+      const allGrouped = await getQuestionsJSON() as Record<string, Record<string, Question[]>>;
 
       const byLevel = allGrouped[data.technologyType] ?? {};
       const flat: Question[] = Object.values(byLevel).flat();
@@ -242,6 +397,15 @@ export default function QuestionnairePage() {
 
   const handleCheckbox = (id: string) => {
     updateData({ answers: { ...data.answers, [id]: !data.answers[id] } });
+  };
+
+  const handleDropdown = (id: string, value: string) => {
+    updateData({ answers: { ...data.answers, [id]: value || null } });
+  };
+
+  const handleMultiConditional = (id: string, update: Partial<MultiConditionalAnswer>) => {
+    const prev = (data.answers[id] as MultiConditionalAnswer) ?? { selection: "", checkedItems: [] };
+    updateData({ answers: { ...data.answers, [id]: { ...prev, ...update } } });
   };
 
   const handleIPChange = (updated: IPData) => {
@@ -295,6 +459,24 @@ export default function QuestionnairePage() {
     if (checkedTypes.length === 0) return true;
     return checkedTypes.some(t => !current.typeStatuses[t]);
   })();
+
+  // Block Next if any visible dropdown or multi-conditional on this page has no selection
+  const dropdownBlocksNext = (() => {
+    if (isIPCategory) return false;
+    return visibleQuestions.some(q => {
+      if (q.type === "dropdown") {
+        const val = data.answers[q.id];
+        return !val; // null or empty string = not selected
+      }
+      if (q.type === "multi-conditional") {
+        const val = data.answers[q.id] as { selection?: string } | undefined;
+        return !val?.selection; // no top-level selection made
+      }
+      return false;
+    });
+  })();
+
+  const blocksNext = ipBlocksNext || dropdownBlocksNext;
 
   // Progress
   const totalSteps = orderedCategories.reduce((acc, cat) => {
@@ -388,10 +570,51 @@ export default function QuestionnairePage() {
             />
           </div>
         ) : (
-          /* Regular Questions */
+          /* Questions — checkbox / dropdown / multi-conditional */
           <div className="space-y-3">
             {visibleQuestions.map(q => {
-              const checked = data.answers[q.id] ?? false;
+              const qType = q.type ?? "checkbox";
+
+              // ── Dropdown ──────────────────────────────────────────────────
+              if (qType === "dropdown") {
+                return (
+                  <DropdownQuestion
+                    key={q.id}
+                    q={q}
+                    value={(data.answers[q.id] as string | null) ?? null}
+                    onChange={val => handleDropdown(q.id, val)}
+                  />
+                );
+              }
+
+              // ── Multi-conditional ─────────────────────────────────────────
+              if (qType === "multi-conditional") {
+                const mcVal = (data.answers[q.id] as MultiConditionalAnswer) ?? { selection: "", checkedItems: [] };
+                return (
+                  <MultiConditionalQuestion
+                    key={q.id}
+                    q={q}
+                    value={mcVal}
+                    onSelectionChange={sel =>
+                      handleMultiConditional(q.id, {
+                        selection: sel,
+                        checkedItems: sel !== "yes" ? [] : mcVal.checkedItems,
+                      })
+                    }
+                    onItemToggle={item => {
+                      const already = mcVal.checkedItems.includes(item);
+                      handleMultiConditional(q.id, {
+                        checkedItems: already
+                          ? mcVal.checkedItems.filter(i => i !== item)
+                          : [...mcVal.checkedItems, item],
+                      });
+                    }}
+                  />
+                );
+              }
+
+              // ── Checkbox (default) ────────────────────────────────────────
+              const checked = data.answers[q.id] === true;
               const tooltipOpen = openTooltips[q.id] ?? false;
               return (
                 <label
@@ -402,7 +625,6 @@ export default function QuestionnairePage() {
                       : "bg-white border-[#ede9e0] hover:border-[#4aa35a]/25 hover:bg-[#4aa35a]/[0.02]"
                   }`}
                 >
-                  {/* Custom checkbox */}
                   <div className="relative flex-shrink-0 mt-0.5">
                     <input type="checkbox" checked={checked} onChange={() => handleCheckbox(q.id)} className="peer sr-only" />
                     <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
@@ -421,8 +643,6 @@ export default function QuestionnairePage() {
                       <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[#0f2e1a] font-medium" : "text-[#4a5568] font-light"}`}>
                         {q.questionText}
                       </span>
-
-                      {/* Tooltip toggle — plus/minus */}
                       {q.toolTip && (
                         <button
                           type="button"
@@ -437,7 +657,6 @@ export default function QuestionnairePage() {
                           }`}
                           title={tooltipOpen ? "Hide hint" : "Show hint"}
                         >
-                          {/* Plus when closed, minus when open */}
                           <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
                             stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8"
                             strokeLinecap="round">
@@ -447,8 +666,6 @@ export default function QuestionnairePage() {
                         </button>
                       )}
                     </div>
-
-                    {/* Tooltip body */}
                     {q.toolTip && tooltipOpen && (
                       <div className="mt-2.5 flex items-start gap-2 bg-[#f8f6f1] border border-[#ede9e0] rounded-xl px-3.5 py-2.5">
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
@@ -463,7 +680,6 @@ export default function QuestionnairePage() {
                       </div>
                     )}
                   </div>
-
                 </label>
               );
             })}
@@ -489,13 +705,14 @@ export default function QuestionnairePage() {
           </button>
 
           <div className="flex flex-col items-end gap-2">
-            {ipBlocksNext && (
+            {blocksNext && (
               <p className="text-[12px] text-amber-600 font-light flex items-center gap-1.5">
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
                   <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                   <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
                 {(() => {
+                  if (dropdownBlocksNext) return "Please answer all questions on this page to continue.";
                   const current = data.ipData[IP_INITIATED_LABEL] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
                   if (current.initiated === "") return "Please answer the IP initiation question to continue.";
                   return "Select at least one IP type and set its status to continue.";
@@ -504,9 +721,9 @@ export default function QuestionnairePage() {
             )}
             <button
               onClick={handleNext}
-              disabled={ipBlocksNext}
+              disabled={blocksNext}
               className={`inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold transition-all duration-300 ${
-                ipBlocksNext
+                blocksNext
                   ? "text-white/60 bg-[#4aa35a]/40 cursor-not-allowed shadow-none"
                   : "text-white bg-[#4aa35a] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)]"
               }`}
