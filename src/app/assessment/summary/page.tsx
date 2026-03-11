@@ -38,7 +38,7 @@ function ConfirmSubmitModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-[#0a1f10]/60 backdrop-blur-sm" onClick={onCancel} />
-      <div className="relative font-[var(--font-body)] bg-[var(--color-bg-card)] rounded-3xl shadow-2xl w-full max-w-[400px] z-10 overflow-hidden">
+      <div className="relative font-['DM Sans'] bg-[var(--color-bg-card)] rounded-3xl shadow-2xl w-full max-w-[400px] z-10 overflow-hidden">
         <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[var(--color-bg-subtle)]">
           <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
           <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">
@@ -54,7 +54,7 @@ function ConfirmSubmitModal({
           </button>
         </div>
         <div className="px-7 py-7">
-          <h2 className="font-[var(--font-heading)] text-[22px] text-[var(--color-primary)] mb-2">
+          <h2 className="font-['DM_Serif_Display'] text-[22px] text-[var(--color-primary)] mb-2">
             Ready to submit?
           </h2>
           <p className="text-[13px] text-[var(--color-text-faint)] font-light mb-7 leading-relaxed">
@@ -366,7 +366,7 @@ export default function SummaryPage() {
 
   if (loading) {
     return (
-      <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
+      <div className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 rounded-full border-2 border-[#4aa35a]/30 border-t-[#4aa35a] animate-spin" />
           <p className="text-[14px] text-[var(--color-text-faintest)] font-light">Loading summary…</p>
@@ -396,7 +396,7 @@ export default function SummaryPage() {
   const displayCategories = categoryOrder.filter(c => c !== "Intellectual Property Protection Status");
 
   return (
-    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-16">
+    <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-16">
       <div className="max-w-[860px] mx-auto">
 
         {/* Header */}
@@ -405,7 +405,7 @@ export default function SummaryPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             Final Step — Review & Submit
           </div>
-          <h1 className="font-[var(--font-heading)] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             Review your <em className="text-[var(--color-accent)]">responses</em>
           </h1>
           <p className="text-[14px] text-[var(--color-text-faint)] font-light leading-relaxed max-w-xl">

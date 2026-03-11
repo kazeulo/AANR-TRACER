@@ -492,7 +492,7 @@ export default function QuestionnairePage() {
   // Loading
   if (loading) {
     return (
-      <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
+      <div className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 rounded-full border-2 border-[#4aa35a]/30 border-t-[#4aa35a] animate-spin" />
           <p className="text-[14px] text-[var(--color-text-faintest)] font-light">Loading assessment…</p>
@@ -503,7 +503,7 @@ export default function QuestionnairePage() {
 
   if (orderedCategories.length === 0) {
     return (
-      <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
+      <div className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
         <div className="text-center">
           <div className="mb-3 w-12 h-12 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center mx-auto">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -517,7 +517,7 @@ export default function QuestionnairePage() {
   }
 
   return (
-    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* Sticky progress bar */}
       <div className="fixed top-[72px] left-0 right-0 z-40 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] px-6 lg:px-[6vw] py-3 shadow-sm">
@@ -549,7 +549,7 @@ export default function QuestionnairePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             Assessment · Category {currentCategoryIndex + 1}
           </div>
-          <h1 className="font-[var(--font-heading)] text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className="font-['DM_Serif_Display'] text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             {currentCategory}
           </h1>
           {categoryDescriptions[currentCategory] && (

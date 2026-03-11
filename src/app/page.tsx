@@ -103,7 +103,7 @@ function TechTypeGrid() {
 
 export default function HomePage() {
   return (
-    <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)]">
+    <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-screen flex items-center bg-[#0f2e1a] overflow-hidden px-6 lg:px-[6vw] pt-[60px] pb-[120px]">
@@ -129,7 +129,7 @@ export default function HomePage() {
 
           {/* Left */}
           <div>
-            <h1 className="font-[var(--font-heading)] text-[clamp(38px,4.2vw,52px)] leading-[1.1] text-white mb-5 tracking-tight">
+            <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,4.2vw,52px)] leading-[1.1] text-white mb-5 tracking-tight">
               Technology Readiness<br />
               Assessment for{" "}
               <em className="text-[var(--color-accent)] italic">Commercialization</em>
@@ -198,7 +198,7 @@ export default function HomePage() {
           ].map(({ n, label, Icon }) => (
             <div key={label} className="text-center px-6 border-r border-white/[0.08] last:border-r-0 flex flex-col items-center gap-1">
               <Icon className="w-5 h-5 text-[var(--color-accent)] mb-3" />
-              <div className="font-[var(--font-heading)] text-[32px] text-[var(--color-accent)] leading-none">{n}</div>
+              <div className="font-['DM_Serif_Display'] text-[32px] text-[var(--color-accent)] leading-none">{n}</div>
               <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
             </div>
           ))}
@@ -218,7 +218,7 @@ export default function HomePage() {
               <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
                 Covered Technologies
               </span>
-              <h2 className="font-[var(--font-heading)] text-[clamp(28px,3vw,38px)] text-[var(--color-primary)] tracking-tight leading-snug">
+              <h2 className="font-['DM_Serif_Display'] text-[clamp(28px,3vw,38px)] text-[var(--color-primary)] tracking-tight leading-snug">
                 Built for the <em className="text-[var(--color-accent)]">AANR Sector</em>
               </h2>
             </div>
@@ -240,7 +240,7 @@ export default function HomePage() {
               About TRACER
             </span>
 
-            <h2 className="font-[var(--font-heading)] text-[clamp(28px,3vw,40px)] text-[var(--color-primary)] leading-[1.15] tracking-tight mb-6">
+            <h2 className="font-['DM_Serif_Display'] text-[clamp(28px,3vw,40px)] text-[var(--color-primary)] leading-[1.15] tracking-tight mb-6">
               A structured framework for technology maturation and commercialization
             </h2>
 
@@ -298,7 +298,7 @@ export default function HomePage() {
               className="relative z-10 w-full rounded-2xl object-cover shadow-[0_24px_64px_rgba(15,46,26,0.2)]"
             />
             <div className="absolute -bottom-5 -right-5 z-20 bg-[#0f2e1a] text-white px-5 py-4 rounded-2xl text-center shadow-[0_12px_32px_rgba(15,46,26,0.3)]">
-              <div className="font-[var(--font-heading)] text-[18px] text-[var(--color-accent)] leading-none">PCAARRD</div>
+              <div className="font-['DM_Serif_Display'] text-[18px] text-[var(--color-accent)] leading-none">PCAARRD</div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-[1px] mt-1">Los Baños, Laguna</div>
             </div>
           </div>
@@ -323,7 +323,7 @@ export default function HomePage() {
             <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
               Process
             </span>
-            <h2 className="font-[var(--font-heading)] text-[clamp(30px,3vw,42px)] text-white tracking-tight">
+            <h2 className="font-['DM_Serif_Display'] text-[clamp(30px,3vw,42px)] text-white tracking-tight">
               How <span className="text-[var(--color-accent)] italic">TRACER</span> works
             </h2>
           </div>
@@ -331,7 +331,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {steps.map(({ n, Icon, title, desc }) => (
               <div key={n} className="bg-[var(--white-10)] border border-[var(--white-35)] hover:bg-[var(--white-10) hover:border-[#4aa35a]/20 transition-all duration-300 rounded-2xl p-8">
-                <div className="font-[var(--font-heading)] text-[54px] text-[var(--color-accent)] leading-none mb-5 tracking-[-2px]">
+                <div className="font-['DM_Serif_Display'] text-[54px] text-[var(--color-accent)] leading-none mb-5 tracking-[-2px]">
                   {n}
                 </div>
                 <div className="w-10 h-10 rounded-[10px] bg-[var(--color-accent)]/12 flex items-center justify-center mb-5">
@@ -357,7 +357,7 @@ export default function HomePage() {
               <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
                 Find Us
               </span>
-              <h2 className="font-[var(--font-heading)] text-[clamp(28px,2.5vw,38px)] text-[var(--color-primary)] tracking-tight">
+              <h2 className="font-['DM_Serif_Display'] text-[clamp(28px,2.5vw,38px)] text-[var(--color-primary)] tracking-tight">
                 Visit DOST PCAARRD
               </h2>
             </div>

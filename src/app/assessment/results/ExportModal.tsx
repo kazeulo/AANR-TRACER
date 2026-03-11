@@ -37,7 +37,7 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
         onClick={() => !exporting && onClose()}
       />
 
-      <div className="relative font-[var(--font-body)] bg-[var(--color-bg-card)] rounded-3xl shadow-2xl w-full max-w-[440px] z-10 overflow-hidden">
+      <div className="relative font-['DM Sans'] bg-[var(--color-bg-card)] rounded-3xl shadow-2xl w-full max-w-[440px] z-10 overflow-hidden">
 
         {/* Modal header strip */}
         <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[var(--color-bg-subtle)]">
@@ -54,7 +54,7 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
         </div>
 
         <div className="px-7 py-7">
-          <h2 className="font-[var(--font-heading)] text-[22px] text-[var(--color-primary)] mb-1">Export as PDF</h2>
+          <h2 className="font-['DM_Serif_Display'] text-[22px] text-[var(--color-primary)] mb-1">Export as PDF</h2>
           <p className="text-[13px] text-[var(--color-text-faint)] font-light mb-7">
             Your details will be included in the report header.
           </p>

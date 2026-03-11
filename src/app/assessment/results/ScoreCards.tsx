@@ -34,7 +34,7 @@ export default function ScoreCards({
           </p>
           <div className="flex items-end gap-3 leading-none">
             <span
-              className="font-[var(--font-heading)] text-[56px] leading-none"
+              className="font-['DM_Serif_Display'] text-[56px] leading-none"
               style={{ color: completedColor }}
             >
               {completedTRL === 0 ? "—" : completedTRL}
@@ -62,7 +62,7 @@ export default function ScoreCards({
             </p>
             <div className="flex items-end gap-3 leading-none">
               <span
-                className="font-[var(--font-heading)] text-[56px] leading-none"
+                className="font-['DM_Serif_Display'] text-[56px] leading-none"
                 style={{ color: achievableColor }}
               >
                 {achievableTRL}

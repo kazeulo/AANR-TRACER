@@ -31,7 +31,7 @@ export default function FAQ() {
   };
 
   return (
-    <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)]">
+    <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* ═══ HEADER ═══ */}
       <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[80px] pb-[100px] overflow-hidden">
@@ -44,7 +44,7 @@ export default function FAQ() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             PCAARRD · AANR-TRACER
           </div>
-          <h1 className="font-[var(--font-heading)] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
+          <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
             Frequently Asked <em className="text-[var(--color-accent)]">Questions</em>
           </h1>
           <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
@@ -106,7 +106,7 @@ export default function FAQ() {
                 <div className="w-10 h-10 bg-[#0f2e1a] rounded-[12px] flex items-center justify-center flex-shrink-0">
                   <CategoryIcon name={cat.icon} size={18} color="#4aa35a" />
                 </div>
-                <h2 className="font-[var(--font-heading)] text-[24px] text-[var(--color-primary)] tracking-tight">
+                <h2 className="font-['DM_Serif_Display'] text-[24px] text-[var(--color-primary)] tracking-tight">
                   {cat.title}
                 </h2>
                 <div className="flex-1 h-px bg-[#e5e1d8]" />

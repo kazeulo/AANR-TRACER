@@ -44,7 +44,7 @@ export default function Terms() {
     .filter(Boolean) as typeof categories;
 
   return (
-    <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
+    <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
 
       {/* ═══ HEADER ═══ */}
       <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[140px] pb-[100px] overflow-hidden">
@@ -57,7 +57,7 @@ export default function Terms() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             PCAARRD · AANR-TRacer
           </div>
-          <h1 className="font-[var(--font-heading)] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
+          <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             Terms &amp; <em className="text-[var(--color-accent)]">Definitions</em>
           </h1>
           <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
@@ -152,7 +152,7 @@ export default function Terms() {
                   <div className="w-12 h-12 bg-[#0f2e1a] rounded-[14px] flex items-center justify-center flex-shrink-0">
                     <TermIcon name={cat.icon} size={22} color="#4aa35a" />
                   </div>
-                  <h2 className="font-[var(--font-heading)] text-[26px] text-[var(--color-primary)] tracking-tight leading-[1.2]">
+                  <h2 className="font-['DM_Serif_Display'] text-[26px] text-[var(--color-primary)] tracking-tight leading-[1.2]">
                     {cat.title}
                   </h2>
                 </div>

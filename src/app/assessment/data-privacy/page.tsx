@@ -8,7 +8,7 @@ export default function DataPrivacyNotice() {
   const router = useRouter();
 
   return (
-    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
+    <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
       <div className="max-w-[760px] mx-auto w-full">
 
         {/* Page title */}
@@ -18,7 +18,7 @@ export default function DataPrivacyNotice() {
             Data Privacy Notice
           </div>
 
-          <h1 className="font-[var(--font-heading)] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             Your data stays with you
           </h1>
           <p className="text-[14px] text-[var(--color-text-faint)] font-light max-w-sm mx-auto leading-relaxed">

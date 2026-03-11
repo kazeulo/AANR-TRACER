@@ -14,7 +14,7 @@ export default function Footer() {
         <path fill="var(--color-primary)" d="M0,30 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" />
       </svg>
 
-      <footer className="bg-[var(--color-primary)] text-white font-[var(--font-body)]">
+      <footer className="bg-[var(--color-primary)] text-white font-['DM Sans']">
         <div className="max-w-[1370px] mx-auto px-6 lg:px-[6vw]">
 
           {/* Brand + socials */}

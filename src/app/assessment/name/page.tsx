@@ -15,7 +15,7 @@ export default function TechnologyNamePage() {
   };
 
   return (
-    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
+    <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
       <div className="max-w-[760px] mx-auto w-full">
 
         {/* Eyebrow */}
@@ -27,7 +27,7 @@ export default function TechnologyNamePage() {
         </div>
 
         {/* Title */}
-        <h1 className="font-[var(--font-heading)] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
+        <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Tell us about your <em className="text-[var(--color-accent)]">technology</em>
         </h1>
         <p className="text-[14px] text-[var(--color-text-faint)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">

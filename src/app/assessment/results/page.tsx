@@ -40,7 +40,7 @@ function PageLoader() {
   }, []);
 
   return (
-    <div className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
+    <div className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
       <div className="flex flex-col items-center gap-6 max-w-xs text-center">
 
         {/* Spinner */}
@@ -146,7 +146,7 @@ function CongratulatoryHero({
           >
             <span className="text-[9px] font-bold tracking-[2px] uppercase text-white/40 leading-none mb-0.5">TRL</span>
             <span
-              className="font-[var(--font-heading)] text-[46px] leading-none"
+              className="font-['DM_Serif_Display'] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
               {trl === 0 ? "—" : trl}
@@ -174,7 +174,7 @@ function CongratulatoryHero({
                 {isTRL9 ? "Maximum Readiness Reached" : "Assessment Complete"}
               </span>
             </div>
-            <p className="font-[var(--font-heading)] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
+            <p className="font-['DM_Serif_Display'] text-[clamp(22px,3vw,32px)] text-white leading-[1.15] tracking-tight">
               {trl === 0
                 ? "Your technology is at the starting line."
                 : <>
@@ -205,7 +205,7 @@ function CongratulatoryHero({
           {header === null ? (
             <div className="h-5 w-64 rounded-md bg-[var(--color-bg-card)]/10 animate-pulse mb-2" />
           ) : header.headline ? (
-            <h2 className="font-[var(--font-heading)] text-[clamp(14px,1.8vw,18px)] text-white/80 leading-[1.3] tracking-tight font-normal italic mb-2">
+            <h2 className="font-['DM_Serif_Display'] text-[clamp(14px,1.8vw,18px)] text-white/80 leading-[1.3] tracking-tight font-normal italic mb-2">
               {header.headline}
             </h2>
           ) : null}
@@ -306,7 +306,7 @@ export default function ResultsPage() {
   const gap             = result.highestAchievableTRL - result.highestCompletedTRL;
 
   return (
-    <main className="font-[var(--font-body)] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-16">
+    <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-16">
       <div className="max-w-[860px] mx-auto space-y-6">
 
         {/* Eyebrow */}
@@ -344,7 +344,7 @@ export default function ResultsPage() {
 
         {/* Detailed breakdown */}
         <div>
-          <h2 className="font-[var(--font-heading)] text-[22px] text-[var(--color-primary)] mb-4">
+          <h2 className="font-['DM_Serif_Display'] text-[22px] text-[var(--color-primary)] mb-4">
             Detailed <em className="text-[var(--color-accent)]">Breakdown</em>
           </h2>
           <div className="space-y-3">
