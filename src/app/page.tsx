@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { trlLevels } from "./utils/helperConstants";
+import { tracerLevels } from "./utils/helperConstants";
 import { 
   IconWheat, 
   IconFish, 
@@ -41,7 +41,7 @@ const steps = [
     n: "03",
     Icon: IconBarChart,
     title: "Get Your TRL Report",
-    desc: "Receive your Highest Completed TRL, Highest Achievable TRL, and a clear list of gaps — exportable as a professional PDF report.",
+    desc: "Receive your highest completed TRACER level, identified strengths and gaps, and a roadmap toward successful commercialization.",
   },
 ];
 
@@ -169,7 +169,7 @@ export default function HomePage() {
           {/* Right — TRL scale */}
           <div className="hidden lg:flex flex-col gap-2.5">
             <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--white-35)] mb-2">TRACER Scale</div>
-            {trlLevels.map(({ n, label, w, color }) => (
+            {tracerLevels.map(({ n, label, w, color }) => (
               <div key={n} className="flex items-center gap-3">
                 <span className="text-[11px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
                 <div className="flex-1 h-1.5 bg-[var(--white-15)] rounded-full overflow-hidden">
@@ -284,12 +284,6 @@ export default function HomePage() {
 
           {/* Image */}
           <div className="relative">
-            {/* Rice stalk cluster beside image */}
-            <div className="absolute -left-7 bottom-[12%] flex gap-1 pointer-events-none z-20">
-              <RiceStalk className="w-[16px] text-[var(--color-accent)]/25 -rotate-6" />
-              <RiceStalk className="w-[20px] text-[var(--color-accent)]/35" />
-              <RiceStalk className="w-[14px] text-[var(--color-accent)]/20 rotate-8" />
-            </div>
 
             <div className="absolute -top-4 -left-4 right-4 bottom-4 border-2 border-[#4aa35a] rounded-[20px] z-0" />
             <img

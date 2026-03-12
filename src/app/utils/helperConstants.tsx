@@ -19,7 +19,7 @@ export const categoryDescriptions: Record<string, string> = {
     "Ensure your technology meets all necessary legal and industry standards for safety and quality.",
 };
 
-export const trlLevels = [
+export const tracerLevels = [
   { n: 1, label: "Concept & Market Definition",                     w: "w-[11%]",  color: "bg-slate-400" },
   { n: 2, label: "Design / Formulation / Prototype Planning",       w: "w-[22%]",  color: "bg-slate-500" },
   { n: 3, label: "Prototype Development & Laboratory Testing",      w: "w-[33%]",  color: "bg-amber-400" },

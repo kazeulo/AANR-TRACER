@@ -1,6 +1,11 @@
 import '../styles/globals.css';
 import { Montserrat } from 'next/font/google';
 import type { Metadata } from 'next';
+import BackToTop from "./components/BacktoTop";
+
+// for fontsize control
+import FontSizeControl from "./utils/fontZoom/FontsizeControl";
+import { FontSizeProvider } from "./utils/fontZoom/FontsizeContext";
 
 // components
 import Header from "./components/Header";
@@ -25,9 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <Header />
-        {children}
-        <Footer />
+        <FontSizeProvider>
+          <Header />
+          {children}
+          <Footer />
+          <FontSizeControl />
+          <BackToTop />
+      </FontSizeProvider>
       </body>
     </html>
   );

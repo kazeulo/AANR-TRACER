@@ -40,8 +40,8 @@
 
   /* whites with opacity */
   --white-10:    rgba(255,255,255, 0.1);
-  --white-15:   rgba(255,255,255, 0.15);
-  --white-35:   rgba(255,255,255, 0.35);
+  --white-15:    rgba(255,255,255, 0.15);
+  --white-35:    rgba(255,255,255, 0.35);
 
   /* Borders */
   --color-border:        #ede9e0;   /* default card border */
