@@ -484,8 +484,8 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {hasGap && (
           <FieldRow
-            label="Highest Achievable:"
-            value={`TRACER ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
+            label="Highest Potential:"
+            value={`TRACER Level ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
           />
         )}
 
@@ -510,32 +510,6 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         <View style={s.hr} />
 
-        {/* ── Lacking / Next Steps ── */}
-        {isMaxed ? (
-          <View>
-            <Text style={s.sectionLabel}>Next Steps</Text>
-            <View style={s.hr} />
-            <Text style={{ fontSize: 9, color: "#555555", fontStyle: "italic" }}>
-              Your technology has reached full commercialization (TRACER Level 9).
-              No further steps are required.
-            </Text>
-          </View>
-        ) : hasGap ? (
-          <QuestionSection
-            title={`Requirements to Reach TRACER Level ${highestAchievableTRL}`}
-            questions={lackingForAchievable}
-            type={techType}
-          />
-        ) : (
-          <QuestionSection
-            title={`Requirements for TRACER Level ${highestCompletedTRL + 1}`}
-            questions={lackingForNextLevel}
-            type={techType}
-          />
-        )}
-
-        <View style={s.hr} />
-
         {/* ── Commercialization Roadmap ── */}
         <RoadmapSection roadmap={roadmap ?? []} closing={closing} type={techType} />
 
@@ -543,7 +517,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {/* ── Footer (fixed at bottom of every page) ── */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>AANR-TRacer · DOST-PCAARRD</Text>
+          <Text style={s.footerText}>AANR-TRACER</Text>
           <Text style={s.footerText}
             render={({ pageNumber, totalPages }) =>
               `Page ${pageNumber} of ${totalPages}`

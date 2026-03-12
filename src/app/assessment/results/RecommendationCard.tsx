@@ -176,7 +176,7 @@ export default function AIRecommendationCard({
       <div className="flex items-center gap-2.5 px-7 py-4 border-b border-[#f0ede6] bg-[#f8f6f1]">
         <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
         <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
-          Action Steps
+          Commercialization Roadmap
         </span>
         <span className="ml-auto text-[10px] text-[#94a3a0] bg-[#f0ece3] px-2 py-0.5 rounded-full font-medium">
           AI-powered
@@ -226,7 +226,7 @@ export default function AIRecommendationCard({
             AI-generated. Validate with a technology transfer specialist. For further assistance, contact your regional Technology Transfer Specialist.
           </p>
         </div>
-        <button
+        {/* <button
           onClick={() => reload(true)}
           className="inline-flex items-center gap-1.5 text-[11px] text-[#94a3a0] hover:text-[#4aa35a] transition-colors font-medium"
         >
@@ -237,7 +237,7 @@ export default function AIRecommendationCard({
             <path d="M8 16H3v5" />
           </svg>
           Regenerate
-        </button>
+        </button> */}
       </div>
     </div>
   );
