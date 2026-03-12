@@ -1,4 +1,4 @@
-// Types
+// Types 
 
 export interface QuestionItem {
   id: string;
@@ -51,7 +51,7 @@ export interface TRLResult {
   lackingToLevel9: QuestionItem[];  // every unmet item from completedTRL+1 through Level 9
 }
 
-// IP synthetic questions
+// IP synthetic questions 
 
 const PLANT_ANIMAL_TYPES = [
   "New Plant Variety (Conventional)",
@@ -70,6 +70,9 @@ function isIPAnsweredYes(label: string, ipEntry: IPQuestionData | undefined): bo
   }
 
   if (label === IP_FILED_LABEL) {
+    // Trade secret is a valid alternative to formal IP filing — exempt from this requirement
+    if (ipEntry.initiated === "trade_secret") return true;
+
     return Object.entries(ipEntry.selectedTypes ?? {}).some(
       ([ipType, checked]) =>
         checked &&
@@ -99,7 +102,7 @@ function buildIPQuestions(technologyType: string): QuestionItem[] {
   ];
 }
 
-// Answer evaluation 
+// Answer evaluation
 
 /**
  * For a dropdown question, returns the highest TRL level the selected
@@ -215,7 +218,7 @@ export function calculateTRL(
   const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
   const maxLevel = Math.max(...levels);
 
-  // Highest Completed TRL 
+  // Highest Completed TRL
   // Highest level N where ALL questions at levels 1..N are satisfied
   let highestCompletedTRL = 0;
 
@@ -241,7 +244,7 @@ export function calculateTRL(
     }
   }
 
-  // Highest Achievable TRL 
+  // Highest Achievable TRL
   let highestAchievableTRL = highestCompletedTRL;
   for (const level of [...levels].reverse()) {
     const questionsAtLevel = byLevel[level] ?? [];
@@ -254,10 +257,10 @@ export function calculateTRL(
     }
   }
 
-  // Completed Questions
+  // Completed Questions 
   const completedQuestions = questions.filter(q => isAnsweredYes(q, answers, ipData));
 
-  // Lacking for Next Level 
+  // Lacking for Next Level
   const nextLevel = highestCompletedTRL + 1;
   const lackingForNextLevel =
     nextLevel <= maxLevel
@@ -271,7 +274,7 @@ export function calculateTRL(
         })
       : [];
 
-  // Lacking for Achievable
+  // Lacking for Achievable 
   const lackingForAchievable =
     highestAchievableTRL > highestCompletedTRL
       ? questions.filter(q => {
@@ -284,7 +287,7 @@ export function calculateTRL(
         })
       : [];
 
-  // ── Lacking all the way to Level 9 (full commercialization roadmap) 
+  // Lacking all the way to Level 9 (full commercialization roadmap)
   const lackingToLevel9 = questions.filter(q => {
     if ((q.type ?? "checkbox") === "dropdown" && q.options) {
       const opts = q.options as DropdownOption[];
@@ -297,7 +300,7 @@ export function calculateTRL(
     return q.trlLevel > highestCompletedTRL && !isAnsweredYes(q, answers, ipData);
   });
 
-  //  TRL 9 promotion
+  // TRL 9 promotion 
   if (highestAchievableTRL === 9 && highestCompletedTRL < 9) {
     highestCompletedTRL = 9;
   }

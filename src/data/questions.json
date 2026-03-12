@@ -140,8 +140,25 @@
         "questionText": "Packaging compatibility validated for safety and shelf life",
         "trlLevel": 5,
         "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
+        "type": "dropdown",
+        "toolTip": "",
+        "options": [
+          {
+            "label": "Yes",
+            "value": "yes",
+            "trlSatisfied": 5
+          },
+          {
+            "label": "No",
+            "value": "no",
+            "trlSatisfied": 4
+          },
+          {
+            "label": "Not Required/Not Applicable ",
+            "value": "not_required",
+            "trlSatisfied": null
+          }
+        ]
       },
       {
         "id": "market_0_26",
