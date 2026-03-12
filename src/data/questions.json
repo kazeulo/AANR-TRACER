@@ -104,6 +104,11 @@
         "toolTip": "",
         "options": [
           {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
+          {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
             "trlSatisfied": 4
@@ -523,6 +528,11 @@
         "toolTip": "",
         "options": [
           {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
+          {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
             "trlSatisfied": 4
@@ -878,6 +888,11 @@
         "type": "dropdown",
         "toolTip": "",
         "options": [
+          {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
           {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
@@ -1241,6 +1256,11 @@
         "toolTip": "",
         "options": [
           {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
+          {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
             "trlSatisfied": 4
@@ -1573,6 +1593,11 @@
         "toolTip": "",
         "options": [
           {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
+          {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
             "trlSatisfied": 4
@@ -1904,6 +1929,11 @@
         "type": "dropdown",
         "toolTip": "",
         "options": [
+          {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
           {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
@@ -2244,6 +2274,11 @@
         "type": "dropdown",
         "toolTip": "",
         "options": [
+          {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
           {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
@@ -2601,6 +2636,11 @@
         "toolTip": "",
         "options": [
           {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
+          {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
             "trlSatisfied": 4
@@ -2940,6 +2980,11 @@
         "type": "dropdown",
         "toolTip": "",
         "options": [
+          {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
           {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
@@ -3288,6 +3333,11 @@
         "type": "dropdown",
         "toolTip": "",
         "options": [
+          {
+            "label": "No Industry Partner Identified",
+            "value": "not_identified",
+            "trlSatisfied": null
+          },
           {
             "label": "Identified Potential Industry Partner",
             "value": "identified",
