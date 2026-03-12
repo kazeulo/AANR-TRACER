@@ -1,4 +1,4 @@
-// Types 
+//  Types
 
 export interface QuestionItem {
   id: string;
@@ -51,7 +51,7 @@ export interface TRLResult {
   lackingToLevel9: QuestionItem[];  // every unmet item from completedTRL+1 through Level 9
 }
 
-// IP synthetic questions 
+// ─── IP synthetic questions ───────────────────────────────────────────────────
 
 const PLANT_ANIMAL_TYPES = [
   "New Plant Variety (Conventional)",
@@ -102,7 +102,7 @@ function buildIPQuestions(technologyType: string): QuestionItem[] {
   ];
 }
 
-// Answer evaluation
+// ─── Answer evaluation ────────────────────────────────────────────────────────
 
 /**
  * For a dropdown question, returns the highest TRL level the selected
@@ -182,7 +182,7 @@ function isAnsweredYes(
   return isAnsweredYesAtLevel(q, answers, ipData, q.trlLevel);
 }
 
-// Main Calculator
+// ─── Main Calculator ──────────────────────────────────────────────────────────
 
 export function calculateTRL(
   allQuestions: QuestionItem[],
@@ -218,15 +218,13 @@ export function calculateTRL(
   const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
   const maxLevel = Math.max(...levels);
 
-  // Highest Completed TRL
+  // ── Highest Completed TRL ─────────────────────────────────────────────────
   // Highest level N where ALL questions at levels 1..N are satisfied
   let highestCompletedTRL = 0;
 
   for (const level of levels) {
-    // For each level, check all questions that are required at this level
     const allUpToLevel = questions.filter(q => {
       if ((q.type ?? "checkbox") === "dropdown" && q.options) {
-        // Dropdown is "required at this level" if any option can satisfy this level
         const opts = q.options as DropdownOption[];
         return opts.some(o => o.trlSatisfied !== null && o.trlSatisfied <= level && o.trlSatisfied >= 1);
       }
@@ -244,7 +242,27 @@ export function calculateTRL(
     }
   }
 
-  // Highest Achievable TRL
+  // ── Null-answer cap ───────────────────────────────────────────────────────
+  // Only cap if the user's natural TRL reaches (or passes) a dropdown question
+  // where they selected a "nothing done yet" option (trlSatisfied: null).
+  // Example: if user naturally reaches Level 7 but answered "No Licensing Yet"
+  // on a Level 7 question → cap at 6. But if they only reach Level 2 and that
+  // same Level 7 question is "No Licensing Yet", don't drag them down to 6.
+  questions.forEach(q => {
+    if ((q.type ?? "checkbox") !== "dropdown" || !q.options) return;
+    const answer = answers[q.id];
+    if (typeof answer !== "string" || !answer) return;
+    const opts = q.options as DropdownOption[];
+    const selected = opts.find(o => o.value === answer);
+    if (selected && selected.trlSatisfied === null) {
+      // Only apply cap if the user's achieved TRL has reached this question's level
+      if (highestCompletedTRL >= q.trlLevel) {
+        highestCompletedTRL = Math.min(highestCompletedTRL, q.trlLevel - 1);
+      }
+    }
+  });
+
+  // ── Highest Achievable TRL ────────────────────────────────────────────────
   let highestAchievableTRL = highestCompletedTRL;
   for (const level of [...levels].reverse()) {
     const questionsAtLevel = byLevel[level] ?? [];
@@ -257,10 +275,23 @@ export function calculateTRL(
     }
   }
 
-  // Completed Questions 
+  // Apply the same null-answer cap to achievable — only when it's in range
+  questions.forEach(q => {
+    if ((q.type ?? "checkbox") !== "dropdown" || !q.options) return;
+    const answer = answers[q.id];
+    if (typeof answer !== "string" || !answer) return;
+    const opts = q.options as DropdownOption[];
+    const selected = opts.find(o => o.value === answer);
+    if (selected && selected.trlSatisfied === null) {
+      if (highestAchievableTRL >= q.trlLevel) {
+        highestAchievableTRL = Math.min(highestAchievableTRL, q.trlLevel - 1);
+      }
+    }
+  });
+  // ── Completed Questions ───────────────────────────────────────────────────
   const completedQuestions = questions.filter(q => isAnsweredYes(q, answers, ipData));
 
-  // Lacking for Next Level
+  // ── Lacking for Next Level ────────────────────────────────────────────────
   const nextLevel = highestCompletedTRL + 1;
   const lackingForNextLevel =
     nextLevel <= maxLevel
@@ -274,7 +305,7 @@ export function calculateTRL(
         })
       : [];
 
-  // Lacking for Achievable 
+  // ── Lacking for Achievable ────────────────────────────────────────────────
   const lackingForAchievable =
     highestAchievableTRL > highestCompletedTRL
       ? questions.filter(q => {
@@ -287,10 +318,16 @@ export function calculateTRL(
         })
       : [];
 
-  // Lacking all the way to Level 9 (full commercialization roadmap)
+  // ── Lacking all the way to Level 9 (full commercialization roadmap) ─────
   const lackingToLevel9 = questions.filter(q => {
     if ((q.type ?? "checkbox") === "dropdown" && q.options) {
       const opts = q.options as DropdownOption[];
+      const answer = answers[q.id];
+      // If answered with a null-satisfaction option, it's blocking — include it
+      if (typeof answer === "string" && answer) {
+        const selected = opts.find(o => o.value === answer);
+        if (selected && selected.trlSatisfied === null) return true;
+      }
       // Include if the dropdown hasn't satisfied its highest possible level yet
       const maxSatisfiable = Math.max(
         ...opts.map(o => o.trlSatisfied ?? 0).filter(v => v > 0)
@@ -300,7 +337,7 @@ export function calculateTRL(
     return q.trlLevel > highestCompletedTRL && !isAnsweredYes(q, answers, ipData);
   });
 
-  // TRL 9 promotion 
+  // ── TRL 9 promotion ───────────────────────────────────────────────────────
   if (highestAchievableTRL === 9 && highestCompletedTRL < 9) {
     highestCompletedTRL = 9;
   }
