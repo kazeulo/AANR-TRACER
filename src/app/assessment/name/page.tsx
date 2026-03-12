@@ -30,7 +30,7 @@ export default function TechnologyNamePage() {
         <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Tell us about your <em className="text-[var(--color-accent)]">technology</em>
         </h1>
-        <p className="text-[14px] text-[var(--color-text-faint)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
+        <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
           Provide some basic details about your innovation. This helps us tailor the assessment and give you relevant recommendations.
         </p>
 
@@ -55,7 +55,7 @@ export default function TechnologyNamePage() {
               placeholder="e.g. Solar-Powered Tilapia Feeder"
               className="w-full bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3.5 text-[15px] text-[var(--color-text)] placeholder-[#b0a99e] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all"
             />
-            <p className="text-[12px] text-[var(--color-text-faintest)] font-light mt-3 leading-relaxed">
+            <p className="text-[12px] text-[var(--color-text-light-gray)] font-light mt-3 leading-relaxed">
               Keep it short and clear. A working or temporary name is fine if you haven't decided on a final one yet.
             </p>
           </div>

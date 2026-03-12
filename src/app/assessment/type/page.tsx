@@ -36,7 +36,7 @@ export default function TechnologyTypePage() {
         <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Select your <em className="text-[var(--color-accent)]">technology type</em>
         </h1>
-        <p className="text-[14px] text-[var(--color-text-faint)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
+        <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
           This helps us tailor the questionnaire and provide relevant recommendations based on your innovation's category.
         </p>
 
@@ -72,7 +72,7 @@ export default function TechnologyTypePage() {
               </div>
             </div>
 
-            <p className="text-[12px] text-[var(--color-text-faintest)] font-light mt-3 leading-relaxed">
+            <p className="text-[12px] text-[var(--color-text-light-gray)] font-light mt-3 leading-relaxed">
               Not sure which category fits? View detailed descriptions and examples in the{" "}
               <a href="/terms" className="text-[var(--color-accent)] underline underline-offset-2 hover:text-[#3d8f4c] transition-colors font-medium">
                 Terms & Definitions

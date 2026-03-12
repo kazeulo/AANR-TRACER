@@ -31,7 +31,7 @@ export default function FundingSourcePage() {
         <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Who is funding your <em className="text-[var(--color-accent)]">technology?</em>
         </h1>
-        <p className="text-[14px] text-[var(--color-text-faint)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
+        <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
           Indicate the primary source of funding. This helps us understand the background and support behind your innovation.
         </p>
 
@@ -69,7 +69,7 @@ export default function FundingSourcePage() {
                     <div className={`text-[14px] font-semibold leading-snug ${selected ? "text-[var(--color-primary)]" : "text-[var(--color-text-gray)]"}`}>
                       {value}
                     </div>
-                    <div className="text-[12px] text-[var(--color-text-faintest)] font-light mt-0.5">{desc}</div>
+                    <div className="text-[12px] text-[var(--color-text-gray)] font-light mt-0.5">{desc}</div>
                   </div>
                   {/* Radio indicator */}
                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${

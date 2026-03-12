@@ -8,11 +8,7 @@ import { useRouter } from "next/navigation";
 import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 
-// Module-level cache — shared with ResultsPage so the JSON is only ever
-// fetched once per browser session, regardless of which page loads first.
 const questionsCache: Record<string, Record<string, Question[]>> = {};
-
-// Types 
 
 interface DropdownOption {
   label: string;
@@ -33,8 +29,6 @@ interface Question {
   type?: "checkbox" | "dropdown" | "multi-conditional";
   options?: DropdownOption[];
 }
-
-// IP Section 
 
 interface IPSectionProps {
   label: string;
@@ -73,7 +67,15 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
         <div className="relative mb-5">
           <select
             value={current.initiated}
-            onChange={e => setField("initiated", e.target.value)}
+            onChange={e => {
+              const newVal = e.target.value as "yes" | "no" | "trade_secret" | "";
+              if (newVal !== "yes") {
+                // Clear dependent selections so stale IP types don't persist into the calculator
+                onChange({ ...ipData, [key]: { initiated: newVal, selectedTypes: {}, typeStatuses: {} } });
+              } else {
+                setField("initiated", newVal);
+              }
+            }}
             className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
           >
             <option value="">Select an option…</option>
@@ -183,15 +185,45 @@ function DropdownQuestion({
   value: string | null;
   onChange: (val: string) => void;
 }) {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const selected = q.options?.find(o => o.value === value);
   const showContact = selected?.contactLabel;
 
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
-          {q.questionText}
-        </p>
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
+            {q.questionText}
+          </p>
+          {q.toolTip && (
+            <button
+              type="button"
+              onClick={e => { e.preventDefault(); setTooltipOpen(o => !o); }}
+              className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
+                tooltipOpen
+                  ? "bg-[var(--color-accent)] border-[#4aa35a]"
+                  : "bg-[var(--color-bg-card)] border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[var(--color-accent)]/10"
+              }`}
+              title={tooltipOpen ? "Hide hint" : "Show hint"}
+            >
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
+                stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8" strokeLinecap="round">
+                <line x1="4" y1="1" x2="4" y2="7" className={`transition-all duration-200 ${tooltipOpen ? "opacity-0" : "opacity-100"}`} />
+                <line x1="1" y1="4" x2="7" y2="4" />
+              </svg>
+            </button>
+          )}
+        </div>
+        {q.toolTip && tooltipOpen && (
+          <div className="mb-3 flex items-start gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl px-3.5 py-2.5">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
+              stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" className="flex-shrink-0 mt-[1px]">
+              <circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/>
+            </svg>
+            <p className="text-[12px] text-[#6b7a75] font-light leading-relaxed">{q.toolTip}</p>
+          </div>
+        )}
         <div className="relative">
           <select
             value={value ?? ""}
@@ -232,15 +264,45 @@ function MultiConditionalQuestion({
   onSelectionChange: (sel: string) => void;
   onItemToggle: (item: string) => void;
 }) {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const yesOption = q.options?.find(o => o.action === "checklist");
   const noOption  = q.options?.find(o => o.action === "contacts");
 
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
-          {q.questionText}
-        </p>
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
+            {q.questionText}
+          </p>
+          {q.toolTip && (
+            <button
+              type="button"
+              onClick={e => { e.preventDefault(); setTooltipOpen(o => !o); }}
+              className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
+                tooltipOpen
+                  ? "bg-[var(--color-accent)] border-[#4aa35a]"
+                  : "bg-[var(--color-bg-card)] border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[var(--color-accent)]/10"
+              }`}
+              title={tooltipOpen ? "Hide hint" : "Show hint"}
+            >
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
+                stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8" strokeLinecap="round">
+                <line x1="4" y1="1" x2="4" y2="7" className={`transition-all duration-200 ${tooltipOpen ? "opacity-0" : "opacity-100"}`} />
+                <line x1="1" y1="4" x2="7" y2="4" />
+              </svg>
+            </button>
+          )}
+        </div>
+        {q.toolTip && tooltipOpen && (
+          <div className="mb-3 flex items-start gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl px-3.5 py-2.5">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
+              stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" className="flex-shrink-0 mt-[1px]">
+              <circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/>
+            </svg>
+            <p className="text-[12px] text-[#6b7a75] font-light leading-relaxed">{q.toolTip}</p>
+          </div>
+        )}
 
         {/* Top-level selection */}
         <div className="relative mb-4">
@@ -331,7 +393,6 @@ export default function QuestionnairePage() {
   useEffect(() => {
     if (!data.technologyType) return;
 
-    // Restore position from context — runs on every render but is instant
     if (lastCategoryIndex >= 0 && lastPage >= 0 && orderedCategories.length > 0) {
       setCurrentCategoryIndex(Math.min(lastCategoryIndex, orderedCategories.length - 1));
       setCurrentPage(lastPage);
@@ -341,7 +402,6 @@ export default function QuestionnairePage() {
   useEffect(() => {
     if (!data.technologyType) return;
 
-    // Return immediately from cache if already loaded for this type
     if (questionsCache[data.technologyType]) {
       const groupedData = questionsCache[data.technologyType];
       const ordered = categoryOrder.filter(
@@ -368,7 +428,6 @@ export default function QuestionnairePage() {
         groupedData[q.category].push(q);
       });
 
-      // Store in module cache for instant reuse
       questionsCache[data.technologyType] = groupedData;
 
       const ordered = categoryOrder.filter(
@@ -446,7 +505,6 @@ export default function QuestionnairePage() {
 
   const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
 
-  // IP validation
   const ipBlocksNext = (() => {
     if (!isIPCategory) return false;
     const ipKey = IP_INITIATED_LABEL;
@@ -460,17 +518,16 @@ export default function QuestionnairePage() {
     return checkedTypes.some(t => !current.typeStatuses[t]);
   })();
 
-  // Block Next if any visible dropdown or multi-conditional on this page has no selection
   const dropdownBlocksNext = (() => {
     if (isIPCategory) return false;
     return visibleQuestions.some(q => {
       if (q.type === "dropdown") {
         const val = data.answers[q.id];
-        return !val; // null or empty string = not selected
+        return !val;
       }
       if (q.type === "multi-conditional") {
         const val = data.answers[q.id] as { selection?: string } | undefined;
-        return !val?.selection; // no top-level selection made
+        return !val?.selection;
       }
       return false;
     });
@@ -478,7 +535,6 @@ export default function QuestionnairePage() {
 
   const blocksNext = ipBlocksNext || dropdownBlocksNext;
 
-  // Progress
   const totalSteps = orderedCategories.reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
     return acc + Math.ceil((grouped[cat]?.length ?? 0) / questionsPerPage);
@@ -489,7 +545,6 @@ export default function QuestionnairePage() {
   }, 0) + currentPage;
   const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
 
-  // Loading
   if (loading) {
     return (
       <div className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
@@ -570,12 +625,10 @@ export default function QuestionnairePage() {
             />
           </div>
         ) : (
-          /* Questions — checkbox / dropdown / multi-conditional */
           <div className="space-y-3">
             {visibleQuestions.map(q => {
               const qType = q.type ?? "checkbox";
 
-              // ── Dropdown ──────────────────────────────────────────────────
               if (qType === "dropdown") {
                 return (
                   <DropdownQuestion
@@ -587,7 +640,6 @@ export default function QuestionnairePage() {
                 );
               }
 
-              // ── Multi-conditional ─────────────────────────────────────────
               if (qType === "multi-conditional") {
                 const mcVal = (data.answers[q.id] as MultiConditionalAnswer) ?? { selection: "", checkedItems: [] };
                 return (
@@ -613,7 +665,6 @@ export default function QuestionnairePage() {
                 );
               }
 
-              // ── Checkbox (default) ────────────────────────────────────────
               const checked = data.answers[q.id] === true;
               const tooltipOpen = openTooltips[q.id] ?? false;
               return (

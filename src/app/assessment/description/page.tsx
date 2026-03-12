@@ -44,7 +44,7 @@ export default function TechnologyDescriptionPage() {
         <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Describe your <em className="text-[var(--color-accent)]">technology</em>
         </h1>
-        <p className="text-[14px] text-[var(--color-text-faint)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
+        <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
           A brief description helps us understand your innovation and tailor the assessment questions to your context.
         </p>
 
@@ -77,7 +77,7 @@ export default function TechnologyDescriptionPage() {
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <span className={`text-[12px] font-medium flex-shrink-0 ${isFull ? "text-amber-500" : "text-[var(--color-text-faintest)]"}`}>
+              <span className={`text-[12px] font-medium flex-shrink-0 ${isFull ? "text-amber-500" : "text-[var(--color-text-faint)]"}`}>
                 {wordCount} / {maxWords} words
               </span>
             </div>

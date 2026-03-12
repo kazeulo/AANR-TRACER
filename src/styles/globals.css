@@ -9,7 +9,7 @@
 
 /* ─── Design tokens ──────────────────────────────────────────────────────── */
 :root {
-
+  --font-scale: 1;
   /* Fonts */
   --font-heading: 'DM Serif Display', serif;
   --font-body:    'DM Sans', sans-serif;
@@ -51,6 +51,7 @@
   /* Text */
   --color-text:          #1a1a1a;   /* primary body text */
   --color-text-heading:  #0f2e1a;   /* dark headings */
+  --color-text-light-gray:    #727d8d;
   --color-text-gray:     #3e4652;
   --color-text-muted:    #84b798;   /* muted body copy */
   --color-text-faint:    #96a7a1;   /* placeholder / helper text */
@@ -84,6 +85,10 @@
   --transition-fast:   150ms ease;
   --transition-normal: 200ms ease;
   --transition-slow:   300ms ease;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
 }
 
 /* ─── Base styles ────────────────────────────────────────────────────────── */
