@@ -7,7 +7,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 const SCALES = [0.9, 1, 1.1, 1.2] as const;
 const LABELS = ["Small", "Default", "Large", "Larger"] as const;
 const STORAGE_KEY = "aanr-font-scale";
-const DEFAULT_INDEX = 0; // "Default" = 1.0
+const DEFAULT_INDEX = 1; // "Default" = 1.0
 
 // ─── Context ──────────────────────────────────────────────────────────────────
 
