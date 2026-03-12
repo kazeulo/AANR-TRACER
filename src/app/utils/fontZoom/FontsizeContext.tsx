@@ -5,9 +5,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 const SCALES = [0.9, 1, 1.1, 1.2] as const;
-const LABELS = ["Small", "Default", "Large", "Extra Large"] as const;
+const LABELS = ["Small", "Default", "Large", "Larger"] as const;
 const STORAGE_KEY = "aanr-font-scale";
-const DEFAULT_INDEX = 1; // "Default" = 1.0
+const DEFAULT_INDEX = 0; // "Default" = 1.0
 
 // ─── Context ──────────────────────────────────────────────────────────────────
 
@@ -40,17 +40,23 @@ export function FontSizeProvider({ children }: { children: React.ReactNode }) {
     } catch { /* localStorage unavailable */ }
   }, []);
 
-  // Apply zoom to <html> whenever scale changes
+  // Apply zoom to <html> so ALL elements (px, rem, em, spacing) scale uniformly.
+  // iOS Safari doesn't support zoom on <html> — we work around this by also
+  // setting font-size as a fallback, and the CSS in globals.css pins the
+  // font-family so it never falls back to the system font.
   useEffect(() => {
     const scale = SCALES[scaleIndex];
-    document.documentElement.style.zoom = String(scale);
+    const root = document.documentElement;
+    root.style.zoom = String(scale);
+    // iOS/WebKit fallback — won't scale px values but keeps fonts correct
+    root.style.fontSize = `${16 * scale}px`;
     try {
       localStorage.setItem(STORAGE_KEY, String(scaleIndex));
     } catch { /* ignore */ }
 
-    // Cleanup on unmount
     return () => {
-      document.documentElement.style.zoom = "1";
+      root.style.zoom = "";
+      root.style.fontSize = "";
     };
   }, [scaleIndex]);
 

@@ -1,12 +1,19 @@
-
 /* ─── Google Fonts ───────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
-
+ 
 /* ─── Tailwind directives ─────────────────────────────────────────────────── */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
+/* ─── Font zoom fix ──────────────────────────────────────────────────────── */
+/* Pins font-family on html/body so iOS Safari never falls back to system     */
+/* font when zoom or font-size is applied via FontSizeContext.                 */
+html {
+  font-family: 'DM Sans', sans-serif;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 /* ─── Design tokens ──────────────────────────────────────────────────────── */
 :root {
   --font-scale: 1;
@@ -235,3 +242,4 @@ html {
     border-top-color: var(--color-accent);
   }
 }
+
