@@ -381,7 +381,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-wrap items-center gap-3 pb-10">
+        <div className="flex flex-wrap items-center gap-3 pb-5">
           <button
             onClick={() => router.push("/")}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all duration-200"
@@ -403,6 +403,34 @@ export default function ResultsPage() {
               </svg>
             </span>
           </button>
+        </div>
+
+        {/* Feedback banner */}
+        <div className="rounded-2xl border border-[#4aa35a]/20 bg-white px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="w-10 h-10 flex-shrink-0 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="#4aa35a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[14px] font-semibold text-[#0f2e1a] mb-0.5">
+              Help us improve AANR-TRACER
+            </p>
+            <p className="text-[12px] text-[#6b7a75] leading-relaxed">
+              Share your experience and suggestions — your feedback helps us make this tool better for everyone in the AANR sector.
+            </p>
+          </div>
+          <a
+            href="https://forms.gle/7kTGomz9ZSMuh5pE6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+                        text-[13px] font-semibold text-white bg-[#0f2e1a]
+                        hover:bg-[#1a3d26] hover:-translate-y-0.5 transition-all duration-200 shadow-sm whitespace-nowrap"
+          >
+            Give Feedback
+          </a>
         </div>
 
       </div>
@@ -430,6 +458,7 @@ export default function ResultsPage() {
           </div>
         </div>
       )}
+
     </main>
   );
 }

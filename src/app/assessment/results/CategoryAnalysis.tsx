@@ -21,6 +21,7 @@ interface Props {
   completedQuestions: QuestionItem[];
   lackingToLevel9:    QuestionItem[];
   completedTRL:       number;
+  narrative?:         string;  // AI-generated strength/gap paragraph
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -124,6 +125,7 @@ const SHORT_NAMES: Record<string, string> = {
   "Industry Validation and Adoption Status":    "Industry",
   "Regulatory Compliance Status":               "Regulatory",
 };
+
 
 // ─── Radar Chart ──────────────────────────────────────────────────────────────
 
@@ -245,7 +247,7 @@ function RadarChart({ scores }: { scores: CategoryScore[] }) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, completedTRL }: Props) {
+export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, completedTRL, narrative }: Props) {
 
   const scores: CategoryScore[] = useMemo(() => {
     return categoryOrder.map(category => {
@@ -259,8 +261,13 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
     });
   }, [completedQuestions, lackingToLevel9]);
 
-  const strongest = [...scores].sort((a, b) => b.percent - a.percent)[0];
-  const weakest   = [...scores].sort((a, b) => a.percent - b.percent)[0];
+  // Strongest = highest TRACER level reached; Focus = lowest TRACER level reached
+  const categoryLevels = scores.map(s => ({
+    ...s,
+    highestLevel: highestLevelInCategory(s.category, completedQuestions),
+  }));
+  const strongest = categoryLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
+  const weakest   = categoryLevels.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a);
   const insight   = useMemo(() => buildInsight(scores, completedQuestions), [scores, completedQuestions]);
 
   return (
@@ -276,6 +283,20 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
 
       <div className="px-7 py-6 space-y-6">
 
+        {/* Insight paragraph */}
+        <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-gradient-to-r from-[#0f2e1a]/[0.03] to-[#4aa35a]/[0.04] border border-[#4aa35a]/20">
+          <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mt-0.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
+              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4M12 8h.01" />
+            </svg>
+          </div>
+          <p className="text-[13px] text-[#2d4a38] leading-relaxed font-light">
+            {narrative || insight}
+          </p>
+        </div>
+
         {/* Strength / Weakness badges */}
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-xl px-4 py-3 border border-[#86efac] bg-[#dcfce7]">
@@ -286,7 +307,7 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
               {strongest.category}
             </p>
             <p className="text-[11px] text-[#16a34a] mt-0.5">
-              {strongest.percent}% complete
+              TRACER Level {strongest.highestLevel > 0 ? strongest.highestLevel : "—"}
             </p>
           </div>
           <div className="rounded-xl px-4 py-3 border border-[#fdba74] bg-[#ffedd5]">
@@ -297,7 +318,7 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
               {weakest.category}
             </p>
             <p className="text-[11px] text-[#ea580c] mt-0.5">
-              {weakest.percent}% complete
+              TRACER Level {weakest.highestLevel > 0 ? weakest.highestLevel : "—"}
             </p>
           </div>
         </div>
@@ -357,20 +378,6 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
               </div>
             ))}
           </div>
-        </div>
-
-                {/* Insight paragraph */}
-        <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-gradient-to-r from-[#0f2e1a]/[0.03] to-[#4aa35a]/[0.04] border border-[#4aa35a]/20">
-          <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mt-0.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
-              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 16v-4M12 8h.01" />
-            </svg>
-          </div>
-          <p className="text-[13px] text-[#2d4a38] leading-relaxed font-light">
-            {insight}
-          </p>
         </div>
 
       </div>
