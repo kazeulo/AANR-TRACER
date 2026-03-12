@@ -126,7 +126,6 @@ const SHORT_NAMES: Record<string, string> = {
   "Regulatory Compliance Status":               "Regulatory",
 };
 
-
 // ─── Radar Chart ──────────────────────────────────────────────────────────────
 
 function RadarChart({ scores }: { scores: CategoryScore[] }) {

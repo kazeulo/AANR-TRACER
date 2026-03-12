@@ -415,11 +415,11 @@
     "9": [
       {
         "id": "tech_dev_0_10",
-        "questionText": "Fully commercialized with documented royalty income (The technology is fully commercialized, with the product commercially available to target users and generating royalty income.)",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the product commercially available to target users and generating royalty income."
       }
     ]
   },
@@ -776,11 +776,11 @@
     "9": [
       {
         "id": "tech_dev_1_10",
-        "questionText": "Fully commercialized with documented royalty income (The technology is fully commercialized, with the product commercially available to target users and generating royalty income.)",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the product commercially available to target users and generating royalty income."
       }
     ]
   },
@@ -1094,11 +1094,11 @@
     "8": [
       {
         "id": "tech_dev_2_9",
-        "questionText": "Fully commercialized with documented royalty income (The technology is fully commercialized, with the product commercially available to target users and generating documented royalty income.)",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the product commercially available to target users and generating documented royalty income."
       },
       {
         "id": "fairness_2",
@@ -1231,11 +1231,11 @@
       },
       {
         "id": "tech_dev_3_12",
-        "questionText": "Fully commercialized with documented royalty income (The technology is fully commercialized, with the machine or facility commercially available to target users and generating royalty income.)",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the machine or facility commercially available to target users and generating royalty income."
       }
     ],
     "4": [
@@ -1578,11 +1578,11 @@
       },
       {
         "id": "tech_dev_4_13",
-        "questionText": "Fully commercialized with documented royalty income (The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income.)",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
       },
       {
         "id": "industry_partner_4",
@@ -1915,11 +1915,11 @@
       },
       {
         "id": "tech_dev_5_13",
-        "questionText": "Fully commercialized with documented royalty income (The system/application is fully commercialized, available to target users, and generating royalty income.)",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
       },
       {
         "id": "industry_partner_5",
@@ -2717,11 +2717,11 @@
       },
       {
         "id": "tech_dev_7_15",
-        "questionText": "Fully Commercialized with Documented Royalty Income (The new plant variety is fully commercialized, making the variety commercially available to target users, and generating royalty income.)",
+        "questionText": "Fully Commercialized with Documented Royalty Income",
         "trlLevel": 6,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, and generating royalty income."
       },
       {
         "id": "industry_validation_7",
@@ -3019,11 +3019,11 @@
       },
       {
         "id": "tech_dev_8_16",
-        "questionText": "Fully Commercialized with Documented Royalty Income (The new plant variety is fully commercialized, making the variety commercially available to target users, with royalty fees paid to the IP owner.)",
+        "questionText": "Fully Commercialized with Documented Royalty Income",
         "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, with royalty fees paid to the IP owner."
       },
       {
         "id": "precom_docs_8",
@@ -3415,11 +3415,11 @@
       },
       {
         "id": "tech_dev_9_15",
-        "questionText": "Fully Commercialized with Documented Royalty Income (The new animal breed or genetic resource is fully commercialized, making it commercially available to target users, and generating royalty income.)",
+        "questionText": "Fully Commercialized with Documented Royalty Income",
         "trlLevel": 6,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The new animal breed or genetic resource is fully commercialized, making it commercially available to target users, and generating royalty income."
       },
       {
         "id": "industry_validation_9",

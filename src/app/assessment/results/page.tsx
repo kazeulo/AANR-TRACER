@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
-import { usePDFExport, PDFContent } from "./UsePDFExport";
+import { usePDFExport, PDFContent, generateAndDownloadPDF } from "./UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/TRACERdescriptions";
 import { getTracerLabel } from "./Levelsdescription";
 import {
@@ -27,11 +27,11 @@ import CategoryAnalysis     from "./CategoryAnalysis";
 
 function PageLoader() {
   const steps = [
-    "Calculating your TRACER Level score…",
-    "Analysing your assessment answers…",
-    "Generating your personalised roadmap…",
-    "Preparing your commercialization steps…",
-    "Almost ready…",
+    "Calculating your TRACER Level score\u2026",
+    "Analysing your assessment answers\u2026",
+    "Generating your personalised roadmap\u2026",
+    "Preparing your commercialization steps\u2026",
+    "Almost ready\u2026",
   ];
   const [idx, setIdx] = useState(0);
 
@@ -87,7 +87,7 @@ function CongratulatoryHero({
   technologyName: string;
   technologyType: string;
   completedColor: string;
-  header: AIHeader | null;   // null while AI is loading
+  header: AIHeader | null;
   tracerLabel: string;
 }) {
   const isTRL9 = trl === 9;
@@ -150,12 +150,12 @@ function CongratulatoryHero({
               className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
-              {trl === 0 ? "—" : trl}
+              {trl === 0 ? "\u2014" : trl}
             </span>
           </div>
           {trl > 0 && (
             <span className="text-[10px] text-white/35 text-center max-w-[84px] leading-tight">
-              {TRL_LABELS[trl]}
+              {tracerLabel || TRL_LABELS[trl]}
             </span>
           )}
         </div>
@@ -202,7 +202,7 @@ function CongratulatoryHero({
             )}
           </div>
 
-          {/* AI headline — skeleton while loading */}
+          {/* AI headline */}
           {header === null ? (
             <div className="h-5 w-64 rounded-md bg-white/10 animate-pulse mb-2" />
           ) : header.headline ? (
@@ -211,14 +211,14 @@ function CongratulatoryHero({
             </h2>
           ) : null}
 
-          {/* AI explanation — skeleton while loading */}
+          {/* AI explanation */}
           {header === null ? (
             <div className="space-y-1.5">
               <div className="h-3 w-full max-w-[480px] rounded bg-white/10 animate-pulse" />
               <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
             </div>
           ) : header.explanation ? (
-            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[520px]">
+            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[650px]">
               {header.explanation}
             </p>
           ) : null}
@@ -242,20 +242,15 @@ export default function ResultsPage() {
   const { data } = useAssessment();
   const router   = useRouter();
 
-  // Score data — available almost instantly (local calculation)
   type ScoreData = { result: TRLResult; aiInput: RecommendationInput; officialInfo: ReturnType<typeof getTracerInfo> };
   const [scoreData,  setScoreData]  = useState<ScoreData | null>(null);
-
-  // AI data — arrives as one combined response
   const [aiResult,   setAiResult]   = useState<AIResult | null>(null);
   const [aiError,    setAiError]    = useState<string | undefined>();
-
   const [showModal,  setShowModal]  = useState(false);
-  const { pdfRef, exporting, exportForm, triggerExport } = usePDFExport();
+  const { exporting, setExporting, exportForm, triggerExport, clearForm } = usePDFExport();
 
   useEffect(() => {
     const run = async () => {
-      // ── Step 1: load questions (cached after first visit) + calculate score ──
       const allGrouped = await getQuestionsJSON() as Record<string, Record<string, QuestionItem[]>>;
       const questions  = Object.values(allGrouped[data.technologyType] ?? {}).flat() as QuestionItem[];
       const result     = calculateTRL(questions, data.answers, data.ipData, data.technologyType);
@@ -273,13 +268,11 @@ export default function ResultsPage() {
       };
       const officialInfo = getTracerInfo(data.technologyType, result.highestCompletedTRL);
 
-      // ── Step 2: fetch AI — wait for it before showing the page ───────────
-      let aiResult: AIResult;
+      let aiRes: AIResult;
       try {
-        aiResult = await fetchRecommendation(aiInput, officialInfo);
+        aiRes = await fetchRecommendation(aiInput, officialInfo);
       } catch (err) {
-        // AI failed — fall back to official description, show empty roadmap
-        aiResult = {
+        aiRes = {
           header: {
             headline:    officialInfo?.title ?? "",
             explanation: officialInfo?.description ?? "",
@@ -289,15 +282,13 @@ export default function ResultsPage() {
         setAiError(err instanceof Error ? err.message : "Unknown error");
       }
 
-      // ── Step 3: everything ready — reveal the page at once ───────────────
       setScoreData({ result, aiInput, officialInfo });
-      setAiResult(aiResult);
+      setAiResult(aiRes);
     };
 
     run();
   }, [data]);
 
-  // Show loader until both score + AI are ready
   if (!scoreData || !aiResult) return <PageLoader />;
 
   const { result, aiInput, officialInfo } = scoreData;
@@ -316,7 +307,7 @@ export default function ResultsPage() {
           Assessment Results
         </div>
 
-        {/* Hero — AI header streams in, falls back to skeleton until ready */}
+        {/* Hero */}
         <CongratulatoryHero
           trl={result.highestCompletedTRL}
           technologyName={data.technologyName}
@@ -326,7 +317,7 @@ export default function ResultsPage() {
           tracerLabel={getTracerLabel(data.technologyType, result.highestCompletedTRL)}
         />
 
-        {/* ScoreCards + achievable gap combined */}
+        {/* ScoreCards */}
         <ScoreCards
           completedTRL={result.highestCompletedTRL}
           achievableTRL={result.highestAchievableTRL}
@@ -334,6 +325,7 @@ export default function ResultsPage() {
           achievableColor={achievableColor}
           lackingCount={result.lackingForAchievable.length}
           pendingCount={result.highestCompletedTRL === 9 ? result.lackingForAchievable.length : 0}
+          techType={data.technologyType}
         />
 
         {/* Category analysis */}
@@ -343,7 +335,7 @@ export default function ResultsPage() {
           completedTRL={result.highestCompletedTRL}
         />
 
-        {/* AI roadmap — single fetch, passed as prop */}
+        {/* AI roadmap */}
         <AIRecommendationCard
           {...aiInput}
           initialSteps={aiResult?.steps ?? null}
@@ -361,13 +353,15 @@ export default function ResultsPage() {
               questions={result.completedQuestions}
               accent="#4aa35a"
               defaultOpen={false}
+              techType={data.technologyType}
             />
             {result.lackingForAchievable.length > 0 ? (
               <QuestionGroup
-                title={`Lacking to Reach Highest Achievable (TRACER Level ${result.highestAchievableTRL})`}
+                title={`Lacking to Reach Highest Potential TRACER Level ${result.highestAchievableTRL}`}
                 questions={result.lackingForAchievable}
                 accent="#3b82f6"
                 defaultOpen={true}
+                techType={data.technologyType}
               />
             ) : result.lackingForNextLevel.length > 0 ? (
               <QuestionGroup
@@ -375,6 +369,7 @@ export default function ResultsPage() {
                 questions={result.lackingForNextLevel}
                 accent="#f97316"
                 defaultOpen={true}
+                techType={data.technologyType}
               />
             ) : null}
           </div>
@@ -418,7 +413,7 @@ export default function ResultsPage() {
               Help us improve AANR-TRACER
             </p>
             <p className="text-[12px] text-[#6b7a75] leading-relaxed">
-              Share your experience and suggestions — your feedback helps us make this tool better for everyone in the AANR sector.
+              Share your experience and suggestions \u2014 your feedback helps us make this tool better for everyone in the AANR sector.
             </p>
           </div>
           <a
@@ -439,25 +434,28 @@ export default function ResultsPage() {
       {showModal && (
         <ExportModal
           onClose={() => !exporting && setShowModal(false)}
-          onExport={form => triggerExport(form)}
+          onExport={async form => {
+            setExporting(true);
+            try {
+              await generateAndDownloadPDF({
+                result,
+                techName: data.technologyName,
+                techType: data.technologyType,
+                techDescription: data.technologyDescription,
+                form,
+                roadmap: aiResult?.steps?.roadmap ?? [],
+                closing: aiResult?.steps?.closing ?? "",
+              });
+            } finally {
+              setExporting(false);
+              clearForm();
+            }
+          }}
           exporting={exporting}
         />
       )}
 
-      {/* Hidden PDF render target */}
-      {exportForm && result && (
-        <div style={{ position: "fixed", top: 0, left: "-9999px", zIndex: -1, pointerEvents: "none" }}>
-          <div ref={pdfRef}>
-            <PDFContent
-              result={result}
-              techName={data.technologyName}
-              techType={data.technologyType}
-              techDescription={data.technologyDescription}
-              form={exportForm}
-            />
-          </div>
-        </div>
-      )}
+      {/* PDF generated via @react-pdf/renderer — no hidden div needed */}
 
     </main>
   );

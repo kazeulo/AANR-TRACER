@@ -1,4 +1,5 @@
 import { TRL_LABELS } from "./FetchRecommendation";
+import { TRACER_DESCRIPTIONS } from "../../utils/TRACERdescriptions";
 import TRLStepBar from "./TRLStepBar";
 
 interface ScoreCardsProps {
@@ -8,6 +9,7 @@ interface ScoreCardsProps {
   achievableColor: string;
   lackingCount:    number;
   pendingCount?:   number;
+  techType?:       string;
 }
 
 export default function ScoreCards({
@@ -17,33 +19,36 @@ export default function ScoreCards({
   achievableColor,
   lackingCount,
   pendingCount = 0,
+  techType,
 }: ScoreCardsProps) {
   const gap = achievableTRL - completedTRL;
+  const levelTitle = (lvl: number) =>
+    TRACER_DESCRIPTIONS[techType ?? ""]?.[lvl]?.title ?? TRL_LABELS[lvl] ?? "";
   const atNineWithPending = completedTRL === 9 && pendingCount > 0;
 
   return (
-    <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
+    <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
 
       {/* ── Two score columns ── */}
       <div className={`grid ${gap > 0 ? "sm:grid-cols-2" : "grid-cols-1"} divide-y sm:divide-y-0 sm:divide-x divide-[#f0ece3]`}>
 
         {/* Completed */}
         <div className="px-7 py-7 flex flex-col gap-2">
-          <p className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)]">
-            Highest Completed TRACER Level
+          <p className="text-[10px] font-bold tracking-[2px] uppercase text-[#94a3a0]">
+            Current TRACER Level
           </p>
           <div className="flex items-end gap-3 leading-none">
             <span
-              className="font-['DM_Serif_Display'] text-[56px] leading-none"
+              className="font-['DM_Serif_Display',serif] text-[56px] leading-none"
               style={{ color: completedColor }}
             >
               {completedTRL === 0 ? "—" : completedTRL}
             </span>
           </div>
-          <p className="text-[14px] font-semibold text-[var(--color-primary)] leading-tight">
-            {TRL_LABELS[completedTRL] ?? "Not Yet Assessed"}
+          <p className="text-[14px] font-semibold text-[#0f2e1a] leading-tight">
+            {levelTitle(completedTRL) || "Not Yet Assessed"}
           </p>
-          <p className="text-[12px] text-[var(--color-text-faintest)] font-light leading-relaxed mt-0.5">
+          <p className="text-[12px] text-[#94a3a0] font-light leading-relaxed mt-0.5">
             {completedTRL === 0
               ? "No TRL level has been fully satisfied yet."
               : completedTRL === 9 && pendingCount > 0
@@ -57,12 +62,12 @@ export default function ScoreCards({
         {/* Achievable — only when gap > 0 */}
         {gap > 0 && (
           <div className="px-7 py-7 flex flex-col gap-2 bg-[#f8faf9]">
-            <p className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)]">
+            <p className="text-[10px] font-bold tracking-[2px] uppercase text-[#94a3a0]">
               Highest Potential TRACER Level
             </p>
             <div className="flex items-end gap-3 leading-none">
               <span
-                className="font-['DM_Serif_Display'] text-[56px] leading-none"
+                className="font-['DM_Serif_Display',serif] text-[56px] leading-none"
                 style={{ color: achievableColor }}
               >
                 {achievableTRL}
@@ -74,12 +79,12 @@ export default function ScoreCards({
                 +{gap}
               </span>
             </div>
-            <p className="text-[14px] font-semibold text-[var(--color-primary)] leading-tight">
-              {TRL_LABELS[achievableTRL]}
+            <p className="text-[14px] font-semibold text-[#0f2e1a] leading-tight">
+              {levelTitle(achievableTRL)}
             </p>
-            <p className="text-[12px] text-[var(--color-text-faintest)] font-light leading-relaxed mt-0.5">
+            <p className="text-[12px] text-[#94a3a0] font-light leading-relaxed mt-0.5">
               You have the foundation to reach this level by completing{" "}
-              <span className="font-semibold text-[var(--color-text-gray)]">
+              <span className="font-semibold text-[#4a5568]">
                 {lackingCount} outstanding item{lackingCount !== 1 ? "s" : ""}
               </span>{" "}
               identified in your assessment.
@@ -91,8 +96,8 @@ export default function ScoreCards({
       {/* ── Progress bar ── */}
       <div className="px-7 py-6 border-t border-[#f0ece3]">
         <div className="flex items-center gap-2 mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
-          <span className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
+          <span className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
             Progress Overview
           </span>
         </div>
@@ -101,26 +106,26 @@ export default function ScoreCards({
 
       {/* ── Gap notice ── */}
       {gap > 0 && (
-        <div className="mx-6 mb-6 px-5 py-4 rounded-xl bg-[var(--color-accent)]/[0.05] border border-[#4aa35a]/20 flex items-start gap-3">
+        <div className="mx-6 mb-6 px-5 py-4 rounded-xl bg-[#4aa35a]/[0.05] border border-[#4aa35a]/20 flex items-start gap-3">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <path d="M2 17l10 5 10-5" />
             <path d="M2 12l10 5 10-5" />
           </svg>
-          <p className="text-[12px] text-[var(--color-text-gray)] font-light leading-relaxed">
+          <p className="text-[12px] text-[#4a5568] font-light leading-relaxed">
             Currently at{" "}
-            <span className="font-semibold text-[var(--color-primary)]">TRACER Level {completedTRL}</span>
+            <span className="font-semibold text-[#0f2e1a]">TRACER Level {completedTRL}</span>
             {completedTRL > 0 && (
-              <span className="text-[var(--color-text-faintest)]"> ({TRL_LABELS[completedTRL]})</span>
+              <span className="text-[#94a3a0]"> ({levelTitle(completedTRL)})</span>
             )}
             {" "}— with demonstrated progress toward{" "}
             <span className="font-semibold" style={{ color: achievableColor }}>
               TRACER Level {achievableTRL}
             </span>{" "}
-            <span className="text-[var(--color-text-faintest)]">({TRL_LABELS[achievableTRL]})</span>.
+            <span className="text-[#94a3a0]">({levelTitle(achievableTRL)})</span>.
             {" "}Complete the{" "}
-            <span className="font-semibold text-[var(--color-primary)]">
+            <span className="font-semibold text-[#0f2e1a]">
               {lackingCount} item{lackingCount !== 1 ? "s" : ""}
             </span>{" "}
             in your action steps to unlock your full potential.
@@ -139,7 +144,7 @@ export default function ScoreCards({
           </svg>
           <p className="text-[12px] text-amber-800 font-light leading-relaxed">
             You've reached{" "}
-            <span className="font-semibold">TRACER Level 9</span> — an outstanding achievement! A few finishing touches remain:{" "}
+            <span className="font-semibold">TRACER Level 9</span> — an outstanding achievement! 🎉 A few finishing touches remain:{" "}
             <span className="font-semibold">
               {pendingCount} item{pendingCount !== 1 ? "s" : ""}
             </span>{" "}

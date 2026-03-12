@@ -1,17 +1,30 @@
-import { useRef, useEffect, useState } from "react";
-import type { JSX } from "react";
-import { TRLResult, QuestionItem } from "../../utils/trlCalculator";
+"use client";
 
-/* ─── Types ───────────────────────────────────────── */
+import { useState } from "react";
+import { TRLResult, QuestionItem } from "../../utils/trlCalculator";
+import { RoadmapGroup } from "./FetchRecommendation";
+import { TRACER_DESCRIPTIONS } from "../../utils/TRACERdescriptions";
+
+/* ─── Types ───────────────────────────────────────────────────────────────── */
 
 export interface ExportFormData {
-  name: string;
-  email: string;
-  role: string;
+  name:         string;
+  email:        string;
+  role:         string;
   organization: string;
 }
 
-/* ─── TRL Maps ────────────────────────────────────── */
+export interface PDFContentProps {
+  result:           TRLResult;
+  techName?:        string;
+  techType?:        string;
+  techDescription?: string;
+  form:             ExportFormData;
+  roadmap?:         RoadmapGroup[];
+  closing?:         string;
+}
+
+/* ─── TRL Maps ────────────────────────────────────────────────────────────── */
 
 export const TRL_LABELS: Record<number, string> = {
   1: "Concept & Market Definition",
@@ -25,467 +38,540 @@ export const TRL_LABELS: Record<number, string> = {
   9: "Full Commercialization",
 };
 
+/** Returns the TRACER level title for the given tech type, falling back to TRL_LABELS. */
+function getLevelTitle(techType: string | undefined, level: number): string {
+  return TRACER_DESCRIPTIONS[techType ?? ""]?.[level]?.title ?? TRL_LABELS[level] ?? "";
+}
+
+/** Returns the TRACER level description for the given tech type, or empty string. */
+function getLevelDescription(techType: string | undefined, level: number): string {
+  return TRACER_DESCRIPTIONS[techType ?? ""]?.[level]?.description ?? "";
+}
+
 export const TRL_COLORS: Record<number, string> = {
-  1: "#94a3b8",
-  2: "#64748b",
-  3: "#f59e0b",
-  4: "#f97316",
-  5: "#10b981",
-  6: "#06b6d4",
-  7: "#3b82f6",
-  8: "#8b5cf6",
-  9: "#22c55e",
+  1: "#94a3b8", 2: "#64748b", 3: "#f59e0b", 4: "#f97316",
+  5: "#10b981", 6: "#06b6d4", 7: "#3b82f6", 8: "#8b5cf6", 9: "#22c55e",
 };
 
-/* PDF Export Hook */
+/* ─── Hook ────────────────────────────────────────────────────────────────── */
 
 export function usePDFExport() {
-  const pdfRef = useRef<HTMLDivElement>(null);
-  const [exporting, setExporting]     = useState(false);
-  const [exportForm, setExportForm]   = useState<ExportFormData | null>(null);
+  const [exporting,  setExporting]  = useState(false);
+  const [exportForm, setExportForm] = useState<ExportFormData | null>(null);
 
-  useEffect(() => {
-    if (!exportForm || !pdfRef.current) return;
-
-    const generate = async () => {
-      setExporting(true);
-      try {
-        const html2canvas = (await import("html2canvas")).default;
-        const jsPDF       = (await import("jspdf")).default;
-
-        const canvas = await html2canvas(pdfRef.current!, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-        });
-
-        const pdf   = new jsPDF({ orientation: "portrait", unit: "px", format: "a4" });
-        const pageW = pdf.internal.pageSize.getWidth();
-        const pageH = pdf.internal.pageSize.getHeight();
-
-        const marginTop    = 48;
-        const marginBottom = 40;
-        const contentH     = pageH - marginTop - marginBottom;
-
-        const scale = pageW / canvas.width;
-        const totalH = canvas.height * scale;
-
-        const container  = pdfRef.current!;
-        const containerTop = container.getBoundingClientRect().top;
-
-        const allEls = Array.from(container.querySelectorAll<HTMLElement>(
-          "div, p, span, img, hr"
-        ));
-
-        // bottom positions in pdf px, sorted ascending
-        const breakCandidates = allEls
-          .map(el => {
-            const r = el.getBoundingClientRect();
-            return (r.bottom - containerTop);
-          })
-          .filter(y => y > 0 && y < totalH)
-          .sort((a, b) => a - b);
-
-        // Build actual page break positions: for each page, find the largest
-        // safe break point that fits within contentH of where the page starts
-        const pageBreaks: number[] = [0]; // srcY positions in pdf px
-        while (true) {
-          const pageStart = pageBreaks[pageBreaks.length - 1];
-          const idealEnd  = pageStart + contentH;
-          if (idealEnd >= totalH) break;
-
-          // Find the last safe candidate that fits before idealEnd
-          // Leave a small buffer (8px) so the cut isn't right at the element edge
-          const safeBreak = breakCandidates
-            .filter(y => y > pageStart + 20 && y <= idealEnd - 8)
-            .pop(); // largest value that fits
-
-          pageBreaks.push(safeBreak ?? idealEnd); // fallback to hard cut if no candidate
-        }
-
-        // Render each page slice 
-        const offscreen = document.createElement("canvas");
-        offscreen.width = canvas.width;
-
-        for (let i = 0; i < pageBreaks.length; i++) {
-
-          const startPdfY = pageBreaks[i];
-          const endPdfY   = pageBreaks[i + 1] ?? totalH;
-
-          const slicePdfH = endPdfY - startPdfY;
-
-          // convert pdf units → canvas pixels
-          const startPx   = startPdfY / scale;
-          const slicePxH  = slicePdfH / scale;
-
-          offscreen.height = Math.ceil(slicePxH);
-
-          const ctx = offscreen.getContext("2d")!;
-          ctx.fillStyle = "#ffffff";
-          ctx.fillRect(0, 0, offscreen.width, offscreen.height);
-
-          ctx.drawImage(
-            canvas,
-            0, startPx,
-            canvas.width, slicePxH,
-            0, 0,
-            canvas.width, slicePxH
-          );
-
-          if (i > 0) pdf.addPage();
-
-          pdf.addImage(
-            offscreen.toDataURL("image/png"),
-            "PNG",
-            0,
-            marginTop,
-            pageW,
-            slicePdfH
-          );
-        }
-
-        const safeName = exportForm.name.replace(/\s+/g, "_").toLowerCase();
-        pdf.save(`trl_report_${safeName}.pdf`);
-      } finally {
-        setExporting(false);
-        setExportForm(null);
-      }
-    };
-
-    const t = setTimeout(generate, 300);
-    return () => clearTimeout(t);
-  }, [exportForm]);
+  // pdfRef kept for API compatibility — not used with react-pdf
+  const pdfRef = { current: null } as unknown as React.RefObject<HTMLDivElement>;
 
   const triggerExport = (form: ExportFormData) => setExportForm(form);
+  const clearForm     = () => setExportForm(null);
 
-  return { pdfRef, exporting, exportForm, triggerExport };
+  return { pdfRef, exporting, setExporting, exportForm, triggerExport, clearForm };
 }
 
-/* Design tokens  */
+/* ─── PDF Document (react-pdf) ────────────────────────────────────────────── */
+// Loaded dynamically so it never runs on the server.
+// Call generateAndDownloadPDF() from a client component.
 
-// A4 at 96 dpi ≈ 794px wide
-// Margins: 72px left/right (≈ 1 inch), 64px top/bottom
-const FONT  = "'Calibri', 'Gill Sans', 'Trebuchet MS', Arial, sans-serif";
-const ML    = 72;   // margin left  (px)
-const MR    = 72;   // margin right (px)
-const MT    = 60;   // margin top
-const MB    = 60;  // margin bottom — increased to prevent content clipping
-const INNER = 794 - ML - MR; // usable width
+export async function generateAndDownloadPDF(props: PDFContentProps): Promise<void> {
+  // Dynamic imports — keeps the bundle lean
+  const { pdf, Document, Page, Text, View, Image, StyleSheet, Font } =
+    await import("@react-pdf/renderer");
 
-const t = {
-  page: {
-    width: 794,
-    boxSizing: "border-box" as const,
-    backgroundColor: "#ffffff",
-    fontFamily: FONT,
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: ML,
-    paddingRight: MR,
-    color: "#111",
-    fontSize: 12,
-    lineHeight: 1.6,
-  } as React.CSSProperties,
+  // ── Fonts ──────────────────────────────────────────────────────────────────
+  // Use built-in Helvetica — no external fetch needed
+  // (swap to custom fonts via Font.register if desired)
 
-  hr: {
-    border: "none",
-    borderTop: "1px solid #d0d0d0",
-    margin: "14px 0",
-  } as React.CSSProperties,
+  // ── Styles ─────────────────────────────────────────────────────────────────
+  const s = StyleSheet.create({
+    page: {
+      fontFamily: "Helvetica",
+      fontSize: 10,
+      color: "#111111",
+      paddingTop: 48,
+      paddingBottom: 56,
+      paddingHorizontal: 52,
+      backgroundColor: "#ffffff",
+    },
 
-  hrThick: {
-    border: "none",
-    borderTop: "2px solid #111",
-    margin: "14px 0",
-  } as React.CSSProperties,
+    // ── Header ──
+    headerRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      marginBottom: 10,
+    },
+    agencyBlock: {
+      flexDirection: "column",
+    },
+    agencyName: {
+      fontSize: 11,
+      fontFamily: "Helvetica-Bold",
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      color: "#111111",
+    },
+    agencySubtitle: {
+      fontSize: 8.5,
+      color: "#555555",
+      marginTop: 2,
+      lineHeight: 1.5,
+    },
+    logo: {
+      width: 48,
+      height: 48,
+      objectFit: "contain",
+    },
 
-  sectionLabel: {
-    fontSize: 10,
-    fontWeight: 700 as const,
-    textTransform: "uppercase" as const,
-    letterSpacing: 1.2,
-    color: "#555",
-    marginBottom: 6,
-    marginTop: 18,
-  } as React.CSSProperties,
+    // ── Dividers ──
+    hrThick: {
+      borderBottomWidth: 1.5,
+      borderBottomColor: "#111111",
+      marginBottom: 12,
+    },
+    hr: {
+      borderBottomWidth: 0.5,
+      borderBottomColor: "#cccccc",
+      marginVertical: 8,
+    },
 
-  fieldRow: {
-    display: "flex",
-    gap: 0,
-    marginBottom: 4,
-    fontSize: 12,
-  } as React.CSSProperties,
+    // ── Report title ──
+    reportTitle: {
+      fontSize: 18,
+      fontFamily: "Helvetica-Bold",
+      color: "#0f2e1a",
+      letterSpacing: 0.3,
+      marginBottom: 2,
+    },
+    reportDate: {
+      fontSize: 8,
+      color: "#888888",
+      marginBottom: 10,
+    },
 
-  fieldKey: {
-    fontWeight: 700 as const,
-    minWidth: 180,
-    color: "#333",
-  } as React.CSSProperties,
+    // ── Section labels ──
+    sectionLabel: {
+      fontSize: 8,
+      fontFamily: "Helvetica-Bold",
+      textTransform: "uppercase",
+      letterSpacing: 1.2,
+      color: "#4aa35a",
+      marginBottom: 5,
+      marginTop: 14,
+    },
 
-  fieldVal: {
-    color: "#111",
-    flex: 1,
-  } as React.CSSProperties,
+    // ── Field rows ──
+    fieldRow: {
+      flexDirection: "row",
+      marginBottom: 4,
+      gap: 0,
+    },
+    fieldKey: {
+      fontSize: 9.5,
+      fontFamily: "Helvetica-Bold",
+      color: "#333333",
+      width: 140,
+      flexShrink: 0,
+    },
+    fieldVal: {
+      fontSize: 9.5,
+      color: "#111111",
+      flex: 1,
+      lineHeight: 1.5,
+    },
 
-  trlLevelLabel: {
-    fontSize: 11,
-    fontWeight: 700 as const,
-    color: "#333",
-    marginTop: 12,
-    marginBottom: 4,
-    textTransform: "uppercase" as const,
-    letterSpacing: 0.5,
-  } as React.CSSProperties,
+    // ── TRACER level badge ──
+    tracerBadge: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+      backgroundColor: "#f0f7f1",
+      borderWidth: 1,
+      borderColor: "#2d7a3a",
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 8,
+    },
+    tracerBadgeLevel: {
+      fontSize: 20,
+      fontFamily: "Helvetica-Bold",
+      color: "#2d7a3a",
+      width: 90,
+    },
+    tracerBadgeLabel: {
+      fontSize: 8,
+      fontFamily: "Helvetica-Bold",
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      color: "#2d7a3a",
+      marginBottom: 3,
+    },
+    tracerBadgeName: {
+      fontSize: 11,
+      fontFamily: "Helvetica-Bold",
+      color: "#111111",
+    },
 
-  bulletRow: {
-    display: "flex",
-    gap: 8,
-    marginBottom: 4,
-    alignItems: "flex-start",
-    paddingLeft: 8,
-  } as React.CSSProperties,
+    // ── Question sections ──
+    trlLevelHeader: {
+      fontSize: 9,
+      fontFamily: "Helvetica-Bold",
+      color: "#2d7a3a",
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      marginTop: 8,
+      marginBottom: 3,
+    },
+    bulletRow: {
+      flexDirection: "row",
+      gap: 6,
+      marginBottom: 3,
+      paddingLeft: 8,
+    },
+    bulletDot: {
+      width: 3,
+      height: 3,
+      borderRadius: 2,
+      backgroundColor: "#444444",
+      marginTop: 4,
+      flexShrink: 0,
+    },
+    bulletText: {
+      fontSize: 9.5,
+      color: "#222222",
+      flex: 1,
+      lineHeight: 1.5,
+    },
 
-  bulletDot: {
-    flexShrink: 0,
-    marginTop: 6,
-    width: 3,
-    height: 3,
-    borderRadius: "50%",
-    backgroundColor: "#444",
-  } as React.CSSProperties,
-};
+    // ── Roadmap ──
+    roadmapGroupHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#f0f7f1",
+      borderWidth: 0.5,
+      borderColor: "#c3e6cb",
+      borderRadius: 4,
+      padding: "5 10",
+      marginBottom: 5,
+      gap: 8,
+    },
+    roadmapLevel: {
+      fontSize: 9,
+      fontFamily: "Helvetica-Bold",
+      color: "#1a5c2a",
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+    },
+    roadmapLevelName: {
+      fontSize: 8.5,
+      color: "#2d7a3a",
+    },
+    roadmapStepRow: {
+      flexDirection: "row",
+      gap: 8,
+      marginBottom: 5,
+      paddingLeft: 10,
+      alignItems: "flex-start",
+    },
+    roadmapStepNum: {
+      width: 14,
+      height: 14,
+      borderRadius: 7,
+      backgroundColor: "#2d7a3a",
+      color: "#ffffff",
+      fontSize: 7,
+      fontFamily: "Helvetica-Bold",
+      textAlign: "center",
+      paddingTop: 2,
+      flexShrink: 0,
+    },
+    roadmapStepAction: {
+      fontSize: 9.5,
+      fontFamily: "Helvetica-Bold",
+      color: "#111111",
+      lineHeight: 1.4,
+    },
+    roadmapStepDetail: {
+      fontSize: 9,
+      color: "#555555",
+      lineHeight: 1.5,
+      marginTop: 1,
+    },
+    roadmapGroup: {
+      marginBottom: 12,
+    },
+    closingBox: {
+      marginTop: 8,
+      padding: "8 10",
+      backgroundColor: "#f8f6f1",
+      borderLeftWidth: 3,
+      borderLeftColor: "#2d7a3a",
+    },
+    closingText: {
+      fontSize: 9,
+      color: "#333333",
+      lineHeight: 1.6,
+      fontStyle: "italic" as const,
+    },
 
-/* PDF Content Component */
-
-interface PDFContentProps {
-  result: TRLResult;
-  techName?: string;
-  techType?: string;
-  techDescription?: string;
-  form: ExportFormData;
-}
-
-function QuestionSection({ title, questions }: { title: string; questions: QuestionItem[] }) {
-  if (questions.length === 0) return null;
-
-  const byLevel: Record<number, QuestionItem[]> = {};
-  questions.forEach(q => {
-    if (!byLevel[q.trlLevel]) byLevel[q.trlLevel] = [];
-    byLevel[q.trlLevel].push(q);
+    // ── Footer ──
+    footer: {
+      position: "absolute",
+      bottom: 24,
+      left: 52,
+      right: 52,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      borderTopWidth: 0.5,
+      borderTopColor: "#cccccc",
+      paddingTop: 6,
+    },
+    footerText: {
+      fontSize: 7.5,
+      color: "#aaaaaa",
+    },
   });
-  const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
 
-  return (
-    <div>
-      <div style={t.sectionLabel}>{title}</div>
-      <div style={t.hr} />
-      {levels.map(level => (
-        <div key={level}>
-          {/* Plain text TRL level — no badge, no color */}
-          <div style={t.trlLevelLabel}>TRL {level} — {TRL_LABELS[level]}</div>
-          {byLevel[level].map(q => (
-            <div key={q.id} style={t.bulletRow}>
-              <div style={t.bulletDot} />
-              <span style={{ fontSize: 12, color: "#222", lineHeight: 1.6 }}>{q.questionText}</span>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
+  // ── Helper components ──────────────────────────────────────────────────────
+
+  function FieldRow({ label, value }: { label: string; value?: string }) {
+    if (!value) return null;
+    return (
+      <View style={s.fieldRow}>
+        <Text style={s.fieldKey}>{label}</Text>
+        <Text style={s.fieldVal}>{value}</Text>
+      </View>
+    );
+  }
+
+  function QuestionSection({ title, questions, type }: { title: string; questions: QuestionItem[]; type?: string }) {
+    if (!questions.length) return null;
+
+    const byLevel: Record<number, QuestionItem[]> = {};
+    questions.forEach(q => {
+      byLevel[q.trlLevel] = byLevel[q.trlLevel] ?? [];
+      byLevel[q.trlLevel].push(q);
+    });
+    const levels = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
+
+    return (
+      <View>
+        <Text style={s.sectionLabel}>{title}</Text>
+        <View style={s.hr} />
+        {levels.map(level => (
+          <View key={level}>
+            <Text style={s.trlLevelHeader}>
+              TRACER Level {level} — {getLevelTitle(type, level)}
+            </Text>
+            {byLevel[level].map(q => (
+              <View key={q.id} style={s.bulletRow}>
+                <View style={s.bulletDot} />
+                <Text style={s.bulletText}>{q.questionText}</Text>
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
+    );
+  }
+
+  function RoadmapSection({ roadmap, closing, type }: { roadmap: RoadmapGroup[]; closing?: string; type?: string }) {
+    if (!roadmap?.length) return null;
+
+    return (
+      <View>
+        <Text style={s.sectionLabel}>Commercialization Roadmap</Text>
+        <View style={s.hr} />
+        {roadmap.map((group, gi) => (
+          <View key={gi} style={s.roadmapGroup}>
+            <View style={s.roadmapGroupHeader}>
+              <Text style={s.roadmapLevel}>TRACER Level {group.trlLevel}</Text>
+              <Text style={s.roadmapLevelName}>{getLevelTitle(type, group.trlLevel)}</Text>
+            </View>
+            {group.steps.map((step, si) => (
+              <View key={si} style={s.roadmapStepRow}>
+                <Text style={s.roadmapStepNum}>{si + 1}</Text>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.roadmapStepAction}>{step.action}</Text>
+                  {step.detail ? (
+                    <Text style={s.roadmapStepDetail}>{step.detail}</Text>
+                  ) : null}
+                </View>
+              </View>
+            ))}
+          </View>
+        ))}
+        {closing ? (
+          <View style={s.closingBox}>
+            <Text style={s.closingText}>{closing}</Text>
+          </View>
+        ) : null}
+      </View>
+    );
+  }
+
+  // ── Build document ─────────────────────────────────────────────────────────
+
+  const {
+    result, techName, techType, techDescription,
+    form, roadmap, closing,
+  } = props;
+
+  const {
+    highestCompletedTRL, highestAchievableTRL,
+    completedQuestions, lackingForAchievable, lackingForNextLevel,
+  } = result;
+
+  const hasGap  = highestAchievableTRL > highestCompletedTRL;
+  const isMaxed = highestCompletedTRL === 9;
+  const dateStr = new Date().toLocaleDateString("en-PH", {
+    year: "numeric", month: "long", day: "numeric",
+  });
+
+  const MyDoc = (
+    <Document
+      title="TRACER Assessment Report"
+      author="DOST-PCAARRD AANR-TRacer"
+      subject={`TRACER Assessment — ${techName ?? "Technology"}`}
+    >
+      <Page size="A4" style={s.page}>
+
+        {/* ── Header ── */}
+        <View style={s.headerRow}>
+          <View style={s.agencyBlock}>
+            <Text style={s.agencyName}>DOST-PCAARRD</Text>
+            <Text style={s.agencySubtitle}>
+              Philippine Council for Agriculture, Aquatic{"\n"}
+              and Natural Resources Research and Development{"\n"}
+              Los Baños, Laguna, Philippines
+            </Text>
+          </View>
+          <Image
+            style={s.logo}
+            src="/img/logos/dost-pcaarrd-logo.png"
+          />
+        </View>
+
+        <View style={s.hrThick} />
+
+        {/* ── Title ── */}
+        <Text style={s.reportTitle}>TRACER Assessment Report</Text>
+        <Text style={s.reportDate}>Generated on {dateStr}</Text>
+
+        <View style={s.hr} />
+
+        {/* ── Technology Details ── */}
+        <Text style={s.sectionLabel}>Technology Details</Text>
+        <View style={s.hr} />
+        <FieldRow label="Technology Name:"    value={techName}        />
+        <FieldRow label="Technology Type:"    value={techType}        />
+        <FieldRow label="Description:"        value={techDescription} />
+
+        <View style={s.hr} />
+
+        {/* ── Assessment Results ── */}
+        <Text style={s.sectionLabel}>Assessment Results</Text>
+        <View style={s.hr} />
+
+        <View style={s.tracerBadge}>
+          <Text style={s.tracerBadgeLevel}>TRACER {highestCompletedTRL}</Text>
+          <View>
+            <Text style={s.tracerBadgeLabel}>Current TRACER Level</Text>
+            <Text style={s.tracerBadgeName}>
+              {getLevelTitle(techType, highestCompletedTRL)}
+            </Text>
+          </View>
+        </View>
+
+        {hasGap && (
+          <FieldRow
+            label="Highest Achievable:"
+            value={`TRACER ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
+          />
+        )}
+
+        <View style={s.hr} />
+
+        {/* ── Assessment Taken By ── */}
+        <Text style={s.sectionLabel}>Assessment Taken By</Text>
+        <View style={s.hr} />
+        <FieldRow label="Name:"          value={form.name}         />
+        <FieldRow label="Email:"         value={form.email}        />
+        <FieldRow label="Role:"          value={form.role}         />
+        <FieldRow label="Organization:"  value={form.organization} />
+
+        <View style={s.hr} />
+
+        {/* ── Completed Requirements ── */}
+        <QuestionSection
+          title="Completed Requirements"
+          questions={completedQuestions}
+          type={techType}
+        />
+
+        <View style={s.hr} />
+
+        {/* ── Lacking / Next Steps ── */}
+        {isMaxed ? (
+          <View>
+            <Text style={s.sectionLabel}>Next Steps</Text>
+            <View style={s.hr} />
+            <Text style={{ fontSize: 9, color: "#555555", fontStyle: "italic" }}>
+              Your technology has reached full commercialization (TRACER Level 9).
+              No further steps are required.
+            </Text>
+          </View>
+        ) : hasGap ? (
+          <QuestionSection
+            title={`Requirements to Reach TRACER Level ${highestAchievableTRL}`}
+            questions={lackingForAchievable}
+            type={techType}
+          />
+        ) : (
+          <QuestionSection
+            title={`Requirements for TRACER Level ${highestCompletedTRL + 1}`}
+            questions={lackingForNextLevel}
+            type={techType}
+          />
+        )}
+
+        <View style={s.hr} />
+
+        {/* ── Commercialization Roadmap ── */}
+        <RoadmapSection roadmap={roadmap ?? []} closing={closing} type={techType} />
+
+        <View style={{ height: 24 }} />
+
+        {/* ── Footer (fixed at bottom of every page) ── */}
+        <View style={s.footer} fixed>
+          <Text style={s.footerText}>AANR-TRacer · DOST-PCAARRD</Text>
+          <Text style={s.footerText}
+            render={({ pageNumber, totalPages }) =>
+              `Page ${pageNumber} of ${totalPages}`
+            }
+          />
+          <Text style={s.footerText}>
+            System-generated. For reference only.
+          </Text>
+        </View>
+
+      </Page>
+    </Document>
   );
+
+  // ── Trigger download ───────────────────────────────────────────────────────
+  const blob     = await pdf(MyDoc).toBlob();
+  const url      = URL.createObjectURL(blob);
+  const anchor   = document.createElement("a");
+  const safeName = (form.name || "report").replace(/\s+/g, "_").toLowerCase();
+  anchor.href     = url;
+  anchor.download = `tracer_report_${safeName}.pdf`;
+  anchor.click();
+  URL.revokeObjectURL(url);
 }
 
-export function PDFContent({ result, techName, techType, techDescription, form }: PDFContentProps): JSX.Element {
-  const { highestCompletedTRL, highestAchievableTRL, completedQuestions, lackingForAchievable, lackingForNextLevel } = result;
-  const hasGap = highestAchievableTRL > highestCompletedTRL;
-  const isMaxed = highestCompletedTRL === 9;
-
-  return (
-    <div style={t.page}>
-
-      {/* ── Header: logo + agency name, right-aligned as a group ── */}
-      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 14, marginBottom: 20 }}>
-
-        {/* Agency text — right-aligned */}
-        <div style={{ fontFamily: FONT, lineHeight: 1.5, textAlign: "right" }}>
-          <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.8 }}>
-            DOST-PCAARRD
-          </div>
-          <div style={{ fontSize: 11, color: "#444", marginTop: 2 }}>
-            Philippine Council for Agriculture, Aquatic
-          </div>
-          <div style={{ fontSize: 11, color: "#444" }}>
-            and Natural Resources Research and Development
-          </div>
-          <div style={{ fontSize: 11, color: "#444", marginTop: 2 }}>
-            Los Baños, Laguna, Philippines
-          </div>
-        </div>
-
-        {/* Logo — right of the agency name */}
-        <img
-          src="/img/logos/dost-pcaarrd-logo.png"
-          alt="DOST-PCAARRD"
-          style={{ height: 56, width: "auto", objectFit: "contain", flexShrink: 0 }}
-          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-        />
-      </div>
-
-      {/* Thick rule below header */}
-      <div style={t.hrThick} />
-
-      {/* Report title — left aligned */}
-      <div style={{ marginBottom: 18 }}>
-        <div style={{
-          fontFamily: FONT,
-          fontSize: 16,
-          fontWeight: 700,
-          color: "#111",
-          lineHeight: 1.3,
-          letterSpacing: 0.3,
-        }}>
-          Technology Readiness Level
-        </div>
-        <div style={{
-          fontFamily: FONT,
-          fontSize: 16,
-          fontWeight: 700,
-          color: "#111",
-          lineHeight: 1.3,
-          letterSpacing: 0.3,
-        }}>
-          Assessment Report
-        </div>
-        <div style={{ fontSize: 10, color: "#777", marginTop: 4 }}>
-          Generated on {new Date().toLocaleDateString("en-PH", { year: "numeric", month: "long", day: "numeric" })}
-        </div>
-      </div>
-
-      <div style={t.hr} />
-
-      {/* ── Technology Details ── */}
-      <div style={t.sectionLabel}>Technology Details</div>
-      <div style={t.hr} />
-      <div style={t.fieldRow}>
-        <span style={t.fieldKey}>Technology Name:</span>
-        <span style={t.fieldVal}>{techName || "—"}</span>
-      </div>
-      <div style={t.fieldRow}>
-        <span style={t.fieldKey}>Technology Domain:</span>
-        <span style={t.fieldVal}>{techType || "—"}</span>
-      </div>
-      <div style={t.fieldRow}>
-        <span style={t.fieldKey}>Description:</span>
-        <span style={t.fieldVal}>{techDescription || "—"}</span>
-      </div>
-
-      <div style={t.hr} />
-
-      {/* ── Assessment Taken By ── */}
-      <div style={t.sectionLabel}>Assessment Taken By</div>
-      <div style={t.hr} />
-      <div style={t.fieldRow}>
-        <span style={t.fieldKey}>Name:</span>
-        <span style={t.fieldVal}>{form.name}</span>
-      </div>
-      <div style={t.fieldRow}>
-        <span style={t.fieldKey}>Email:</span>
-        <span style={t.fieldVal}>{form.email}</span>
-      </div>
-      {form.role && (
-        <div style={t.fieldRow}>
-          <span style={t.fieldKey}>Role / Position:</span>
-          <span style={t.fieldVal}>{form.role}</span>
-        </div>
-      )}
-      {form.organization && (
-        <div style={t.fieldRow}>
-          <span style={t.fieldKey}>Organization:</span>
-          <span style={t.fieldVal}>{form.organization}</span>
-        </div>
-      )}
-
-      <div style={t.hr} />
-
-      {/* ── Assessment Results ── */}
-      <div style={t.sectionLabel}>Assessment Results</div>
-      <div style={t.hr} />
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        border: "1.5px solid #2d7a3a",
-        borderRadius: 6,
-        padding: "10px 14px",
-        marginBottom: 8,
-      }}>
-        <div style={{
-          fontWeight: 700,
-          fontSize: 20,
-          color: "#2d7a3a",
-          lineHeight: 1.2,
-          letterSpacing: 0.5,
-          flexShrink: 0,
-          minWidth: 60,
-        }}>
-          TRL {highestCompletedTRL}
-        </div>
-        <div>
-          <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, color: "#2d7a3a", marginBottom: 2 }}>
-            Highest Completed TRL
-          </div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#111" }}>
-            {TRL_LABELS[highestCompletedTRL] ?? "—"}
-          </div>
-        </div>
-      </div>
-      {hasGap && (
-        <div style={t.fieldRow}>
-          <span style={t.fieldKey}>Highest Achievable TRL:</span>
-          <span style={{ ...t.fieldVal, fontWeight: 700 }}>
-            TRL {highestAchievableTRL} — {TRL_LABELS[highestAchievableTRL] ?? "—"}
-          </span>
-        </div>
-      )}
-
-      <div style={t.hr} />
-
-      {/* ── Completed Questions ── */}
-      <QuestionSection title="Completed Questions" questions={completedQuestions} />
-
-      <div style={t.hr} />
-
-      {/* ── Lacking / Next Steps ── */}
-      {isMaxed ? (
-        <div>
-          <div style={t.sectionLabel}>Next Steps</div>
-          <div style={t.hr} />
-          <p style={{ fontSize: 11, color: "#333", fontStyle: "italic" }}>
-            Your technology has reached full commercialization (TRL 9). No further steps are required.
-          </p>
-        </div>
-      ) : hasGap ? (
-        <QuestionSection
-          title={`Lacking to Reach Highest Achievable (TRL ${highestAchievableTRL})`}
-          questions={lackingForAchievable}
-        />
-      ) : (
-        <QuestionSection
-          title={`Lacking for Next Level (TRL ${highestCompletedTRL + 1})`}
-          questions={lackingForNextLevel}
-        />
-      )}
-
-      {/* ── Footer ── */}
-      <div style={{ ...t.hr, marginTop: 32 }} />
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "#999" }}>
-        <span>AANR-TRacer · DOST-PCAARRD</span>
-        <span>This report is system-generated and for reference purposes only.</span>
-      </div>
-
-      {/* Bottom spacer — ensures last line has breathing room before pdf margin */}
-      <div style={{ height: 24 }} />
-
-    </div>
-  );
+/* ─── Dummy PDFContent — kept so ResultsPage import doesn't break ─────────── */
+// ResultsPage renders this into a hidden div; with react-pdf we no longer need
+// that div. Keep the export so the import compiles without changes.
+export function PDFContent(_props: PDFContentProps) {
+  return null;
 }
