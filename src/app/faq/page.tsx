@@ -40,10 +40,6 @@ export default function FAQ() {
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
-            PCAARRD · AANR-TRACER
-          </div>
           <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
             Frequently Asked <em className="text-[var(--color-accent)]">Questions</em>
           </h1>
@@ -72,7 +68,7 @@ export default function FAQ() {
               onClick={() => scrollToCategory(cat.title)}
               className={`flex items-center gap-2.5 w-full px-3.5 py-3 rounded-[10px] text-[14px] font-medium text-left mb-0.5 border transition-all duration-200 ${
                 activeCategory === cat.title
-                  ? "bg-[var(--color-accent)]/10 text-[var(--color-primary)] border-[#4aa35a]/25 font-semibold"
+                  ? "bg-[var(--white-35)] text-[var(--color-primary)] border-[#4aa35a]/25 font-semibold"
                   : "bg-transparent text-[#6b7a75] border-transparent hover:bg-[#0f2e1a]/[0.05] hover:text-[var(--color-primary)]"
               }`}
             >

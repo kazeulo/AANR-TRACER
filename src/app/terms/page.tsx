@@ -53,10 +53,6 @@ export default function Terms() {
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
-            PCAARRD · AANR-TRacer
-          </div>
           <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             Terms &amp; <em className="text-[var(--color-accent)]">Definitions</em>
           </h1>

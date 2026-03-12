@@ -9,7 +9,7 @@ export default function DataPrivacyNotice() {
 
   return (
     <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-20 flex flex-col justify-center">
-      <div className="max-w-[760px] mx-auto w-full">
+      <div className="max-w-[900px] mx-auto w-full">
 
         {/* Page title */}
         <div className="text-center mb-10">

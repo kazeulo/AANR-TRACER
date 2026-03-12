@@ -72,8 +72,8 @@ function TechTypeGrid() {
                 <Icon className="w-5 h-5 text-[var(--color-accent)]" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] font-semibold text-[var(--color-primary)] leading-snug">{label}</div>
-                <div className="text-[11px] text-[var(--color-text-faintest)] font-light leading-tight mt-1">{sub}</div>
+                <div className="text-[14px] font-semibold text-[var(--color-primary)] leading-snug">{label}</div>
+                <div className="text-[12px] text-[var(--color-text-gray)] font-light leading-tight mt-1.5">{sub}</div>
               </div>
               {/* Chevron */}
               <svg
@@ -136,7 +136,7 @@ export default function HomePage() {
               <br />Enhancement and Roadmapping
             </h1>
 
-            <p className="text-[15px] leading-[1.75] text-[var(--color-text-faint)] font-light mb-6 max-w-[420px]">
+            <p className="text-[15px] leading-[1.75] text-[var(--color-text-faintest)] font-light mb-6 max-w-[420px]">
               Your guide in evaluating the technical and commercial readiness of AANR technologies.
             </p>
 
@@ -222,7 +222,7 @@ export default function HomePage() {
                 Built for the <em className="text-[var(--color-accent)]">AANR Sector</em>
               </h2>
             </div>
-            <p className="text-[13px] text-[var(--color-text-faint)] font-light max-w-[260px] leading-relaxed">
+            <p className="text-[13.5px] text-[var(--color-text-gray)] font-light max-w-[300px] leading-relaxed">
               TRACER covers the full breadth of Agriculture, Aquatic, and Natural Resources innovations.
             </p>
           </div>
@@ -338,7 +338,7 @@ export default function HomePage() {
                   <Icon className="w-[18px] h-[18px] text-[var(--color-accent)]" />
                 </div>
                 <div className="text-[15px] font-semibold text-white mb-3 leading-snug">{title}</div>
-                <p className="text-[13px] leading-[1.75] text-[var(--color-text-muted)] font-light">{desc}</p>
+                <p className="text-[13px] leading-[1.75] text-[var(--color-text-faintest)] font-light">{desc}</p>
               </div>
             ))}
           </div>
@@ -361,7 +361,7 @@ export default function HomePage() {
                 Visit DOST PCAARRD
               </h2>
             </div>
-            <div className="text-[13px] text-[var(--color-text-faint)] md:text-right leading-[1.6] font-light">
+            <div className="text-[13px] text-[var(--color-text-gray)] md:text-right leading-[1.6] font-light">
               DOST-PCAARRD, Los Baños<br />Laguna, Philippines 4030
             </div>
           </div>

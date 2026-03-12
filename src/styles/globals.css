@@ -24,7 +24,7 @@
 
   /* Accent tints (for backgrounds / borders) */
   --color-accent-08:     rgba(74, 163, 90, 0.08);
-  --color-accent-15:     rgba(74, 163, 90, 0.15);
+  --color-accent-15:     rgba(86, 173, 102, 0.15);
   --color-accent-20:     rgba(74, 163, 90, 0.20);
   --color-accent-30:     rgba(74, 163, 90, 0.30);
   --color-accent-35:     rgba(74, 163, 90, 0.35);
@@ -51,10 +51,10 @@
   /* Text */
   --color-text:          #1a1a1a;   /* primary body text */
   --color-text-heading:  #0f2e1a;   /* dark headings */
-  --color-text-gray:     #343b46;
+  --color-text-gray:     #3e4652;
   --color-text-muted:    #84b798;   /* muted body copy */
-  --color-text-faint:    #8a9a94;   /* placeholder / helper text */
-  --color-text-faintest: #94a3a0;   /* timestamps, meta */
+  --color-text-faint:    #96a7a1;   /* placeholder / helper text */
+  --color-text-faintest: #bcd2c8;   /* timestamps, meta */
   --color-text-disabled: #b0a99e;   /* unchecked items, disabled */
 
   /* Semantic */

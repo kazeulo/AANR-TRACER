@@ -1,4 +1,4 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types 
 
 export interface LackingItem {
   trlLevel: number;
@@ -40,7 +40,7 @@ export interface AIResult {
   steps: AISteps;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// Constants
 
 export const TRL_LABELS: Record<number, string> = {
   0: "Not Yet Assessed",

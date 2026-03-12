@@ -52,8 +52,8 @@ export default function Header() {
                 href={href}
                 className={`text-[14px] font-medium px-3.5 py-2 rounded-lg transition-all duration-200 whitespace-nowrap ${
                   pathname === href
-                    ? "text-[var(--color-accent)] bg-[var(--color-accent)]/10"
-                    : "text-white/60 hover:text-white hover:bg-[var(--color-bg-card)]/[0.07]"
+                    ? "text-[var(--color-accent)] bg-[var(--white-10)]"
+                    : "text-white hover:text-white/60 hover:bg-[var(--white-15)]"
                 }`}
               >
                 {label}

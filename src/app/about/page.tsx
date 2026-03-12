@@ -22,10 +22,6 @@ export default function About() {
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] mb-5 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
-            PCAARRD · AANR-TRacer
-          </div>
           <h1 className="font-['DM_Serif_Display'] text-[clamp(40px,5vw,64px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             About <em className="text-[var(--color-accent)]">TRACER</em>
           </h1>
@@ -105,7 +101,7 @@ export default function About() {
             A four-step process that takes you from raw innovation to a documented, actionable TRACER assessment report.
           </p>
 
-          <div className="flex flex-col gap-px bg-[var(--color-bg-card)]/[0.04] rounded-[20px] overflow-hidden">
+          <div className="flex flex-col gap-px bg-[var(--white-10)] rounded-[20px] overflow-hidden">
             {[
               { icon: "clipboard", title: "Answer Targeted Questions",       body: "Complete a detailed questionnaire covering all critical aspects of technology readiness — development progress, intellectual property status, market potential, regulatory compliance, and industry adoption. Each question is designed to pinpoint the specific stage and maturity of your innovation." },
               { icon: "calc", title: "Automated TRACER Levels Calculation",  body: "Based on your responses, the tool automatically calculates your Technology readiness based on TRACER scale. The platform requires that all relevant readiness criteria at each level be fully satisfied before advancing — providing a precise, reliable measure of your technology's maturity." },
@@ -115,9 +111,9 @@ export default function About() {
               <div key={i} className="grid grid-cols-[80px_1fr] bg-[var(--color-bg-card)]/[0.02] hover:bg-[var(--color-bg-card)]/[0.05] transition-colors">
                 {/* Left */}
                 <div className="flex flex-col items-center pt-9 pb-9 border-r border-white/[0.05] gap-3">
-                  <span className="text-[11px] font-bold text-[var(--color-accent)]">0{i + 1}</span>
-                  <div className="w-9 h-9 rounded-[10px] bg-[var(--color-accent)]/12 flex items-center justify-center"><StepIcon name={icon} /></div>
-                  {i < 3 && <div className="flex-1 w-px bg-[var(--color-accent)]/12 min-h-5" />}
+                  <span className="text-[11px] font-bold text-white">0{i + 1}</span>
+                  <div className="w-9 h-9 rounded-[10px] bg-white flex items-center justify-center"><StepIcon name={icon} /></div>
+                  {i < 3 && <div className="flex-1 w-px bg-[var(--color-accent)] min-h-5" />}
                 </div>
                 {/* Right */}
                 <div className="px-9 py-9">

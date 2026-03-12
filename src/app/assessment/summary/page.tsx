@@ -397,7 +397,7 @@ export default function SummaryPage() {
 
   return (
     <main className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] px-6 lg:px-[6vw] py-16">
-      <div className="max-w-[860px] mx-auto">
+      <div className="max-w-[900px] mx-auto">
 
         {/* Header */}
         <div className="mb-10">

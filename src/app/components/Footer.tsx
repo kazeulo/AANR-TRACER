@@ -18,18 +18,18 @@ export default function Footer() {
         <div className="max-w-[1370px] mx-auto px-6 lg:px-[6vw]">
 
           {/* Brand + socials */}
-          <div className="flex flex-col md:flex-row justify-between items-start gap-6 py-12 border-b border-white/[0.07]">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-6 py-12 border-b border-[var(--white-15)]">
 
-            <div className="max-w-sm">
+            <div className="max-w-500">
               <div className="font-['DM_Serif_Display'] text-[32px] leading-none tracking-tight mb-3">
                 AANR-<span className="text-[var(--color-accent)] italic">TRACER</span>
               </div>
-              <p className="text-[13px] text-[var(--color-text-muted)] font-light leading-relaxed max-w-xs">
-                Technology Readiness Assessment for Commercialization Enhancement and Roadmapping — supporting AANR innovations from research to market.
+              <p className="text-[13px] text-[var(--color-text-faintest)] font-light leading-relaxed max-w-xs">
+                Your guide in evaluating the technical and commercial readiness of AANR technologies.
               </p>
               <div className="inline-flex items-center gap-1.5 mt-5 text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-accent)] px-3 py-1.5 border border-[#4aa35a]/25 rounded-full bg-[var(--color-accent)]/[0.07]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
-                PCAARRD · DOST
+                {/* <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" /> */}
+                DOST · PCAARRD · RAISE WV · Agri-business Hub WV · UPV TTBDO 
               </div>
             </div>
 
@@ -56,11 +56,11 @@ export default function Footer() {
           </div>
 
           {/* Links grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 py-12 border-b border-white/[0.07]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 py-12 border-b border-[var(--white-15)]">
 
             {/* Quick Links */}
             <div>
-              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent)] mb-5 pb-3 border-b border-[#4aa35a]/20">
+              <div className="text-[12px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent)] mb-5 pb-3 border-b border-[var(--white-15)]">
                 Quick Links
               </div>
               {[
@@ -69,7 +69,7 @@ export default function Footer() {
                 { href: "/terms", label: "Terms and Definitions" },
                 { href: "/faq",   label: "FAQ" },
               ].map(({ href, label }) => (
-                <Link key={href} href={href} className="block text-[13px] text-[var(--color-text-muted)] font-light mb-2.5 hover:text-white transition-colors w-fit">
+                <Link key={href} href={href} className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit">
                   {label}
                 </Link>
               ))}
@@ -77,40 +77,40 @@ export default function Footer() {
 
             {/* Resources */}
             <div>
-              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent)] mb-5 pb-3 border-b border-[#4aa35a]/20">
+              <div className="text-[12px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent)] mb-5 pb-3 border-b border-[var(--white-15)]">
                 Resources
               </div>
               <a
                 href="https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-[13px] text-[var(--color-text-muted)] font-light mb-2.5 hover:text-white transition-colors w-fit"
+                className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit"
               >
                 User Guide
               </a>
-              <Link href="/privacy" className="block text-[13px] text-[var(--color-text-muted)] font-light mb-2.5 hover:text-white transition-colors w-fit">
+              <Link href="/privacy" className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit">
                 Data Privacy Statement
               </Link>
-              <Link href="/support" className="block text-[13px] text-[var(--color-text-muted)] font-light mb-2.5 hover:text-white transition-colors w-fit">
+              <Link href="/support" className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit">
                 Support
               </Link>
             </div>
 
             {/* Contact */}
             <div>
-              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent)] mb-5 pb-3 border-b border-[#4aa35a]/20">
+              <div className="text-[12px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent)] mb-5 pb-3 border-b border-[var(--white-15)]">
                 Contact
               </div>
 
-              <a href="ttbdo.upvisayas@up.edu.ph" className="flex items-start gap-2.5 text-[13px] text-[var(--color-text-muted)] font-light mb-3.5 hover:text-white transition-colors">
-                <span className="w-[30px] h-[30px] bg-[var(--color-accent)]/10 rounded-lg flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
+              <a href="ttbdo.upvisayas@up.edu.ph" className="flex items-start gap-2.5 text-[13px] text-[var(--color-text-faintest)] font-light mb-3.5 hover:text-white transition-colors">
+                <span className="w-[30px] h-[30px] bg-[var(--white-10)] rounded-lg flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
                   <Mail size={14} />
                 </span>
                 ttbdo.upvisayas@up.edu.ph
               </a>
 
-              <a className="flex items-start gap-2.5 text-[13px] text-[var(--color-text-muted)] font-light mb-3.5 hover:text-white transition-colors">
-                <span className="w-[30px] h-[30px] bg-[var(--color-accent)]/10 rounded-lg flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
+              <a className="flex items-start gap-2.5 text-[13px] text-[var(--color-text-faintest)] font-light mb-3.5 hover:text-white transition-colors">
+                <span className="w-[30px] h-[30px] bg-[var(--white-10)] rounded-lg flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
                   <Phone size={14} />
                 </span>
                 09054439916
@@ -132,7 +132,7 @@ export default function Footer() {
 
           {/* Bottom bar */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 py-6">
-            <p className="text-[12px] text-[#3d5c47] font-light">
+            <p className="text-[12px] text-white">
               © {new Date().getFullYear()} AANR-TRACER 
             </p>
             <div className="flex gap-5">
@@ -141,7 +141,7 @@ export default function Footer() {
                 { href: "/terms",   label: "Terms" },
                 { href: "/support", label: "Support" },
               ].map(({ href, label }) => (
-                <Link key={href} href={href} className="text-[12px] text-[#3d5c47] hover:text-[var(--color-text-muted)] transition-colors">
+                <Link key={href} href={href} className="text-[12px] text-white hover:text-[var(--color-text-muted)] transition-colors">
                   {label}
                 </Link>
               ))}

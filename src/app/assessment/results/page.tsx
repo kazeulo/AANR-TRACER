@@ -73,7 +73,7 @@ function PageLoader() {
 }
 
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
+// Hero 
 
 function CongratulatoryHero({
   trl,
@@ -179,7 +179,7 @@ function CongratulatoryHero({
               {trl === 0
                 ? "Your technology is at the starting line."
                 : <>
-                    Your technology is at{" "}
+                    Your technology is currently at{" "}
                     <span style={{ color: completedColor }}>TRACER Level {trl}</span>
                     {tracerLabel && (
                       <span className="text-white/60 font-normal"> — {tracerLabel}</span>
@@ -308,7 +308,7 @@ export default function ResultsPage() {
 
   return (
     <main className="font-['DM_Sans',sans-serif] min-h-screen bg-[#f5f2ec] text-[#1a1a1a] px-6 lg:px-[6vw] py-16">
-      <div className="max-w-[860px] mx-auto space-y-6">
+      <div className="max-w-[950px] mx-auto space-y-6">
 
         {/* Eyebrow */}
         <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[#4aa35a] px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[#4aa35a]/[0.08]">

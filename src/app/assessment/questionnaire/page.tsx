@@ -724,7 +724,7 @@ export default function QuestionnairePage() {
               disabled={blocksNext}
               className={`inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold transition-all duration-300 ${
                 blocksNext
-                  ? "text-white/60 bg-[var(--color-accent)]/40 cursor-not-allowed shadow-none"
+                  ? "text-white/60 bg-[var(--color-accent-35)] cursor-not-allowed shadow-none"
                   : "text-white bg-[var(--color-accent)] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)]"
               }`}
             >
