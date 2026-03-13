@@ -374,17 +374,21 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
     );
   }
 
-  function RoadmapSection({ roadmap, closing, type }: { roadmap: RoadmapGroup[]; closing?: string; type?: string }) {
+  function RoadmapSection({ roadmap, closing, type, completedTRL }: { roadmap: RoadmapGroup[]; closing?: string; type?: string; completedTRL?: number }) {
     if (!roadmap?.length) return null;
 
     return (
       <View>
         <Text style={s.sectionLabel}>Commercialization Roadmap</Text>
         <View style={s.hr} />
-        {roadmap.map((group, gi) => (
+        {roadmap.map((group, gi) => {
+          const headerText = completedTRL === 9
+            ? "Remaining Requirements for Full Commercialization"
+            : `Advancing Towards TRACER Level ${group.trlLevel}`;
+          return (
           <View key={gi} style={s.roadmapGroup}>
             <View style={s.roadmapGroupHeader}>
-              <Text style={s.roadmapLevel}>TRACER Level {group.trlLevel}</Text>
+              <Text style={s.roadmapLevel}>{headerText}</Text>
               <Text style={s.roadmapLevelName}>{getLevelTitle(type, group.trlLevel)}</Text>
             </View>
             {group.steps.map((step, si) => (
@@ -399,7 +403,8 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
               </View>
             ))}
           </View>
-        ))}
+          );
+        })}
         {closing ? (
           <View style={s.closingBox}>
             <Text style={s.closingText}>{closing}</Text>
@@ -484,8 +489,8 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {hasGap && (
           <FieldRow
-            label="Highest Potential:"
-            value={`TRACER Level ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
+            label="Highest Achievable:"
+            value={`TRACER ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
           />
         )}
 
@@ -511,13 +516,13 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
         <View style={s.hr} />
 
         {/* ── Commercialization Roadmap ── */}
-        <RoadmapSection roadmap={roadmap ?? []} closing={closing} type={techType} />
+        <RoadmapSection roadmap={roadmap ?? []} closing={closing} type={techType} completedTRL={result.highestCompletedTRL} />
 
         <View style={{ height: 24 }} />
 
         {/* ── Footer (fixed at bottom of every page) ── */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>AANR-TRACER</Text>
+          <Text style={s.footerText}>AANR-TRacer · DOST-PCAARRD</Text>
           <Text style={s.footerText}
             render={({ pageNumber, totalPages }) =>
               `Page ${pageNumber} of ${totalPages}`

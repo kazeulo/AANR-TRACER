@@ -30,11 +30,13 @@ function RoadmapSteps({
   closing,
   technologyName,
   technologyType,
+  completedTRL,
 }: {
   roadmap: AISteps["roadmap"];
   closing: string;
   technologyName: string;
   technologyType: string;
+  completedTRL?: number;
 }) {
   const levelTitle = (lvl: number) =>
     TRACER_DESCRIPTIONS[technologyType ?? ""]?.[lvl]?.title ?? TRL_LABELS[lvl] ?? "";
@@ -60,8 +62,11 @@ function RoadmapSteps({
       {roadmap?.length > 0 ? (
         <div className="space-y-7">
           {roadmap.map((group, gi) => {
-            const color = TRL_COLORS[group.trlLevel] ?? "#4aa35a";
-            const label = levelTitle(group.trlLevel);
+            const color      = TRL_COLORS[group.trlLevel] ?? "#4aa35a";
+            const label      = levelTitle(group.trlLevel);
+            const headerText = completedTRL === 9
+              ? "Remaining Requirements for Full Commercialization"
+              : `Advancing Towards TRACER Level ${group.trlLevel}`;
 
             return (
               <div key={gi}>
@@ -75,7 +80,7 @@ function RoadmapSteps({
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[11px] font-bold tracking-[1.5px] uppercase leading-none" style={{ color }}>
-                      TRACER Level {group.trlLevel}
+                      {headerText}
                     </span>
                     <span className="text-[10.5px] text-[#94a3a0] leading-none mt-0.5">{label}</span>
                   </div>
@@ -176,7 +181,7 @@ export default function AIRecommendationCard({
       <div className="flex items-center gap-2.5 px-7 py-4 border-b border-[#f0ede6] bg-[#f8f6f1]">
         <span className="w-2 h-2 rounded-full bg-[#4aa35a]" />
         <span className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
-          Commercialization Roadmap
+          Action Steps
         </span>
         <span className="ml-auto text-[10px] text-[#94a3a0] bg-[#f0ece3] px-2 py-0.5 rounded-full font-medium">
           AI-powered
@@ -211,6 +216,7 @@ export default function AIRecommendationCard({
             closing={steps.closing ?? ""}
             technologyName={input.technologyName}
             technologyType={input.technologyType}
+            completedTRL={input.completedTRL}
           />
         )}
       </div>
@@ -226,7 +232,7 @@ export default function AIRecommendationCard({
             AI-generated. Validate with a technology transfer specialist. For further assistance, contact your regional Technology Transfer Specialist.
           </p>
         </div>
-        {/* <button
+        <button
           onClick={() => reload(true)}
           className="inline-flex items-center gap-1.5 text-[11px] text-[#94a3a0] hover:text-[#4aa35a] transition-colors font-medium"
         >
@@ -237,7 +243,7 @@ export default function AIRecommendationCard({
             <path d="M8 16H3v5" />
           </svg>
           Regenerate
-        </button> */}
+        </button>
       </div>
     </div>
   );

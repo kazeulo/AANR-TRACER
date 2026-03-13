@@ -72,59 +72,54 @@ function buildInsight(
   scores: CategoryScore[],
   completedQuestions: QuestionItem[]
 ): string {
-  const sorted    = [...scores].sort((a, b) => b.percent - a.percent);
-  const strongest = sorted[0];
-  const weakest   = sorted[sorted.length - 1];
+  // Strength = category with the HIGHEST TRACER level reached
+  // Focus    = category with the LOWEST  TRACER level reached (among those with any progress)
+  const withLevels = scores.map(s => ({
+    category:     s.category,
+    highestLevel: highestLevelInCategory(s.category, completedQuestions),
+  }));
 
-  // Strong categories (≥75%)
-  const strongOnes = sorted.filter(s => s.percent >= 75);
-  // Second weakest that isn't "Not Started" — a realistic focus target
-  const focusTarget = sorted
-    .filter(s => s.category !== weakest.category && s.percent > 0)
-    .sort((a, b) => a.percent - b.percent)[0] ?? weakest;
+  const withProgress  = withLevels.filter(s => s.highestLevel > 0);
+  const allZero       = withProgress.length === 0;
 
-  const strongestLevel = highestLevelInCategory(strongest.category, completedQuestions);
-  const strongProseList = strongOnes.length > 1
-    ? strongOnes
-        .map(s => PROSE_NAMES[s.category] ?? s.category)
-        .reduce((acc, name, i, arr) =>
-          i === arr.length - 1 ? `${acc} and ${name}` : `${acc}, ${name}`)
-    : PROSE_NAMES[strongest.category] ?? strongest.category;
+  const strengthEntry = allZero
+    ? withLevels[0]
+    : withLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
 
-  const focusName  = PROSE_NAMES[focusTarget.category] ?? focusTarget.category;
-  const weakName   = PROSE_NAMES[weakest.category]     ?? weakest.category;
+  const focusEntry = allZero
+    ? withLevels[withLevels.length - 1]
+    : withProgress.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a);
 
-  // Opening — describe strength
-  let insight = `Your key strength lies in ${strongProseList}`;
+  const strengthName = PROSE_NAMES[strengthEntry.category] ?? strengthEntry.category;
+  const focusName    = PROSE_NAMES[focusEntry.category]    ?? focusEntry.category;
 
-  if (strongestLevel > 0) {
-    insight += `, already addressing several requirements aligned with TRACER Level ${strongestLevel}.`;
+  let insight = `Your key strength lies in ${strengthName}`;
+
+  if (strengthEntry.highestLevel > 0) {
+    insight += `, already addressing several requirements aligned with TRACER Level ${strengthEntry.highestLevel}.`;
   } else {
     insight += `.`;
   }
 
-  // Middle — what to focus on
-  if (weakest.percent === 0) {
-    insight += ` To move closer to successful commercialization, begin building your ${weakName} — this area has no completed requirements yet and will be critical in later stages.`;
-  } else if (focusTarget.category !== weakest.category) {
-    insight += ` To move closer to successful commercialization, focus your efforts on strengthening ${focusName} and ${weakName}, where the most gaps remain.`;
+  if (focusEntry.category === strengthEntry.category || allZero) {
+    insight += ` To move closer to successful commercialization, continue building across all areas.`;
+  } else if (focusEntry.highestLevel > 0) {
+    insight += ` To move closer to successful commercialization, focus your efforts on ${focusName}, currently at TRACER Level ${focusEntry.highestLevel}.`;
   } else {
-    insight += ` To move closer to successful commercialization, focus your efforts on ${focusName}, where the most gaps remain.`;
+    insight += ` To move closer to successful commercialization, focus your efforts on ${focusName} — this area has no completed requirements yet and will be critical in later stages.`;
   }
 
-  // Closing line
   insight += ` The guide below outlines your next steps forward.`;
 
   return insight;
 }
-
-const SHORT_NAMES: Record<string, string> = {
-  "Technology Development Status":              "Tech Dev",
-  "Market and Pre-commercialization Preparedness": "Market",
-  "Intellectual Property Protection Status":    "IP",
-  "Industry Validation and Adoption Status":    "Industry",
-  "Regulatory Compliance Status":               "Regulatory",
-};
+  const SHORT_NAMES: Record<string, string> = {
+    "Technology Development Status":              "Tech Dev",
+    "Market and Pre-commercialization Preparedness": "Market",
+    "Intellectual Property Protection Status":    "IP",
+    "Industry Validation and Adoption Status":    "Industry",
+    "Regulatory Compliance Status":               "Regulatory",
+  };
 
 // ─── Radar Chart ──────────────────────────────────────────────────────────────
 
@@ -260,13 +255,17 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
     });
   }, [completedQuestions, lackingToLevel9]);
 
-  // Strongest = highest TRACER level reached; Focus = lowest TRACER level reached
+  // Strongest = category with highest TRACER level reached
+  // Focus     = category with lowest  TRACER level reached (among those with any progress)
   const categoryLevels = scores.map(s => ({
     ...s,
     highestLevel: highestLevelInCategory(s.category, completedQuestions),
   }));
+  const withProgress  = categoryLevels.filter(s => s.highestLevel > 0);
   const strongest = categoryLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
-  const weakest   = categoryLevels.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a);
+  const weakest   = withProgress.length > 0
+    ? withProgress.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a)
+    : categoryLevels[categoryLevels.length - 1];
   const insight   = useMemo(() => buildInsight(scores, completedQuestions), [scores, completedQuestions]);
 
   return (
@@ -281,20 +280,6 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
       </div>
 
       <div className="px-7 py-6 space-y-6">
-
-        {/* Insight paragraph */}
-        <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-gradient-to-r from-[#0f2e1a]/[0.03] to-[#4aa35a]/[0.04] border border-[#4aa35a]/20">
-          <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mt-0.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
-              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 16v-4M12 8h.01" />
-            </svg>
-          </div>
-          <p className="text-[13px] text-[#2d4a38] leading-relaxed font-light">
-            {narrative || insight}
-          </p>
-        </div>
 
         {/* Strength / Weakness badges */}
         <div className="grid grid-cols-2 gap-3">
@@ -378,7 +363,22 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
             ))}
           </div>
         </div>
-
+        
+        
+        {/* Insight paragraph */}
+        <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-gradient-to-r from-[#0f2e1a]/[0.03] to-[#4aa35a]/[0.04] border border-[#4aa35a]/20">
+          <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mt-0.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
+              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4M12 8h.01" />
+            </svg>
+          </div>
+          <p className="text-[13px] text-[#2d4a38] leading-relaxed font-light">
+            {narrative || insight}
+          </p>
+        </div>
+        
       </div>
     </div>
   );
