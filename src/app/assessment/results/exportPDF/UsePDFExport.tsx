@@ -72,7 +72,7 @@ export function usePDFExport() {
 // Loaded dynamically so it never runs on the server.
 // Call generateAndDownloadPDF() from a client component.
 
-export async function generateAndDownloadPDF(props: PDFContentProps): Promise<void> {
+export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
   // Dynamic imports — keeps the bundle lean
   const { pdf, Document, Page, Text, View, Image, StyleSheet, Font } =
     await import("@react-pdf/renderer");
@@ -96,6 +96,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
     // ── Header ──
     headerRow: {
       flexDirection: "row",
+      justifyContent: "space-between",
       alignItems: "flex-start",
       marginBottom: 10,
     },
@@ -108,14 +109,12 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
       textTransform: "uppercase",
       letterSpacing: 0.5,
       color: "#111111",
-      marginLeft: "10"
     },
     agencySubtitle: {
       fontSize: 8.5,
       color: "#555555",
       marginTop: 2,
       lineHeight: 1.5,
-      marginLeft: "10"
     },
     logo: {
       width: 48,
@@ -196,7 +195,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
       fontSize: 20,
       fontFamily: "Helvetica-Bold",
       color: "#2d7a3a",
-      width: 200,
+      width: 90,
     },
     tracerBadgeLabel: {
       fontSize: 8,
@@ -357,7 +356,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
     return (
       <View>
         <Text style={s.sectionLabel}>{title}</Text>
-        <View style={s.hr}/>
+        <View style={s.hr} />
         {levels.map(level => (
           <View key={level}>
             <Text style={s.trlLevelHeader}>
@@ -436,18 +435,18 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
   const MyDoc = (
     <Document
       title="TRACER Assessment Report"
-      author="DOST-PCAARRD AANR-TRACER"
+      author="DOST-PCAARRD AANR-TRacer"
       subject={`TRACER Assessment — ${techName ?? "Technology"}`}
     >
       <Page size="A4" style={s.page}>
 
         {/* ── Header ── */}
         <View style={s.headerRow}>
-          <Image
-            style={s.logo}
-            src="/img/logos/dost-pcaarrd-logo.png"
-          />
           <View style={s.agencyBlock}>
+            <Image
+              style={s.logo}
+              src="/img/logos/dost-pcaarrd-logo.png"
+            />  
             <Text style={s.agencyName}>DOST-PCAARRD</Text>
             <Text style={s.agencySubtitle}>
               Philippine Council for Agriculture, Aquatic{"\n"}
@@ -479,7 +478,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
         <View style={s.hr} />
 
         <View style={s.tracerBadge}>
-          <Text style={s.tracerBadgeLevel}>TRACER Level {highestCompletedTRL}</Text>
+          <Text style={s.tracerBadgeLevel}>TRACER {highestCompletedTRL}</Text>
           <View>
             <Text style={s.tracerBadgeLabel}>Current TRACER Level</Text>
             <Text style={s.tracerBadgeName}>
@@ -490,8 +489,8 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {hasGap && (
           <FieldRow
-            label="Highest Potential Level:"
-            value={`TRACER Level ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
+            label="Highest Achievable:"
+            value={`TRACER ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
           />
         )}
 
@@ -516,6 +515,32 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         <View style={s.hr} />
 
+        {/* ── Lacking / Next Steps ── */}
+        {isMaxed ? (
+          <View>
+            <Text style={s.sectionLabel}>Next Steps</Text>
+            <View style={s.hr} />
+            <Text style={{ fontSize: 9, color: "#555555", fontStyle: "italic" }}>
+              Your technology has reached full commercialization (TRACER Level 9).
+              No further steps are required.
+            </Text>
+          </View>
+        ) : hasGap ? (
+          <QuestionSection
+            title={`Requirements to Reach TRACER Level ${highestAchievableTRL}`}
+            questions={lackingForAchievable}
+            type={techType}
+          />
+        ) : (
+          <QuestionSection
+            title={`Requirements for TRACER Level ${highestCompletedTRL + 1}`}
+            questions={lackingForNextLevel}
+            type={techType}
+          />
+        )}
+
+        <View style={s.hr} />
+
         {/* ── Commercialization Roadmap ── */}
         <RoadmapSection roadmap={roadmap ?? []} closing={closing} type={techType} completedTRL={result.highestCompletedTRL} />
 
@@ -523,7 +548,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {/* ── Footer (fixed at bottom of every page) ── */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>AANR-TRACER · DOST-PCAARRD</Text>
+          <Text style={s.footerText}>AANR-TRacer · DOST-PCAARRD</Text>
           <Text style={s.footerText}
             render={({ pageNumber, totalPages }) =>
               `Page ${pageNumber} of ${totalPages}`
@@ -538,18 +563,37 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
     </Document>
   );
 
-  // ── Trigger download ───────────────────────────────────────────────────────
-  const blob     = await pdf(MyDoc).toBlob();
+  // ── Build blob ────────────────────────────────────────────────────────────
+  const blob = await pdf(MyDoc).toBlob();
+  return blob;
+}
+
+/** Generate PDF, trigger a browser download, and return the Blob. */
+export async function generateAndDownloadPDF(props: PDFContentProps): Promise<void> {
+  const blob = await generatePDFBlob(props);
   const url      = URL.createObjectURL(blob);
   const anchor   = document.createElement("a");
-  const safeName = (form.name || "report").replace(/\s+/g, "_").toLowerCase();
+  const safeName = (props.form.name || "report").replace(/\s+/g, "_").toLowerCase();
   anchor.href     = url;
   anchor.download = `tracer_report_${safeName}.pdf`;
   anchor.click();
   URL.revokeObjectURL(url);
 }
 
+/** Generate PDF and return as base64 string — for email attachment. */
+export async function generatePDFAsBase64(props: PDFContentProps): Promise<string> {
+  const blob        = await generatePDFBlob(props);
+  const arrayBuffer = await blob.arrayBuffer();
+  const bytes       = new Uint8Array(arrayBuffer);
+  let   binary      = "";
+  bytes.forEach(b => (binary += String.fromCharCode(b)));
+  return btoa(binary);
+}
+
+
 /* ─── Dummy PDFContent — kept so ResultsPage import doesn't break ─────────── */
+// ResultsPage renders this into a hidden div; with react-pdf we no longer need
+// that div. Keep the export so the import compiles without changes.
 export function PDFContent(_props: PDFContentProps) {
   return null;
 }

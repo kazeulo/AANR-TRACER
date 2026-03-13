@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
-import { usePDFExport, PDFContent, generateAndDownloadPDF } from "./exportPDF/UsePDFExport";
+import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/TRACERdescriptions";
 import { getTracerLabel } from "./Levelsdescription";
 import {
@@ -20,7 +20,7 @@ import { getQuestionsJSON } from "../../utils/questionsCache";
 import ScoreCards           from "./ScoreCards";
 import QuestionGroup        from "./QuestionGroup";
 import AIRecommendationCard from "./RecommendationCard";
-import ExportModal          from "./ExportModal";
+import ExportModal, { AssessmentMeta } from "./exportPDF/exportModal";
 import CategoryAnalysis     from "./CategoryAnalysis";
 
 // ─── Skeleton shimmer ─────────────────────────────────────────────────────────
@@ -182,7 +182,7 @@ function CongratulatoryHero({
                     Your technology is currently at{" "}
                     <span style={{ color: completedColor }}>TRACER Level {trl}</span>
                     {tracerLabel && (
-                      <span className="text-white/60 font-normal"> — {tracerLabel}</span>
+                      <span className="text-white/60 font-normal"> \u2014 {tracerLabel}</span>
                     )}
                   </>
                 }
@@ -195,7 +195,7 @@ function CongratulatoryHero({
               <span className="text-[12px] font-semibold text-[#4aa35a]">{technologyName}</span>
             )}
             {technologyName && technologyType && (
-              <span className="text-white/20 text-[12px]">·</span>
+              <span className="text-white/20 text-[12px]">\u00b7</span>
             )}
             {technologyType && (
               <span className="text-[11px] text-white/40 font-light">{technologyType}</span>
@@ -218,7 +218,7 @@ function CongratulatoryHero({
               <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
             </div>
           ) : header.explanation ? (
-            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[650px]">
+            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[520px]">
               {header.explanation}
             </p>
           ) : null}
@@ -434,24 +434,63 @@ export default function ResultsPage() {
       {showModal && (
         <ExportModal
           onClose={() => !exporting && setShowModal(false)}
-          onExport={async form => {
+          exporting={exporting}
+          meta={{
+            technologyName: data.technologyName,
+            technologyType: data.technologyType,
+            trlLevel:       result.highestCompletedTRL,
+            trlDescription: getTracerLabel(data.technologyType, result.highestCompletedTRL) ?? TRL_LABELS[result.highestCompletedTRL] ?? "",
+          }}
+          onExport={async (form, mode, recipientEmail) => {
             setExporting(true);
             try {
-              await generateAndDownloadPDF({
+              const pdfProps = {
                 result,
-                techName: data.technologyName,
-                techType: data.technologyType,
+                techName:        data.technologyName,
+                techType:        data.technologyType,
                 techDescription: data.technologyDescription,
                 form,
                 roadmap: aiResult?.steps?.roadmap ?? [],
                 closing: aiResult?.steps?.closing ?? "",
-              });
+              };
+
+              const needsDownload = mode === "download" || mode === "both";
+              const needsEmail    = mode === "email"    || mode === "both";
+
+              // Generate PDF — once, shared between download and email
+              const pdfBase64 = needsEmail ? await generatePDFAsBase64(pdfProps) : null;
+
+              if (needsDownload) {
+                await generateAndDownloadPDF(pdfProps);
+              }
+
+              if (needsEmail && pdfBase64) {
+                const trlDescription = getTracerLabel(data.technologyType, result.highestCompletedTRL)
+                  ?? TRL_LABELS[result.highestCompletedTRL]
+                  ?? "";
+                await fetch("/api/send-report", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    recipientEmail,
+                    submittedByName:  form.name,
+                    submittedByEmail: form.email,
+                    submittedByOrg:   form.organization,
+                    submittedByRole:  form.role,
+                    technologyName:   data.technologyName,
+                    technologyType:   data.technologyType,
+                    trlLevel:         result.highestCompletedTRL,
+                    trlDescription,
+                    assessmentDate:   new Date().toLocaleDateString(),
+                    pdfBase64,
+                  }),
+                });
+              }
             } finally {
               setExporting(false);
               clearForm();
             }
           }}
-          exporting={exporting}
         />
       )}
 
