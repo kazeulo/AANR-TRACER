@@ -40,7 +40,7 @@ const steps = [
   {
     n: "03",
     Icon: IconBarChart,
-    title: "Get Your TRL Report",
+    title: "Get Your TRACER Report",
     desc: "Receive your highest completed TRACER level, identified strengths and gaps, and a roadmap toward successful commercialization.",
   },
 ];

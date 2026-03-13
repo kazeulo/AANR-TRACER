@@ -435,7 +435,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
   const MyDoc = (
     <Document
       title="TRACER Assessment Report"
-      author="DOST-PCAARRD AANR-TRacer"
+      author="DOST-PCAARRD AANR-TRACER"
       subject={`TRACER Assessment — ${techName ?? "Technology"}`}
     >
       <Page size="A4" style={s.page}>
@@ -478,7 +478,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
         <View style={s.hr} />
 
         <View style={s.tracerBadge}>
-          <Text style={s.tracerBadgeLevel}>TRACER {highestCompletedTRL}</Text>
+          <Text style={s.tracerBadgeLevel}>TRACER Level {highestCompletedTRL}</Text>
           <View>
             <Text style={s.tracerBadgeLabel}>Current TRACER Level</Text>
             <Text style={s.tracerBadgeName}>
@@ -489,8 +489,8 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {hasGap && (
           <FieldRow
-            label="Highest Achievable:"
-            value={`TRACER ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
+            label="Highest Potential:"
+            value={`TRACER Level${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
           />
         )}
 
@@ -522,7 +522,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {/* ── Footer (fixed at bottom of every page) ── */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>AANR-TRacer · DOST-PCAARRD</Text>
+          <Text style={s.footerText}>AANR-TRACER · DOST-PCAARRD</Text>
           <Text style={s.footerText}
             render={({ pageNumber, totalPages }) =>
               `Page ${pageNumber} of ${totalPages}`
@@ -549,8 +549,6 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 }
 
 /* ─── Dummy PDFContent — kept so ResultsPage import doesn't break ─────────── */
-// ResultsPage renders this into a hidden div; with react-pdf we no longer need
-// that div. Keep the export so the import compiles without changes.
 export function PDFContent(_props: PDFContentProps) {
   return null;
 }
