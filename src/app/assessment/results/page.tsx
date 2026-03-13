@@ -150,7 +150,7 @@ function CongratulatoryHero({
               className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
-              {trl === 0 ? "\u2014" : trl}
+              {trl === 0 ? "-" : trl}
             </span>
           </div>
           {trl > 0 && (
@@ -182,7 +182,7 @@ function CongratulatoryHero({
                     Your technology is currently at{" "}
                     <span style={{ color: completedColor }}>TRACER Level {trl}</span>
                     {tracerLabel && (
-                      <span className="text-white/60 font-normal"> \u2014 {tracerLabel}</span>
+                      <span className="text-white/60 font-normal"> - {tracerLabel}</span>
                     )}
                   </>
                 }
@@ -195,7 +195,7 @@ function CongratulatoryHero({
               <span className="text-[12px] font-semibold text-[#4aa35a]">{technologyName}</span>
             )}
             {technologyName && technologyType && (
-              <span className="text-white/20 text-[12px]">\u00b7</span>
+              <span className="text-white/20 text-[12px]">·</span>
             )}
             {technologyType && (
               <span className="text-[11px] text-white/40 font-light">{technologyType}</span>

@@ -19,7 +19,7 @@ export default function BackToTop() {
     <button
       onClick={scrollToTop}
       aria-label="Back to top"
-      className="fixed bottom-12 right-12 z-50 w-14 h-14 rounded-full
+      className="fixed bottom-12 right-10 z-50 w-14 h-14 rounded-full
                  bg-[var(--color-accent)] text-white shadow-[var(--shadow-btn-sm)]
                  flex items-center justify-center
                  hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5

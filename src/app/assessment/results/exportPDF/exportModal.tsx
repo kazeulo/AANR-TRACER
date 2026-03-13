@@ -138,7 +138,7 @@ export default function ExportModal({ onClose, onExport, exporting, meta }: Expo
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-[#0a1f10]/60 backdrop-blur-sm" onClick={() => !exporting && onClose()} />
 
-      <div className="relative font-['DM_Sans',sans-serif] bg-white rounded-3xl shadow-2xl w-full max-w-[480px] z-10 overflow-hidden max-h-[90vh] flex flex-col">
+      <div className="relative font-['DM_Sans',sans-serif] bg-white rounded-3xl shadow-2xl w-full max-w-[550px] z-10 overflow-hidden max-h-[90vh] flex flex-col">
 
         {/* Header */}
         <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec] bg-[#f8f6f1] flex-shrink-0">
