@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { TRLResult, QuestionItem } from "../../utils/trlCalculator";
-import { RoadmapGroup } from "./FetchRecommendation";
-import { TRACER_DESCRIPTIONS } from "../../utils/TRACERdescriptions";
+import { TRLResult, QuestionItem } from "../../../utils/trlCalculator";
+import { RoadmapGroup } from "../FetchRecommendation";
+import { TRACER_DESCRIPTIONS } from "../../../utils/TRACERdescriptions";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -96,7 +96,6 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
     // ── Header ──
     headerRow: {
       flexDirection: "row",
-      justifyContent: "space-between",
       alignItems: "flex-start",
       marginBottom: 10,
     },
@@ -109,12 +108,14 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
       textTransform: "uppercase",
       letterSpacing: 0.5,
       color: "#111111",
+      marginLeft: "10"
     },
     agencySubtitle: {
       fontSize: 8.5,
       color: "#555555",
       marginTop: 2,
       lineHeight: 1.5,
+      marginLeft: "10"
     },
     logo: {
       width: 48,
@@ -195,7 +196,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
       fontSize: 20,
       fontFamily: "Helvetica-Bold",
       color: "#2d7a3a",
-      width: 90,
+      width: 200,
     },
     tracerBadgeLabel: {
       fontSize: 8,
@@ -356,7 +357,7 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
     return (
       <View>
         <Text style={s.sectionLabel}>{title}</Text>
-        <View style={s.hr} />
+        <View style={s.hr}/>
         {levels.map(level => (
           <View key={level}>
             <Text style={s.trlLevelHeader}>
@@ -442,6 +443,10 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {/* ── Header ── */}
         <View style={s.headerRow}>
+          <Image
+            style={s.logo}
+            src="/img/logos/dost-pcaarrd-logo.png"
+          />
           <View style={s.agencyBlock}>
             <Text style={s.agencyName}>DOST-PCAARRD</Text>
             <Text style={s.agencySubtitle}>
@@ -450,10 +455,6 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
               Los Baños, Laguna, Philippines
             </Text>
           </View>
-          <Image
-            style={s.logo}
-            src="/img/logos/dost-pcaarrd-logo.png"
-          />
         </View>
 
         <View style={s.hrThick} />
@@ -489,8 +490,8 @@ export async function generateAndDownloadPDF(props: PDFContentProps): Promise<vo
 
         {hasGap && (
           <FieldRow
-            label="Highest Potential:"
-            value={`TRACER Level${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
+            label="Highest Potential Level:"
+            value={`TRACER Level ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
           />
         )}
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { QuestionItem } from "../../utils/trlCalculator";
-import { TRL_COLORS } from "./UsePDFExport";
+import { TRL_COLORS } from "./exportPDF/UsePDFExport";
 import { TRACER_DESCRIPTIONS } from "../../utils/TRACERdescriptions";
 import { TRL_LABELS } from "./FetchRecommendation";
 
