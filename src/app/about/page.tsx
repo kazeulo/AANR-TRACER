@@ -97,16 +97,21 @@ export default function About() {
           <h2 className="font-['DM_Serif_Display'] text-[clamp(30px,3vw,42px)] text-white mb-4 tracking-tight">
             How <span className="text-[var(--color-accent)] italic">TRACER</span> works
           </h2>
-          <p className="text-[15px] text-[var(--color-text-muted)] font-light max-w-[520px] leading-[1.7] mb-14">
-            A four-step process that takes you from raw innovation to a documented, actionable TRACER assessment report.
+          <p className="text-[15px] text-[var(--color-text-faintest)] font-light max-w-[520px] leading-[1.7] mb-14">
+            A three-step process that takes you from raw innovation to a documented, actionable TRACER assessment report.
           </p>
 
           <div className="flex flex-col gap-px bg-[var(--white-10)] rounded-[20px] overflow-hidden">
             {[
-              { icon: "clipboard", title: "Answer Targeted Questions",       body: "Complete a detailed questionnaire covering all critical aspects of technology readiness — development progress, intellectual property status, market potential, regulatory compliance, and industry adoption. Each question is designed to pinpoint the specific stage and maturity of your innovation." },
-              { icon: "calc", title: "Automated TRACER Levels Calculation",  body: "Based on your responses, the tool automatically calculates your Technology readiness based on TRACER scale. The platform requires that all relevant readiness criteria at each level be fully satisfied before advancing — providing a precise, reliable measure of your technology's maturity." },
-              { icon: "lightbulb", title: "Personalized Recommendations",    body: "After the assessment, you receive a clear, actionable report highlighting your current TRACER Level and the key steps to move forward. Recommendations are tailored to your technology type and target users, ensuring guidance is practical and relevant to your specific context." },
-              { icon: "file", title: "Report Generation and Download",       body: "TRACER automatically generates a formal TRACER Assessment Report summarizing your technology details, assessment results, and required steps to reach the next level. Download it as a professionally formatted PDF for documentation, funding proposals, or project planning." },
+              { icon: "clipboard", 
+                title: "Select Your Technology Type",       
+                body: "Complete a detailed questionnaire covering all critical aspects of technology readiness — development progress, intellectual property status, market potential, regulatory compliance, and industry adoption. Each question is designed to pinpoint the specific stage and maturity of your innovation." },
+              { icon: "calc", 
+                title: "Answer the Assessment",  
+                body: "Go through structured questions across Technology Status, Market Readiness, IP Protection, Industry Adoption, and Regulatory Compliance." },
+              { icon: "file", 
+                title: "Get Your TRL Report",       
+                body: "Receive your highest completed TRACER level, identified strengths and gaps, and a roadmap toward successful commercialization." },
             ].map(({ icon, title, body }, i) => (
               <div key={i} className="grid grid-cols-[80px_1fr] bg-[var(--color-bg-card)]/[0.02] hover:bg-[var(--color-bg-card)]/[0.05] transition-colors">
                 {/* Left */}
@@ -118,7 +123,7 @@ export default function About() {
                 {/* Right */}
                 <div className="px-9 py-9">
                   <div className="text-[16px] font-semibold text-white mb-2.5">{title}</div>
-                  <p className="text-[14px] leading-[1.75] text-[var(--color-text-muted)] font-light">{body}</p>
+                  <p className="text-[14px] leading-[1.75] text-[var(--color-text-faintest)] font-light">{body}</p>
                 </div>
               </div>
             ))}

@@ -168,14 +168,14 @@ export default function HomePage() {
 
           {/* Right — TRL scale */}
           <div className="hidden lg:flex flex-col gap-2.5">
-            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--white-35)] mb-2">TRACER Scale</div>
+            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faint)] mb-2">TRACER Scale</div>
             {tracerLevels.map(({ n, label, w, color }) => (
               <div key={n} className="flex items-center gap-3">
                 <span className="text-[11px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
                 <div className="flex-1 h-1.5 bg-[var(--white-15)] rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${w} ${color}`} />
                 </div>
-                <span className="text-[12px] text-[var(--white-35)] w-[160px] flex-shrink-0">{label}</span>
+                <span className="text-[12px] text-[var(--color-text-faint)] w-[160px] flex-shrink-0">{label}</span>
               </div>
             ))}
           </div>
