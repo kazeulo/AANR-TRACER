@@ -516,7 +516,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hr} />
 
-        {/* ── Commercialization Roadmap (AI-generated; fallback: roadmap only, no closing) ── */}
+        {/* ── Commercialization Roadmap ── */}
         <RoadmapSection
           roadmap={roadmap ?? []}
           closing={closing}
