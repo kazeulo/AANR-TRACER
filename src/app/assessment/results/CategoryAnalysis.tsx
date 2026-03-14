@@ -73,36 +73,64 @@ function buildInsight(
   completedQuestions: QuestionItem[]
 ): string {
   // Strength = category with the HIGHEST TRACER level reached
-  // Focus    = category with the LOWEST  TRACER level reached (among those with any progress)
+  // Focus    = category with the LOWEST TRACER level reached,
+  //            among those with progress but NOT fully completed
   const withLevels = scores.map(s => ({
     category:     s.category,
     highestLevel: highestLevelInCategory(s.category, completedQuestions),
+    isComplete:   s.total > 0 && s.answered === s.total,
   }));
 
-  const withProgress  = withLevels.filter(s => s.highestLevel > 0);
-  const allZero       = withProgress.length === 0;
+  const withProgress    = withLevels.filter(s => s.highestLevel > 0);
+  const allZero         = withProgress.length === 0;
 
   const strengthEntry = allZero
     ? withLevels[0]
     : withLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
 
+  // Exclude fully-completed categories from focus — they need no attention
+  const focusCandidates = withProgress.filter(s => !s.isComplete);
+
   const focusEntry = allZero
     ? withLevels[withLevels.length - 1]
-    : withProgress.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a);
+    : focusCandidates.length > 0
+      ? focusCandidates.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a)
+      : null;   // all categories with progress are fully complete
 
   const strengthName = PROSE_NAMES[strengthEntry.category] ?? strengthEntry.category;
-  const focusName    = PROSE_NAMES[focusEntry.category]    ?? focusEntry.category;
+  const focusName    = focusEntry ? (PROSE_NAMES[focusEntry.category] ?? focusEntry.category) : null;
 
-  let insight = `Your key strength lies in ${strengthName}`;
+  // All fully-completed categories (answered === total, total > 0)
+  const completedCategories = withLevels.filter(s => s.isComplete && s.highestLevel > 0);
 
-  if (strengthEntry.highestLevel > 0) {
-    insight += `, already addressing several requirements aligned with TRACER Level ${strengthEntry.highestLevel}.`;
+  // Build the opening sentence — list ALL completed categories, not just the strongest
+  let insight = "";
+
+  if (completedCategories.length === 0) {
+    // Nothing fully complete yet — key strength phrasing only
+    insight += `Your key strength lies in ${strengthName}`;
+    if (strengthEntry.highestLevel > 0) {
+      insight += `, already addressing requirements aligned with TRACER Level ${strengthEntry.highestLevel}.`;
+    } else {
+      insight += `.`;
+    }
+  } else if (completedCategories.length === 1) {
+    const name = PROSE_NAMES[completedCategories[0].category] ?? completedCategories[0].category;
+    insight += `Your key strength lies in ${strengthName}. You have fully addressed all requirements under ${name} (up to TRACER Level ${completedCategories[0].highestLevel}).`;
   } else {
-    insight += `.`;
+    // Join list naturally: "A, B, and C"
+    const names = completedCategories.map(s => PROSE_NAMES[s.category] ?? s.category);
+    const listed = names.length === 2
+      ? `${names[0]} and ${names[1]}`
+      : `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+    insight += `Your key strength lies in ${strengthName}. You have fully addressed requirements across ${listed}.`;
   }
 
-  if (focusEntry.category === strengthEntry.category || allZero) {
-    insight += ` To move closer to successful commercialization, continue building across all areas.`;
+  // Focus sentence
+  if (!focusEntry || allZero) {
+    insight += ` All active categories have been fully addressed — continue building across any remaining areas to reach full commercialization.`;
+  } else if (focusEntry.category === strengthEntry.category) {
+    insight += ` Continue building across all areas to move closer to successful commercialization.`;
   } else if (focusEntry.highestLevel > 0) {
     insight += ` To move closer to successful commercialization, focus your efforts on ${focusName}, currently at TRACER Level ${focusEntry.highestLevel}.`;
   } else {
@@ -113,13 +141,13 @@ function buildInsight(
 
   return insight;
 }
-  const SHORT_NAMES: Record<string, string> = {
-    "Technology Development Status":              "Tech Dev",
-    "Market and Pre-commercialization Preparedness": "Market",
-    "Intellectual Property Protection Status":    "IP",
-    "Industry Validation and Adoption Status":    "Industry",
-    "Regulatory Compliance Status":               "Regulatory",
-  };
+const SHORT_NAMES: Record<string, string> = {
+  "Technology Development Status":                  "Tech Dev",
+  "Market and Pre-commercialization Preparedness":  "Market",
+  "Intellectual Property Protection Status":        "IP",
+  "Industry Validation and Adoption Status":        "Industry",
+  "Regulatory Compliance Status":                   "Regulatory",
+};
 
 // ─── Radar Chart ──────────────────────────────────────────────────────────────
 
@@ -256,16 +284,20 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
   }, [completedQuestions, lackingToLevel9]);
 
   // Strongest = category with highest TRACER level reached
-  // Focus     = category with lowest  TRACER level reached (among those with any progress)
+  // Focus     = category with lowest TRACER level (among those with progress but NOT fully complete)
   const categoryLevels = scores.map(s => ({
     ...s,
     highestLevel: highestLevelInCategory(s.category, completedQuestions),
+    isComplete:   s.total > 0 && s.answered === s.total,
   }));
-  const withProgress  = categoryLevels.filter(s => s.highestLevel > 0);
+  const withProgress      = categoryLevels.filter(s => s.highestLevel > 0);
+  const incompleteWithProgress = withProgress.filter(s => !s.isComplete);
   const strongest = categoryLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
-  const weakest   = withProgress.length > 0
-    ? withProgress.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a)
-    : categoryLevels[categoryLevels.length - 1];
+  const weakest   = incompleteWithProgress.length > 0
+    ? incompleteWithProgress.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a)
+    : withProgress.length > 0
+      ? withProgress[withProgress.length - 1]
+      : categoryLevels[categoryLevels.length - 1];
   const insight   = useMemo(() => buildInsight(scores, completedQuestions), [scores, completedQuestions]);
 
   return (
@@ -364,8 +396,7 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
           </div>
         </div>
         
-        
-        {/* Insight paragraph */}
+         {/* Insight paragraph */}
         <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-gradient-to-r from-[#0f2e1a]/[0.03] to-[#4aa35a]/[0.04] border border-[#4aa35a]/20">
           <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-[#4aa35a]/10 flex items-center justify-center mt-0.5">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"

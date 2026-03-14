@@ -360,7 +360,7 @@ export default function ResultsPage() {
                 title={`Lacking to Reach Highest Potential TRACER Level ${result.highestAchievableTRL}`}
                 questions={result.lackingForAchievable}
                 accent="#3b82f6"
-                defaultOpen={true}
+                defaultOpen={false}
                 techType={data.technologyType}
               />
             ) : result.lackingForNextLevel.length > 0 ? (
@@ -368,7 +368,7 @@ export default function ResultsPage() {
                 title={`Lacking for Next Level (TRACER Level ${result.highestCompletedTRL + 1})`}
                 questions={result.lackingForNextLevel}
                 accent="#f97316"
-                defaultOpen={true}
+                defaultOpen={false}
                 techType={data.technologyType}
               />
             ) : null}
