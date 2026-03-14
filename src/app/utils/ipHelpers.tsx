@@ -9,10 +9,8 @@ export const IP_FILED_LABEL = "IP Filed or Registered";
 export const IP_CATEGORY = "Intellectual Property Protection Status";
 
 export const IP_TYPES = [
-  "Patent - Product",
-  "Patent - Process",
-  "Utility Model - Product",
-  "Utility Model - Process",
+  "Patent",
+  "Utility Model",
   "Industrial Design",
   "Trademark",
   "Copyright",

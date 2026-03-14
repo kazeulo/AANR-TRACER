@@ -4,8 +4,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const SCALES = [0.9, 1, 1.1, 1.2] as const;
-const LABELS = ["Small", "Default", "Large", "Larger"] as const;
+const SCALES = [0.9, 1, 1.1, 1.2, 1.3] as const;
+const LABELS = ["Small", "Default", "Large", "X-Large", "XX-Large"] as const;
 const STORAGE_KEY = "aanr-font-scale";
 const DEFAULT_INDEX = 1; // "Default" = 1.0
 
