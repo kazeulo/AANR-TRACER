@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { TRLResult, QuestionItem } from "../../../utils/trlCalculator";
 import { RoadmapGroup } from "../FetchRecommendation";
 import { TRACER_DESCRIPTIONS } from "../../../utils/TRACERdescriptions";
@@ -19,6 +19,7 @@ export interface PDFContentProps {
   techName?:        string;
   techType?:        string;
   techDescription?: string;
+  fundingSource?:   string;
   form:             ExportFormData;
   roadmap?:         RoadmapGroup[];
   closing?:         string;
@@ -96,8 +97,8 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     // ── Header ──
     headerRow: {
       flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "flex-start",
+      alignItems: "center",
+      gap: 20,
       marginBottom: 10,
     },
     agencyBlock: {
@@ -391,9 +392,9 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
               <Text style={s.roadmapLevel}>{headerText}</Text>
               <Text style={s.roadmapLevelName}>{getLevelTitle(type, group.trlLevel)}</Text>
             </View>
-            {group.steps.map((step, si) => (
-              <View key={si} style={s.roadmapStepRow}>
-                <Text style={s.roadmapStepNum}>{si + 1}</Text>
+            {(group.steps ?? []).map((step: { action: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; detail: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, si: any) => (
+              <View key={si ?? 0} style={s.roadmapStepRow}>
+                <Text style={s.roadmapStepNum}>{(si ?? 0) + 1}</Text>
                 <View style={{ flex: 1 }}>
                   <Text style={s.roadmapStepAction}>{step.action}</Text>
                   {step.detail ? (
@@ -417,17 +418,16 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
   // ── Build document ─────────────────────────────────────────────────────────
 
   const {
-    result, techName, techType, techDescription,
+    result, techName, techType, techDescription, fundingSource,
     form, roadmap, closing,
   } = props;
 
   const {
     highestCompletedTRL, highestAchievableTRL,
-    completedQuestions, lackingForAchievable, lackingForNextLevel,
+    completedQuestions,
   } = result;
 
   const hasGap  = highestAchievableTRL > highestCompletedTRL;
-  const isMaxed = highestCompletedTRL === 9;
   const dateStr = new Date().toLocaleDateString("en-PH", {
     year: "numeric", month: "long", day: "numeric",
   });
@@ -442,11 +442,11 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         {/* ── Header ── */}
         <View style={s.headerRow}>
+          <Image
+            style={s.logo}
+            src="/img/logos/dost-pcaarrd-logo.png"
+          />
           <View style={s.agencyBlock}>
-            <Image
-              style={s.logo}
-              src="/img/logos/dost-pcaarrd-logo.png"
-            />  
             <Text style={s.agencyName}>DOST-PCAARRD</Text>
             <Text style={s.agencySubtitle}>
               Philippine Council for Agriculture, Aquatic{"\n"}
@@ -469,6 +469,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
         <View style={s.hr} />
         <FieldRow label="Technology Name:"    value={techName}        />
         <FieldRow label="Technology Type:"    value={techType}        />
+        <FieldRow label="Funding Source:"     value={fundingSource}   />
         <FieldRow label="Description:"        value={techDescription} />
 
         <View style={s.hr} />
@@ -515,34 +516,13 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hr} />
 
-        {/* ── Lacking / Next Steps ── */}
-        {isMaxed ? (
-          <View>
-            <Text style={s.sectionLabel}>Next Steps</Text>
-            <View style={s.hr} />
-            <Text style={{ fontSize: 9, color: "#555555", fontStyle: "italic" }}>
-              Your technology has reached full commercialization (TRACER Level 9).
-              No further steps are required.
-            </Text>
-          </View>
-        ) : hasGap ? (
-          <QuestionSection
-            title={`Requirements to Reach TRACER Level ${highestAchievableTRL}`}
-            questions={lackingForAchievable}
-            type={techType}
-          />
-        ) : (
-          <QuestionSection
-            title={`Requirements for TRACER Level ${highestCompletedTRL + 1}`}
-            questions={lackingForNextLevel}
-            type={techType}
-          />
-        )}
-
-        <View style={s.hr} />
-
-        {/* ── Commercialization Roadmap ── */}
-        <RoadmapSection roadmap={roadmap ?? []} closing={closing} type={techType} completedTRL={result.highestCompletedTRL} />
+        {/* ── Commercialization Roadmap (AI-generated; fallback: roadmap only, no closing) ── */}
+        <RoadmapSection
+          roadmap={roadmap ?? []}
+          closing={closing}
+          type={techType}
+          completedTRL={result.highestCompletedTRL}
+        />
 
         <View style={{ height: 24 }} />
 

@@ -150,7 +150,7 @@ function CongratulatoryHero({
               className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
               style={{ color: completedColor }}
             >
-              {trl === 0 ? "-" : trl}
+              {trl === 0 ? "—" : trl}
             </span>
           </div>
           {trl > 0 && (
@@ -182,7 +182,7 @@ function CongratulatoryHero({
                     Your technology is currently at{" "}
                     <span style={{ color: completedColor }}>TRACER Level {trl}</span>
                     {tracerLabel && (
-                      <span className="text-white/60 font-normal"> - {tracerLabel}</span>
+                      <span className="text-white/60 font-normal"> — {tracerLabel}</span>
                     )}
                   </>
                 }
@@ -239,7 +239,7 @@ function CongratulatoryHero({
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function ResultsPage() {
-  const { data } = useAssessment();
+  const { data, clearData } = useAssessment();
   const router   = useRouter();
 
   type ScoreData = { result: TRLResult; aiInput: RecommendationInput; officialInfo: ReturnType<typeof getTracerInfo> };
@@ -378,13 +378,13 @@ export default function ResultsPage() {
         {/* Action buttons */}
         <div className="flex flex-wrap items-center gap-3 pb-5">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => { clearData(); router.push("/assessment/name"); }}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-[#6b7a75] bg-white border border-[#e5e1d8] hover:border-[#0f2e1a]/30 hover:text-[#0f2e1a] transition-all duration-200"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M8 5H2M5 8L2 5l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            Back to Home
+            Start New Assessment
           </button>
 
           <button
@@ -413,7 +413,7 @@ export default function ResultsPage() {
               Help us improve AANR-TRACER
             </p>
             <p className="text-[12px] text-[#6b7a75] leading-relaxed">
-              Share your experience and suggestions \u2014 your feedback helps us make this tool better for everyone in the AANR sector.
+              Share your experience and suggestions — your feedback helps us make this tool better for everyone in the AANR sector.
             </p>
           </div>
           <a
@@ -441,7 +441,7 @@ export default function ResultsPage() {
             trlLevel:       result.highestCompletedTRL,
             trlDescription: getTracerLabel(data.technologyType, result.highestCompletedTRL) ?? TRL_LABELS[result.highestCompletedTRL] ?? "",
           }}
-          onExport={async (form, mode, recipientEmail) => {
+          onExport={async (form: { name: any; email: any; organization: any; role: any; }, mode: string, recipientEmail: any) => {
             setExporting(true);
             try {
               const pdfProps = {
