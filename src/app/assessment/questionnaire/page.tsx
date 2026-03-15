@@ -6,6 +6,7 @@ import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
 import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
+import { ABH_REGIONS, ATBI_REGIONS, REGULATORY_BODIES} from "../../utils/contacts";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 
 const questionsCache: Record<string, Record<string, Question[]>> = {};
@@ -147,7 +148,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
               Protecting your technology is an important step toward commercialization.
             </p>
             <p className="text-[13px] text-amber-700 font-light leading-relaxed">
-              Contact a Regional Office below for guidance on filing intellectual property protection.
+              For assistance with Intellectual Property Protection applications, you may contact the following Regional IP-TBM Offices under the RAISE Program.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
               {REGION_CONTACTS.map(r => (
@@ -176,16 +177,132 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
 
 // ─── Dropdown Question ────────────────────────────────────────────────────────
 
+function ABHContactPanel() {
+  return (
+    <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-amber-200 bg-amber-100/60">
+        <p className="text-[11px] font-bold tracking-[1.5px] uppercase text-amber-800 mb-0.5">
+          Agribusiness Hub (ABH) Contacts
+        </p>
+        <p className="text-[11.5px] text-amber-700 font-light leading-relaxed">
+          For pre-commercialization packaging, coordinate with the ABH Project under the RAISE Program in your region.
+        </p>
+      </div>
+      {/* Region list */}
+      <div className="divide-y divide-amber-100">
+        {ABH_REGIONS.map(({ region, university, email }) => (
+          <div key={region} className="flex items-center justify-between gap-3 px-4 py-1">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-400" />
+              <span className="text-[12px] text-amber-900 font-light truncate">{region}</span>
+            </div>
+            <div className="flex-shrink-0 flex flex-col items-end gap-0.5">
+              <span className="text-[12px] font-semibold text-amber-800">{university}</span>
+              {email && (
+                <a
+                  href={`mailto:${email}`}
+                  className="text-[10px] text-amber-600 hover:text-amber-800 underline underline-offset-2 transition-colors"
+                >
+                  {email}
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ATBIContactPanel({ technologyType }: { technologyType: string }) {
+  const reg = REGULATORY_BODIES[technologyType];
+  return (
+    <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 overflow-hidden">
+
+      {/* ABH / RAISE institutions under ATBI */}
+      <div className="px-4 py-3">
+        <p className="text-[11px] font-bold tracking-[1.5px] uppercase text-blue-700 mb-1.5">
+          Regional ATBI Contact Information
+        </p>
+        <p className="text-[11.5px] text-blue-600 font-light leading-relaxed mb-3">
+          For assistance with regulatory requirements, you may reach out to ATBI at the email address below or visit the official regulatory body website for detailed application guidelines.
+        </p>
+        <div className="divide-y divide-blue-100 rounded-lg border border-blue-100 overflow-hidden">
+          {ATBI_REGIONS.map(({ region, university, email }) => (
+            <div key={region} className="flex items-center justify-between gap-3 px-3 py-1">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-blue-300" />
+                <span className="text-[11.5px] text-blue-800 font-light truncate">{region}</span>
+              </div>
+              <div className="flex-shrink-0 flex flex-col items-end gap-0.5">
+                <span className="text-[11.5px] font-semibold text-blue-900">{university}</span>
+                {email && (
+                  <a
+                    href={`mailto:${email}`}
+                    className="text-[10px] text-blue-500 hover:text-blue-700 underline underline-offset-2 transition-colors"
+                  >
+                    {email}
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-blue-200 bg-blue-100/60">
+        <p className="text-[11.5px] text-blue-700 font-light leading-relaxed">
+          You may also visit the official website of the relevant regulatory body to review requirements and begin your application.
+        </p>
+      </div>
+      {/* Regulatory body */}
+      {reg && (
+        <div className="px-4 py-3 border-b border-blue-200 space-y-2">
+          <div className="flex items-start gap-2.5">
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5" />
+            <div>
+              <p className="text-[11px] font-bold tracking-[1px] uppercase text-blue-600 mb-0.5">
+                Relevant Regulatory Body
+              </p>
+              <p className="text-[12.5px] text-blue-900 font-medium leading-relaxed">
+                {reg.body}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5 pl-4">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+            <a
+              href={reg.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[12px] text-blue-600 hover:text-blue-800 underline underline-offset-2 transition-colors break-all"
+            >
+              {reg.url}
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DropdownQuestion({
   q,
   value,
   onChange,
+  technologyType,
 }: {
   q: Question;
   value: string | null;
   onChange: (val: string) => void;
+  technologyType: string;
 }) {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const selected = q.options?.find(o => o.value === value);
   const showContact = selected?.contactLabel;
 
@@ -196,34 +313,7 @@ function DropdownQuestion({
           <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
             {q.questionText}
           </p>
-          {q.toolTip && (
-            <button
-              type="button"
-              onClick={e => { e.preventDefault(); setTooltipOpen(o => !o); }}
-              className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
-                tooltipOpen
-                  ? "bg-[var(--color-accent)] border-[#4aa35a]"
-                  : "bg-[var(--color-bg-card)] border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[var(--color-accent)]/10"
-              }`}
-              title={tooltipOpen ? "Hide hint" : "Show hint"}
-            >
-              <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
-                stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8" strokeLinecap="round">
-                <line x1="4" y1="1" x2="4" y2="7" className={`transition-all duration-200 ${tooltipOpen ? "opacity-0" : "opacity-100"}`} />
-                <line x1="1" y1="4" x2="7" y2="4" />
-              </svg>
-            </button>
-          )}
         </div>
-        {q.toolTip && tooltipOpen && (
-          <div className="mb-3 flex items-start gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl px-3.5 py-2.5">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
-              stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" className="flex-shrink-0 mt-[1px]">
-              <circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/>
-            </svg>
-            <p className="text-[12px] text-[#6b7a75] font-light leading-relaxed">{q.toolTip}</p>
-          </div>
-        )}
         <div className="relative">
           <select
             value={value ?? ""}
@@ -242,9 +332,7 @@ function DropdownQuestion({
           </div>
         </div>
         {showContact && (
-          <div className="mt-3 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-[12px] text-amber-800 font-light leading-relaxed">
-            {selected?.contactLabel}
-          </div>
+          <ATBIContactPanel technologyType={technologyType} />
         )}
       </div>
     </div>
@@ -264,7 +352,6 @@ function MultiConditionalQuestion({
   onSelectionChange: (sel: string) => void;
   onItemToggle: (item: string) => void;
 }) {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const yesOption = q.options?.find(o => o.action === "checklist");
   const noOption  = q.options?.find(o => o.action === "contacts");
 
@@ -275,34 +362,7 @@ function MultiConditionalQuestion({
           <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
             {q.questionText}
           </p>
-          {q.toolTip && (
-            <button
-              type="button"
-              onClick={e => { e.preventDefault(); setTooltipOpen(o => !o); }}
-              className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
-                tooltipOpen
-                  ? "bg-[var(--color-accent)] border-[#4aa35a]"
-                  : "bg-[var(--color-bg-card)] border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[var(--color-accent)]/10"
-              }`}
-              title={tooltipOpen ? "Hide hint" : "Show hint"}
-            >
-              <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
-                stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8" strokeLinecap="round">
-                <line x1="4" y1="1" x2="4" y2="7" className={`transition-all duration-200 ${tooltipOpen ? "opacity-0" : "opacity-100"}`} />
-                <line x1="1" y1="4" x2="7" y2="4" />
-              </svg>
-            </button>
-          )}
         </div>
-        {q.toolTip && tooltipOpen && (
-          <div className="mb-3 flex items-start gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl px-3.5 py-2.5">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
-              stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" className="flex-shrink-0 mt-[1px]">
-              <circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/>
-            </svg>
-            <p className="text-[12px] text-[#6b7a75] font-light leading-relaxed">{q.toolTip}</p>
-          </div>
-        )}
 
         {/* Top-level selection */}
         <div className="relative mb-4">
@@ -323,14 +383,12 @@ function MultiConditionalQuestion({
           </div>
         </div>
 
-        {/* No → show contact info */}
+        {/* No, show ABH regional contacts */}
         {value.selection === "no" && noOption?.contactLabel && (
-          <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-[12px] text-amber-800 font-light leading-relaxed">
-            {noOption.contactLabel}
-          </div>
+          <ABHContactPanel />
         )}
 
-        {/* Yes → checklist of sub-items */}
+        {/* Yes, checklist of sub-items */}
         {value.selection === "yes" && yesOption?.items && (
           <div className="space-y-2.5 mt-1">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
@@ -385,7 +443,6 @@ export default function QuestionnairePage() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [openTooltips, setOpenTooltips] = useState<Record<string, boolean>>({});
 
   const questionsPerPage = 5;
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
@@ -422,8 +479,16 @@ export default function QuestionnairePage() {
       const byLevel = allGrouped[data.technologyType] ?? {};
       const flat: Question[] = Object.values(byLevel).flat();
 
+      // Deduplicate by id in case of any duplicate entries in the source data
+      const seen = new Set<string>();
+      const uniqueFlat = flat.filter(q => {
+        if (seen.has(q.id)) return false;
+        seen.add(q.id);
+        return true;
+      });
+
       const groupedData: Record<string, Question[]> = {};
-      flat.forEach(q => {
+      uniqueFlat.forEach(q => {
         if (!groupedData[q.category]) groupedData[q.category] = [];
         groupedData[q.category].push(q);
       });
@@ -636,6 +701,7 @@ export default function QuestionnairePage() {
                     q={q}
                     value={(data.answers[q.id] as string | null) ?? null}
                     onChange={val => handleDropdown(q.id, val)}
+                    technologyType={data.technologyType}
                   />
                 );
               }
@@ -666,7 +732,6 @@ export default function QuestionnairePage() {
               }
 
               const checked = data.answers[q.id] === true;
-              const tooltipOpen = openTooltips[q.id] ?? false;
               return (
                 <label
                   key={q.id}
@@ -694,42 +759,7 @@ export default function QuestionnairePage() {
                       <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
                         {q.questionText}
                       </span>
-                      {q.toolTip && (
-                        <button
-                          type="button"
-                          onClick={e => {
-                            e.preventDefault();
-                            setOpenTooltips(prev => ({ ...prev, [q.id]: !prev[q.id] }));
-                          }}
-                          className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
-                            tooltipOpen
-                              ? "bg-[var(--color-accent)] border-[#4aa35a]"
-                              : "bg-[var(--color-bg-card)] border-[#c8c3b8] hover:border-[#4aa35a] hover:bg-[var(--color-accent)]/10"
-                          }`}
-                          title={tooltipOpen ? "Hide hint" : "Show hint"}
-                        >
-                          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"
-                            stroke={tooltipOpen ? "white" : "#6b7a75"} strokeWidth="1.8"
-                            strokeLinecap="round">
-                            <line x1="4" y1="1" x2="4" y2="7" className={`transition-all duration-200 ${tooltipOpen ? "opacity-0" : "opacity-100"}`} />
-                            <line x1="1" y1="4" x2="7" y2="4" />
-                          </svg>
-                        </button>
-                      )}
                     </div>
-                    {q.toolTip && tooltipOpen && (
-                      <div className="mt-2.5 flex items-start gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl px-3.5 py-2.5">
-                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
-                          stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round"
-                          className="flex-shrink-0 mt-[1px]">
-                          <circle cx="8" cy="8" r="7"/>
-                          <path d="M8 7v4M8 5h.01"/>
-                        </svg>
-                        <p className="text-[12px] text-[#6b7a75] font-light leading-relaxed">
-                          {q.toolTip}
-                        </p>
-                      </div>
-                    )}
                   </div>
                 </label>
               );
