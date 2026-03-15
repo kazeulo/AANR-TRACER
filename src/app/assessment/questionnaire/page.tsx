@@ -71,7 +71,6 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
             onChange={e => {
               const newVal = e.target.value as "yes" | "no" | "trade_secret" | "";
               if (newVal !== "yes") {
-                // Clear dependent selections so stale IP types don't persist into the calculator
                 onChange({ ...ipData, [key]: { initiated: newVal, selectedTypes: {}, typeStatuses: {} } });
               } else {
                 setField("initiated", newVal);
@@ -174,13 +173,11 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
   );
 }
 
-
-// ─── Dropdown Question ────────────────────────────────────────────────────────
+// ─── ABH Contact Panel ────────────────────────────────────────────────────────
 
 function ABHContactPanel() {
   return (
     <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 overflow-hidden">
-      {/* Header */}
       <div className="px-4 py-3 border-b border-amber-200 bg-amber-100/60">
         <p className="text-[11px] font-bold tracking-[1.5px] uppercase text-amber-800 mb-0.5">
           Agribusiness Hub (ABH) Contacts
@@ -189,7 +186,6 @@ function ABHContactPanel() {
           For pre-commercialization packaging, coordinate with the ABH Project under the RAISE Program in your region.
         </p>
       </div>
-      {/* Region list */}
       <div className="divide-y divide-amber-100">
         {ABH_REGIONS.map(({ region, university, email }) => (
           <div key={region} className="flex items-center justify-between gap-3 px-4 py-1">
@@ -200,10 +196,7 @@ function ABHContactPanel() {
             <div className="flex-shrink-0 flex flex-col items-end gap-0.5">
               <span className="text-[12px] font-semibold text-amber-800">{university}</span>
               {email && (
-                <a
-                  href={`mailto:${email}`}
-                  className="text-[10px] text-amber-600 hover:text-amber-800 underline underline-offset-2 transition-colors"
-                >
+                <a href={`mailto:${email}`} className="text-[10px] text-amber-600 hover:text-amber-800 underline underline-offset-2 transition-colors">
                   {email}
                 </a>
               )}
@@ -215,13 +208,15 @@ function ABHContactPanel() {
   );
 }
 
+// ─── ATBI Contact Panel ───────────────────────────────────────────────────────
+
 function ATBIContactPanel({ technologyType }: { technologyType: string }) {
   const reg = REGULATORY_BODIES[technologyType];
   return (
     <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 overflow-hidden">
 
-      {/* ABH / RAISE institutions under ATBI */}
-      <div className="px-4 py-3">
+      {/* Regional ATBI contacts */}
+      <div className="px-4 py-3 border-b border-blue-200">
         <p className="text-[11px] font-bold tracking-[1.5px] uppercase text-blue-700 mb-1.5">
           Regional ATBI Contact Information
         </p>
@@ -238,10 +233,7 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
               <div className="flex-shrink-0 flex flex-col items-end gap-0.5">
                 <span className="text-[11.5px] font-semibold text-blue-900">{university}</span>
                 {email && (
-                  <a
-                    href={`mailto:${email}`}
-                    className="text-[10px] text-blue-500 hover:text-blue-700 underline underline-offset-2 transition-colors"
-                  >
+                  <a href={`mailto:${email}`} className="text-[10px] text-blue-500 hover:text-blue-700 underline underline-offset-2 transition-colors">
                     {email}
                   </a>
                 )}
@@ -251,46 +243,42 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
         </div>
       </div>
 
-      {/* Header */}
-      <div className="px-4 py-3 border-b border-blue-200 bg-blue-100/60">
-        <p className="text-[11.5px] text-blue-700 font-light leading-relaxed">
-          You may also visit the official website of the relevant regulatory body to review requirements and begin your application.
-        </p>
-      </div>
-      {/* Regulatory body */}
+      {/* Regulatory body website */}
       {reg && (
-        <div className="px-4 py-3 border-b border-blue-200 space-y-2">
+        <div className="px-4 py-3 space-y-3">
+          <p className="text-[11.5px] text-blue-700 font-light leading-relaxed">
+            You may also visit the official website of the relevant regulatory body to review requirements and begin your application.
+          </p>
           <div className="flex items-start gap-2.5">
             <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5" />
             <div>
               <p className="text-[11px] font-bold tracking-[1px] uppercase text-blue-600 mb-0.5">
                 Relevant Regulatory Body
               </p>
-              <p className="text-[12.5px] text-blue-900 font-medium leading-relaxed">
+              <p className="text-[12.5px] text-blue-900 font-medium leading-relaxed mb-1">
                 {reg.body}
               </p>
+              <a
+                href={reg.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[12px] text-blue-600 hover:text-blue-800 underline underline-offset-2 transition-colors break-all"
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                {reg.url}
+              </a>
             </div>
-          </div>
-          <div className="flex items-center gap-2.5 pl-4">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-              stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-            </svg>
-            <a
-              href={reg.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[12px] text-blue-600 hover:text-blue-800 underline underline-offset-2 transition-colors break-all"
-            >
-              {reg.url}
-            </a>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+// ─── Dropdown Question ────────────────────────────────────────────────────────
 
 function DropdownQuestion({
   q,
@@ -383,12 +371,12 @@ function MultiConditionalQuestion({
           </div>
         </div>
 
-        {/* No, show ABH regional contacts */}
+        {/* No → show ABH regional contacts */}
         {value.selection === "no" && noOption?.contactLabel && (
           <ABHContactPanel />
         )}
 
-        {/* Yes, checklist of sub-items */}
+        {/* Yes → checklist of sub-items */}
         {value.selection === "yes" && yesOption?.items && (
           <div className="space-y-2.5 mt-1">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
@@ -432,7 +420,7 @@ function MultiConditionalQuestion({
   );
 }
 
-// Main Page 
+// ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();
@@ -448,8 +436,6 @@ export default function QuestionnairePage() {
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
 
   useEffect(() => {
-    if (!data.technologyType) return;
-
     if (lastCategoryIndex >= 0 && lastPage >= 0 && orderedCategories.length > 0) {
       setCurrentCategoryIndex(Math.min(lastCategoryIndex, orderedCategories.length - 1));
       setCurrentPage(lastPage);
@@ -475,11 +461,9 @@ export default function QuestionnairePage() {
     setLoading(true);
     const loadQuestions = async () => {
       const allGrouped = await getQuestionsJSON() as Record<string, Record<string, Question[]>>;
-
       const byLevel = allGrouped[data.technologyType] ?? {};
       const flat: Question[] = Object.values(byLevel).flat();
 
-      // Deduplicate by id in case of any duplicate entries in the source data
       const seen = new Set<string>();
       const uniqueFlat = flat.filter(q => {
         if (seen.has(q.id)) return false;
@@ -512,12 +496,36 @@ export default function QuestionnairePage() {
   const currentCategory = orderedCategories[currentCategoryIndex] ?? "";
   const isIPCategory = currentCategory === IP_CATEGORY;
   const currentQuestions = grouped[currentCategory] ?? [];
-  const totalPages = isIPCategory ? 1 : Math.ceil(currentQuestions.length / questionsPerPage);
+
+  // ── Page groups ────────────────────────────────────────────────────────────
+  // precom_docs questions (id starts with "precom_docs") always get their own
+  // solo page. All other questions are batched up to questionsPerPage.
+  const pageGroups: Question[][] = useMemo(() => {
+    if (isIPCategory) return [];
+    const groups: Question[][] = [];
+    let batch: Question[] = [];
+
+    for (const q of currentQuestions) {
+      if (q.id.startsWith("precom_docs")) {
+        // Flush current batch first
+        if (batch.length > 0) { groups.push(batch); batch = []; }
+        // precom_docs gets its own solo page
+        groups.push([q]);
+      } else {
+        batch.push(q);
+        if (batch.length >= questionsPerPage) { groups.push(batch); batch = []; }
+      }
+    }
+    if (batch.length > 0) groups.push(batch);
+    return groups;
+  }, [currentQuestions, isIPCategory, questionsPerPage]);
+
+  const totalPages = isIPCategory ? 1 : pageGroups.length;
 
   const visibleQuestions = useMemo(() => {
     if (isIPCategory) return [];
-    return currentQuestions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage);
-  }, [currentPage, currentQuestions, isIPCategory]);
+    return pageGroups[currentPage] ?? [];
+  }, [currentPage, pageGroups, isIPCategory]);
 
   const handleCheckbox = (id: string) => {
     updateData({ answers: { ...data.answers, [id]: !data.answers[id] } });
@@ -558,7 +566,23 @@ export default function QuestionnairePage() {
       const prevIndex = currentCategoryIndex - 1;
       const prevCat = orderedCategories[prevIndex];
       const prevQuestions = grouped[prevCat] ?? [];
-      const lastPageOfPrev = prevCat === IP_CATEGORY ? 0 : Math.ceil(prevQuestions.length / questionsPerPage) - 1;
+      const prevPageGroups: Question[][] = (() => {
+        if (prevCat === IP_CATEGORY) return [];
+        const gs: Question[][] = [];
+        let b: Question[] = [];
+        for (const q of prevQuestions) {
+          if (q.id.startsWith("precom_docs")) {
+            if (b.length > 0) { gs.push(b); b = []; }
+            gs.push([q]);
+          } else {
+            b.push(q);
+            if (b.length >= questionsPerPage) { gs.push(b); b = []; }
+          }
+        }
+        if (b.length > 0) gs.push(b);
+        return gs;
+      })();
+      const lastPageOfPrev = prevCat === IP_CATEGORY ? 0 : Math.max(0, prevPageGroups.length - 1);
       setCurrentCategoryIndex(prevIndex);
       setCurrentPage(lastPageOfPrev);
     }
@@ -600,14 +624,33 @@ export default function QuestionnairePage() {
 
   const blocksNext = ipBlocksNext || dropdownBlocksNext;
 
+  // Progress calculation using pageGroups
   const totalSteps = orderedCategories.reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
-    return acc + Math.ceil((grouped[cat]?.length ?? 0) / questionsPerPage);
+    const catQs = grouped[cat] ?? [];
+    const gs: Question[][] = [];
+    let b: Question[] = [];
+    for (const q of catQs) {
+      if (q.id.startsWith("precom_docs")) { if (b.length > 0) { gs.push(b); b = []; } gs.push([q]); }
+      else { b.push(q); if (b.length >= questionsPerPage) { gs.push(b); b = []; } }
+    }
+    if (b.length > 0) gs.push(b);
+    return acc + gs.length;
   }, 0);
+
   const stepsCompleted = orderedCategories.slice(0, currentCategoryIndex).reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
-    return acc + Math.ceil((grouped[cat]?.length ?? 0) / questionsPerPage);
+    const catQs = grouped[cat] ?? [];
+    const gs: Question[][] = [];
+    let b: Question[] = [];
+    for (const q of catQs) {
+      if (q.id.startsWith("precom_docs")) { if (b.length > 0) { gs.push(b); b = []; } gs.push([q]); }
+      else { b.push(q); if (b.length >= questionsPerPage) { gs.push(b); b = []; } }
+    }
+    if (b.length > 0) gs.push(b);
+    return acc + gs.length;
   }, 0) + currentPage;
+
   const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
 
   if (loading) {
@@ -679,93 +722,90 @@ export default function QuestionnairePage() {
           )}
         </div>
 
-        {/* IP Category */}
+        {/* Questions */}
         <div style={{ minHeight: 420 }}>
-        {isIPCategory ? (
-          <div className="space-y-6">
-            <IPSection
-              label={IP_INITIATED_LABEL}
-              ipData={data.ipData}
-              onChange={handleIPChange}
-            />
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {visibleQuestions.map(q => {
-              const qType = q.type ?? "checkbox";
+          {isIPCategory ? (
+            <div className="space-y-6">
+              <IPSection
+                label={IP_INITIATED_LABEL}
+                ipData={data.ipData}
+                onChange={handleIPChange}
+              />
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {visibleQuestions.map(q => {
+                const qType = q.type ?? "checkbox";
 
-              if (qType === "dropdown") {
+                if (qType === "dropdown") {
+                  return (
+                    <DropdownQuestion
+                      key={q.id}
+                      q={q}
+                      value={(data.answers[q.id] as string | null) ?? null}
+                      onChange={val => handleDropdown(q.id, val)}
+                      technologyType={data.technologyType}
+                    />
+                  );
+                }
+
+                if (qType === "multi-conditional") {
+                  const mcVal = (data.answers[q.id] as MultiConditionalAnswer) ?? { selection: "", checkedItems: [] };
+                  return (
+                    <MultiConditionalQuestion
+                      key={q.id}
+                      q={q}
+                      value={mcVal}
+                      onSelectionChange={sel =>
+                        handleMultiConditional(q.id, {
+                          selection: sel,
+                          checkedItems: sel !== "yes" ? [] : mcVal.checkedItems,
+                        })
+                      }
+                      onItemToggle={item => {
+                        const already = mcVal.checkedItems.includes(item);
+                        handleMultiConditional(q.id, {
+                          checkedItems: already
+                            ? mcVal.checkedItems.filter(i => i !== item)
+                            : [...mcVal.checkedItems, item],
+                        });
+                      }}
+                    />
+                  );
+                }
+
+                const checked = data.answers[q.id] === true;
                 return (
-                  <DropdownQuestion
+                  <label
                     key={q.id}
-                    q={q}
-                    value={(data.answers[q.id] as string | null) ?? null}
-                    onChange={val => handleDropdown(q.id, val)}
-                    technologyType={data.technologyType}
-                  />
-                );
-              }
-
-              if (qType === "multi-conditional") {
-                const mcVal = (data.answers[q.id] as MultiConditionalAnswer) ?? { selection: "", checkedItems: [] };
-                return (
-                  <MultiConditionalQuestion
-                    key={q.id}
-                    q={q}
-                    value={mcVal}
-                    onSelectionChange={sel =>
-                      handleMultiConditional(q.id, {
-                        selection: sel,
-                        checkedItems: sel !== "yes" ? [] : mcVal.checkedItems,
-                      })
-                    }
-                    onItemToggle={item => {
-                      const already = mcVal.checkedItems.includes(item);
-                      handleMultiConditional(q.id, {
-                        checkedItems: already
-                          ? mcVal.checkedItems.filter(i => i !== item)
-                          : [...mcVal.checkedItems, item],
-                      });
-                    }}
-                  />
-                );
-              }
-
-              const checked = data.answers[q.id] === true;
-              return (
-                <label
-                  key={q.id}
-                  className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
-                    checked
-                      ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40"
-                      : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
-                  }`}
-                >
-                  <div className="relative flex-shrink-0 mt-0.5">
-                    <input type="checkbox" checked={checked} onChange={() => handleCheckbox(q.id)} className="peer sr-only" />
-                    <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-                      checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
-                    }`}>
-                      {checked && (
-                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                          <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
+                    className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
+                      checked
+                        ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40"
+                        : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
+                    }`}
+                  >
+                    <div className="relative flex-shrink-0 mt-0.5">
+                      <input type="checkbox" checked={checked} onChange={() => handleCheckbox(q.id)} className="peer sr-only" />
+                      <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
+                        checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
+                      }`}>
+                        {checked && (
+                          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
                       <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
                         {q.questionText}
                       </span>
                     </div>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
-        )}
+                  </label>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Navigation */}
