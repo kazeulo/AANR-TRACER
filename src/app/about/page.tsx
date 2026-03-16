@@ -110,7 +110,7 @@ export default function About() {
                 title: "Answer the Assessment",  
                 body: "Go through structured questions across Technology Status, Market Readiness, IP Protection, Industry Adoption, and Regulatory Compliance." },
               { icon: "file", 
-                title: "Get Your TRL Report",       
+                title: "Get Your TRACER Level Report",       
                 body: "Receive your highest completed TRACER level, identified strengths and gaps, and a roadmap toward successful commercialization." },
             ].map(({ icon, title, body }, i) => (
               <div key={i} className="grid grid-cols-[80px_1fr] bg-[var(--color-bg-card)]/[0.02] hover:bg-[var(--color-bg-card)]/[0.05] transition-colors">
