@@ -61,6 +61,7 @@ const PLANT_ANIMAL_TYPES = [
 
 const IP_INITIATED_LABEL = "Intellectual Property (IP) Initiated";
 const IP_FILED_LABEL = "IP Filed or Registered";
+export const IP_PENDING_LABEL = "Intellectual Property (IP) is Pending for Review"
 
 function isIPAnsweredYes(label: string, ipEntry: IPQuestionData | undefined): boolean {
   if (!ipEntry) return false;
@@ -94,9 +95,15 @@ function buildIPQuestions(technologyType: string): QuestionItem[] {
       category: "Intellectual Property Protection Status",
     },
     {
+      id: "ip-pending",
+      questionText: IP_PENDING_LABEL,
+      trlLevel: isPlantAnimal ? 6 : 3,
+      category: "Intellectual Property Protection Status",
+    },
+    {
       id: "ip-filed",
       questionText: IP_FILED_LABEL,
-      trlLevel: isPlantAnimal ? 6 : 3,
+      trlLevel: isPlantAnimal ? 7 : 4,
       category: "Intellectual Property Protection Status",
     },
   ];

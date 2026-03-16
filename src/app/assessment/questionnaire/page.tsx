@@ -5,7 +5,7 @@ import { useAssessment, IPData, AnswerValue } from "../AssessmentContext";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
-import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
+import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_PENDING_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
 import { ABH_REGIONS, ATBI_REGIONS, REGULATORY_BODIES} from "../../utils/contacts";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 
