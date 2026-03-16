@@ -68,8 +68,8 @@ export default function FontSizeControl() {
         }`}
       >
         <div className="flex flex-col gap-3 w-[138px] rounded-r-2xl px-4 py-4
-                        shadow-xl border-y border-r border-[#4aa35a]/30"
-             style={{ background: "linear-gradient(180deg, #0f2e1a 0%, #1a3d26 100%)" }}>
+                        shadow-xl border-y border-r border-[#4aa35a]/50"
+             style={{ background: "#1a3d26" }}>
 
           {/* Label */}
           <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">
@@ -111,7 +111,7 @@ export default function FontSizeControl() {
 
           {/* Scale indicator dots */}
           <div className="flex items-center justify-center gap-2">
-            {[0, 1, 2, 3].map(i => (
+            {[0, 1, 2, 3, 4].map(i => (
               <span
                 key={i}
                 className={`rounded-full transition-all duration-200 ${

@@ -103,7 +103,7 @@ export default function Terms() {
         {/* Sidebar */}
         <aside className="hidden lg:block sticky top-0 h-screen overflow-y-auto bg-[var(--color-bg-card)] border-r border-[var(--color-border)] py-8">
           <div className="px-6 pb-5 mb-3 border-b border-[#f0ece3]">
-            <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-text-faintest)]">Browse Categories</div>
+            <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-accent-dark)]">Browse Categories</div>
           </div>
           {categories.map(cat => (
             <button

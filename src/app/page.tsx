@@ -1,6 +1,10 @@
 "use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useAssessment } from "./assessment/AssessmentContext";
 import { tracerLevels } from "./utils/helperConstants";
 import { 
   IconWheat, 
@@ -21,8 +25,7 @@ import {
   aanrTypes,
   IconListCheck,
   IconBarChart
-} from "./utils/decorativeIcons"
-import { useState } from "react";
+} from "./utils/decorativeIcons";
 
 const steps = [
   {
@@ -102,6 +105,15 @@ function TechTypeGrid() {
 // ─── Main Component 
 
 export default function HomePage() {
+  const router = useRouter();
+ 
+  // Clear any previous assessment data when landing on home page
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("aanr_tracer_assessment");
+    }
+  }, []);
+
   return (
     <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)]">
 
@@ -153,17 +165,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            <Link
-              href="/assessment/disclaimer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
+            <button
+              onClick={() => router.push("/assessment/disclaimer")}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#4aa35a] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
             >
               Start Your Assessment
-              <span className="w-5 h-5 rounded-full bg-[var(--color-bg-card)]/20 flex items-center justify-center">
+              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-            </Link>
+            </button>
           </div>
 
           {/* Right — TRL scale */}

@@ -5,7 +5,7 @@ import { useAssessment, IPData, AnswerValue } from "../AssessmentContext";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
-import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_PENDING_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
+import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
 import { ABH_REGIONS, ATBI_REGIONS, REGULATORY_BODIES} from "../../utils/contacts";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 
@@ -498,27 +498,11 @@ export default function QuestionnairePage() {
   const currentQuestions = grouped[currentCategory] ?? [];
 
   // ── Page groups ────────────────────────────────────────────────────────────
-  // precom_docs questions (id starts with "precom_docs") always get their own
-  // solo page. All other questions are batched up to questionsPerPage.
+  // precom_docs always gets its own solo page.
   const pageGroups: Question[][] = useMemo(() => {
     if (isIPCategory) return [];
-    const groups: Question[][] = [];
-    let batch: Question[] = [];
-
-    for (const q of currentQuestions) {
-      if (q.id.startsWith("precom_docs")) {
-        // Flush current batch first
-        if (batch.length > 0) { groups.push(batch); batch = []; }
-        // precom_docs gets its own solo page
-        groups.push([q]);
-      } else {
-        batch.push(q);
-        if (batch.length >= questionsPerPage) { groups.push(batch); batch = []; }
-      }
-    }
-    if (batch.length > 0) groups.push(batch);
-    return groups;
-  }, [currentQuestions, isIPCategory, questionsPerPage]);
+    return buildPageGroups(currentQuestions);
+  }, [currentQuestions, isIPCategory]);
 
   const totalPages = isIPCategory ? 1 : pageGroups.length;
 
@@ -527,6 +511,62 @@ export default function QuestionnairePage() {
     return pageGroups[currentPage] ?? [];
   }, [currentPage, pageGroups, isIPCategory]);
 
+
+  // Shared helper — builds page groups for any category's question list
+  function buildPageGroups(questions: Question[]): Question[][] {
+    const before: Question[] = [];
+    const precomList: Question[] = [];
+    const after: Question[] = [];
+    let seenPrecom = false;
+
+    for (const q of questions) {
+      if (q.id.startsWith("precom_docs")) {
+        seenPrecom = true;
+        precomList.push(q);
+      } else if (seenPrecom) {
+        after.push(q);
+      } else {
+        before.push(q);
+      }
+    }
+
+    if (precomList.length === 0) {
+      const groups: Question[][] = [];
+      let b: Question[] = [];
+      for (const q of questions) {
+        b.push(q);
+        if (b.length >= questionsPerPage) { groups.push(b); b = []; }
+      }
+      if (b.length > 0) groups.push(b);
+      return groups;
+    }
+
+    const groups: Question[][] = [];
+    let b: Question[] = [];
+    for (const q of before) {
+      b.push(q);
+      if (b.length >= questionsPerPage) { groups.push(b); b = []; }
+    }
+    const slotsLeft = b.length > 0 ? questionsPerPage - b.length : 0;
+    const beforeBatch = [...b];
+    b = [];
+
+    for (const q of precomList) groups.push([q]);
+
+    const afterWithBackfill = [...after];
+    const backfillItems = afterWithBackfill.splice(0, Math.min(slotsLeft, afterWithBackfill.length));
+
+    if (beforeBatch.length > 0 || backfillItems.length > 0) {
+      groups.splice(groups.length - precomList.length, 0, [...beforeBatch, ...backfillItems]);
+    }
+
+    for (const q of afterWithBackfill) {
+      b.push(q);
+      if (b.length >= questionsPerPage) { groups.push(b); b = []; }
+    }
+    if (b.length > 0) groups.push(b);
+    return groups;
+  }
   const handleCheckbox = (id: string) => {
     updateData({ answers: { ...data.answers, [id]: !data.answers[id] } });
   };
@@ -566,22 +606,8 @@ export default function QuestionnairePage() {
       const prevIndex = currentCategoryIndex - 1;
       const prevCat = orderedCategories[prevIndex];
       const prevQuestions = grouped[prevCat] ?? [];
-      const prevPageGroups: Question[][] = (() => {
-        if (prevCat === IP_CATEGORY) return [];
-        const gs: Question[][] = [];
-        let b: Question[] = [];
-        for (const q of prevQuestions) {
-          if (q.id.startsWith("precom_docs")) {
-            if (b.length > 0) { gs.push(b); b = []; }
-            gs.push([q]);
-          } else {
-            b.push(q);
-            if (b.length >= questionsPerPage) { gs.push(b); b = []; }
-          }
-        }
-        if (b.length > 0) gs.push(b);
-        return gs;
-      })();
+      const prevPageGroups: Question[][] =
+        prevCat === IP_CATEGORY ? [] : buildPageGroups(prevQuestions);
       const lastPageOfPrev = prevCat === IP_CATEGORY ? 0 : Math.max(0, prevPageGroups.length - 1);
       setCurrentCategoryIndex(prevIndex);
       setCurrentPage(lastPageOfPrev);
@@ -627,28 +653,12 @@ export default function QuestionnairePage() {
   // Progress calculation using pageGroups
   const totalSteps = orderedCategories.reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
-    const catQs = grouped[cat] ?? [];
-    const gs: Question[][] = [];
-    let b: Question[] = [];
-    for (const q of catQs) {
-      if (q.id.startsWith("precom_docs")) { if (b.length > 0) { gs.push(b); b = []; } gs.push([q]); }
-      else { b.push(q); if (b.length >= questionsPerPage) { gs.push(b); b = []; } }
-    }
-    if (b.length > 0) gs.push(b);
-    return acc + gs.length;
+    return acc + buildPageGroups(grouped[cat] ?? []).length;
   }, 0);
 
   const stepsCompleted = orderedCategories.slice(0, currentCategoryIndex).reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
-    const catQs = grouped[cat] ?? [];
-    const gs: Question[][] = [];
-    let b: Question[] = [];
-    for (const q of catQs) {
-      if (q.id.startsWith("precom_docs")) { if (b.length > 0) { gs.push(b); b = []; } gs.push([q]); }
-      else { b.push(q); if (b.length >= questionsPerPage) { gs.push(b); b = []; } }
-    }
-    if (b.length > 0) gs.push(b);
-    return acc + gs.length;
+    return acc + buildPageGroups(grouped[cat] ?? []).length;
   }, 0) + currentPage;
 
   const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
