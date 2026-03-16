@@ -435,7 +435,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
   const MyDoc = (
     <Document
       title="TRACER Assessment Report"
-      author="DOST-PCAARRD AANR-TRacer"
+      author="DOST-PCAARRD AANR-TRACER"
       subject={`TRACER Assessment — ${techName ?? "Technology"}`}
     >
       <Page size="A4" style={s.page}>
@@ -528,7 +528,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         {/* ── Footer (fixed at bottom of every page) ── */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>AANR-TRacer · DOST-PCAARRD</Text>
+          <Text style={s.footerText}>AANR-TRACER · DOST-PCAARRD</Text>
           <Text style={s.footerText}
             render={({ pageNumber, totalPages }) =>
               `Page ${pageNumber} of ${totalPages}`
