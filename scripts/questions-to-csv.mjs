@@ -7,7 +7,7 @@
  *   node scripts/questions-to-csv.mjs
  *
  * Output:
- *   questions-export.csv  (created in your project root)
+ *   questions-export.csv
  *
  * Each row = one question. Dropdown options and multi-conditional
  * checklist items are expanded into readable columns.
@@ -23,7 +23,7 @@ const OUTPUT    = path.resolve(__dirname, "../questions-export.csv");
 
 // ── Load ──────────────────────────────────────────────────────────────────────
 if (!fs.existsSync(INPUT)) {
-  console.error(`❌  Could not find ${INPUT}`);
+  console.error(`   Could not find ${INPUT}`);
   console.error(`    Run this script from your project root.`);
   process.exit(1);
 }
@@ -117,7 +117,7 @@ for (const [techType, levels] of Object.entries(data)) {
 fs.writeFileSync(OUTPUT, rows.join("\n"), "utf8");
 
 const totalRows = rows.length - 1; // exclude header
-console.log(`✅  Done.`);
+console.log(`   Done.`);
 console.log(`   Questions exported : ${totalRows}`);
 console.log(`   Output file        : ${OUTPUT}`);
 console.log();
