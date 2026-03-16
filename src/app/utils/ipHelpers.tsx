@@ -5,6 +5,7 @@ export const PLANT_ANIMAL_TYPES = [
 ];
 
 export const IP_INITIATED_LABEL = "Intellectual Property (IP) Initiated";
+export const IP_PENDING_LABEL = "Intellectual Property (IP) is Pending for Review"
 export const IP_FILED_LABEL = "IP Filed or Registered";
 export const IP_CATEGORY = "Intellectual Property Protection Status";
 
