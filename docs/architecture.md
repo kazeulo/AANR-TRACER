@@ -28,9 +28,10 @@ The system consists of a Wix-based frontend application, a structured assessment
 - Converts assessment outputs into structured prompts
 - Generates contextualized guidance using AI models
 
-### AI Services (Hugging Face)
+### AI Services (OpenAI API GPT4o-mini)
 - Natural language generation for recommendations
 - Ensures consistent tone and explainability
+- For a more contexted recommendation
 
 ## Data Flow
 

@@ -494,7 +494,7 @@ export default function ResultsPage() {
         />
       )}
 
-      {/* PDF generated via @react-pdf/renderer — no hidden div needed */}
+      {/* PDF generated via @react-pdf/renderer */}
 
     </main>
   );

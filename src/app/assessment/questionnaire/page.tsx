@@ -1,3 +1,5 @@
+// questionnaire/page.tsx
+
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -90,7 +92,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
           </div>
         </div>
 
-        {/* YES → IP type checkboxes */}
+        {/* YES - IP type checkboxes */}
         {current.initiated === "yes" && (
           <div className="space-y-3">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-3">
@@ -371,12 +373,12 @@ function MultiConditionalQuestion({
           </div>
         </div>
 
-        {/* No → show ABH regional contacts */}
+        {/* No - show ABH regional contacts */}
         {value.selection === "no" && noOption?.contactLabel && (
           <ABHContactPanel />
         )}
 
-        {/* Yes → checklist of sub-items */}
+        {/* Yes - checklist of sub-items */}
         {value.selection === "yes" && yesOption?.items && (
           <div className="space-y-2.5 mt-1">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
@@ -498,7 +500,7 @@ export default function QuestionnairePage() {
   const currentQuestions = grouped[currentCategory] ?? [];
 
   // ── Page groups ────────────────────────────────────────────────────────────
-  // precom_docs always gets its own solo page.
+  // precom_docs always gets its own solo page
   const pageGroups: Question[][] = useMemo(() => {
     if (isIPCategory) return [];
     return buildPageGroups(currentQuestions);

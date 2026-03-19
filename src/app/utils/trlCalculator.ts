@@ -1,5 +1,6 @@
-//  Types
+// trlCalculator.ts
 
+//  Types
 export interface QuestionItem {
   id: string;
   questionText: string;
@@ -71,7 +72,7 @@ function isIPAnsweredYes(label: string, ipEntry: IPQuestionData | undefined): bo
   }
 
   if (label === IP_FILED_LABEL) {
-    // Trade secret is a valid alternative to formal IP filing — exempt from this requirement
+
     if (ipEntry.initiated === "trade_secret") return true;
 
     return Object.entries(ipEntry.selectedTypes ?? {}).some(
@@ -128,9 +129,9 @@ function dropdownSatisfiedTRL(
 
 /**
  * For a multi-conditional question:
- * - "exempt"  → satisfies q.trlLevel
- * - "yes" + at least one item checked → satisfies q.trlLevel
- * - "no"      → does not satisfy
+ * - "exempt" - satisfies q.trlLevel
+ * - "yes" + at least one item checked - satisfies q.trlLevel
+ * - "no"     - does not satisfy
  */
 function multiConditionalSatisfied(
   q: QuestionItem,
@@ -155,7 +156,7 @@ function isAnsweredYesAtLevel(
 ): boolean {
   // IP synthetic questions
   if (q.id === "ip-initiated") return isIPAnsweredYes(IP_INITIATED_LABEL, ipData[IP_INITIATED_LABEL]);
-  if (q.id === "ip-filed")     return isIPAnsweredYes(IP_FILED_LABEL, ipData[IP_INITIATED_LABEL]);
+  if (q.id === "ip-filed") return isIPAnsweredYes(IP_FILED_LABEL, ipData[IP_INITIATED_LABEL]);
 
   const answer = answers[q.id];
   const qType = q.type ?? "checkbox";
@@ -177,10 +178,6 @@ function isAnsweredYesAtLevel(
   return false;
 }
 
-/**
- * Simpler version — just "is this question answered at all / in a positive way"
- * Used for completedQuestions list.
- */
 function isAnsweredYes(
   q: QuestionItem,
   answers: Record<string, AnswerValue>,
@@ -253,7 +250,7 @@ export function calculateTRL(
   // Only cap if the user's natural TRL reaches (or passes) a dropdown question
   // where they selected a "nothing done yet" option (trlSatisfied: null).
   // Example: if user naturally reaches Level 7 but answered "No Licensing Yet"
-  // on a Level 7 question → cap at 6. But if they only reach Level 2 and that
+  // on a Level 7 question, cap at 6. But if they only reach Level 2 and that
   // same Level 7 question is "No Licensing Yet", don't drag them down to 6.
   questions.forEach(q => {
     if ((q.type ?? "checkbox") !== "dropdown" || !q.options) return;
@@ -303,26 +300,26 @@ export function calculateTRL(
   const lackingForNextLevel =
     nextLevel <= maxLevel
       ? questions.filter(q => {
-          if ((q.type ?? "checkbox") === "dropdown" && q.options) {
-            const opts = q.options as DropdownOption[];
-            const relevant = opts.some(o => o.trlSatisfied !== null && o.trlSatisfied <= nextLevel);
-            return relevant && !isAnsweredYesAtLevel(q, answers, ipData, nextLevel);
-          }
-          return q.trlLevel <= nextLevel && !isAnsweredYes(q, answers, ipData);
-        })
+        if ((q.type ?? "checkbox") === "dropdown" && q.options) {
+          const opts = q.options as DropdownOption[];
+          const relevant = opts.some(o => o.trlSatisfied !== null && o.trlSatisfied <= nextLevel);
+          return relevant && !isAnsweredYesAtLevel(q, answers, ipData, nextLevel);
+        }
+        return q.trlLevel <= nextLevel && !isAnsweredYes(q, answers, ipData);
+      })
       : [];
 
   // ── Lacking for Achievable ────────────────────────────────────────────────
   const lackingForAchievable =
     highestAchievableTRL > highestCompletedTRL
       ? questions.filter(q => {
-          if ((q.type ?? "checkbox") === "dropdown" && q.options) {
-            const opts = q.options as DropdownOption[];
-            const relevant = opts.some(o => o.trlSatisfied !== null && o.trlSatisfied <= highestAchievableTRL);
-            return relevant && !isAnsweredYesAtLevel(q, answers, ipData, highestAchievableTRL);
-          }
-          return q.trlLevel <= highestAchievableTRL && !isAnsweredYes(q, answers, ipData);
-        })
+        if ((q.type ?? "checkbox") === "dropdown" && q.options) {
+          const opts = q.options as DropdownOption[];
+          const relevant = opts.some(o => o.trlSatisfied !== null && o.trlSatisfied <= highestAchievableTRL);
+          return relevant && !isAnsweredYesAtLevel(q, answers, ipData, highestAchievableTRL);
+        }
+        return q.trlLevel <= highestAchievableTRL && !isAnsweredYes(q, answers, ipData);
+      })
       : [];
 
   // ── Lacking all the way to Level 9 (full commercialization roadmap) ─────
