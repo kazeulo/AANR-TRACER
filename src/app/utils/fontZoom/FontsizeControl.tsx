@@ -69,7 +69,7 @@ export default function FontSizeControl() {
       >
         <div className="flex flex-col gap-3 w-[138px] rounded-r-2xl px-4 py-4
                         shadow-xl border-y border-r border-[#4aa35a]/50"
-             style={{ background: "#1a3d26" }}>
+            style={{ background: "#1a3d26" }}>
 
           {/* Label */}
           <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#4aa35a]">

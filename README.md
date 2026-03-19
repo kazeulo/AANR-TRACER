@@ -41,10 +41,10 @@ This supports:
 | Language | TypeScript |
 | Styling | Tailwind CSS v3 |
 | AI Recommendations | OpenAI API (`gpt-4o-mini`) |
-| PDF Export | html2canvas + jsPDF |
-| State Management | React Context API |
-| Data | CSV-based question bank (PapaParse) |
-
+| PDF Generation | `@react-pdf/renderer` |
+| Email Delivery | Nodemailer + Gmail OAuth2 |
+| State Management | React Context API + `sessionStorage` |
+| Data | `questions.json` — structured question bank |
 ---
 
 ## Project Structure
