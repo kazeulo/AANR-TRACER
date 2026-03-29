@@ -579,7 +579,7 @@ export default function QuestionnairePage() {
     let seenPrecom = false;
 
     for (const q of questions) {
-      if (q.id.startsWith("precom_docs")) {
+      if (q.id.startsWith("precom_docs") || q.id.startsWith("packaging")) {
         seenPrecom = true;
         precomList.push(q);
       } else if (seenPrecom) {
