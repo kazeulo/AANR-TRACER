@@ -145,7 +145,7 @@ function CongratulatoryHero({
             className="w-[84px] h-[84px] rounded-2xl flex flex-col items-center justify-center border-2"
             style={{ backgroundColor: `${completedColor}15`, borderColor: `${completedColor}35` }}
           >
-            <span className="text-[9px] font-bold tracking-[2px] uppercase text-white/40 leading-none mb-0.5">TRL</span>
+            <span className="text-[9px] font-bold tracking-[2px] uppercase text-white/40 leading-none mb-0.5">TRACER Level</span>
             <span
               className="font-['DM_Serif_Display',serif] text-[46px] leading-none"
               style={{ color: completedColor }}
