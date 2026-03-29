@@ -19,7 +19,7 @@ interface DropdownOption {
   trlSatisfied?: number | null;
   contactLabel?: string;
   action?: string;
-  items?: string[];
+  items?: { text: string; trlLevel: number }[];
 }
 
 interface Question {
@@ -385,13 +385,13 @@ function MultiConditionalQuestion({
               Select all that apply
             </p>
             {yesOption.items.map(item => {
-              const checked = value.checkedItems.includes(item);
+              const checked = value.checkedItems.includes(item.text);
               return (
-                <label key={item} className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
+                <label key={item.text} className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
                   checked ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40" : "bg-[var(--color-bg-subtle)] border-[var(--color-border-input)] hover:border-[#4aa35a]/30"
                 }`}>
                   <div className="relative flex-shrink-0 mt-0.5">
-                    <input type="checkbox" checked={checked} onChange={() => onItemToggle(item)} className="peer sr-only" />
+                    <input type="checkbox" checked={checked} onChange={() => onItemToggle(item.text)} className="peer sr-only" />
                     <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
                       checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
                     }`}>
@@ -403,7 +403,7 @@ function MultiConditionalQuestion({
                     </div>
                   </div>
                   <span className={`text-[13px] leading-relaxed ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
-                    {item}
+                    {item.text}
                   </span>
                 </label>
               );

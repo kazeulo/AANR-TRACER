@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v1.3.1 - fix bugs
+
+### Fixed
+- Fix bug for ip questions
+- Added levels for the choices in precom docs
+- Incorporated the individual levels of choices in precom docs'
+- Review extempted
+
 ## v1.3.0 – Questionnaire & Content Update
 March 2026
 

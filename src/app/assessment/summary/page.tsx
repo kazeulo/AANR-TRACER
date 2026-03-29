@@ -14,7 +14,7 @@ interface DropdownOption {
   value: string;
   trlSatisfied?: number | null;
   action?: string;
-  items?: string[];
+  items?: { text: string; trlLevel: number }[];
 }
 
 interface Question {
@@ -360,11 +360,11 @@ function AnswerRow({
               <p className="text-[11px] font-bold tracking-[1.5px] uppercase text-[#6b7a75] mb-2">Select all that apply:</p>
               <div className="space-y-1.5">
                 {yesOption.items.map(item => {
-                  const checked = mc.checkedItems.includes(item);
+                  const checked = mc.checkedItems.includes(item.text);
                   return (
                     <button
-                      key={item}
-                      onClick={() => toggleItem(item)}
+                      key={item.text}
+                      onClick={() => toggleItem(item.text)}
                       className={`w-full text-left flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border text-[13px] transition-all ${
                         checked
                           ? "bg-[#2d7a3a]/[0.07] border-[#2d7a3a]/30 text-[#1a5c2a] font-medium"
@@ -380,7 +380,7 @@ function AnswerRow({
                           </svg>
                         )}
                       </span>
-                      <span>{item}</span>
+                      <span>{item.text}</span>
                     </button>
                   );
                 })}

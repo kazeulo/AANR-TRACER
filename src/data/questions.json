@@ -46,7 +46,7 @@
       {
         "id": "market_0_25",
         "questionText": "Initial Assessment on the Potential User",
-        "trlLevel": 2,
+        "trlLevel": 2, 
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
@@ -62,8 +62,8 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_0_12",
-        "questionText": "Proximate Analysis Conducted to Assess Chemical Properties",
+        "id": "tech_dev_0_12", 
+        "questionText": "Proximate Analysis Initiated to Assess Chemical Properties",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -160,18 +160,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 8 }
             ]
           },
           {
@@ -257,7 +257,7 @@
       },
       {
         "id": "tech_dev_0_17",
-        "questionText": "Packaging compatibility validated for safety and shelf life (Industry-scale)",
+        "questionText": "Industry Standard Packaging Compatibility Validated for Safety and Shelf-life",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "dropdown",
@@ -573,7 +573,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_1",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -584,18 +584,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -934,7 +934,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_2",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -945,18 +945,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -1301,7 +1301,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_3",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -1312,18 +1312,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -1638,7 +1638,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_4",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -1649,18 +1649,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -1975,7 +1975,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_5",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -1986,18 +1986,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -2328,7 +2328,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_6",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -2339,18 +2339,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -2673,7 +2673,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_7",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -2684,18 +2684,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -3026,7 +3026,7 @@
         "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, with royalty fees paid to the IP owner."
       },
       {
-        "id": "precom_docs_8",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -3037,18 +3037,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {
@@ -3371,7 +3371,7 @@
         "toolTip": ""
       },
       {
-        "id": "precom_docs_9",
+        "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
@@ -3382,18 +3382,18 @@
             "label": "No",
             "value": "no",
             "action": "contacts",
-            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: \n CAR - BSU | Region 1: Ilocos - MMSU | Region 2: Cagayan Valley - ISU | Region 3: Central Luzon - PCC @ CLSU | Region 4: Southern Tagalog - CvSU | Region 5: Bicol Region - BU | Region 6: Western Visayas - UPV (upvraise.agribusiness@gmail.com) | Region 7: Central Visayas - VSU | Region 8: Eastern Visayas - BISU | Region 9: Western Mindanao - WMSU | Region 10: Northern Mindanao - CMU | Region 11: Southern Mindanao - USeP | Region 12: SOCCSKSARGEN - USM | Region 13: Caraga - CSU"
+            "contactLabel": "For pre-commercialization packaging, please coordinate with the following Agribusiness Hub Projects under the RAISE Program: ..."
           },
           {
             "label": "Yes",
             "value": "yes",
             "action": "checklist",
             "items": [
-              "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data",
-              "Initial Business Model Canvas (BMC) Accomplished",
-              "Freedom to Operate (FTO) Report Prepared",
-              "IP Valuation Prepared",
-              "Technology Commercialization Plan Prepared"
+              { "text": "Market Viability Assessment or Market/Feasibility Study using At least Secondary Data", "trlLevel": 4 },
+              { "text": "Initial Business Model Canvas (BMC) Accomplished",                                      "trlLevel": 5 },
+              { "text": "Freedom to Operate (FTO) Report Prepared",                                              "trlLevel": 7 },
+              { "text": "IP Valuation Prepared",                                                                 "trlLevel": 7 },
+              { "text": "Technology Commercialization Plan Prepared",                                            "trlLevel": 7 }
             ]
           },
           {

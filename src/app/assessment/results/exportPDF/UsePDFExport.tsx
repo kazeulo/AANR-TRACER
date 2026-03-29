@@ -79,8 +79,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     await import("@react-pdf/renderer");
 
   // ── Fonts ──────────────────────────────────────────────────────────────────
-  // Use built-in Helvetica — no external fetch needed
-  // (swap to custom fonts via Font.register if desired)
+  // Use built-in Helvetica
 
   // ── Styles ─────────────────────────────────────────────────────────────────
   const s = StyleSheet.create({
