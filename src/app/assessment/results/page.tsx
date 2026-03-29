@@ -15,6 +15,7 @@ import {
   TRL_COLORS,
   TRL_LABELS,
 } from "./FetchRecommendation";
+import { getCongratulatoryMessage } from "../../utils/congratulatoryMessages";
 
 import { getQuestionsJSON } from "../../utils/questionsCache";
 import ScoreCards           from "./ScoreCards";
@@ -73,7 +74,6 @@ function PageLoader() {
   );
 }
 
-
 // Hero 
 
 function CongratulatoryHero({
@@ -83,6 +83,7 @@ function CongratulatoryHero({
   completedColor,
   header,
   tracerLabel,
+  congratulatoryMessage,
 }: {
   trl: number;
   technologyName: string;
@@ -90,6 +91,7 @@ function CongratulatoryHero({
   completedColor: string;
   header: AIHeader | null;
   tracerLabel: string;
+  congratulatoryMessage: string;
 }) {
   const isTRL9 = trl === 9;
 
@@ -213,16 +215,20 @@ function CongratulatoryHero({
           ) : null}
 
           {/* AI explanation */}
-          {header === null ? (
-            <div className="space-y-1.5">
-              <div className="h-3 w-full max-w-[480px] rounded bg-white/10 animate-pulse" />
-              <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
-            </div>
-          ) : header.explanation ? (
-            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[650px]">
-              {header.explanation}
-            </p>
-          ) : null}
+          {congratulatoryMessage ? (
+          <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[650px]">
+            {congratulatoryMessage}
+          </p>
+        ) : header === null ? (
+          <div className="space-y-1.5">
+            <div className="h-3 w-full max-w-[480px] rounded bg-white/10 animate-pulse" />
+            <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
+          </div>
+        ) : header.explanation ? (
+          <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[650px]">
+            {header.explanation}
+          </p>
+        ) : null}
         </div>
       </div>
 
@@ -316,6 +322,7 @@ export default function ResultsPage() {
           completedColor={completedColor}
           header={aiResult?.header ?? null}
           tracerLabel={getTracerLabel(data.technologyType, result.highestCompletedTRL)}
+          congratulatoryMessage={getCongratulatoryMessage(data.technologyType, result.highestCompletedTRL)}
         />
 
         {/* ScoreCards */}

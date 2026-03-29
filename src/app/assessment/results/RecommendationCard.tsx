@@ -64,9 +64,14 @@ function RoadmapSteps({
           {roadmap.map((group, gi) => {
             const color      = TRL_COLORS[group.trlLevel] ?? "#4aa35a";
             const label      = levelTitle(group.trlLevel);
-            const headerText = completedTRL === 9
-              ? "Remaining Requirements for Full Commercialization"
-              : `Advancing Towards TRACER Level ${group.trlLevel}`;
+            const hasNoLacking = !roadmap || roadmap.every(g => g.steps.length === 0);
+
+            const headerText =
+              completedTRL === 9 && hasNoLacking
+                ? "Scaling Up for Long-Term Market Success"
+                : completedTRL === 9
+                ? "Remaining Requirements for Full Commercialization"
+                : `Advancing Towards TRACER Level ${group.trlLevel}`;
 
             return (
               <div key={gi}>

@@ -16,7 +16,7 @@ export interface RecommendationInput {
 
 export interface AIHeader {
   headline: string;
-  explanation: string;
+  explanation?: string;
 }
 
 export interface ActionStep {
@@ -105,7 +105,7 @@ const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
 {
   "header": {
     "headline": "<one short warm sentence, max 10 words, celebrating their TRACER Level — do NOT start with Congratulations>",
-    "explanation": "<1-3 sentences grounded in the official level definition, personalised to this technology>"
+    "explanation": ""
   },
   "roadmap": [
     {
@@ -141,7 +141,7 @@ ${techContext}
 - TRACER Level: 9 — fully commercialised.${officialBlock}
 
 INSTRUCTIONS:
-HEADER: headline (max 10 words) + 1-2 sentence explanation grounded in the official definition.
+HEADER: headline only (max 10 words, no "Congratulations"). Leave explanation as empty string "".
 ROADMAP: 4-5 sustaining steps under TRACER Level 9 (expand markets, IP, R&D, partnerships, policy). Each step: action = imperative phrase, detail = 1 concrete sentence.
 CLOSING: 1 warm sentence.
 
@@ -160,7 +160,7 @@ UNMET REQUIREMENTS (grouped by TRACER Level):
 ${formatLacking(i.lackingItems)}
 
 INSTRUCTIONS:
-HEADER: headline (max 10 words, no "Congratulations", specific to this technology) + 1-2 sentence explanation grounded in the official definition.
+HEADER: headline only (max 10 words, no "Congratulations", specific to this technology). Leave explanation as empty string "".
 ROADMAP:
 Produce a complete roadmap to TRACER Level 9.
 1. Group ALL items by TRACER Level (${allLevels}). Each level = one roadmap entry.
