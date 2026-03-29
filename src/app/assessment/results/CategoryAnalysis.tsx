@@ -417,20 +417,31 @@ export default function CategoryAnalysis({ completedQuestions, lackingToLevel9, 
 
   // Strongest = category with highest TRACER level reached
   // Focus     = category with lowest TRACER level (among those with progress but NOT fully complete)
+  const BADGE_CATEGORIES = new Set([
+    "Technology Development Status",
+    "Market and Pre-commercialization Preparedness",
+    "Industry Validation and Adoption Status",
+  ]);
+
   const categoryLevels = scores.map(s => ({
     ...s,
     highestLevel: highestLevelInCategory(s.category, completedQuestions),
     isComplete:   s.total > 0 && s.answered === s.total,
   }));
-  const withProgress      = categoryLevels.filter(s => s.highestLevel > 0);
+
+  // Strongest and Focus badges only consider the three core categories
+  const badgeLevels        = categoryLevels.filter(s => BADGE_CATEGORIES.has(s.category));
+  const withProgress       = badgeLevels.filter(s => s.highestLevel > 0);
   const incompleteWithProgress = withProgress.filter(s => !s.isComplete);
-  const strongest = categoryLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
+
+  const strongest = badgeLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
   const weakest   = incompleteWithProgress.length > 0
     ? incompleteWithProgress.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a)
     : withProgress.length > 0
       ? withProgress[withProgress.length - 1]
-      : categoryLevels[categoryLevels.length - 1];
-  const insight   = useMemo(() => buildInsight(scores, completedQuestions), [scores, completedQuestions]);
+      : badgeLevels[badgeLevels.length - 1];
+
+  const insight = useMemo(() => buildInsight(scores, completedQuestions), [scores, completedQuestions]);
 
   return (
     <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
