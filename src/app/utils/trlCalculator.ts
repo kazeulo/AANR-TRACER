@@ -1,3 +1,11 @@
+import {
+  PLANT_VARIETY_TYPES,
+  ANIMAL_BREED_TYPES,
+  IP_INITIATED_LABEL,
+  IP_PENDING_LABEL,
+  IP_FILED_LABEL,
+} from "./ipHelpers";
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface QuestionItem {
@@ -33,6 +41,7 @@ export interface IPQuestionData {
   initiated: "yes" | "no" | "trade_secret" | "";
   selectedTypes: Record<string, boolean>;
   typeStatuses: Record<string, string>;
+  dusPvpStatus?: string; // only used for plant variety types
 }
 
 export interface IPData {
@@ -57,39 +66,81 @@ export interface TRLResult {
 
 // ─── IP synthetic questions ───────────────────────────────────────────────────
 
-const PLANT_ANIMAL_TYPES = [
+const PLANT_ANIMAL_TYPES_LOCAL = [
   "New Plant Variety (Conventional)",
   "New Plant Variety (Gene-Edited and GM)",
-  "New Animal Breed (Aquatic and Terrestrial)",
+  "New Animal Breed or Genetic Resources (Aquatic and Terrestrial)",
 ];
 
-const IP_INITIATED_LABEL = "Intellectual Property (IP) Initiated";
-const IP_PENDING_LABEL   = "Intellectual Property (IP) is Pending for Review";
-const IP_FILED_LABEL     = "IP Filed or Registered";
-
-function isIPAnsweredYes(label: string, ipEntry: IPQuestionData | undefined): boolean {
+function isIPAnsweredYes(
+  label: string,
+  ipEntry: IPQuestionData | undefined,
+  technologyType: string
+): boolean {
   if (!ipEntry) return false;
-  if (label === IP_INITIATED_LABEL)
+
+  const isPlantVariety = PLANT_VARIETY_TYPES.includes(technologyType);
+  const isAnimalBreed  = ANIMAL_BREED_TYPES.includes(technologyType);
+
+  if (label === IP_INITIATED_LABEL) {
     return ipEntry.initiated === "yes" || ipEntry.initiated === "trade_secret";
+  }
+
   if (label === IP_PENDING_LABEL) {
     if (ipEntry.initiated === "trade_secret") return true;
+
+    // Plant variety: submitted or registered satisfies pending
+    if (isPlantVariety) {
+      const val = ipEntry.dusPvpStatus ?? "";
+      return val === "submitted" || val === "registered";
+    }
+
+    // Animal breed: any type with pending/filed/registered satisfies pending
+    if (isAnimalBreed) {
+      return Object.entries(ipEntry.selectedTypes ?? {}).some(([t, checked]) => {
+        if (!checked) return false;
+        const status = ipEntry.typeStatuses?.[t];
+        return status === "pending" || status === "filed" || status === "registered";
+      });
+    }
+
+    // Generic flow
     return Object.entries(ipEntry.selectedTypes ?? {}).some(
       ([t, checked]) => checked && !!ipEntry.typeStatuses?.[t]
     );
   }
+
   if (label === IP_FILED_LABEL) {
     if (ipEntry.initiated === "trade_secret") return true;
+
+    // Plant variety: only registered satisfies filed
+    if (isPlantVariety) {
+      return ipEntry.dusPvpStatus === "registered";
+    }
+
+    // Animal breed: filed or registered satisfies filed
+    if (isAnimalBreed) {
+      return Object.entries(ipEntry.selectedTypes ?? {}).some(([t, checked]) => {
+        if (!checked) return false;
+        const status = ipEntry.typeStatuses?.[t];
+        return status === "filed" || status === "registered";
+      });
+    }
+
+    // Generic flow
     return Object.entries(ipEntry.selectedTypes ?? {}).some(
       ([t, checked]) =>
         checked &&
-        (ipEntry.typeStatuses?.[t] === "Filed" || ipEntry.typeStatuses?.[t] === "Registered")
+        (ipEntry.typeStatuses?.[t] === "Filed" ||
+          ipEntry.typeStatuses?.[t] === "Registered")
     );
   }
+
   return false;
 }
 
 function buildIPQuestions(technologyType: string): QuestionItem[] {
-  const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(technologyType);
+  const isPlantAnimal = PLANT_ANIMAL_TYPES_LOCAL.includes(technologyType);
   return [
     { id: "ip-initiated", questionText: IP_INITIATED_LABEL, trlLevel: isPlantAnimal ? 5 : 2, category: "Intellectual Property Protection Status" },
     { id: "ip-pending",   questionText: IP_PENDING_LABEL,   trlLevel: isPlantAnimal ? 6 : 3, category: "Intellectual Property Protection Status" },
@@ -106,18 +157,6 @@ function dropdownSatisfiedTRL(q: QuestionItem, answer: AnswerValue): number | nu
   return opts.find(o => o.value === answer)?.trlSatisfied ?? null;
 }
 
-/**
- * Expands a dropdown into lacking QuestionItem objects — one per unsatisfied
- * option level. Each option above the selected one becomes its own item with:
- *   - questionText = that option's label (the thing the user still needs to do)
- *   - trlLevel     = that option's trlSatisfied
- *
- * Example: user selects "initiated" (trlSatisfied: 6) on a question that also
- * has "validated" (trlSatisfied: 7) and "exempt" (trlSatisfied: 7).
- * → Returns one lacking item at trlLevel 7: "Industry Feedback Collected/..."
- *
- * upToLevel: if provided, only return items whose trlSatisfied <= upToLevel.
- */
 function dropdownLackingItems(
   q: QuestionItem,
   answer: AnswerValue,
@@ -131,21 +170,16 @@ function dropdownLackingItems(
 
   const selectedValue = typeof answer === "string" ? answer : null;
   const selectedOpt   = selectedValue ? opts.find(o => o.value === selectedValue) : null;
-  const satisfiedUpTo = selectedOpt?.trlSatisfied ?? null; // null = nothing satisfied yet
+  const satisfiedUpTo = selectedOpt?.trlSatisfied ?? null;
 
-  // Options that are not yet satisfied
   const lacking = nonNull.filter(o =>
     satisfiedUpTo === null ? true : o.trlSatisfied > satisfiedUpTo
   );
 
-  // Apply level cap
   const capped = upToLevel !== undefined
     ? lacking.filter(o => o.trlSatisfied <= upToLevel)
     : lacking;
 
-  // Deduplicate by trlSatisfied — keep the first non-exempt label per level
-  // (so "validated" wins over "exempt" at the same level — both mean the same
-  //  thing to reach, but "validated" is more descriptive of the actual action)
   const byLevel = new Map<number, DropdownOption & { trlSatisfied: number }>();
   capped.forEach(o => {
     if (!byLevel.has(o.trlSatisfied)) byLevel.set(o.trlSatisfied, o);
@@ -160,11 +194,6 @@ function dropdownLackingItems(
   }));
 }
 
-/**
- * Expands a dropdown into completed QuestionItem objects — one per satisfied
- * option level (all options at or below the selected option's trlSatisfied).
- */
-// Labels that indicate an exempt/waiver answer — never shown in completed list
 const EXEMPT_LABEL_PATTERNS = [
   /not required/i,
   /not applicable/i,
@@ -177,15 +206,6 @@ function isExemptLabel(label: string): boolean {
   return EXEMPT_LABEL_PATTERNS.some(p => p.test(label));
 }
 
-/**
- * Expands a dropdown into completed QuestionItem objects.
- *
- * - If the selected option is exempt-type: show the parent question itself
- *   (e.g. "Industry Standard Packaging Compatibility Validated") rather than
- *   the waiver label ("Not Required/Not Applicable").
- * - Otherwise: show each satisfied option's label, skipping any exempt labels
- *   that may appear at lower levels.
- */
 function dropdownCompletedItems(q: QuestionItem, answer: AnswerValue): QuestionItem[] {
   const opts = (q.options as DropdownOption[] | undefined) ?? [];
   const nonNull = opts.filter((o): o is DropdownOption & { trlSatisfied: number } =>
@@ -198,24 +218,20 @@ function dropdownCompletedItems(q: QuestionItem, answer: AnswerValue): QuestionI
   const satisfiedUpTo = selectedOpt?.trlSatisfied ?? null;
   if (satisfiedUpTo === null) return [];
 
-  // If the user selected an exempt option, represent the whole question as
-  // completed using the parent question text — not the waiver label.
   if (selectedOpt && isExemptLabel(selectedOpt.label)) {
     return [{
       id:           `${q.id}__lvl${satisfiedUpTo}`,
-      questionText: q.questionText,   // parent label, not "Not Required/..."
+      questionText: q.questionText,
       trlLevel:     satisfiedUpTo,
       category:     q.category,
       type:         "checkbox" as const,
     }];
   }
 
-  // Non-exempt selection: expand all satisfied levels, skipping exempt labels
   const satisfied = nonNull.filter(o =>
     o.trlSatisfied <= satisfiedUpTo && !isExemptLabel(o.label)
   );
 
-  // Deduplicate by trlSatisfied — keep last option per level
   const byLevel = new Map<number, DropdownOption & { trlSatisfied: number }>();
   satisfied.forEach(o => byLevel.set(o.trlSatisfied, o));
 
@@ -317,11 +333,12 @@ function isAnsweredYesAtLevel(
   q: QuestionItem,
   answers: Record<string, AnswerValue>,
   ipData: IPData,
-  checkLevel: number
+  checkLevel: number,
+  technologyType: string
 ): boolean {
-  if (q.id === "ip-initiated") return isIPAnsweredYes(IP_INITIATED_LABEL, ipData[IP_INITIATED_LABEL]);
-  if (q.id === "ip-pending")   return isIPAnsweredYes(IP_PENDING_LABEL,   ipData[IP_INITIATED_LABEL]);
-  if (q.id === "ip-filed")     return isIPAnsweredYes(IP_FILED_LABEL,     ipData[IP_INITIATED_LABEL]);
+  if (q.id === "ip-initiated") return isIPAnsweredYes(IP_INITIATED_LABEL, ipData[IP_INITIATED_LABEL], technologyType);
+  if (q.id === "ip-pending")   return isIPAnsweredYes(IP_PENDING_LABEL,   ipData[IP_INITIATED_LABEL], technologyType);
+  if (q.id === "ip-filed")     return isIPAnsweredYes(IP_FILED_LABEL,     ipData[IP_INITIATED_LABEL], technologyType);
 
   const answer = answers[q.id];
   const qType  = q.type ?? "checkbox";
@@ -339,8 +356,13 @@ function isAnsweredYesAtLevel(
   return false;
 }
 
-function isAnsweredYes(q: QuestionItem, answers: Record<string, AnswerValue>, ipData: IPData): boolean {
-  return isAnsweredYesAtLevel(q, answers, ipData, q.trlLevel);
+function isAnsweredYes(
+  q: QuestionItem,
+  answers: Record<string, AnswerValue>,
+  ipData: IPData,
+  technologyType: string
+): boolean {
+  return isAnsweredYesAtLevel(q, answers, ipData, q.trlLevel, technologyType);
 }
 
 // ─── Main Calculator ──────────────────────────────────────────────────────────
@@ -359,9 +381,6 @@ export function calculateTRL(
   const checkboxQuestions = questions.filter(q => (q.type ?? "checkbox") === "checkbox");
 
   // ── Build byLevel map ─────────────────────────────────────────────────────
-  // Dropdowns register at every level any of their options can satisfy.
-  // Multi-conditionals register at every level their items span.
-  // Checkboxes register at their own trlLevel.
   const byLevel: Record<number, QuestionItem[]> = {};
 
   const registerAt = (lvl: number, q: QuestionItem) => {
@@ -386,11 +405,9 @@ export function calculateTRL(
   const maxLevel = Math.max(...levels, 0);
 
   // ── Highest Completed TRL ─────────────────────────────────────────────────
-  // A level N is complete when every question whose scope reaches N is satisfied at N.
   let highestCompletedTRL = 0;
 
   for (const level of levels) {
-    // All questions that are in scope at this level
     const inScope = questions.filter(q => {
       if (q.type === "dropdown" && q.options) {
         const opts = q.options as DropdownOption[];
@@ -403,22 +420,21 @@ export function calculateTRL(
       return q.trlLevel <= level;
     });
 
-    const allDone = inScope.every(q => isAnsweredYesAtLevel(q, answers, ipData, level));
+    const allDone = inScope.every(q =>
+      isAnsweredYesAtLevel(q, answers, ipData, level, technologyType)
+    );
     if (allDone) highestCompletedTRL = level;
     else break;
   }
 
-  // Null-answer cap: if a dropdown is answered with a null-satisfaction option
-  // AND the user's completed TRL has reached that question's first level,
-  // clamp completed TRL to just below that level.
+  // Null-answer cap
   dropdownQuestions.forEach(q => {
     const answer = answers[q.id];
     if (typeof answer !== "string" || !answer) return;
     const opts     = q.options as DropdownOption[];
     const selected = opts.find(o => o.value === answer);
-    if (selected?.trlSatisfied !== null) return; // not a blocking answer
+    if (selected?.trlSatisfied !== null) return;
 
-    // Find the lowest level this dropdown participates in
     const lowestLevel = Math.min(
       ...opts.filter(o => o.trlSatisfied !== null).map(o => o.trlSatisfied!)
     );
@@ -431,7 +447,7 @@ export function calculateTRL(
   let highestAchievableTRL = highestCompletedTRL;
   for (const level of [...levels].reverse()) {
     const anyDone = (byLevel[level] ?? []).some(q =>
-      isAnsweredYesAtLevel(q, answers, ipData, level)
+      isAnsweredYesAtLevel(q, answers, ipData, level, technologyType)
     );
     if (anyDone) { highestAchievableTRL = Math.max(highestAchievableTRL, level); break; }
   }
@@ -454,7 +470,7 @@ export function calculateTRL(
   const completedQuestions: QuestionItem[] = [];
 
   checkboxQuestions.forEach(q => {
-    if (isAnsweredYes(q, answers, ipData)) completedQuestions.push(q);
+    if (isAnsweredYes(q, answers, ipData, technologyType)) completedQuestions.push(q);
   });
 
   dropdownQuestions.forEach(q => {
@@ -471,7 +487,7 @@ export function calculateTRL(
 
   if (nextLevel <= maxLevel) {
     checkboxQuestions.forEach(q => {
-      if (q.trlLevel <= nextLevel && !isAnsweredYes(q, answers, ipData))
+      if (q.trlLevel <= nextLevel && !isAnsweredYes(q, answers, ipData, technologyType))
         lackingForNextLevel.push(q);
     });
 
@@ -489,7 +505,7 @@ export function calculateTRL(
 
   if (highestAchievableTRL > highestCompletedTRL) {
     checkboxQuestions.forEach(q => {
-      if (q.trlLevel <= highestAchievableTRL && !isAnsweredYes(q, answers, ipData))
+      if (q.trlLevel <= highestAchievableTRL && !isAnsweredYes(q, answers, ipData, technologyType))
         lackingForAchievable.push(q);
     });
 
@@ -506,12 +522,11 @@ export function calculateTRL(
   const lackingToLevel9: QuestionItem[] = [];
 
   checkboxQuestions.forEach(q => {
-    if (q.trlLevel > highestCompletedTRL && !isAnsweredYes(q, answers, ipData))
+    if (q.trlLevel > highestCompletedTRL && !isAnsweredYes(q, answers, ipData, technologyType))
       lackingToLevel9.push(q);
   });
 
   dropdownQuestions.forEach(q => {
-    // All unsatisfied option levels, no cap
     lackingToLevel9.push(
       ...dropdownLackingItems(q, answers[q.id])
         .filter(item => item.trlLevel > highestCompletedTRL)

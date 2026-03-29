@@ -1,5 +1,3 @@
-// questionnaire/page.tsx
-
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -7,8 +5,20 @@ import { useAssessment, IPData, AnswerValue } from "../AssessmentContext";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
-import { PLANT_ANIMAL_TYPES, IP_INITIATED_LABEL, IP_FILED_LABEL, IP_CATEGORY, IP_TYPES, IP_STATUS_OPTIONS, REGION_CONTACTS} from "../../utils/ipHelpers";
-import { ABH_REGIONS, ATBI_REGIONS, REGULATORY_BODIES} from "../../utils/contacts";
+import {
+  PLANT_ANIMAL_TYPES,
+  PLANT_VARIETY_TYPES,
+  ANIMAL_BREED_TYPES,
+  ANIMAL_BREED_IP_TYPES,
+  ANIMAL_BREED_IP_STATUS_OPTIONS,
+  DUS_PVP_OPTIONS,
+  IP_INITIATED_LABEL,
+  IP_CATEGORY,
+  IP_TYPES,
+  IP_STATUS_OPTIONS,
+  REGION_CONTACTS,
+} from "../../utils/ipHelpers";
+import { ABH_REGIONS, ATBI_REGIONS, REGULATORY_BODIES } from "../../utils/contacts";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 
 const questionsCache: Record<string, Record<string, Question[]>> = {};
@@ -37,11 +47,17 @@ interface IPSectionProps {
   label: string;
   ipData: IPData;
   onChange: (updated: IPData) => void;
+  technologyType: string;
 }
 
-function IPSection({ label, ipData, onChange }: IPSectionProps) {
+// ─── IP Section ───────────────────────────────────────────────────────────────
+
+function IPSection({ label, ipData, onChange, technologyType }: IPSectionProps) {
   const key = label;
-  const current = ipData[key] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
+  const current = ipData[key] ?? { initiated: "", selectedTypes: {}, typeStatuses: {}, dusPvpStatus: "" };
+
+  const isPlantVariety = PLANT_VARIETY_TYPES.includes(technologyType);
+  const isAnimalBreed  = ANIMAL_BREED_TYPES.includes(technologyType);
 
   const setField = (field: string, value: unknown) => {
     onChange({ ...ipData, [key]: { ...current, [field]: value } });
@@ -55,6 +71,8 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
     onChange({ ...ipData, [key]: { ...current, selectedTypes: updatedTypes, typeStatuses: updatedStatuses } });
   };
 
+  const ipTypesToShow = isAnimalBreed ? ANIMAL_BREED_IP_TYPES : IP_TYPES;
+
   return (
     <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,46,26,0.05)]">
 
@@ -66,14 +84,14 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
 
       <div className="px-6 py-6">
 
-        {/* Main select */}
+        {/* Main initiated select */}
         <div className="relative mb-5">
           <select
             value={current.initiated}
             onChange={e => {
               const newVal = e.target.value as "yes" | "no" | "trade_secret" | "";
               if (newVal !== "yes") {
-                onChange({ ...ipData, [key]: { initiated: newVal, selectedTypes: {}, typeStatuses: {} } });
+                onChange({ ...ipData, [key]: { initiated: newVal, selectedTypes: {}, typeStatuses: {}, dusPvpStatus: "" } });
               } else {
                 setField("initiated", newVal);
               }
@@ -92,8 +110,86 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
           </div>
         </div>
 
-        {/* YES - IP type checkboxes */}
-        {current.initiated === "yes" && (
+        {/* YES — Plant Variety: DUS/PVP single dropdown */}
+        {current.initiated === "yes" && isPlantVariety && (
+          <div className="space-y-3">
+            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-3">
+              Plant Variety Protection Status
+            </p>
+            <div className="relative">
+              <select
+                value={current.dusPvpStatus ?? ""}
+                onChange={e => setField("dusPvpStatus", e.target.value)}
+                className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
+              >
+                <option value="">Select current status…</option>
+                {DUS_PVP_OPTIONS.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* YES — Animal Breed: Copyright + Trademark checkboxes with status */}
+        {current.initiated === "yes" && isAnimalBreed && (
+          <div className="space-y-3">
+            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-3">
+              Select IP Protection Type(s)
+            </p>
+            {ipTypesToShow.map(ipType => {
+              const isChecked = current.selectedTypes[ipType] ?? false;
+              return (
+                <div key={ipType} className="space-y-2">
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="relative flex-shrink-0">
+                      <input type="checkbox" checked={isChecked} onChange={() => handleTypeToggle(ipType)} className="peer sr-only" />
+                      <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
+                        isChecked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8] group-hover:border-[#4aa35a]/60"
+                      }`}>
+                        {isChecked && (
+                          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                    <span className={`text-[14px] font-light leading-snug transition-colors ${isChecked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)]"}`}>
+                      {ipType}
+                    </span>
+                  </label>
+                  {isChecked && (
+                    <div className="ml-8 relative">
+                      <select
+                        value={current.typeStatuses[ipType] ?? ""}
+                        onChange={e => setField("typeStatuses", { ...current.typeStatuses, [ipType]: e.target.value })}
+                        className="w-full max-w-xs appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-2.5 text-[13px] text-[var(--color-text-gray)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-8"
+                      >
+                        <option value="">IP Protection Status…</option>
+                        {ANIMAL_BREED_IP_STATUS_OPTIONS.map(opt => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
+                      </select>
+                      <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                          <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* YES — Generic flow: all IP types */}
+        {current.initiated === "yes" && !isPlantVariety && !isAnimalBreed && (
           <div className="space-y-3">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-3">
               Select IP Protection Type(s)
@@ -127,7 +223,9 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
                         className="w-full max-w-xs appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-2.5 text-[13px] text-[var(--color-text-gray)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-8"
                       >
                         <option value="">IP Protection Status…</option>
-                        {IP_STATUS_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                        {IP_STATUS_OPTIONS.map(opt => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
                       </select>
                       <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
                         <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
@@ -142,7 +240,7 @@ function IPSection({ label, ipData, onChange }: IPSectionProps) {
           </div>
         )}
 
-        {/* NO */}
+        {/* NO — Regional IP-TBM contacts */}
         {current.initiated === "no" && (
           <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl space-y-3">
             <p className="text-[14px] font-semibold text-amber-800">
@@ -216,8 +314,6 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
   const reg = REGULATORY_BODIES[technologyType];
   return (
     <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 overflow-hidden">
-
-      {/* Regional ATBI contacts */}
       <div className="px-4 py-3 border-b border-blue-200">
         <p className="text-[11px] font-bold tracking-[1.5px] uppercase text-blue-700 mb-1.5">
           Regional ATBI Contact Information
@@ -244,8 +340,6 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
           ))}
         </div>
       </div>
-
-      {/* Regulatory body website */}
       {reg && (
         <div className="px-4 py-3 space-y-3">
           <p className="text-[11.5px] text-blue-700 font-light leading-relaxed">
@@ -260,6 +354,7 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
               <p className="text-[12.5px] text-blue-900 font-medium leading-relaxed mb-1">
                 {reg.body}
               </p>
+              
               <a
                 href={reg.url}
                 target="_blank"
@@ -283,10 +378,7 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
 // ─── Dropdown Question ────────────────────────────────────────────────────────
 
 function DropdownQuestion({
-  q,
-  value,
-  onChange,
-  technologyType,
+  q, value, onChange, technologyType,
 }: {
   q: Question;
   value: string | null;
@@ -299,11 +391,9 @@ function DropdownQuestion({
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
-            {q.questionText}
-          </p>
-        </div>
+        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
+          {q.questionText}
+        </p>
         <div className="relative">
           <select
             value={value ?? ""}
@@ -321,9 +411,7 @@ function DropdownQuestion({
             </svg>
           </div>
         </div>
-        {showContact && (
-          <ATBIContactPanel technologyType={technologyType} />
-        )}
+        {showContact && <ATBIContactPanel technologyType={technologyType} />}
       </div>
     </div>
   );
@@ -332,10 +420,7 @@ function DropdownQuestion({
 // ─── Multi-Conditional Question ───────────────────────────────────────────────
 
 function MultiConditionalQuestion({
-  q,
-  value,
-  onSelectionChange,
-  onItemToggle,
+  q, value, onSelectionChange, onItemToggle,
 }: {
   q: Question;
   value: MultiConditionalAnswer;
@@ -348,13 +433,9 @@ function MultiConditionalQuestion({
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
-            {q.questionText}
-          </p>
-        </div>
-
-        {/* Top-level selection */}
+        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
+          {q.questionText}
+        </p>
         <div className="relative mb-4">
           <select
             value={value.selection}
@@ -372,13 +453,7 @@ function MultiConditionalQuestion({
             </svg>
           </div>
         </div>
-
-        {/* No - show ABH regional contacts */}
-        {value.selection === "no" && noOption?.contactLabel && (
-          <ABHContactPanel />
-        )}
-
-        {/* Yes - checklist of sub-items */}
+        {value.selection === "no" && noOption?.contactLabel && <ABHContactPanel />}
         {value.selection === "yes" && yesOption?.items && (
           <div className="space-y-2.5 mt-1">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
@@ -410,8 +485,6 @@ function MultiConditionalQuestion({
             })}
           </div>
         )}
-
-        {/* Exempt */}
         {value.selection === "exempt" && (
           <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-[13px] text-blue-800 font-light leading-relaxed">
             This requirement is exempted for privately funded technologies.
@@ -499,22 +572,6 @@ export default function QuestionnairePage() {
   const isIPCategory = currentCategory === IP_CATEGORY;
   const currentQuestions = grouped[currentCategory] ?? [];
 
-  // ── Page groups ────────────────────────────────────────────────────────────
-  // precom_docs always gets its own solo page
-  const pageGroups: Question[][] = useMemo(() => {
-    if (isIPCategory) return [];
-    return buildPageGroups(currentQuestions);
-  }, [currentQuestions, isIPCategory]);
-
-  const totalPages = isIPCategory ? 1 : pageGroups.length;
-
-  const visibleQuestions = useMemo(() => {
-    if (isIPCategory) return [];
-    return pageGroups[currentPage] ?? [];
-  }, [currentPage, pageGroups, isIPCategory]);
-
-
-  // Shared helper — builds page groups for any category's question list
   function buildPageGroups(questions: Question[]): Question[][] {
     const before: Question[] = [];
     const precomList: Question[] = [];
@@ -569,6 +626,19 @@ export default function QuestionnairePage() {
     if (b.length > 0) groups.push(b);
     return groups;
   }
+
+  const pageGroups: Question[][] = useMemo(() => {
+    if (isIPCategory) return [];
+    return buildPageGroups(currentQuestions);
+  }, [currentQuestions, isIPCategory]);
+
+  const totalPages = isIPCategory ? 1 : pageGroups.length;
+
+  const visibleQuestions = useMemo(() => {
+    if (isIPCategory) return [];
+    return pageGroups[currentPage] ?? [];
+  }, [currentPage, pageGroups, isIPCategory]);
+
   const handleCheckbox = (id: string) => {
     updateData({ answers: { ...data.answers, [id]: !data.answers[id] } });
   };
@@ -622,13 +692,22 @@ export default function QuestionnairePage() {
 
   const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
 
+  // ── ipBlocksNext ──────────────────────────────────────────────────────────
   const ipBlocksNext = (() => {
     if (!isIPCategory) return false;
     const ipKey = IP_INITIATED_LABEL;
-    const current = data.ipData[ipKey] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
+    const current = data.ipData[ipKey] ?? { initiated: "", selectedTypes: {}, typeStatuses: {}, dusPvpStatus: "" };
+
     if (current.initiated === "") return true;
-    if (current.initiated !== "yes") return false;
-    const checkedTypes = Object.entries(current.selectedTypes)
+    if (current.initiated === "no" || current.initiated === "trade_secret") return false;
+
+    // Plant variety: must select a DUS/PVP status
+    if (PLANT_VARIETY_TYPES.includes(data.technologyType)) {
+      return !current.dusPvpStatus;
+    }
+
+    // Animal breed or generic: must select at least one type with a status
+    const checkedTypes = Object.entries(current.selectedTypes ?? {})
       .filter(([, v]) => v)
       .map(([k]) => k);
     if (checkedTypes.length === 0) return true;
@@ -638,10 +717,7 @@ export default function QuestionnairePage() {
   const dropdownBlocksNext = (() => {
     if (isIPCategory) return false;
     return visibleQuestions.some(q => {
-      if (q.type === "dropdown") {
-        const val = data.answers[q.id];
-        return !val;
-      }
+      if (q.type === "dropdown") return !data.answers[q.id];
       if (q.type === "multi-conditional") {
         const val = data.answers[q.id] as { selection?: string } | undefined;
         return !val?.selection;
@@ -652,7 +728,7 @@ export default function QuestionnairePage() {
 
   const blocksNext = ipBlocksNext || dropdownBlocksNext;
 
-  // Progress calculation using pageGroups
+  // Progress
   const totalSteps = orderedCategories.reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
     return acc + buildPageGroups(grouped[cat] ?? []).length;
@@ -680,11 +756,6 @@ export default function QuestionnairePage() {
     return (
       <div className="font-['DM Sans'] min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6">
         <div className="text-center">
-          <div className="mb-3 w-12 h-12 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center mx-auto">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-          </div>
           <p className="text-[15px] text-[var(--color-text-gray)] font-light">No questions available for the selected technology type.</p>
         </div>
       </div>
@@ -742,6 +813,7 @@ export default function QuestionnairePage() {
                 label={IP_INITIATED_LABEL}
                 ipData={data.ipData}
                 onChange={handleIPChange}
+                technologyType={data.technologyType}
               />
             </div>
           ) : (
@@ -846,8 +918,9 @@ export default function QuestionnairePage() {
                 </svg>
                 {(() => {
                   if (dropdownBlocksNext) return "Please answer all questions on this page to continue.";
-                  const current = data.ipData[IP_INITIATED_LABEL] ?? { initiated: "", selectedTypes: {}, typeStatuses: {} };
+                  const current = data.ipData[IP_INITIATED_LABEL] ?? { initiated: "", selectedTypes: {}, typeStatuses: {}, dusPvpStatus: "" };
                   if (current.initiated === "") return "Please answer the IP initiation question to continue.";
+                  if (PLANT_VARIETY_TYPES.includes(data.technologyType)) return "Please select a Plant Variety Protection status to continue.";
                   return "Select at least one IP type and set its status to continue.";
                 })()}
               </p>

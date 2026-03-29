@@ -9,6 +9,7 @@ export type { AnswerValue, MultiConditionalAnswer, DropdownAnswer } from "../uti
 // ─── IP Types ─────────────────────────────────────────────────────────────────
 
 export interface IPQuestionData {
+  dusPvpStatus: any;
   initiated: "yes" | "no" | "trade_secret" | "";
   selectedTypes: Record<string, boolean>;
   typeStatuses: Record<string, string>;
