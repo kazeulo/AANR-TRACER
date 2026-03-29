@@ -81,7 +81,7 @@ export default function TechnologyNamePage() {
           </button>
 
           {!isValid && (
-            <p className="text-[12px] text-[var(--color-text-faintest)] font-light">
+            <p className="text-[12px] text-[var(--color-text-faint)] font-light">
               Enter a technology name to continue
             </p>
           )}

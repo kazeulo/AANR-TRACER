@@ -114,7 +114,7 @@ export default function Disclaimer() {
           </button>
 
           {!agreed && (
-            <p className="text-[12px] text-[var(--color-text-faintest)] font-light">
+            <p className="text-[12px] text-[var(--color-text-faint)] font-light">
               Please check the box above to continue
             </p>
           )}
