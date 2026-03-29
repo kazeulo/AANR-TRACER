@@ -182,7 +182,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     // ── TRACER level badge ──
     tracerBadge: {
       flexDirection: "row",
-      alignItems: "center",
+      alignItems: "flex-start",
       gap: 12,
       backgroundColor: "#f0f7f1",
       borderWidth: 1,
@@ -195,7 +195,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       fontSize: 20,
       fontFamily: "Helvetica-Bold",
       color: "#2d7a3a",
-      width: 90,
+      width: 180,
     },
     tracerBadgeLabel: {
       fontSize: 8,
@@ -478,14 +478,14 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
         <View style={s.hr} />
 
         <View style={s.tracerBadge}>
-          <Text style={s.tracerBadgeLevel}>TRACER {highestCompletedTRL}</Text>
-          <View>
-            <Text style={s.tracerBadgeLabel}>Current TRACER Level</Text>
-            <Text style={s.tracerBadgeName}>
-              {getLevelTitle(techType, highestCompletedTRL)}
-            </Text>
-          </View>
+        <View>
+          <Text style={s.tracerBadgeLabel}>Current TRACER Level</Text>
+          <Text style={s.tracerBadgeLevel}>TRACER Level {highestCompletedTRL}</Text>
         </View>
+        <Text style={s.tracerBadgeName}>
+          {getLevelTitle(techType, highestCompletedTRL)}
+        </Text>
+      </View>
 
         {hasGap && (
           <FieldRow
