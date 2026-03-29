@@ -460,14 +460,6 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_1_11",
-        "questionText": "Proximate Analysis of the Product Initiated",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_1_25",
         "questionText": "Initial Assessment on the Potential User",
         "trlLevel": 2,
@@ -478,16 +470,24 @@
     ],
     "3": [
       {
-        "id": "tech_dev_1_4",
-        "questionText": "Formulation Optimized Based on Initial Results of Feeding Trial",
+        "id": "tech_dev_1_11",
+        "questionText": "Proximate Analysis of the Product Initiated",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_1_12",
-        "questionText": "Proximate Analysis on Nutritional Adequacy Confirmed",
+        "id": "tech_dev_1_4",
+        "questionText": "Formulation Optimized Based on Initial Results of Feeding Trial",
+        "trlLevel": 3,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },     
+      {
+        "id": "tech_dev_1_5",
+        "questionText": "Product Validated Through Initial Feeding Trial with Target Animals",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -496,14 +496,6 @@
     ],
     "4": [
       {
-        "id": "tech_dev_1_5",
-        "questionText": "Product Validated Through Initial Feeding Trial with Target Animals",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "tech_dev_1_13",
         "questionText": "Passed Toxicity Evaluation",
         "trlLevel": 4,
@@ -511,6 +503,14 @@
         "type": "checkbox",
         "toolTip": ""
       },
+      {
+        "id": "tech_dev_1_12",
+        "questionText": "Proximate Analysis on Nutritional Adequacy Confirmed",
+        "trlLevel": 4,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }, 
       {
         "id": "tech_dev_1_14",
         "questionText": "Storage Stability Established",
@@ -553,29 +553,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_1_6",
-        "questionText": "Pilot-scale formulation developed with an established production manual for scaled-up manufacturing.",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
-      },
-      {
-        "id": "market_1_26",
-        "questionText": "Product Promotion and Packaging using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
-        "trlLevel": 5,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -606,6 +588,24 @@
         ]
       }
     ],
+    "5": [
+      {
+        "id": "tech_dev_1_6",
+        "questionText": "Pilot-scale formulation developed with an established production manual for scaled-up manufacturing.",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+      },
+      {
+        "id": "market_1_26",
+        "questionText": "Product Promotion and Packaging using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Pre-commercialization Preparedness",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
     "6": [
       {
         "id": "tech_dev_1_7",
@@ -618,14 +618,6 @@
       {
         "id": "market_1_27",
         "questionText": "Initial Market Tests Conducted (i.e.: selling in Trade Shows, Limited Release)",
-        "trlLevel": 6,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "market_1_28",
-        "questionText": "Records of Initial Sales from Market Testing",
         "trlLevel": 6,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
@@ -660,6 +652,14 @@
             "trlSatisfied": 7
           }
         ]
+      },
+      {
+        "id": "market_1_28",
+        "questionText": "Records of Initial Sales from Market Testing",
+        "trlLevel": 7,
+        "category": "Market and Pre-commercialization Preparedness",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "7": [
@@ -821,14 +821,6 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_2_11",
-        "questionText": "Toxicity Test Initiated",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_2_25",
         "questionText": "Initial Assessment on the Potential User",
         "trlLevel": 2,
@@ -839,6 +831,14 @@
     ],
     "3": [
       {
+        "id": "tech_dev_2_11",
+        "questionText": "Toxicity Test Initiated",
+        "trlLevel": 3,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
         "id": "tech_dev_2_4",
         "questionText": "Formulation Optimized Based on Initial Response of the Experimental Subject",
         "trlLevel": 3,
@@ -847,8 +847,8 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_2_12",
-        "questionText": "Positive Experimental Results on Product Efficacy, Stability, and/or Compatibility under Controlled Conditions Obtained",
+        "id": "tech_dev_2_10",
+        "questionText": "Formulated Product Initially Tested Under Laboratory Conditions (Efficacy, Stability, Compatibility)",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -857,12 +857,12 @@
     ],
     "4": [
       {
-        "id": "tech_dev_2_5",
-        "questionText": "Pilot-scale formulation developed with an established production manual for scaled-up manufacturing.",
-        "trlLevel": 4,
+        "id": "tech_dev_2_12",
+        "questionText": "Positive Experimental Results on Product Efficacy, Stability, and/or Compatibility under Controlled Conditions Obtained",
+        "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": ""
       },
       {
         "id": "tech_dev_2_13",
@@ -914,29 +914,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_2_6",
-        "questionText": "Product Tested for Scaled-up Pilot Production",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "market_2_26",
-        "questionText": "Product Promotion using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
-        "trlLevel": 5,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -967,10 +949,28 @@
         ]
       }
     ],
+    "5": [
+      {
+        "id": "tech_dev_2_5",
+        "questionText": "Pilot-scale formulation developed with an established production manual for scaled-up manufacturing.",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+      },
+      {
+        "id": "market_2_26",
+        "questionText": "Product Promotion using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Pre-commercialization Preparedness",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
     "6": [
       {
-        "id": "tech_dev_2_7",
-        "questionText": "Standardized Manual for Product Manufacturing and Commercial Production Established",
+        "id": "tech_dev_2_6",
+        "questionText": "Product Tested for Scaled-up Pilot Production",
         "trlLevel": 6,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -1017,8 +1017,8 @@
     ],
     "7": [
       {
-        "id": "tech_dev_2_8",
-        "questionText": "Product Ready for Full-scale Commercial Production (Replicable Without Error)",
+        "id": "tech_dev_2_7",
+        "questionText": "Standardized Manual for Product Manufacturing and Commercial Production Established",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -1093,12 +1093,12 @@
     ],
     "8": [
       {
-        "id": "tech_dev_2_9",
-        "questionText": "Fully commercialized with documented royalty income",
+        "id": "tech_dev_2_8",
+        "questionText": "Product Ready for Full-scale Commercial Production (Replicable Without Error)",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "The technology is fully commercialized, with the product commercially available to target users and generating documented royalty income."
+        "toolTip": ""
       },
       {
         "id": "fairness_2",
@@ -1158,12 +1158,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_2_10",
-        "questionText": "Formulated Product Initially Tested Under Laboratory Conditions (Efficacy, Stability, Compatibility)",
+        "id": "tech_dev_2_9",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the product commercially available to target users and generating documented royalty income."
       }
     ]
   },
@@ -1204,14 +1204,6 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_3_11",
-        "questionText": "Ready for Commercial-Scale Production (Replicable/ Operational Without Error)",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_3_25",
         "questionText": "Initial Assessment on the Potential User",
         "trlLevel": 2,
@@ -1230,12 +1222,12 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_3_12",
-        "questionText": "Fully commercialized with documented royalty income",
+        "id": "tech_dev_3_7",
+        "questionText": "Prototype Tested for Basic Operational Capability",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "The technology is fully commercialized, with the machine or facility commercially available to target users and generating royalty income."
+        "toolTip": ""
       }
     ],
     "4": [
@@ -1281,29 +1273,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_3_6",
-        "questionText": "Machine/Facility Stable During Pilot-Scale Operation",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
-      },
-      {
-        "id": "market_3_26",
-        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
-        "trlLevel": 5,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -1334,15 +1308,33 @@
         ]
       }
     ],
-    "6": [
+    "5": [
       {
-        "id": "tech_dev_3_7",
-        "questionText": "Prototype Tested for Basic Operational Capability",
-        "trlLevel": 6,
+        "id": "tech_dev_3_6",
+        "questionText": "Machine/Facility Stable During Pilot-Scale Operation",
+        "trlLevel": 5,
         "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+      },
+      {
+        "id": "market_3_26",
+        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
+        "trlLevel": 5,
+        "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
       },
+      {
+        "id": "tech_dev_3_8",
+        "questionText": "Operation Manual for the Use of Machinery/Facility Established",
+        "trlLevel": 7,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
+    "6": [
       {
         "id": "industry_validation_3",
         "questionText": "Industry Testing/Validation",
@@ -1372,17 +1364,17 @@
             "trlSatisfied": 7
           }
         ]
-      }
-    ],
-    "7": [
+      },
       {
-        "id": "tech_dev_3_8",
-        "questionText": "Operation Manual for the Use of Machinery/Facility Established",
-        "trlLevel": 7,
+        "id": "tech_dev_3_9",
+        "questionText": "Production or Fabrication Manual, or Technical Drawing or Plan Established",
+        "trlLevel": 6,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
-      },
+      }
+    ],
+    "7": [
       {
         "id": "licensing_3",
         "questionText": "Licensing Status",
@@ -1448,12 +1440,20 @@
             "trlSatisfied": 8
           }
         ]
+      },
+      {
+        "id": "tech_dev_3_10",
+        "questionText": "First Replication Achieved",
+        "trlLevel": 7,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "8": [
       {
-        "id": "tech_dev_3_9",
-        "questionText": "Production or Fabrication Manual, or Technical Drawing or Plan Established",
+        "id": "tech_dev_3_11",
+        "questionText": "Ready for Commercial-Scale Production (Replicable/ Operational Without Error)",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -1487,12 +1487,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_3_10",
-        "questionText": "First Replication Achieved",
+        "id": "tech_dev_3_12",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the machine or facility commercially available to target users and generating royalty income."
       }
     ]
   },
@@ -1533,14 +1533,6 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_4_11",
-        "questionText": "Standardized Protocol/Manual for Industry-scale Production/Fabrication/Assembly of Device/Kit",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_4_25",
         "questionText": "Preliminary Assessment of User Requirements and Operational Feasibility",
         "trlLevel": 2,
@@ -1557,14 +1549,6 @@
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
-      },
-      {
-        "id": "tech_dev_4_12",
-        "questionText": "Device/kit ready for commercial-scale production (replicable without error)",
-        "trlLevel": 3,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
       }
     ],
     "4": [
@@ -1577,12 +1561,12 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_4_13",
-        "questionText": "Fully commercialized with documented royalty income",
+        "id": "tech_dev_4_7",
+        "questionText": "Analytical Performance Confirmed (i.e.: Detection Limits, Repeatability, or Reliability)",
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
+        "toolTip": ""
       },
       {
         "id": "industry_partner_4",
@@ -1618,29 +1602,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_4_6",
-        "questionText": "Device/Kit Validated with Positive Result Under Laboratory or Controlled Field Conditions",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "market_4_26",
-        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
-        "trlLevel": 5,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -1671,15 +1637,33 @@
         ]
       }
     ],
-    "6": [
+    "5": [
       {
-        "id": "tech_dev_4_7",
-        "questionText": "Analytical Performance Confirmed (i.e.: Detection Limits, Repeatability, or Reliability)",
-        "trlLevel": 6,
+        "id": "tech_dev_4_6",
+        "questionText": "Device/Kit Validated with Positive Result Under Laboratory or Controlled Field Conditions",
+        "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
+      {
+        "id": "market_4_26",
+        "questionText": "Product Promotion using Basic Technology Profile or Techno Demo Conducted",
+        "trlLevel": 5,
+        "category": "Market and Pre-commercialization Preparedness",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_4_9",
+        "questionText": "User Manual for the Use of Device/Kit Established",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
+    "6": [
       {
         "id": "industry_validation_4",
         "questionText": "Industry Testing/Validation",
@@ -1709,9 +1693,25 @@
             "trlSatisfied": 7
           }
         ]
+      },
+      {
+        "id": "tech_dev_4_10",
+        "questionText": "Drafted Production/Fabrication/Assembly Manual for Scalable Manufacturing",
+        "trlLevel": 6,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "7": [
+      {
+        "id": "tech_dev_4_11",
+        "questionText": "Standardized Protocol/Manual for Industry-scale Production/Fabrication/Assembly of Device/Kit",
+        "trlLevel": 7,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
       {
         "id": "tech_dev_4_8",
         "questionText": "Device/Kit Tested Under Pilot-scale or Semi-field Conditions",
@@ -1789,9 +1789,9 @@
     ],
     "8": [
       {
-        "id": "tech_dev_4_9",
-        "questionText": "User Manual for the Use of Device/Kit Established",
-        "trlLevel": 8,
+        "id": "tech_dev_4_12",
+        "questionText": "Device/kit ready for commercial-scale production (replicable without error)",
+        "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
@@ -1824,12 +1824,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_4_10",
-        "questionText": "Drafted Production/Fabrication/Assembly Manual for Scalable Manufacturing",
+        "id": "tech_dev_4_13",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
       }
     ]
   },
@@ -1870,14 +1870,6 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_5_11",
-        "questionText": "System Stable in Industry-scale Operations (Stable Release)",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_5_25",
         "questionText": "Initial Assessment of Potential User Requirements and Usability",
         "trlLevel": 2,
@@ -1896,8 +1888,8 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_5_12",
-        "questionText": "System/Application Ready for Full-scale Commercial Operation (Replicable Without Error)",
+        "id": "tech_dev_5_5",
+        "questionText": "Working System/Application Developed (Integrated Prototype)",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -1905,22 +1897,6 @@
       }
     ],
     "4": [
-      {
-        "id": "tech_dev_5_5",
-        "questionText": "Working System/Application Developed (Integrated Prototype)",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_5_13",
-        "questionText": "Fully commercialized with documented royalty income",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
-      },
       {
         "id": "industry_partner_5",
         "questionText": "Industry Partner for Industry Testing",
@@ -1955,29 +1931,19 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
+      },
       {
         "id": "tech_dev_5_6",
         "questionText": "Alpha Testing Successfully Conducted",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": "The initial phase of system or product testing conducted internally by the development team or a limited group of users in a controlled environment, aimed at identifying bugs, functional issues, and usability problems."
       },
       {
-        "id": "market_5_26",
-        "questionText": "Product Promotion using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
-        "trlLevel": 5,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -2008,15 +1974,41 @@
         ]
       }
     ],
-    "6": [
+    "5": [
+      {
+        "id": "market_5_26",
+        "questionText": "Product Promotion using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Pre-commercialization Preparedness",
+        "type": "checkbox",
+        "toolTip": ""
+      },
       {
         "id": "tech_dev_5_7",
         "questionText": "Beta testing successfully conducted with select external users",
-        "trlLevel": 6,
+        "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": "Evaluation of a product or system by a limited group of external users under real-world conditions before full commercial launch, focusing on user feedback and performance validation."
       },
+      {
+        "id": "tech_dev_5_8",
+        "questionText": "User feedback incorporated to improve system usability, reliability, and performance",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_5_9",
+        "questionText": "User Guide/manual for system created",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
+    "6": [
       {
         "id": "industry_validation_5",
         "questionText": "Industry Testing/Validation",
@@ -2046,12 +2038,20 @@
             "trlSatisfied": 7
           }
         ]
+      },
+      {
+        "id": "tech_dev_5_10",
+        "questionText": "Core System Stable in Limited Commercial Operations",
+        "trlLevel": 6,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "7": [
       {
-        "id": "tech_dev_5_8",
-        "questionText": "User feedback incorporated to improve system usability, reliability, and performance",
+        "id": "tech_dev_5_11",
+        "questionText": "System Stable in Industry-scale Operations (Stable Release)",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2126,8 +2126,8 @@
     ],
     "8": [
       {
-        "id": "tech_dev_5_9",
-        "questionText": "User Guide/manual for system created",
+        "id": "tech_dev_5_12",
+        "questionText": "System/Application Ready for Full-scale Commercial Operation (Replicable Without Error)",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2161,12 +2161,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_5_10",
-        "questionText": "Core System Stable in Limited Commercial Operations",
+        "id": "tech_dev_5_13",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
       }
     ]
   },
@@ -2187,28 +2187,20 @@
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
+      },
+      {
+        "id": "tech_dev_6_2",
+        "questionText": "Potential Material Properties Identified",
+        "trlLevel": 1,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "2": [
       {
-        "id": "tech_dev_6_2",
-        "questionText": "Potential Material Properties Identified",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "tech_dev_6_3",
         "questionText": "Material Formulation or Composition Defined",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_6_11",
-        "questionText": "Performance Tested Under Simulated or Relevant Conditions",
         "trlLevel": 2,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2221,20 +2213,36 @@
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
+      },
+      {
+        "id": "tech_dev_6_4",
+        "questionText": "Intended Application Identified (e.g., Construction, Packaging, Handicrafts)",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_6_5",
+        "questionText": "Initial Laboratory Scale Processing Method Proposed",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "3": [
       {
-        "id": "tech_dev_6_4",
-        "questionText": "Intended Application Identified (e.g., Construction, Packaging, Handicrafts)",
+        "id": "tech_dev_6_6",
+        "questionText": "Laboratory-scale Sample Produced",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_6_12",
-        "questionText": "Initial Cost and Raw Material Availability Assessed",
+        "id": "tech_dev_6_7",
+        "questionText": "Preliminary Testing Conducted (e.g.: Tensile Strength, Density, Absorption)",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2242,30 +2250,6 @@
       }
     ],
     "4": [
-      {
-        "id": "tech_dev_6_5",
-        "questionText": "Initial Laboratory Scale Processing Method Proposed",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_6_13",
-        "questionText": "Prototype Material or Product Fabricated",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_6_14",
-        "questionText": "Demonstrated Performance in Intended Application (e.g.: Wall Panel, Packaging Unit)",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
       {
         "id": "industry_partner_6",
         "questionText": "Industry Partner for Industry Testing",
@@ -2300,37 +2284,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_6_6",
-        "questionText": "Laboratory-scale Sample Produced",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_6_16",
-        "questionText": "Final Material Specification Established",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "market_6_26",
-        "questionText": "Product Promotion using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
-        "trlLevel": 5,
-        "category": "Market and Pre-commercialization Preparedness",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -2359,20 +2317,62 @@
             "action": "exempt"
           }
         ]
+      },
+      {
+        "id": "tech_dev_6_8",
+        "questionText": "Repeatable Laboratory-scale Production Achieved",
+        "trlLevel": 4,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "tech_dev_6_12",
+        "questionText": "Initial Cost and Raw Material Availability Assessed",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_6_11",
+        "questionText": "Performance Tested Under Simulated or Relevant Conditions",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "market_6_26",
+        "questionText": "Product Promotion using Basic Technology Profile Conducted (i.e.: display in Exhibit, Tradefairs, Pitching)",
+        "trlLevel": 5,
+        "category": "Market and Pre-commercialization Preparedness",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_6_10",
+        "questionText": "Pilot-scale Material Production Conducted",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
       }
     ],
     "6": [
       {
-        "id": "tech_dev_6_7",
-        "questionText": "Preliminary Testing Conducted (e.g.: Tensile Strength, Density, Absorption)",
+        "id": "tech_dev_6_14",
+        "questionText": "Demonstrated Performance in Intended Application (e.g.: Wall Panel, Packaging Unit)",
         "trlLevel": 6,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_6_15",
-        "questionText": "Standardized Production Protocol/Manual  Established",
+        "id": "tech_dev_6_13",
+        "questionText": "Prototype Material or Product Fabricated",
         "trlLevel": 6,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2411,8 +2411,8 @@
     ],
     "7": [
       {
-        "id": "tech_dev_6_8",
-        "questionText": "Repeatable Laboratory-scale Production Achieved",
+        "id": "tech_dev_6_15",
+        "questionText": "Standardized Production Protocol/Manual Established",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2487,6 +2487,14 @@
     ],
     "8": [
       {
+        "id": "tech_dev_6_16",
+        "questionText": "Final Material Specification Established",
+        "trlLevel": 8,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
         "id": "tech_dev_6_9",
         "questionText": "Standard Laboratory Tests Completed (e.g., ASTM/ISO-aligned methods)",
         "trlLevel": 8,
@@ -2522,12 +2530,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_6_10",
-        "questionText": "Pilot-scale Material Production Conducted",
+        "id": "tech_dev_6_13",
+        "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "The technology is fully commercialized, with the device or kit commercially available to target users and generating royalty income."
       }
     ]
   },
@@ -2568,34 +2576,42 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_7_11",
-        "questionText": "Preliminary Field Trials Conducted in Controlled Plots",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_7_25",
         "questionText": "Preliminary Market Requirements Considered (Trait, Relevance, Consumer/end-user needs)",
         "trlLevel": 2,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
+      },
+      {
+        "id": "tech_dev_7_4",
+        "questionText": "Target Traits Clearly Identified",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_7_5",
+        "questionText": "Breeding Plan Prepared",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "3": [
       {
-        "id": "tech_dev_7_4",
-        "questionText": "Target Traits Clearly Identified",
+        "id": "tech_dev_7_6",
+        "questionText": "Initial Crosses or Mutation Events Conducted",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_7_12",
-        "questionText": "Field Performance Documentation Prepared",
+        "id": "tech_dev_7_7",
+        "questionText": "Progeny Produced and Screened for Presence of Target Traits",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2603,30 +2619,6 @@
       }
     ],
     "4": [
-      {
-        "id": "tech_dev_7_5",
-        "questionText": "Breeding Plan Prepared",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_7_13",
-        "questionText": "Seed/Plant Materials Production Protocol Standardized for Commercial Adoption",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_7_14",
-        "questionText": "Stable and Consistent Seed/Plant Production at Industry Scale Achieved",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
       {
         "id": "industry_partner_7",
         "questionText": "Industry Partner for Industry Testing",
@@ -2661,21 +2653,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_7_6",
-        "questionText": "Initial Crosses or Mutation Events Conducted",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -2704,25 +2686,51 @@
             "action": "exempt"
           }
         ]
-      }
-    ],
-    "6": [
+      },
       {
-        "id": "tech_dev_7_7",
-        "questionText": "Progeny Produced and Screened for Presence of Target Traits",
-        "trlLevel": 6,
+        "id": "tech_dev_7_8",
+        "questionText": "Progeny Successfully Grown Under Controlled Conditions (i.e.: in Greenhouse, Screenhouse, etc.)",
+        "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_7_15",
-        "questionText": "Fully Commercialized with Documented Royalty Income",
-        "trlLevel": 6,
+        "id": "tech_dev_7_9",
+        "questionText": "Target Traits Confirmed in Progeny",
+        "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, and generating royalty income."
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "tech_dev_7_12",
+        "questionText": "Field Performance Documentation Prepared",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       },
+      {
+        "id": "tech_dev_7_11",
+        "questionText": "Preliminary Field Trials Conducted in Controlled Plots",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_7_10",
+        "questionText": "Stable and Pure Lines Selected",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
+    "6": [
       {
         "id": "industry_validation_7",
         "questionText": "Industry Testing/Validation",
@@ -2756,8 +2764,8 @@
     ],
     "7": [
       {
-        "id": "tech_dev_7_8",
-        "questionText": "Progeny Successfully Grown Under Controlled Conditions (i.e.: in Greenhouse, Screenhouse, etc.)",
+        "id": "tech_dev_7_13",
+        "questionText": "Seed/Plant Materials Production Protocol Standardized for Commercial Adoption",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2832,8 +2840,8 @@
     ],
     "8": [
       {
-        "id": "tech_dev_7_9",
-        "questionText": "Target Traits Confirmed in Progeny",
+        "id": "tech_dev_7_14",
+        "questionText": "Stable and Consistent Seed/Plant Production at Industry Scale Achieved",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2867,12 +2875,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_7_10",
-        "questionText": "Stable and Pure Lines Selected",
+        "id": "tech_dev_7_15",
+        "questionText": "Fully Commercialized with Documented Royalty Income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, and generating royalty income."
       }
     ]
   },
@@ -2893,28 +2901,20 @@
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
+      },
+      {
+        "id": "tech_dev_8_2",
+        "questionText": "Bioinformatic Analysis of Gene Function/In-silico Studies Conducted",
+        "trlLevel": 1,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "2": [
       {
-        "id": "tech_dev_8_2",
-        "questionText": "Bioinformatic Analysis of Gene Function/In-silico Studies Conducted",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "tech_dev_8_3",
         "questionText": "Germplasm Collected",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_8_11",
-        "questionText": "Edited/Modified Lines Evaluated in Greenhouse or Actual Field Plots",
         "trlLevel": 2,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2927,20 +2927,36 @@
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
+      },
+      {
+        "id": "tech_dev_8_4",
+        "questionText": "Marker Developed/Gene Identified",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_8_5",
+        "questionText": "Molecular Construct Planned (CRISPR, RNAi)",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "3": [
       {
-        "id": "tech_dev_8_4",
-        "questionText": "Marker Developed/Gene Identified",
+        "id": "tech_dev_8_6",
+        "questionText": "Genetic Modification Designs Developed (CRISPR/RNAi Constructs)",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_8_12",
-        "questionText": "Agronomic and Phenotypic Data Collected",
+        "id": "tech_dev_8_7",
+        "questionText": "Transformation or Gene Editing in Laboratory or Growth Chamber Conducted",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -2949,24 +2965,24 @@
     ],
     "4": [
       {
-        "id": "tech_dev_8_5",
-        "questionText": "Molecular Construct Planned (CRISPR, RNAi)",
+        "id": "tech_dev_8_9",
+        "questionText": "Target Traits Confirmed via Sequencing, PCR, or Marker Analysis",
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_8_13",
-        "questionText": "Contained Field Trial/Confined Test for GM Crops Conducted",
+        "id": "tech_dev_8_8",
+        "questionText": "Edited/Modified Plant Regenerated",
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_8_14",
-        "questionText": "Seed Materials Production Protocol Standardized for Commercial Adoption",
+        "id": "tech_dev_8_10",
+        "questionText": "Preliminary Phenotyping under Greenhouse Conducted",
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -3006,29 +3022,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_8_6",
-        "questionText": "Genetic Modification Designs Developed (CRISPR/RNAi Constructs)",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_8_16",
-        "questionText": "Fully Commercialized with Documented Royalty Income",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, with royalty fees paid to the IP owner."
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -3059,23 +3057,33 @@
         ]
       }
     ],
+    "5": [
+      {
+        "id": "tech_dev_8_12",
+        "questionText": "Agronomic and Phenotypic Data Collected",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_8_13",
+        "questionText": "Contained Field Trial/Confined Test for GM Crops Conducted",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_8_11",
+        "questionText": "Edited/Modified Lines Evaluated in Greenhouse or Actual Field Plots",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
     "6": [
-      {
-        "id": "tech_dev_8_7",
-        "questionText": "Transformation or Gene Editing in Laboratory or Growth Chamber Conducted",
-        "trlLevel": 6,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_8_15",
-        "questionText": "Stable and Consistent Seed Production at Industry Scale Achieved",
-        "trlLevel": 6,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
       {
         "id": "industry_validation_8",
         "questionText": "Industry Testing/Validation",
@@ -3109,8 +3117,8 @@
     ],
     "7": [
       {
-        "id": "tech_dev_8_8",
-        "questionText": "Edited/Modified Plant Regenerated",
+        "id": "tech_dev_8_14",
+        "questionText": "Seed Materials Production Protocol Standardized for Commercial Adoption",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -3185,8 +3193,8 @@
     ],
     "8": [
       {
-        "id": "tech_dev_8_9",
-        "questionText": "Target Traits Confirmed via Sequencing, PCR, or Marker Analysis",
+        "id": "tech_dev_8_15",
+        "questionText": "Stable and Consistent Seed Production at Industry Scale Achieved",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -3220,12 +3228,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_8_10",
-        "questionText": "Preliminary Phenotyping under Greenhouse Conducted",
+        "id": "tech_dev_8_16",
+        "questionText": "Fully Commercialized with Documented Royalty Income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The new plant variety is fully commercialized, making the variety commercially available to target users, with royalty fees paid to the IP owner."
       }
     ]
   },
@@ -3266,34 +3274,42 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_9_11",
-        "questionText": "Preliminary Field Trials Conducted in Controlled Farm/Aquaculture Plots",
-        "trlLevel": 2,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
         "id": "market_9_25",
         "questionText": "Preliminary Assessment of Market Demand",
         "trlLevel": 2,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "checkbox",
         "toolTip": ""
+      },
+      {
+        "id": "tech_dev_9_4",
+        "questionText": "Target Traits for Improvement Identified",
+        "trlLevel": 2,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       }
     ],
     "3": [
       {
-        "id": "tech_dev_9_4",
-        "questionText": "Target Traits for Improvement Identified",
+        "id": "tech_dev_9_5",
+        "questionText": "Initial Crosses, Selective Breeding, or Genetic Modification Conducted",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_9_12",
-        "questionText": "Data Collected for Growth, Survivability, Product Quality, and Adaptability",
+        "id": "tech_dev_9_6",
+        "questionText": "Progeny Produced and Screened for Presence of Target Traits",
+        "trlLevel": 3,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_9_7",
+        "questionText": "Breeding Events Documented",
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -3301,30 +3317,6 @@
       }
     ],
     "4": [
-      {
-        "id": "tech_dev_9_5",
-        "questionText": "Initial Crosses, Selective Breeding, or Genetic Modification Conducted",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_9_13",
-        "questionText": "Protocols Standardized for Propagation of New Breed/Strain",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
-      {
-        "id": "tech_dev_9_14",
-        "questionText": "Stable and Consistent Breeding Achieved at Industry Scale",
-        "trlLevel": 4,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
-      },
       {
         "id": "industry_partner_9",
         "questionText": "Industry Partner for Industry Testing",
@@ -3359,21 +3351,11 @@
             "trlSatisfied": 6
           }
         ]
-      }
-    ],
-    "5": [
-      {
-        "id": "tech_dev_9_6",
-        "questionText": "Progeny Produced and Screened for Presence of Target Traits",
-        "trlLevel": 5,
-        "category": "Technology Development Status",
-        "type": "checkbox",
-        "toolTip": ""
       },
       {
         "id": "precom_docs_0",
         "questionText": "With Available Pre-commercialization Documents",
-        "trlLevel": 5,
+        "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
         "toolTip": "",
@@ -3402,25 +3384,51 @@
             "action": "exempt"
           }
         ]
-      }
-    ],
-    "6": [
+      },
       {
-        "id": "tech_dev_9_7",
-        "questionText": "Breeding Events Documented",
-        "trlLevel": 6,
+        "id": "tech_dev_9_8",
+        "questionText": "Progeny Raised Under Controlled Conditions (Hatchery, Nursery, Farm, or Experimental Facility)",
+        "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
         "toolTip": ""
       },
       {
-        "id": "tech_dev_9_15",
-        "questionText": "Fully Commercialized with Documented Royalty Income",
-        "trlLevel": 6,
+        "id": "tech_dev_9_9",
+        "questionText": "Target Traits Confirmed in Progeny (Growth, Disease Resistance, Environmental Tolerance)",
+        "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "The new animal breed or genetic resource is fully commercialized, making it commercially available to target users, and generating royalty income."
+        "toolTip": ""
+      }
+    ],
+    "5": [
+      {
+        "id": "tech_dev_9_12",
+        "questionText": "Data Collected for Growth, Survivability, Product Quality, and Adaptability",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
       },
+      {
+        "id": "tech_dev_9_11",
+        "questionText": "Preliminary Field Trials Conducted in Controlled Farm/Aquaculture Plots",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      },
+      {
+        "id": "tech_dev_9_10",
+        "questionText": "Stable Lines/Strain or Family Groups Selected",
+        "trlLevel": 5,
+        "category": "Technology Development Status",
+        "type": "checkbox",
+        "toolTip": ""
+      }
+    ],
+    "6": [
       {
         "id": "industry_validation_9",
         "questionText": "Industry Testing/Validation",
@@ -3454,8 +3462,8 @@
     ],
     "7": [
       {
-        "id": "tech_dev_9_8",
-        "questionText": "Progeny RaisedUnder Controlled Conditions (Hatchery, Nursery, Farm, or Experimental Facility)",
+        "id": "tech_dev_9_13",
+        "questionText": "Protocols Standardized for Propagation of New Breed/Strain",
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -3530,8 +3538,8 @@
     ],
     "8": [
       {
-        "id": "tech_dev_9_9",
-        "questionText": "Target Traits Confirmed in Progeny (Growth, Disease Resistance, Environmental Tolerance)",
+        "id": "tech_dev_9_14",
+        "questionText": "Stable and Consistent Breeding Achieved at Industry Scale",
         "trlLevel": 8,
         "category": "Technology Development Status",
         "type": "checkbox",
@@ -3565,12 +3573,12 @@
     ],
     "9": [
       {
-        "id": "tech_dev_9_10",
-        "questionText": "Stable Lines/Strain or Family Groups Selected",
+        "id": "tech_dev_9_15",
+        "questionText": "Fully Commercialized with Documented Royalty Income",
         "trlLevel": 9,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "The new animal breed or genetic resource is fully commercialized, making it commercially available to target users, and generating royalty income."
       }
     ]
   }
