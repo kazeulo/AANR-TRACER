@@ -1,139 +1,241 @@
 "use client";
 
+/*
+This component renders the TRACER Category Analysis section.
+It shows:
+• Radar chart of category progress
+• Progress bars per category
+• Strongest and focus areas
+• Insight narrative summarizing strengths and gaps
+*/
+
 import { useMemo } from "react";
 import { QuestionItem } from "../../utils/trlCalculator";
 import { categoryOrder } from "../../utils/helperConstants";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────
+// Types
+// ─────────────────────────────────────────────────────────────
+
+/*
+Represents the calculated progress for a single category
+after evaluating answered vs remaining questions.
+*/
 interface CategoryScore {
-  category:   string;
-  answered:   number;
-  total:      number;
-  percent:    number;
-  label:      "Strong" | "Moderate" | "Needs Work" | "Not Started";
-  color:      string;
-  bgColor:    string;
-  borderColor:string;
+  category: string;        // category name
+  answered: number;        // number of completed questions
+  total: number;           // total questions in category
+  percent: number;         // completion percentage
+  label: "Strong" | "Moderate" | "Needs Work" | "Not Started"; // qualitative label
+  color: string;           // label text color
+  bgColor: string;         // label background color
+  borderColor: string;     // label border color
 }
 
+
+/*
+Props passed into the component from the TRACER results page.
+*/
 interface Props {
-  completedQuestions: QuestionItem[];
-  lackingToLevel9:    QuestionItem[];
-  completedTRL:       number;
-  narrative?:         string;  // AI-generated strength/gap paragraph
+  completedQuestions: QuestionItem[];  // questions the user satisfied
+  lackingToLevel9: QuestionItem[];     // remaining questions needed for TRL 9
+  completedTRL: number;                // user's calculated TRACER level
+  narrative?: string;                  // optional AI-generated narrative
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────
+// Helper Functions
+// ─────────────────────────────────────────────────────────────
+
+/*
+Converts percentage completion into a qualitative status label.
+*/
 function getLabel(pct: number): CategoryScore["label"] {
   if (pct >= 75) return "Strong";
   if (pct >= 40) return "Moderate";
-  if (pct > 0)   return "Needs Work";
+  if (pct > 0) return "Needs Work";
   return "Not Started";
 }
 
-function getLabelStyle(label: CategoryScore["label"]): {
-  color: string; bgColor: string; borderColor: string;
-} {
+
+/*
+Returns styling colors for each label state.
+Used for badges beside each category.
+*/
+function getLabelStyle(label: CategoryScore["label"]) {
   switch (label) {
-    case "Strong":      return { color: "#166534", bgColor: "#dcfce7", borderColor: "#86efac" };
-    case "Moderate":    return { color: "#92400e", bgColor: "#fef3c7", borderColor: "#fcd34d" };
-    case "Needs Work":  return { color: "#9a3412", bgColor: "#ffedd5", borderColor: "#fdba74" };
-    case "Not Started": return { color: "#6b7280", bgColor: "#f3f4f6", borderColor: "#d1d5db" };
+    case "Strong":
+      return { color: "#166534", bgColor: "#dcfce7", borderColor: "#86efac" };
+
+    case "Moderate":
+      return { color: "#92400e", bgColor: "#fef3c7", borderColor: "#fcd34d" };
+
+    case "Needs Work":
+      return { color: "#9a3412", bgColor: "#ffedd5", borderColor: "#fdba74" };
+
+    case "Not Started":
+      return { color: "#6b7280", bgColor: "#f3f4f6", borderColor: "#d1d5db" };
   }
 }
 
+
+/*
+Returns the progress bar color based on completion.
+*/
 function getBarColor(pct: number): string {
   if (pct >= 75) return "#4aa35a";
   if (pct >= 40) return "#f59e0b";
-  if (pct > 0)   return "#f97316";
+  if (pct > 0) return "#f97316";
   return "#d1d5db";
 }
 
-// Friendly short names for use in prose
+
+/*
+Friendly category names used in narrative sentences.
+These are easier to read than the full titles.
+*/
 const PROSE_NAMES: Record<string, string> = {
-  "Technology Development Status":                 "technology development",
-  "Market and Pre-commercialization Preparedness": "market and pre-commercialization preparedness",
-  "Intellectual Property Protection Status":       "intellectual property protection",
-  "Industry Validation and Adoption Status":       "industry validation and adoption",
-  "Regulatory Compliance Status":                  "regulatory compliance",
+  "Technology Development Status": "technology development",
+  "Market and Pre-commercialization Preparedness":
+    "market and pre-commercialization preparedness",
+  "Intellectual Property Protection Status":
+    "intellectual property protection",
+  "Industry Validation and Adoption Status":
+    "industry validation and adoption",
+  "Regulatory Compliance Status": "regulatory compliance",
 };
 
-// Highest TRL level that has at least one completed question in a category
-function highestLevelInCategory(category: string, completedQuestions: QuestionItem[]): number {
+
+/*
+Finds the highest TRACER level achieved in a category
+based on completed questions.
+*/
+function highestLevelInCategory(
+  category: string,
+  completedQuestions: QuestionItem[]
+): number {
   const levels = completedQuestions
-    .filter(q => q.category === category)
-    .map(q => q.trlLevel);
+    .filter((q) => q.category === category)
+    .map((q) => q.trlLevel);
+
   return levels.length > 0 ? Math.max(...levels) : 0;
 }
 
+
+/*
+Builds the natural-language insight paragraph.
+
+Logic:
+1. Identify strongest category (highest TRACER level reached)
+2. Identify focus category (lowest level with progress)
+3. Determine fully-completed categories
+4. Construct readable narrative explaining strengths and next focus
+*/
 function buildInsight(
   scores: CategoryScore[],
   completedQuestions: QuestionItem[]
 ): string {
-  // Strength = category with the HIGHEST TRACER level reached
-  // Focus    = category with the LOWEST TRACER level reached,
-  //            among those with progress but NOT fully completed
-  const withLevels = scores.map(s => ({
-    category:     s.category,
+
+  const withLevels = scores.map((s) => ({
+    category: s.category,
     highestLevel: highestLevelInCategory(s.category, completedQuestions),
-    isComplete:   s.total > 0 && s.answered === s.total,
+    isComplete: s.total > 0 && s.answered === s.total,
   }));
 
-  const withProgress    = withLevels.filter(s => s.highestLevel > 0);
-  const allZero         = withProgress.length === 0;
+
+  const withProgress = withLevels.filter((s) => s.highestLevel > 0);
+  const allZero = withProgress.length === 0;
+
 
   const strengthEntry = allZero
     ? withLevels[0]
-    : withLevels.reduce((a, b) => b.highestLevel > a.highestLevel ? b : a);
+    : withLevels.reduce((a, b) =>
+        b.highestLevel > a.highestLevel ? b : a
+      );
 
-  // Exclude fully-completed categories from focus — they need no attention
-  const focusCandidates = withProgress.filter(s => !s.isComplete);
+
+  const focusCandidates = withProgress.filter((s) => !s.isComplete);
+
 
   const focusEntry = allZero
     ? withLevels[withLevels.length - 1]
     : focusCandidates.length > 0
-      ? focusCandidates.reduce((a, b) => b.highestLevel < a.highestLevel ? b : a)
-      : null;   // all categories with progress are fully complete
+    ? focusCandidates.reduce((a, b) =>
+        b.highestLevel < a.highestLevel ? b : a
+      )
+    : null;
 
-  const strengthName = PROSE_NAMES[strengthEntry.category] ?? strengthEntry.category;
-  const focusName    = focusEntry ? (PROSE_NAMES[focusEntry.category] ?? focusEntry.category) : null;
 
-  // All fully-completed categories (answered === total, total > 0)
-  const completedCategories = withLevels.filter(s => s.isComplete && s.highestLevel > 0);
+  const strengthName =
+    PROSE_NAMES[strengthEntry.category] ?? strengthEntry.category;
 
-  // Build the opening sentence — list ALL completed categories, not just the strongest
+  const focusName = focusEntry
+    ? PROSE_NAMES[focusEntry.category] ?? focusEntry.category
+    : null;
+
+
+  const completedCategories = withLevels.filter(
+    (s) => s.isComplete && s.highestLevel > 0
+  );
+
   let insight = "";
 
+
+  /*
+  Construct narrative depending on how many categories are complete
+  */
   if (completedCategories.length === 0) {
-    // Nothing fully complete yet — key strength phrasing only
+
     insight += `Your key strength lies in ${strengthName}`;
+
     if (strengthEntry.highestLevel > 0) {
       insight += `, already addressing requirements aligned with TRACER Level ${strengthEntry.highestLevel}.`;
     } else {
       insight += `.`;
     }
+
   } else if (completedCategories.length === 1) {
-    const name = PROSE_NAMES[completedCategories[0].category] ?? completedCategories[0].category;
+
+    const name =
+      PROSE_NAMES[completedCategories[0].category] ??
+      completedCategories[0].category;
+
     insight += `Your key strength lies in ${strengthName}. You have fully addressed all requirements under ${name} (up to TRACER Level ${completedCategories[0].highestLevel}).`;
+
   } else {
-    // Join list naturally: "A, B, and C"
-    const names = completedCategories.map(s => PROSE_NAMES[s.category] ?? s.category);
-    const listed = names.length === 2
-      ? `${names[0]} and ${names[1]}`
-      : `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+
+    const names = completedCategories.map(
+      (s) => PROSE_NAMES[s.category] ?? s.category
+    );
+
+    const listed =
+      names.length === 2
+        ? `${names[0]} and ${names[1]}`
+        : `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+
     insight += `Your key strength lies in ${strengthName}. You have fully addressed requirements across ${listed}.`;
   }
 
-  // Focus sentence
+
+  /*
+  Focus recommendation sentence
+  */
   if (!focusEntry || allZero) {
+
     insight += ` All active categories have been fully addressed — continue building across any remaining areas to reach full commercialization.`;
+
   } else if (focusEntry.category === strengthEntry.category) {
+
     insight += ` Continue building across all areas to move closer to successful commercialization.`;
+
   } else if (focusEntry.highestLevel > 0) {
+
     insight += ` To move closer to successful commercialization, focus your efforts on ${focusName}, currently at TRACER Level ${focusEntry.highestLevel}.`;
+
   } else {
+
     insight += ` To move closer to successful commercialization, focus your efforts on ${focusName} — this area has no completed requirements yet and will be critical in later stages.`;
   }
 
@@ -141,96 +243,133 @@ function buildInsight(
 
   return insight;
 }
+
+
+/*
+Short category names used around the radar chart
+to prevent long labels from overflowing.
+*/
 const SHORT_NAMES: Record<string, string> = {
-  "Technology Development Status":                  "Tech Dev",
-  "Market and Pre-commercialization Preparedness":  "Market",
-  "Intellectual Property Protection Status":        "IP",
-  "Industry Validation and Adoption Status":        "Industry",
-  "Regulatory Compliance Status":                   "Regulatory",
+  "Technology Development Status": "Tech Dev",
+  "Market and Pre-commercialization Preparedness": "Market",
+  "Intellectual Property Protection Status": "IP",
+  "Industry Validation and Adoption Status": "Industry",
+  "Regulatory Compliance Status": "Regulatory",
 };
 
-// ─── Radar Chart ──────────────────────────────────────────────────────────────
 
+
+// ─────────────────────────────────────────────────────────────
+// Radar Chart Component
+// ─────────────────────────────────────────────────────────────
+
+/*
+Displays category performance in a radar/spider chart.
+
+Each axis = category
+Distance from center = completion percentage
+*/
 function RadarChart({ scores }: { scores: CategoryScore[] }) {
-  const size    = 220;
-  const cx      = size / 2;
-  const cy      = size / 2;
-  const radius  = 80;
-  const n       = scores.length;
 
-  // Compute polygon points for a given scale (0-1)
+  const size = 220;
+  const cx = size / 2;
+  const cy = size / 2;
+  const radius = 80;
+  const n = scores.length;
+
+  /*
+  Calculates polygon coordinates for grid rings
+  */
   function polygonPoints(scale: number): string {
-    return scores.map((_, i) => {
-      const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
-      const r     = radius * scale;
-      return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-    }).join(" ");
+    return scores
+      .map((_, i) => {
+        const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
+        const r = radius * scale;
+
+        return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+      })
+      .join(" ");
   }
 
-  // Axis endpoints
+
+  /*
+  Axis endpoints for category lines
+  */
   const axes = scores.map((s, i) => {
     const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
+
     return {
-      x:     cx + radius * Math.cos(angle),
-      y:     cy + radius * Math.sin(angle),
+      x: cx + radius * Math.cos(angle),
+      y: cy + radius * Math.sin(angle),
       label: SHORT_NAMES[s.category] ?? s.category,
-      pct:   s.percent,
+      pct: s.percent,
       color: getBarColor(s.percent),
     };
   });
 
-  // Data polygon
-  const dataPoints = scores.map((s, i) => {
-    const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
-    const r     = radius * (s.percent / 100);
-    return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-  }).join(" ");
 
-  // Label positioning — push labels further out
+  /*
+  Data polygon showing user's progress
+  */
+  const dataPoints = scores
+    .map((s, i) => {
+      const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
+      const r = radius * (s.percent / 100);
+
+      return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+    })
+    .join(" ");
+
+
+  /*
+  Positions labels slightly outside radar radius
+  */
   const labelRadius = radius + 28;
+
   const labels = scores.map((s, i) => {
     const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
+
     return {
-      x:     cx + labelRadius * Math.cos(angle),
-      y:     cy + labelRadius * Math.sin(angle),
+      x: cx + labelRadius * Math.cos(angle),
+      y: cy + labelRadius * Math.sin(angle),
       label: SHORT_NAMES[s.category] ?? s.category,
-      pct:   s.percent,
+      pct: s.percent,
     };
   });
 
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
 
-      {/* Grid rings */}
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+
+      {/* grid rings */}
       {[0.25, 0.5, 0.75, 1].map(scale => (
         <polygon
           key={scale}
           points={polygonPoints(scale)}
           fill="none"
           stroke="#e8e4dc"
-          strokeWidth="1"
         />
       ))}
 
-      {/* Axis lines */}
+      {/* axis lines */}
       {axes.map((ax, i) => (
         <line key={i} x1={cx} y1={cy} x2={ax.x} y2={ax.y}
-          stroke="#e8e4dc" strokeWidth="1" />
+          stroke="#e8e4dc" />
       ))}
 
-      {/* Data fill */}
+      {/* radar data polygon */}
       <polygon
         points={dataPoints}
         fill="rgba(74,163,90,0.15)"
         stroke="#4aa35a"
         strokeWidth="2"
-        strokeLinejoin="round"
       />
 
-      {/* Data points */}
+      {/* data points */}
       {scores.map((s, i) => {
         const angle = (i * 2 * Math.PI) / n - Math.PI / 2;
-        const r     = radius * (s.percent / 100);
+        const r = radius * (s.percent / 100);
+
         return (
           <circle
             key={i}
@@ -239,30 +378,23 @@ function RadarChart({ scores }: { scores: CategoryScore[] }) {
             r={4}
             fill={getBarColor(s.percent)}
             stroke="white"
-            strokeWidth="1.5"
           />
         );
       })}
 
-      {/* Labels */}
+      {/* axis labels */}
       {labels.map((l, i) => (
         <text
           key={i}
           x={l.x}
           y={l.y}
           textAnchor="middle"
-          dominantBaseline="middle"
           fontSize="9"
-          fontFamily="DM Sans, sans-serif"
-          fontWeight="600"
-          fill="#4a5568"
         >
           {l.label}
         </text>
       ))}
 
-      {/* Center dot */}
-      <circle cx={cx} cy={cy} r={3} fill="#e8e4dc" />
     </svg>
   );
 }

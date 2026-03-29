@@ -1,8 +1,9 @@
-"use client";
+"use client"; 
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAssessment } from "../assessment/AssessmentContext";
 
 const links = [
   { href: "/", label: "Home" },
@@ -15,6 +16,8 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { clearData } = useAssessment();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,6 +26,11 @@ export default function Header() {
   }, []);
 
   useEffect(() => { setIsOpen(false); }, [pathname]);
+
+  const handleStartAssessment = () => {
+    clearData();
+    router.push("/assessment/disclaimer");
+  };
 
   return (
     <>
@@ -62,12 +70,12 @@ export default function Header() {
           </div>
 
           {/* Desktop CTA */}
-          <Link
-            href="/assessment/disclaimer"
+          <button
+            onClick={handleStartAssessment}
             className="hidden md:inline-flex items-center text-[13px] font-semibold text-white bg-[var(--color-accent)] px-5 py-2.5 rounded-full flex-shrink-0 shadow-[0_4px_16px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(74,163,90,0.45)] transition-all duration-200"
           >
             Start Assessment
-          </Link>
+          </button>
 
           {/* Hamburger */}
           <button
@@ -103,12 +111,12 @@ export default function Header() {
               </Link>
             ))}
             <div className="h-px bg-[var(--color-bg-card)]/[0.05] my-2" />
-            <Link
-              href="/assessment/disclaimer"
+            <button
+              onClick={handleStartAssessment}
               className="flex items-center justify-center text-sm font-semibold text-white bg-[var(--color-accent)] px-4 py-3.5 rounded-[10px] hover:bg-[var(--color-accent-hover)] transition-colors mt-1"
             >
               Start Assessment →
-            </Link>
+            </button>
           </div>
         </div>
       </nav>

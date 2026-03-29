@@ -7,6 +7,8 @@ import BackToTop from "./components/BacktoTop";
 import FontSizeControl from "./utils/fontZoom/FontsizeControl";
 import { FontSizeProvider } from "./utils/fontZoom/FontsizeContext";
 
+import { AssessmentProvider } from "./assessment/AssessmentContext";
+
 // components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -30,13 +32,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <FontSizeProvider>
-          <Header />
-          {children}
-          <Footer />
-          <FontSizeControl />
-          <BackToTop />
-      </FontSizeProvider>
+        <AssessmentProvider>
+          <FontSizeProvider>
+            <Header />
+            {children}
+            <Footer />
+            <FontSizeControl />
+            <BackToTop />
+        </FontSizeProvider>
+      </AssessmentProvider>
       </body>
     </html>
   );

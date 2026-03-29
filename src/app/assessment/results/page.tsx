@@ -26,6 +26,7 @@ import CategoryAnalysis     from "./CategoryAnalysis";
 // ─── Skeleton shimmer ─────────────────────────────────────────────────────────
 
 function PageLoader() {
+
   const steps = [
     "Calculating your TRACER Level score\u2026",
     "Analysing your assessment answers\u2026",
@@ -218,7 +219,7 @@ function CongratulatoryHero({
               <div className="h-3 w-4/5 max-w-[380px] rounded bg-white/10 animate-pulse" />
             </div>
           ) : header.explanation ? (
-            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[520px]">
+            <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[650px]">
               {header.explanation}
             </p>
           ) : null}

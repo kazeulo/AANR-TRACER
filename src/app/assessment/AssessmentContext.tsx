@@ -2,7 +2,7 @@
 
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from "react";
 import type { AnswerValue } from "../utils/trlCalculator";
 export type { AnswerValue, MultiConditionalAnswer, DropdownAnswer } from "../utils/trlCalculator";
 
@@ -78,11 +78,12 @@ function saveToSession(data: AssessmentData) {
 const AssessmentContext = createContext<AssessmentContextType | undefined>(undefined);
 
 export function AssessmentProvider({ children }: { children: ReactNode }) {
-  const [data, setData] = useState<AssessmentData>(DEFAULT_DATA);
+  const [data, setData]         = useState<AssessmentData>(DEFAULT_DATA);
   const [hydrated, setHydrated] = useState(false);
+  const isClearing              = useRef(false);   // ← prevents re-save after clear
 
   const [lastCategoryIndex, setLastCategoryIndex] = useState(0);
-  const [lastPage, setLastPage] = useState(0);
+  const [lastPage, setLastPage]                   = useState(0);
 
   // Load from sessionStorage once on mount (client only)
   useEffect(() => {
@@ -91,9 +92,15 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     setHydrated(true);
   }, []);
 
-  // Persist to sessionStorage whenever data changes
+  // Persist to sessionStorage whenever data changes —
+  // but skip the write if we're in the middle of a clear.
   useEffect(() => {
-    if (hydrated) saveToSession(data);
+    if (!hydrated) return;
+    if (isClearing.current) {
+      isClearing.current = false;
+      return;
+    }
+    saveToSession(data);
   }, [data, hydrated]);
 
   const updateData = (values: Partial<AssessmentData>) => {
@@ -101,7 +108,11 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
   };
 
   const clearData = () => {
+    // Set the flag BEFORE setState so the persist effect skips the next write
+    isClearing.current = true;
     setData(DEFAULT_DATA);
+    setLastCategoryIndex(0);
+    setLastPage(0);
     if (typeof window !== "undefined") {
       sessionStorage.removeItem(SESSION_KEY);
     }
