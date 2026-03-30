@@ -88,8 +88,19 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
 
   // Load from sessionStorage once on mount (client only)
   useEffect(() => {
-    const saved = loadFromSession();
-    setData(saved);
+    // If navigated with ?fresh=1, always start clean
+    const isFresh = typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("fresh") === "1";
+
+    if (isFresh) {
+      sessionStorage.removeItem("aanr_tracer_assessment");
+      setData(DEFAULT_DATA);
+      setLastCategoryIndex(0);
+      setLastPage(0);
+    } else {
+      const saved = loadFromSession();
+      setData(saved);
+    }
     setHydrated(true);
   }, []);
 

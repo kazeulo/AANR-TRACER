@@ -28,8 +28,13 @@ export default function Header() {
   useEffect(() => { setIsOpen(false); }, [pathname]);
 
   const handleStartAssessment = () => {
-    clearData();
-    router.push("/assessment/disclaimer");
+    try {
+      sessionStorage.removeItem("aanr_tracer_assessment");
+      Object.keys(sessionStorage)
+        .filter(k => k.startsWith("tracer_"))
+        .forEach(k => sessionStorage.removeItem(k));
+    } catch { /* ignore */ }
+    router.push("/assessment/disclaimer?fresh=1");
   };
 
   return (
