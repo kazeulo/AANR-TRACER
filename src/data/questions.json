@@ -555,7 +555,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_1",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -916,7 +916,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_2",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -1275,7 +1275,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_3",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -1604,7 +1604,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_4",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -1941,7 +1941,7 @@
         "toolTip": "The initial phase of system or product testing conducted internally by the development team or a limited group of users in a controlled environment, aimed at identifying bugs, functional issues, and usability problems."
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_5",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -2286,7 +2286,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_6",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -2371,7 +2371,7 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_6_13",
+        "id": "tech_dev_6_15",
         "questionText": "Prototype Material or Product Fabricated",
         "trlLevel": 6,
         "category": "Technology Development Status",
@@ -2530,7 +2530,7 @@
     ],
     "9": [
       {
-        "id": "tech_dev_6_13",
+        "id": "tech_dev_6_17",
         "questionText": "Fully commercialized with documented royalty income",
         "trlLevel": 9,
         "category": "Technology Development Status",
@@ -2655,7 +2655,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_7",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -3024,7 +3024,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_8",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
@@ -3353,7 +3353,7 @@
         ]
       },
       {
-        "id": "precom_docs_0",
+        "id": "precom_docs_9",
         "questionText": "With Available Pre-commercialization Documents",
         "trlLevel": 4,
         "category": "Market and Pre-commercialization Preparedness",
