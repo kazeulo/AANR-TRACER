@@ -187,7 +187,7 @@ function dropdownLackingItems(
 
   return [...byLevel.values()].map(o => ({
     id:           `${q.id}__lvl${o.trlSatisfied}`,
-    questionText: o.label,
+    questionText: `${q.questionText} — ${o.label}`,
     trlLevel:     o.trlSatisfied,
     category:     q.category,
     type:         "checkbox" as const,
