@@ -17,7 +17,7 @@ export default function Disclaimer() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             Disclaimer
           </div>
-          <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className=" text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             Before you begin
           </h1>
           <p className="text-[14px] text-[var(--color-text-faint)] font-light max-w-sm mx-auto leading-relaxed">

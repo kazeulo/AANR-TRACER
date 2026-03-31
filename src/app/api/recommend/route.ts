@@ -4,13 +4,13 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 const MODEL          = "gpt-4o-mini";
 
-// ─── Hard limits ──────────────────────────────────────────────────────────────
+//    ─ Hard limits   ─
 const MAX_TOKENS_ALLOWED  = 2500;   // never let a caller request more than this
 const MAX_MESSAGES        = 3;      // system + user
 const MAX_MESSAGE_LENGTH  = 8000;   // chars per message — ~2000 tokens worst case
 const MAX_BODY_BYTES      = 32_000; // ~32KB total request body cap
 
-// ─── Simple in-memory rate limiter (per IP) ───────────────────────────────────
+//    ─ Simple in-memory rate limiter (per IP)    ───────────────────────────────
 // Allows 10 requests per minute per IP. Resets on server restart.
 // For production at scale, replace with Upstash Redis rate limiter.
 const ipRequestLog = new Map<string, { count: number; resetAt: number }>();
@@ -31,7 +31,7 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-// ─── Route handler ────────────────────────────────────────────────────────────
+//    ─ Route handler    ────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
 
   // 1. API key check

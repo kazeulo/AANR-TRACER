@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ExportFormData } from "./UsePDFExport";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+//    ─ Types ─
 
 export interface AssessmentMeta {
   technologyName: string;
@@ -21,7 +21,7 @@ interface ExportModalProps {
 
 type Mode = "download" | "email" | "both";
 
-// ─── Field component ──────────────────────────────────────────────────────────
+//    ─ Field component    ──────────────────────────────────────────────────────
 
 function Field({
   id, label, placeholder, required = false, type = "text",
@@ -58,7 +58,7 @@ function Field({
   );
 }
 
-// ─── Mode toggle pill ─────────────────────────────────────────────────────────
+//    ─ Mode toggle pill    ─────────────────────────────────────────────────────
 
 function ModePill({ active, onClick, icon, label }: {
   active: boolean; onClick: () => void;
@@ -79,7 +79,7 @@ function ModePill({ active, onClick, icon, label }: {
   );
 }
 
-// ─── Main modal ───────────────────────────────────────────────────────────────
+//    ─ Main modal      
 
 export default function ExportModal({ onClose, onExport, exporting, meta }: ExportModalProps) {
   const [mode, setMode] = useState<Mode>("download");
@@ -157,7 +157,7 @@ export default function ExportModal({ onClose, onExport, exporting, meta }: Expo
         {/* Scrollable body */}
         <div className="px-7 py-6 overflow-y-auto flex-1">
 
-          {/* ── Success screen ── */}
+          {/*     Success screen     */}
           {done ? (
             <div className="flex flex-col items-center text-center py-6 gap-5">
 
@@ -226,7 +226,7 @@ export default function ExportModal({ onClose, onExport, exporting, meta }: Expo
               </div>
             </div>
           ) : (
-          <> {/* ── Form ── */}
+          <> {/*     Form     */}
 
           <h2 className="font-['DM_Serif_Display',serif] text-[22px] text-[#0f2e1a] mb-1">Export Report</h2>
           <p className="text-[13px] text-[#8a9a94] font-light mb-5">

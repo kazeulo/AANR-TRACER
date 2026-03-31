@@ -795,7 +795,7 @@ export default function QuestionnairePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             Assessment · Category {currentCategoryIndex + 1}
           </div>
-          <h1 className="font-['DM_Serif_Display'] text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className=" text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             {currentCategory}
           </h1>
           {categoryDescriptions[currentCategory] && (

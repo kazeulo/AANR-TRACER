@@ -10,7 +10,7 @@ import {
 } from "./FetchRecommendation";
 import { TRACER_DESCRIPTIONS } from "../../utils/TRACERdescriptions";
 
-// ─── Markdown bold renderer ───────────────────────────────────────────────────
+//    ─ Markdown bold renderer    ───────────────────────────────────────────────
 function Md({ text }: { text: string }) {
   const parts = text.split(/\*\*(.*?)\*\*/g);
   return (
@@ -24,7 +24,7 @@ function Md({ text }: { text: string }) {
   );
 }
 
-// ─── Roadmap renderer ─────────────────────────────────────────────────────────
+//    ─ Roadmap renderer    ─────────────────────────────────────────────────────
 function RoadmapSteps({
   roadmap,
   closing,
@@ -143,13 +143,13 @@ function RoadmapSteps({
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+//    ─ Main component    ───────────────────────────────────────────────────────
 interface Props extends RecommendationInput {
   initialSteps: AISteps | null;
   initialError?: string;
 }
 
-// ─── Static fallback when AI is unavailable ───────────────────────────────────
+//    ─ Static fallback when AI is unavailable    ───────────────────────────────
 function FallbackSteps({
   completedTRL,
   technologyType,

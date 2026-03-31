@@ -21,7 +21,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const INPUT     = path.resolve(__dirname, "../src/data/questions.json");
 const OUTPUT    = path.resolve(__dirname, "../questions-export.csv");
 
-// ── Load ──────────────────────────────────────────────────────────────────────
+//     Load ───
 if (!fs.existsSync(INPUT)) {
   console.error(`   Could not find ${INPUT}`);
   console.error(`    Run this script from your project root.`);
@@ -30,7 +30,7 @@ if (!fs.existsSync(INPUT)) {
 
 const data = JSON.parse(fs.readFileSync(INPUT, "utf8"));
 
-// ── CSV helpers ───────────────────────────────────────────────────────────────
+//     CSV helpers      
 
 /** Wrap a value in quotes and escape any internal quotes. */
 function cell(val) {
@@ -44,7 +44,7 @@ function row(...values) {
   return values.map(cell).join(",");
 }
 
-// ── Build rows ────────────────────────────────────────────────────────────────
+//     Build rows      ─
 
 const HEADERS = [
   "Technology Type",
@@ -70,7 +70,7 @@ for (const [techType, levels] of Object.entries(data)) {
     for (const q of questions) {
       const qType = q.type ?? "checkbox";
 
-      // ── Format options column ─────────────────────────────────────────────
+      //     Format options column    ─────────────────────────────────────────
       let optionsStr = "";
       let checklistStr = "";
 
@@ -113,7 +113,7 @@ for (const [techType, levels] of Object.entries(data)) {
   }
 }
 
-// ── Write ─────────────────────────────────────────────────────────────────────
+//     Write ──
 fs.writeFileSync(OUTPUT, rows.join("\n"), "utf8");
 
 const totalRows = rows.length - 1; // exclude header

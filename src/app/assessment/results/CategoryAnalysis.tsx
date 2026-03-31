@@ -1,22 +1,10 @@
 "use client";
 
-/*
-This component renders the TRACER Category Analysis section.
-It shows:
-• Radar chart of category progress
-• Progress bars per category
-• Strongest and focus areas
-• Insight narrative summarizing strengths and gaps
-*/
-
 import { useMemo } from "react";
 import { QuestionItem } from "../../utils/trlCalculator";
 import { categoryOrder } from "../../utils/helperConstants";
 
-
-// ─────────────────────────────────────────────────────────────
 // Types
-// ─────────────────────────────────────────────────────────────
 
 interface CategoryScore {
   category: string;
@@ -37,10 +25,8 @@ interface Props {
 }
 
 
-// ─────────────────────────────────────────────────────────────
+ 
 // Helper Functions
-// ─────────────────────────────────────────────────────────────
-
 function getLabel(pct: number): CategoryScore["label"] {
   if (pct >= 75) return "Strong";
   if (pct >= 40) return "Moderate";
@@ -146,9 +132,9 @@ const SHORT_NAMES: Record<string, string> = {
 };
 
 
-// ─────────────────────────────────────────────────────────────
+ 
 // Radar Chart
-// ─────────────────────────────────────────────────────────────
+ 
 
 function RadarChart({ scores }: { scores: CategoryScore[] }) {
   const size = 220, cx = 110, cy = 110, radius = 80, n = scores.length;
@@ -209,7 +195,7 @@ function RadarChart({ scores }: { scores: CategoryScore[] }) {
 }
 
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// ─ Main Component ─────────────────────────────────────────────────────────
 
 export default function CategoryAnalysis({
   completedQuestions,
@@ -230,10 +216,7 @@ export default function CategoryAnalysis({
     });
   }, [completedQuestions, lackingToLevel9]);
 
-  // ── Badge logic ─────────────────────────────────────────────────────────────
-  // Core categories are prioritized for Strongest/Focus badges.
-  // IP and Regulatory only participate as fallbacks — they have narrow TRL ranges
-  // (IP caps at 4, Regulatory starts at 7) which would skew the badges unfairly.
+  // Badge logic   
 
   const CORE_CATEGORIES = new Set([
     "Technology Development Status",

@@ -5,7 +5,7 @@ import { TRLResult, QuestionItem } from "../../../utils/trlCalculator";
 import { RoadmapGroup } from "../FetchRecommendation";
 import { TRACER_DESCRIPTIONS } from "../../../utils/TRACERdescriptions";
 
-/* ─── Types ───────────────────────────────────────────────────────────────── */
+/*    ─ Types  */
 
 export interface ExportFormData {
   name:         string;
@@ -25,7 +25,7 @@ export interface PDFContentProps {
   closing?:         string;
 }
 
-/* ─── TRL Maps ────────────────────────────────────────────────────────────── */
+/*    ─ TRL Maps   ─ */
 
 export const TRL_LABELS: Record<number, string> = {
   1: "Concept & Market Definition",
@@ -54,7 +54,7 @@ export const TRL_COLORS: Record<number, string> = {
   5: "#10b981", 6: "#06b6d4", 7: "#3b82f6", 8: "#8b5cf6", 9: "#22c55e",
 };
 
-/* ─── Hook ────────────────────────────────────────────────────────────────── */
+/*    ─ Hook ─ */
 
 export function usePDFExport() {
   const [exporting,  setExporting]  = useState(false);
@@ -69,7 +69,7 @@ export function usePDFExport() {
   return { pdfRef, exporting, setExporting, exportForm, triggerExport, clearForm };
 }
 
-/* ─── PDF Document (react-pdf) ────────────────────────────────────────────── */
+/*    ─ PDF Document (react-pdf)    ────────────────────────────────────────── */
 // Loaded dynamically so it never runs on the server.
 // Call generateAndDownloadPDF() from a client component.
 
@@ -78,10 +78,10 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
   const { pdf, Document, Page, Text, View, Image, StyleSheet, Font } =
     await import("@react-pdf/renderer");
 
-  // ── Fonts ──────────────────────────────────────────────────────────────────
+  //     Fonts ─
   // Use built-in Helvetica
 
-  // ── Styles ─────────────────────────────────────────────────────────────────
+  //     Styles 
   const s = StyleSheet.create({
     page: {
       fontFamily: "Helvetica",
@@ -93,7 +93,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       backgroundColor: "#ffffff",
     },
 
-    // ── Header ──
+    //     Header    
     headerRow: {
       flexDirection: "row",
       alignItems: "center",
@@ -122,7 +122,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       objectFit: "contain",
     },
 
-    // ── Dividers ──
+    //     Dividers    
     hrThick: {
       borderBottomWidth: 1.5,
       borderBottomColor: "#111111",
@@ -134,7 +134,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       marginVertical: 8,
     },
 
-    // ── Report title ──
+    //     Report title    
     reportTitle: {
       fontSize: 18,
       fontFamily: "Helvetica-Bold",
@@ -148,7 +148,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       marginBottom: 10,
     },
 
-    // ── Section labels ──
+    //     Section labels    
     sectionLabel: {
       fontSize: 8,
       fontFamily: "Helvetica-Bold",
@@ -159,7 +159,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       marginTop: 14,
     },
 
-    // ── Field rows ──
+    //     Field rows    
     fieldRow: {
       flexDirection: "row",
       marginBottom: 4,
@@ -179,7 +179,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       lineHeight: 1.5,
     },
 
-    // ── TRACER level badge ──
+    //     TRACER level badge    
     tracerBadge: {
       flexDirection: "row",
       alignItems: "flex-start",
@@ -211,7 +211,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       color: "#111111",
     },
 
-    // ── Question sections ──
+    //     Question sections    
     trlLevelHeader: {
       fontSize: 9,
       fontFamily: "Helvetica-Bold",
@@ -242,7 +242,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       lineHeight: 1.5,
     },
 
-    // ── Roadmap ──
+    //     Roadmap    
     roadmapGroupHeader: {
       flexDirection: "row",
       alignItems: "center",
@@ -313,7 +313,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       fontStyle: "italic" as const,
     },
 
-    // ── Footer ──
+    //     Footer    
     footer: {
       position: "absolute",
       bottom: 24,
@@ -331,7 +331,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     },
   });
 
-  // ── Helper components ──────────────────────────────────────────────────────
+  //     Helper components    ──────────────────────────────────────────────────
 
   function FieldRow({ label, value }: { label: string; value?: string }) {
     if (!value) return null;
@@ -414,7 +414,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     );
   }
 
-  // ── Build document ─────────────────────────────────────────────────────────
+  //     Build document    ─────────────────────────────────────────────────────
 
   const {
     result, techName, techType, techDescription, fundingSource,
@@ -439,7 +439,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     >
       <Page size="A4" style={s.page}>
 
-        {/* ── Header ── */}
+        {/*     Header     */}
         <View style={s.headerRow}>
           <Image
             style={s.logo}
@@ -457,13 +457,13 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hrThick} />
 
-        {/* ── Title ── */}
+        {/*     Title     */}
         <Text style={s.reportTitle}>TRACER Assessment Report</Text>
         <Text style={s.reportDate}>Generated on {dateStr}</Text>
 
         <View style={s.hr} />
 
-        {/* ── Technology Details ── */}
+        {/*     Technology Details     */}
         <Text style={s.sectionLabel}>Technology Details</Text>
         <View style={s.hr} />
         <FieldRow label="Technology Name:"    value={techName}        />
@@ -473,7 +473,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hr} />
 
-        {/* ── Assessment Results ── */}
+        {/*     Assessment Results     */}
         <Text style={s.sectionLabel}>Assessment Results</Text>
         <View style={s.hr} />
 
@@ -496,7 +496,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hr} />
 
-        {/* ── Assessment Taken By ── */}
+        {/*     Assessment Taken By     */}
         <Text style={s.sectionLabel}>Assessment Taken By</Text>
         <View style={s.hr} />
         <FieldRow label="Name:"          value={form.name}         />
@@ -506,7 +506,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hr} />
 
-        {/* ── Completed Requirements ── */}
+        {/*     Completed Requirements     */}
         <QuestionSection
           title="Completed Requirements"
           questions={completedQuestions}
@@ -515,7 +515,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={s.hr} />
 
-        {/* ── Commercialization Roadmap ── */}
+        {/*     Commercialization Roadmap     */}
         <RoadmapSection
           roadmap={roadmap ?? []}
           closing={closing}
@@ -525,7 +525,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         <View style={{ height: 24 }} />
 
-        {/* ── Footer (fixed at bottom of every page) ── */}
+        {/*     Footer (fixed at bottom of every page)     */}
         <View style={s.footer} fixed>
           <Text style={s.footerText}>AANR-TRACER · DOST-PCAARRD</Text>
           <Text style={s.footerText}
@@ -542,7 +542,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     </Document>
   );
 
-  // ── Build blob ────────────────────────────────────────────────────────────
+  //     Build blob    ────────────────────────────────────────────────────────
   const blob = await pdf(MyDoc).toBlob();
   return blob;
 }
@@ -570,7 +570,7 @@ export async function generatePDFAsBase64(props: PDFContentProps): Promise<strin
 }
 
 
-/* ─── Dummy PDFContent — kept so ResultsPage import doesn't break ─────────── */
+/*    ─ Dummy PDFContent — kept so ResultsPage import doesn't break    ─────── */
 // ResultsPage renders this into a hidden div; with react-pdf we no longer need
 // that div. Keep the export so the import compiles without changes.
 export function PDFContent(_props: PDFContentProps) {

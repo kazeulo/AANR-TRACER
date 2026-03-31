@@ -54,7 +54,7 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
         </div>
 
         <div className="px-7 py-7">
-          <h2 className="font-['DM_Serif_Display'] text-[22px] text-[var(--color-primary)] mb-1">Export as PDF</h2>
+          <h2 className=" text-[22px] text-[var(--color-primary)] mb-1">Export as PDF</h2>
           <p className="text-[13px] text-[var(--color-text-faint)] font-light mb-7">
             Your details will be included in the report header.
           </p>
@@ -115,7 +115,7 @@ export default function ExportModal({ onClose, onExport, exporting }: ExportModa
   );
 }
 
-// ─── Reusable field inside the modal ─────────────────────────────────────────
+//    ─ Reusable field inside the modal    ─────────────────────────────────────
 
 function Field({
   id, label, placeholder, required = false, type = "text",

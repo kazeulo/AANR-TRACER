@@ -29,7 +29,7 @@ export default function ScoreCards({
   return (
     <div className="bg-white border border-[#ede9e0] rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(15,46,26,0.06)]">
 
-      {/* ── Two score columns ── */}
+      {/*     Two score columns     */}
       <div className={`grid ${gap > 0 ? "sm:grid-cols-2" : "grid-cols-1"} divide-y sm:divide-y-0 sm:divide-x divide-[#f0ece3]`}>
 
         {/* Completed */}
@@ -93,7 +93,7 @@ export default function ScoreCards({
         )}
       </div>
 
-      {/* ── Progress bar ── */}
+      {/*     Progress bar     */}
       <div className="px-7 py-6 border-t border-[#f0ece3]">
         <div className="flex items-center gap-2 mb-4">
           <span className="w-1.5 h-1.5 rounded-full bg-[#4aa35a]" />
@@ -104,7 +104,7 @@ export default function ScoreCards({
         <TRLStepBar completed={completedTRL} achievable={achievableTRL} />
       </div>
 
-      {/* ── Gap notice ── */}
+      {/*     Gap notice     */}
       {gap > 0 && (
         <div className="mx-6 mb-6 px-5 py-4 rounded-xl bg-[#4aa35a]/[0.05] border border-[#4aa35a]/20 flex items-start gap-3">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4aa35a"
@@ -133,7 +133,7 @@ export default function ScoreCards({
         </div>
       )}
 
-      {/* ── At TRL 9 with pending items notice ── */}
+      {/*     At TRL 9 with pending items notice     */}
       {atNineWithPending && (
         <div className="mx-6 mb-6 px-5 py-4 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-3">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706"

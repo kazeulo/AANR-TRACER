@@ -53,7 +53,7 @@ export default function Terms() {
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
+          <h1 className=" text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             Terms &amp; <em className="text-[var(--color-accent)]">Definitions</em>
           </h1>
           <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
@@ -148,7 +148,7 @@ export default function Terms() {
                   <div className="w-12 h-12 bg-[#0f2e1a] rounded-[14px] flex items-center justify-center flex-shrink-0">
                     <TermIcon name={cat.icon} size={22} color="#4aa35a" />
                   </div>
-                  <h2 className="font-['DM_Serif_Display'] text-[26px] text-[var(--color-primary)] tracking-tight leading-[1.2]">
+                  <h2 className=" text-[26px] text-[var(--color-primary)] tracking-tight leading-[1.2]">
                     {cat.title}
                   </h2>
                 </div>

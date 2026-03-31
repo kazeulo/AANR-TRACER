@@ -18,7 +18,7 @@ export default function DataPrivacyNotice() {
             Data Privacy Notice
           </div>
 
-          <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className=" text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             Your data stays with you
           </h1>
           <p className="text-[14px] text-[var(--color-text-faint)] font-light max-w-sm mx-auto leading-relaxed">

@@ -21,7 +21,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-6 py-12 border-b border-[var(--white-15)]">
 
             <div className="max-w-500">
-              <div className="font-['DM_Serif_Display'] text-[32px] leading-none tracking-tight mb-3">
+              <div className=" text-[32px] leading-none tracking-tight mb-3">
                 AANR-<span className="text-[var(--color-accent)] italic">TRACER</span>
               </div>
               <p className="text-[13px] text-[var(--color-text-faintest)] font-light leading-relaxed max-w-xs">

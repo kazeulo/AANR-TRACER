@@ -24,7 +24,7 @@ import AIRecommendationCard from "./RecommendationCard";
 import ExportModal, { AssessmentMeta } from "./exportPDF/exportModal";
 import CategoryAnalysis     from "./CategoryAnalysis";
 
-// ─── Skeleton shimmer ─────────────────────────────────────────────────────────
+//    ─ Skeleton shimmer    ─────────────────────────────────────────────────────
 
 function PageLoader() {
 
@@ -243,7 +243,7 @@ function CongratulatoryHero({
   );
 }
 
-// ─── Main page ────────────────────────────────────────────────────────────────
+//    ─ Main page      ─
 
 export default function ResultsPage() {
   const { data, clearData } = useAssessment();

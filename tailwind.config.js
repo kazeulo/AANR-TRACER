@@ -7,7 +7,12 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans:    ['DM Sans', 'sans-serif'],
+        serif:   ['DM Serif Display', 'serif'],
+      },
+    },
   },
   plugins: [],
 }

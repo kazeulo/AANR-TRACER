@@ -2,14 +2,14 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-// ─── Config ───────────────────────────────────────────────────────────────────
+//    ─ Config 
 
 const SCALES = [0.9, 1, 1.1, 1.2, 1.3] as const;
 const LABELS = ["Small", "Default", "Large", "X-Large", "XX-Large"] as const;
 const STORAGE_KEY = "aanr-font-scale";
 const DEFAULT_INDEX = 1; // "Default" = 1.0
 
-// ─── Context ──────────────────────────────────────────────────────────────────
+//    ─ Context ─
 
 interface FontSizeContextValue {
   scaleIndex: number;
@@ -24,7 +24,7 @@ interface FontSizeContextValue {
 
 const FontSizeContext = createContext<FontSizeContextValue | null>(null);
 
-// ─── Provider ─────────────────────────────────────────────────────────────────
+//    ─ Provider 
 
 export function FontSizeProvider({ children }: { children: React.ReactNode }) {
   const [scaleIndex, setScaleIndex] = useState<number>(DEFAULT_INDEX);
@@ -80,7 +80,7 @@ export function FontSizeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ─── Hook ─────────────────────────────────────────────────────────────────────
+//    ─ Hook ──
 
 export function useFontSize() {
   const ctx = useContext(FontSizeContext);

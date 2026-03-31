@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { getQuestionsJSON, prefetchQuestionsJSON } from "../../utils/questionsCache";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+//    ─ Types ─
 
 interface DropdownOption {
   label: string;
@@ -26,7 +26,7 @@ interface Question {
   options?: DropdownOption[];
 }
 
-// ─── Confirm Submit Modal ─────────────────────────────────────────────────────
+//    ─ Confirm Submit Modal    ─────────────────────────────────────────────────
 
 function ConfirmSubmitModal({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) {
   return (
@@ -64,7 +64,7 @@ function ConfirmSubmitModal({ onConfirm, onCancel }: { onConfirm: () => void; on
   );
 }
 
-// ─── Confirm Change Modal ─────────────────────────────────────────────────────
+//    ─ Confirm Change Modal    ─────────────────────────────────────────────────
 
 function ConfirmChangeModal({
   questionText,
@@ -113,7 +113,7 @@ function ConfirmChangeModal({
   );
 }
 
-// ─── Answer Row ───────────────────────────────────────────────────────────────
+//    ─ Answer Row      
 
 function AnswerRow({
   q,
@@ -142,7 +142,7 @@ function AnswerRow({
     setPendingValue(null);
   };
 
-  // ── Checkbox ──────────────────────────────────────────────────────────────
+  //     Checkbox   ─
   if (qType === "checkbox") {
     const checked = answer === true;
     return (
@@ -176,7 +176,7 @@ function AnswerRow({
     );
   }
 
-  // ── Dropdown ──────────────────────────────────────────────────────────────
+  //     Dropdown   ─
   if (qType === "dropdown") {
     const raw      = answer as string | null | undefined;
     const selected = raw ? (q.options?.find(o => o.value === raw)?.label ?? raw) : null;
@@ -255,7 +255,7 @@ function AnswerRow({
     );
   }
 
-  // ── Multi-conditional ─────────────────────────────────────────────────────
+  //     Multi-conditional    ─────────────────────────────────────────────────
   if (qType === "multi-conditional") {
     const mc       = (answer as MultiConditionalAnswer | undefined) ?? { selection: "", checkedItems: [] };
     const selOpt   = q.options?.find(o => o.value === mc.selection);
@@ -398,7 +398,7 @@ function AnswerRow({
   return null;
 }
 
-// ─── IP Summary ───────────────────────────────────────────────────────────────
+//    ─ IP Summary      
 
 function IPSummary({ ipData }: {
   ipData: Record<string, {
@@ -488,7 +488,7 @@ function IPSummary({ ipData }: {
   );
 }
 
-// ─── Technology types ─────────────────────────────────────────────────────────
+//    ─ Technology types    ─────────────────────────────────────────────────────
 
 const TECHNOLOGY_TYPES = [
   "Food, Food Ingredients and Beverages",
@@ -503,7 +503,7 @@ const TECHNOLOGY_TYPES = [
   "New Animal Breed or Genetic Resources (Aquatic and Terrestrial)",
 ];
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+//    ─ Main Page      ─
 
 export default function SummaryPage() {
   const { data, updateData } = useAssessment();
@@ -547,7 +547,7 @@ export default function SummaryPage() {
     );
   }
 
-  // ── Group by category ──────────────────────────────────────────────────────
+  //     Group by category    ──────────────────────────────────────────────────
   const grouped: Record<string, Question[]> = {};
   questions.forEach(q => {
     if (!grouped[q.category]) grouped[q.category] = [];

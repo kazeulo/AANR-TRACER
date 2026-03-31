@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { categories } from "../utils/faqUtils";
 
-// ─── SVG Icon component ───────────────────────────────────────────────────────
+//    ─ SVG Icon component    ───────────────────────────────────────────────────
 
 function CategoryIcon({ name, size = 16, color = "#4aa35a" }: { name: string; size?: number; color?: string }) {
   const s = { width: size, height: size, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -40,7 +40,7 @@ export default function FAQ() {
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <h1 className="font-['DM_Serif_Display'] text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
+          <h1 className=" text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
             Frequently Asked <em className="text-[var(--color-accent)]">Questions</em>
           </h1>
           <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
@@ -102,7 +102,7 @@ export default function FAQ() {
                 <div className="w-10 h-10 bg-[#0f2e1a] rounded-[12px] flex items-center justify-center flex-shrink-0">
                   <CategoryIcon name={cat.icon} size={18} color="#4aa35a" />
                 </div>
-                <h2 className="font-['DM_Serif_Display'] text-[24px] text-[var(--color-primary)] tracking-tight">
+                <h2 className=" text-[24px] text-[var(--color-primary)] tracking-tight">
                   {cat.title}
                 </h2>
                 <div className="flex-1 h-px bg-[#e5e1d8]" />

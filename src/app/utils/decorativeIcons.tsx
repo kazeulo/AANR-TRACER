@@ -1,4 +1,4 @@
-// ─── Sector SVG Icons ─────────────────────────────────────────────────────────
+//    ─ Sector SVG Icons    ─────────────────────────────────────────────────────
 
 export function IconWheat({ className }: { className?: string }) {
   return (
@@ -106,7 +106,7 @@ export function IconPackage({ className }: { className?: string }) {
   );
 }
 
-// ─── Decorative SVG Motifs ────────────────────────────────────────────────────
+//    ─ Decorative SVG Motifs    ────────────────────────────────────────────────
 
 export function RiceStalk({ className }: { className?: string }) {
   return (

@@ -6,7 +6,7 @@ import {
   IP_FILED_LABEL,
 } from "./ipHelpers";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+//    ─ Types ─
 
 export interface QuestionItem {
   id: string;
@@ -64,7 +64,7 @@ export interface TRLResult {
   lackingToLevel9: QuestionItem[];
 }
 
-// ─── IP synthetic questions ───────────────────────────────────────────────────
+//    ─ IP synthetic questions    ───────────────────────────────────────────────
 
 const PLANT_ANIMAL_TYPES_LOCAL = [
   "New Plant Variety (Conventional)",
@@ -142,7 +142,7 @@ function buildIPQuestions(technologyType: string): QuestionItem[] {
   ];
 }
 
-// ─── Dropdown helpers ─────────────────────────────────────────────────────────
+//    ─ Dropdown helpers    ─────────────────────────────────────────────────────
 
 function dropdownSatisfiedTRL(q: QuestionItem, answer: AnswerValue): number | null {
   if (typeof answer !== "string" || !answer) return null;
@@ -238,7 +238,7 @@ function dropdownCompletedItems(q: QuestionItem, answer: AnswerValue): QuestionI
   }));
 }
 
-// ─── Multi-conditional helpers ────────────────────────────────────────────────
+//    ─ Multi-conditional helpers    ────────────────────────────────────────────
 
 function getChecklistItems(q: QuestionItem): ChecklistItem[] {
   if (!q.options) return [];
@@ -321,7 +321,7 @@ function multiConditionalFullySatisfied(
   return false;
 }
 
-// ─── Answer evaluation ────────────────────────────────────────────────────────
+//    ─ Answer evaluation    ────────────────────────────────────────────────────
 
 function isAnsweredYesAtLevel(
   q: QuestionItem,
@@ -359,7 +359,7 @@ function isAnsweredYes(
   return isAnsweredYesAtLevel(q, answers, ipData, q.trlLevel, technologyType);
 }
 
-// ─── Main Calculator ──────────────────────────────────────────────────────────
+//    ─ Main Calculator    ──────────────────────────────────────────────────────
 
 export function calculateTRL(
   allQuestions: QuestionItem[],
@@ -374,7 +374,7 @@ export function calculateTRL(
   const mcQuestions       = questions.filter(q => q.type === "multi-conditional");
   const checkboxQuestions = questions.filter(q => (q.type ?? "checkbox") === "checkbox");
 
-  // ── Build byLevel map ─────────────────────────────────────────────────────
+  //     Build byLevel map    ─────────────────────────────────────────────────
   const byLevel: Record<number, QuestionItem[]> = {};
 
   const registerAt = (lvl: number, q: QuestionItem) => {
@@ -398,7 +398,7 @@ export function calculateTRL(
   const levels   = Object.keys(byLevel).map(Number).sort((a, b) => a - b);
   const maxLevel = Math.max(...levels, 0);
 
-  // ── Highest Completed TRL ─────────────────────────────────────────────────
+  //     Highest Completed TRL    ─────────────────────────────────────────────
   let highestCompletedTRL = 0;
 
   for (const level of levels) {
@@ -442,7 +442,7 @@ export function calculateTRL(
     }
   });
 
-  // ── Highest Achievable TRL ────────────────────────────────────────────────
+  //     Highest Achievable TRL    ────────────────────────────────────────────
   let highestAchievableTRL = highestCompletedTRL;
   for (const level of [...levels].reverse()) {
     const anyDone = (byLevel[level] ?? []).some(q =>
@@ -451,7 +451,7 @@ export function calculateTRL(
     if (anyDone) { highestAchievableTRL = Math.max(highestAchievableTRL, level); break; }
   }
 
-  // ── Completed Questions ───────────────────────────────────────────────────
+  //     Completed Questions    ───────────────────────────────────────────────
   const completedQuestions: QuestionItem[] = [];
 
   checkboxQuestions.forEach(q => {
@@ -466,7 +466,7 @@ export function calculateTRL(
     completedQuestions.push(...multiConditionalCompletedItems(q, answers[q.id]));
   });
 
-  // ── Lacking for Next Level ────────────────────────────────────────────────
+  //     Lacking for Next Level    ────────────────────────────────────────────
   const nextLevel = highestCompletedTRL + 1;
   const lackingForNextLevel: QuestionItem[] = [];
 
@@ -485,7 +485,7 @@ export function calculateTRL(
     });
   }
 
-  // ── Lacking for Achievable ────────────────────────────────────────────────
+  //     Lacking for Achievable    ────────────────────────────────────────────
   const lackingForAchievable: QuestionItem[] = [];
 
   if (highestAchievableTRL > highestCompletedTRL) {
@@ -503,7 +503,7 @@ export function calculateTRL(
     });
   }
 
-  // ── Lacking to Level 9 ───────────────────────────────────────────────────
+  //     Lacking to Level 9    ───────────────────────────────────────────────
   const lackingToLevel9: QuestionItem[] = [];
 
   checkboxQuestions.forEach(q => {
@@ -525,7 +525,7 @@ export function calculateTRL(
     );
   });
 
-  // ── TRL 9 promotion ───────────────────────────────────────────────────────
+  //     TRL 9 promotion    ───────────────────────────────────────────────────
   if (highestAchievableTRL === 9 && highestCompletedTRL < 9)
     highestCompletedTRL = 9;
 

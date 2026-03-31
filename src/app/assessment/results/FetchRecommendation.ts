@@ -68,7 +68,7 @@ export const TRL_COLORS: Record<number, string> = {
   9: "#4aa35a",
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+//    ─ Helpers ─
 
 function formatLacking(items: LackingItem[]): string {
   return items.map(i => `- [TRACER Level ${i.trlLevel}] ${i.questionText}`).join("\n");

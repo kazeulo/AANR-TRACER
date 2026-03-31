@@ -33,7 +33,7 @@ export default function TechnologyTypePage() {
         </div>
 
         {/* Title */}
-        <h1 className="font-['DM_Serif_Display'] text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
+        <h1 className=" text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Select your <em className="text-[var(--color-accent)]">technology type</em>
         </h1>
         <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">

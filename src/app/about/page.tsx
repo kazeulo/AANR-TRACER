@@ -22,7 +22,7 @@ export default function About() {
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <h1 className="font-['DM_Serif_Display'] text-[clamp(40px,5vw,64px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
+          <h1 className=" text-[clamp(40px,5vw,64px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             About <em className="text-[var(--color-accent)]">TRACER</em>
           </h1>
           <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
@@ -44,7 +44,7 @@ export default function About() {
               Overview
             </span>
 
-            <h2 className="font-['DM_Serif_Display'] text-[clamp(30px,3vw,42px)] text-[var(--color-primary)] leading-[1.15] tracking-tight mb-7">
+            <h2 className=" text-[clamp(30px,3vw,42px)] text-[var(--color-primary)] leading-[1.15] tracking-tight mb-7">
               A structured framework for technology maturation and commercialization
             </h2>
 
@@ -82,7 +82,7 @@ export default function About() {
               className="relative z-10 w-full rounded-2xl object-cover shadow-[0_24px_64px_rgba(15,46,26,0.18)]"
             />
             <div className="absolute -bottom-5 -right-5 z-20 bg-[#0f2e1a] text-white px-5 py-4 rounded-2xl text-center shadow-[0_12px_32px_rgba(15,46,26,0.3)]">
-              <div className="font-['DM_Serif_Display'] text-[18px] text-[var(--color-accent)] leading-none">PCAARRD</div>
+              <div className=" text-[18px] text-[var(--color-accent)] leading-none">PCAARRD</div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-[1px] mt-1">Los Baños, Laguna</div>
             </div>
           </div>
@@ -94,7 +94,7 @@ export default function About() {
         <div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <h2 className="font-['DM_Serif_Display'] text-[clamp(30px,3vw,42px)] text-white mb-4 tracking-tight">
+          <h2 className=" text-[clamp(30px,3vw,42px)] text-white mb-4 tracking-tight">
             How <span className="text-[var(--color-accent)] italic">TRACER</span> works
           </h2>
           <p className="text-[15px] text-[var(--color-text-faintest)] font-light max-w-[520px] leading-[1.7] mb-14">
@@ -144,7 +144,7 @@ export default function About() {
               <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-3 border-b-2 border-[#4aa35a]">
                 Find Us
               </span>
-              <h2 className="font-['DM_Serif_Display'] text-[clamp(28px,2.5vw,38px)] text-[var(--color-primary)] tracking-tight">
+              <h2 className=" text-[clamp(28px,2.5vw,38px)] text-[var(--color-primary)] tracking-tight">
                 Our Location
               </h2>
             </div>
