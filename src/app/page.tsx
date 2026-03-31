@@ -69,25 +69,48 @@ function TechTypeGrid() {
           >
             {/* Top row */}
             <div className="flex items-center gap-3 w-full">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors
-                ${isOpen ? "bg-[var(--color-accent)]/[0.10]" : "bg-[var(--color-bg)] group-hover:bg-[var(--color-accent)]/[0.08]"}`}
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200
+                ${isOpen
+                  ? "bg-[var(--color-accent)]/[0.15]"
+                  : "bg-[var(--color-bg)] group-hover:bg-[var(--color-accent)]/[0.12]"
+                }`}
               >
-                <Icon className="w-5 h-5 text-[var(--color-accent)]" />
+                <Icon className={`w-5 h-5 transition-colors duration-200 ${isOpen ? "text-[#2d8a3e]" : "text-[var(--color-accent)] group-hover:text-[#2d8a3e]"}`} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-[14px] font-semibold text-[var(--color-primary)] leading-snug">{label}</div>
                 <div className="text-[12px] text-[var(--color-text-gray)] font-light leading-tight mt-1.5">{sub}</div>
               </div>
-              {/* Chevron */}
-              <svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none"
-                stroke={isOpen ? "#4aa35a" : "#94a3a0"} strokeWidth="2"
-                strokeLinecap="round" strokeLinejoin="round"
-                className={`flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+
+              {/* +/− toggle icon */}
+              <div className={`flex-shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-all duration-200 ${
+                isOpen
+                  ? "border-[#4aa35a]/50 bg-[#4aa35a]/10"
+                  : "border-[var(--color-border)] bg-transparent group-hover:border-[#4aa35a]/40 group-hover:bg-[#4aa35a]/[0.06]"
+              }`}>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                  stroke={isOpen ? "#4aa35a" : "#94a3a0"} strokeWidth="1.8"
+                  strokeLinecap="round"
+                  className="transition-colors duration-200 group-hover:stroke-[#4aa35a]"
+                >
+                  {isOpen ? (
+                    <path d="M2 5h6" />
+                  ) : (
+                    <>
+                      <path d="M5 2v6" />
+                      <path d="M2 5h6" />
+                    </>
+                  )}
+                </svg>
+              </div>
             </div>
+
+            {/* "Tap to learn more" hint — only shown when collapsed */}
+            {!isOpen && (
+              <p className="text-[10.5px] text-[var(--color-text-faintest)] font-light italic pl-[52px] -mt-1 group-hover:text-[#4aa35a]/60 transition-colors duration-200">
+                Tap to learn more
+              </p>
+            )}
 
             {/* Expanded definition */}
             {isOpen && (
@@ -152,19 +175,6 @@ export default function HomePage() {
               Your guide in evaluating the technical and commercial readiness of AANR technologies.
             </p>
 
-            {/* Partner Logos */}
-            <div className="mb-10 bg-[var(--white-35)] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
-              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[var(--color-text-heading)] mb-2 text-center">A Collaborative Project by</div>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <Image src="/img/logos/dost-logo.png" alt="DOST" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={90} height={40} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/raise-logo.png" alt="RAISE" width={120} height={40} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/agri-hub-logo.png" alt="Agri Hub" width={90} height={40} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/upvisayas-logo.png" alt="UP Visayas" width={90} height={40} className="h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                <Image src="/img/logos/ttbdo-logo.png" alt="TTBDO" width={90} height={40} className="h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
-              </div>
-            </div>
-
             <button
               onClick={() => router.push("/assessment/disclaimer")}
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#4aa35a] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
@@ -176,6 +186,20 @@ export default function HomePage() {
                 </svg>
               </span>
             </button>
+
+            {/* Partner Logos */}
+            <div className="my-7 bg-[var(--white-35)] border border-white rounded-xl px-4 py-3 w-full max-w-[480px]">
+              <div className="text-[9px] font-bold tracking-[2px] uppercase text-[var(--color-text-heading)] mb-2 text-center">A Collaborative Project by</div>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Image src="/img/logos/dost-logo.png" alt="DOST" width={80} height={30} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/dost-pcaarrd-logo.png" alt="DOST PCAARRD" width={80} height={30} className="h-[28px] sm:h-[32px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/raise-logo.png" alt="RAISE" width={110} height={30} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/agri-hub-logo.png" alt="Agri Hub" width={80} height={30} className="h-[34px] sm:h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/upvisayas-logo.png" alt="UP Visayas" width={80} height={30} className="h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <Image src="/img/logos/ttbdo-logo.png" alt="TTBDO" width={80} height={30} className="h-[38px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+              </div>
+            </div>
+
           </div>
 
           {/* Right — TRL scale */}
@@ -183,8 +207,8 @@ export default function HomePage() {
             <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faint)] mb-2">TRACER Scale</div>
             {tracerLevels.map(({ n, label, w, color }) => (
               <div key={n} className="flex items-center gap-3">
-                <span className="text-[11px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
-                <div className="flex-1 h-1.5 bg-[var(--white-15)] rounded-full overflow-hidden">
+                <span className="text-[12px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
+                <div className="flex-1 h-2 bg-[var(--white-15)] rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${w} ${color}`} />
                 </div>
                 <span className="text-[12px] text-[var(--color-text-faint)] w-[160px] flex-shrink-0">{label}</span>
