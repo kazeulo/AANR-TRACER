@@ -169,7 +169,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
       fontSize: 9.5,
       fontFamily: "Helvetica-Bold",
       color: "#333333",
-      width: 140,
+      width: 200,
       flexShrink: 0,
     },
     fieldVal: {
@@ -489,7 +489,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
 
         {hasGap && (
           <FieldRow
-            label="Highest Achievable:"
+            label="Highest Potential TRACER Level:"
             value={`TRACER ${highestAchievableTRL} — ${getLevelTitle(techType, highestAchievableTRL)}`}
           />
         )}
