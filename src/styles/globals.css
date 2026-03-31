@@ -18,8 +18,8 @@ html {
   --font-body:    'DM Sans', sans-serif;
 
   /* Brand greens */
-  --color-primary:       #0f2e1a;   /* dark forest — hero bg, headings */
-  --color-primary-mid:   #1a3d26;   /* mid green — hero gradient */
+  --color-primary:       #133a21;   /* dark forest — hero bg, headings */
+  --color-primary-mid:   #225735;   /* mid green — hero gradient */
   --color-primary-deep:  #0a1f10;   /* footer bg */
   --color-accent:        #4aa35a;   /* action green — buttons, tags, accents */
   --color-accent-hover:  #3d8f4c;   /* accent on hover */

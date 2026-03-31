@@ -52,7 +52,7 @@ export default function Header() {
           {/* Brand */}
           <Link
             href="/"
-            className=" text-[24px] text-white text-bold tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
+            className="text-[24px] text-white text-bold tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
           >
             AANR-<span className="text-[var(--color-accent)] italic ">TRACER</span>
           </Link>
