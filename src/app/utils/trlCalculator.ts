@@ -89,13 +89,11 @@ function isIPAnsweredYes(
   if (label === IP_PENDING_LABEL) {
     if (ipEntry.initiated === "trade_secret") return true;
 
-    // Plant variety: submitted or registered satisfies pending
     if (isPlantVariety) {
       const val = ipEntry.dusPvpStatus ?? "";
       return val === "submitted" || val === "registered";
     }
 
-    // Animal breed: any type with pending/filed/registered satisfies pending
     if (isAnimalBreed) {
       return Object.entries(ipEntry.selectedTypes ?? {}).some(([t, checked]) => {
         if (!checked) return false;
@@ -104,7 +102,6 @@ function isIPAnsweredYes(
       });
     }
 
-    // Generic flow
     return Object.entries(ipEntry.selectedTypes ?? {}).some(
       ([t, checked]) => checked && !!ipEntry.typeStatuses?.[t]
     );
@@ -113,12 +110,10 @@ function isIPAnsweredYes(
   if (label === IP_FILED_LABEL) {
     if (ipEntry.initiated === "trade_secret") return true;
 
-    // Plant variety: only registered satisfies filed
     if (isPlantVariety) {
       return ipEntry.dusPvpStatus === "registered";
     }
 
-    // Animal breed: filed or registered satisfies filed
     if (isAnimalBreed) {
       return Object.entries(ipEntry.selectedTypes ?? {}).some(([t, checked]) => {
         if (!checked) return false;
@@ -127,7 +122,6 @@ function isIPAnsweredYes(
       });
     }
 
-    // Generic flow
     return Object.entries(ipEntry.selectedTypes ?? {}).some(
       ([t, checked]) =>
         checked &&
@@ -427,7 +421,12 @@ export function calculateTRL(
     else break;
   }
 
-  // Null-answer cap
+  // Null-answer cap for highestCompletedTRL only.
+  // A dropdown answered with a null-satisfaction option (e.g. "Not Yet Initiated")
+  // blocks completion — clamp completed TRL to just below that level.
+  // This cap is intentionally NOT applied to highestAchievableTRL because
+  // achievable represents potential, and a blocking answer on one question
+  // should not suppress genuine progress already made at higher levels.
   dropdownQuestions.forEach(q => {
     const answer = answers[q.id];
     if (typeof answer !== "string" || !answer) return;
@@ -451,20 +450,6 @@ export function calculateTRL(
     );
     if (anyDone) { highestAchievableTRL = Math.max(highestAchievableTRL, level); break; }
   }
-
-  // Apply same null cap to achievable
-  dropdownQuestions.forEach(q => {
-    const answer = answers[q.id];
-    if (typeof answer !== "string" || !answer) return;
-    const opts     = q.options as DropdownOption[];
-    const selected = opts.find(o => o.value === answer);
-    if (selected?.trlSatisfied !== null) return;
-    const lowestLevel = Math.min(
-      ...opts.filter(o => o.trlSatisfied !== null).map(o => o.trlSatisfied!)
-    );
-    if (highestAchievableTRL >= lowestLevel)
-      highestAchievableTRL = Math.min(highestAchievableTRL, lowestLevel - 1);
-  });
 
   // ── Completed Questions ───────────────────────────────────────────────────
   const completedQuestions: QuestionItem[] = [];
