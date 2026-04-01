@@ -18,9 +18,9 @@ html {
   --font-body:    'DM Sans', sans-serif;
 
   /* Brand greens */
-  --color-primary:       #133a21;   /* dark forest — hero bg, headings */
+  --color-primary:       #0f2e1a;   /* dark forest — hero bg, headings */
   --color-primary-mid:   #225735;   /* mid green — hero gradient */
-  --color-primary-deep:  #0a1f10;   /* footer bg */
+  --color-primary-deep:  #0f3018;   /* footer bg */
   --color-accent:        #4aa35a;   /* action green — buttons, tags, accents */
   --color-accent-hover:  #3d8f4c;   /* accent on hover */
   --color-accent-dark:   #2d6e3a;   /* accent text on light bg */
@@ -38,6 +38,7 @@ html {
   /* Backgrounds */
   --color-bg:            #f5f2ec;   /* warm off-white — page background */
   --color-bg-card:       #ffffff;   /* card / surface */
+  --color-bg-clicked:    #fffcf6;
   --color-bg-subtle:     #f8f6f1;   /* card header strip */
   --color-bg-input:      #f8f6f1;   /* input fields */
 
@@ -48,7 +49,7 @@ html {
 
   /* Borders */
   --color-border:        #ede9e0;   /* default card border */
-  --color-border-input:  #e5e1d8;   /* input border */
+  --color-border-input:  #d7d4cb;   /* input border */
   --color-border-subtle: #f0ece3;   /* inner dividers */
 
   /* Text */

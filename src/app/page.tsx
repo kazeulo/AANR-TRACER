@@ -107,7 +107,7 @@ function TechTypeGrid() {
 
             {/* "Tap to learn more" hint — only shown when collapsed */}
             {!isOpen && (
-              <p className="text-[10.5px] text-[var(--color-text-faintest)] font-light italic pl-[52px] -mt-1 group-hover:text-[#4aa35a]/60 transition-colors duration-200">
+              <p className="text-[10.5px] text-[var(--color-text-light-gray)] font-light italic pl-[52px] -mt-1 group-hover:text-[#4aa35a]/60 transition-colors duration-200">
                 Tap to learn more
               </p>
             )}
@@ -138,10 +138,10 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)]">
+    <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex items-center bg-[#0f2e1a] overflow-hidden px-6 lg:px-[6vw] pt-[60px] pb-[120px]">
+      <section className="relative min-h-screen flex items-center bg-[var(--color-primary)] overflow-hidden px-6 lg:px-[6vw] pt-[60px] pb-[120px]">
 
         {/* Grid overlay */}
         <div className="absolute inset-0 pointer-events-none"

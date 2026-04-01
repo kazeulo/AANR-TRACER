@@ -42,8 +42,8 @@ export default function Header() {
       <nav
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#0a1f10]/95 backdrop-blur-sm border-b border-white/5 shadow-lg shadow-black/20"
-            : "bg-[#0f2e1a]"
+            ? "bg-[#0f2e1a]/90 backdrop-blur-sm border-b border-white/5 shadow-lg shadow-black/20"
+            : "bg-[var(--color-primary)]"
         }`}
       >
         {/* Main bar */}
@@ -52,7 +52,7 @@ export default function Header() {
           {/* Brand */}
           <Link
             href="/"
-            className="text-[24px] text-white text-bold tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
+            className="font-[var(--font-body)] text-[24px] text-bold text-white tracking-tight leading-none flex-shrink-0 hover:opacity-80 transition-opacity"
           >
             AANR-<span className="text-[var(--color-accent)] italic ">TRACER</span>
           </Link>

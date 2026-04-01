@@ -50,7 +50,7 @@ interface IPSectionProps {
   technologyType: string;
 }
 
-// ─── IP Section ───────────────────────────────────────────────────────────────
+// IP Section
 
 function IPSection({ label, ipData, onChange, technologyType }: IPSectionProps) {
   const key = label;
@@ -273,7 +273,7 @@ function IPSection({ label, ipData, onChange, technologyType }: IPSectionProps) 
   );
 }
 
-// ─── ABH Contact Panel ────────────────────────────────────────────────────────
+// ABH Contact Panel
 
 function ABHContactPanel() {
   return (
@@ -308,7 +308,7 @@ function ABHContactPanel() {
   );
 }
 
-// ─── ATBI Contact Panel ───────────────────────────────────────────────────────
+// ATBI Contact Panel
 
 function ATBIContactPanel({ technologyType }: { technologyType: string }) {
   const reg = REGULATORY_BODIES[technologyType];
@@ -375,15 +375,41 @@ function ATBIContactPanel({ technologyType }: { technologyType: string }) {
   );
 }
 
-// ─── Dropdown Question ────────────────────────────────────────────────────────
+// Tool tips
+
+function Tooltip({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <span className="relative inline-flex items-center">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="ml-2 w-4 h-4 rounded-full border border-[var(--color-border-input)] text-[10px] flex items-center justify-center text-[var(--color-text-faintest)] hover:bg-[var(--color-bg-subtle)] transition"
+      >
+        ?
+      </button>
+
+      {open && (
+        <div className="absolute left-0 top-6 z-50 w-[240px] rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] p-3 text-[12px] text-[var(--color-text-gray)] shadow-lg">
+          {text}
+        </div>
+      )}
+    </span>
+  );
+}
+
+// Dropdown Question 
 
 function DropdownQuestion({
-  q, value, onChange, technologyType,
+  q, value, onChange, technologyType, expanded, toggleTip
 }: {
   q: Question;
   value: string | null;
   onChange: (val: string) => void;
   technologyType: string;
+  expanded?: boolean;
+  toggleTip?: () => void;
 }) {
   const selected = q.options?.find(o => o.value === value);
   const showContact = selected?.contactLabel;
@@ -391,9 +417,27 @@ function DropdownQuestion({
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
-          {q.questionText}
-        </p>
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
+            {q.questionText}
+          </p>
+
+          {q.toolTip && (
+            <button
+              type="button"
+              onClick={toggleTip}
+              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
+            >
+              +
+            </button>
+          )}
+        </div>
+        {q.toolTip && expanded && (
+          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-border-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
+            {q.toolTip}
+          </div>
+        )}
+
         <div className="relative">
           <select
             value={value ?? ""}
@@ -417,13 +461,15 @@ function DropdownQuestion({
   );
 }
 
-// ─── Multi-Conditional Question ───────────────────────────────────────────────
+// Multi-Conditional Question 
 
 function MultiConditionalQuestion({
-  q, value, onSelectionChange, onItemToggle,
+  q, value, onSelectionChange, onItemToggle, expanded, toggleTip
 }: {
   q: Question;
   value: MultiConditionalAnswer;
+  expanded?: boolean;
+  toggleTip?: () => void;
   onSelectionChange: (sel: string) => void;
   onItemToggle: (item: string) => void;
 }) {
@@ -433,9 +479,28 @@ function MultiConditionalQuestion({
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
       <div className="p-5">
-        <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed mb-3">
-          {q.questionText}
-        </p>
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
+            {q.questionText}
+          </p>
+
+          {q.toolTip && (
+            <button
+              type="button"
+              onClick={toggleTip}
+              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-faintest)] hover:bg-[var(--color-bg-subtle)] transition"
+            >
+              +
+            </button>
+          )}
+        </div>
+
+        {q.toolTip && expanded && (
+          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
+            {q.toolTip}
+          </div>
+        )}
+
         <div className="relative mb-4">
           <select
             value={value.selection}
@@ -495,7 +560,7 @@ function MultiConditionalQuestion({
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// Main Page
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();
@@ -509,6 +574,15 @@ export default function QuestionnairePage() {
 
   const questionsPerPage = 5;
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
+
+  const [expandedTips, setExpandedTips] = useState<Record<string, boolean>>({});
+
+  const toggleTip = (id: string) => {
+    setExpandedTips(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   useEffect(() => {
     if (lastCategoryIndex >= 0 && lastPage >= 0 && orderedCategories.length > 0) {
@@ -692,7 +766,7 @@ export default function QuestionnairePage() {
 
   const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
 
-  // ── ipBlocksNext ──────────────────────────────────────────────────────────
+  // ipBlocksNext
   const ipBlocksNext = (() => {
     if (!isIPCategory) return false;
     const ipKey = IP_INITIATED_LABEL;
@@ -701,12 +775,10 @@ export default function QuestionnairePage() {
     if (current.initiated === "") return true;
     if (current.initiated === "no" || current.initiated === "trade_secret") return false;
 
-    // Plant variety: must select a DUS/PVP status
     if (PLANT_VARIETY_TYPES.includes(data.technologyType)) {
       return !current.dusPvpStatus;
     }
 
-    // Animal breed or generic: must select at least one type with a status
     const checkedTypes = Object.entries(current.selectedTypes ?? {})
       .filter(([, v]) => v)
       .map(([k]) => k);
@@ -829,6 +901,8 @@ export default function QuestionnairePage() {
                       value={(data.answers[q.id] as string | null) ?? null}
                       onChange={val => handleDropdown(q.id, val)}
                       technologyType={data.technologyType}
+                      expanded={expandedTips[q.id]}
+                      toggleTip={() => toggleTip(q.id)}
                     />
                   );
                 }
@@ -840,6 +914,8 @@ export default function QuestionnairePage() {
                       key={q.id}
                       q={q}
                       value={mcVal}
+                      expanded={expandedTips[q.id]}
+                      toggleTip={() => toggleTip(q.id)}
                       onSelectionChange={sel =>
                         handleMultiConditional(q.id, {
                           selection: sel,
@@ -864,7 +940,7 @@ export default function QuestionnairePage() {
                     key={q.id}
                     className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
                       checked
-                        ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40"
+                        ? "bg-[var(--color-bg-clicked)] border-[#4aa35a]/40"
                         : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
                     }`}
                   >
@@ -880,10 +956,42 @@ export default function QuestionnairePage() {
                         )}
                       </div>
                     </div>
+
                     <div className="flex-1 min-w-0">
-                      <span className={`text-[14px] leading-relaxed transition-colors ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
-                        {q.questionText}
-                      </span>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-3">
+                          <span
+                            className={`text-[14px] leading-relaxed ${
+                              checked
+                                ? "text-[var(--color-primary)] font-medium"
+                                : "text-[var(--color-text-gray)] font-light"
+                            }`}
+                          >
+                            {q.questionText}
+                          </span>
+
+                          {q.toolTip && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleTip(q.id);
+                              }}
+                              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
+                            >
+                              +
+                            </button>
+                          )}
+                        </div>
+
+                        {q.toolTip && expandedTips[q.id] && (
+                          <div className="mt-3 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed">
+                            {q.toolTip}
+                          </div>
+                        )}
+                        
+                      </div>
                     </div>
                   </label>
                 );
