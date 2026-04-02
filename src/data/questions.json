@@ -101,7 +101,7 @@
         "trlLevel": 4,
         "category": "Industry Validation and Adoption Status",
         "type": "dropdown",
-        "toolTip": "Tool tip test",
+        "toolTip": "",
         "options": [
           {
             "label": "No Industry Partner Identified",
@@ -154,7 +154,7 @@
         "trlLevel": 5,
         "category": "Market and Pre-commercialization Preparedness",
         "type": "multi-conditional",
-        "toolTip": "Tool tip test",
+        "toolTip": "",
         "options": [
           {
             "label": "No",
@@ -2178,7 +2178,7 @@
         "trlLevel": 1,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Tool tip test"
+        "toolTip": ""
       },
       {
         "id": "market_6_24",

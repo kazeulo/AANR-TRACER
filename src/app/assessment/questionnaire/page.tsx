@@ -88,7 +88,7 @@ function DropdownQuestion({
   const showContact = selected?.contactLabel;
 
   return (
-    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
+    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-visible transition-all duration-200">
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-3">
           <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
@@ -98,7 +98,11 @@ function DropdownQuestion({
           {q.toolTip && (
             <button
               type="button"
-              onClick={toggleTip}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleTip?.();
+              }}
               className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
             >
               +
@@ -150,7 +154,7 @@ function MultiConditionalQuestion({
   const noOption  = q.options?.find(o => o.action === "contacts");
 
   return (
-    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-hidden transition-all duration-200">
+    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-visible transition-all duration-200">
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-3">
           <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
@@ -160,7 +164,11 @@ function MultiConditionalQuestion({
           {q.toolTip && (
             <button
               type="button"
-              onClick={toggleTip}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleTip?.();
+              }}
               className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-faintest)] hover:bg-[var(--color-bg-subtle)] transition"
             >
               +
@@ -574,7 +582,7 @@ export default function QuestionnairePage() {
                       value={(data.answers[q.id] as string | null) ?? null}
                       onChange={val => handleDropdown(q.id, val)}
                       technologyType={data.technologyType}
-                      expanded={expandedTips[q.id]}
+                      expanded={!!expandedTips[q.id]}
                       toggleTip={() => toggleTip(q.id)}
                     />
                   );
@@ -587,7 +595,7 @@ export default function QuestionnairePage() {
                       key={q.id}
                       q={q}
                       value={mcVal}
-                      expanded={expandedTips[q.id]}
+                      expanded={!!expandedTips[q.id]}
                       toggleTip={() => toggleTip(q.id)}
                       onSelectionChange={sel =>
                         handleMultiConditional(q.id, {
@@ -649,6 +657,7 @@ export default function QuestionnairePage() {
                               type="button"
                               onClick={(e) => {
                                 e.preventDefault();
+                                e.stopPropagation();
                                 toggleTip(q.id);
                               }}
                               className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
