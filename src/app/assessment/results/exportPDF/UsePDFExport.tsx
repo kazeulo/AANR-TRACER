@@ -6,7 +6,6 @@ import { RoadmapGroup } from "../FetchRecommendation";
 import { TRACER_DESCRIPTIONS } from "../../../utils/tracerDescriptions";
 
 /*    ─ Types  */
-
 export interface ExportFormData {
   name:         string;
   email:        string;
