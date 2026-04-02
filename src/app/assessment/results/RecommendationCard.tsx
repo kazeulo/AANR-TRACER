@@ -8,7 +8,7 @@ import {
   TRL_COLORS,
   TRL_LABELS,
 } from "./FetchRecommendation";
-import { TRACER_DESCRIPTIONS } from "../../utils/TRACERdescriptions";
+import { TRACER_DESCRIPTIONS } from "../../utils/tracerDescriptions";
 
 //    ─ Markdown bold renderer    ───────────────────────────────────────────────
 function Md({ text }: { text: string }) {

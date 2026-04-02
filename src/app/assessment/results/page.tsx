@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
 import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
-import { getTracerInfo, TracerLevelInfo } from "../../utils/TRACERdescriptions";
+import { getTracerInfo, TracerLevelInfo } from "../../utils/tracerDescriptions";
 import { getTracerLabel } from "./Levelsdescription";
 import {
   fetchRecommendation,

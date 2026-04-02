@@ -3,7 +3,7 @@
 import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { TRLResult, QuestionItem } from "../../../utils/trlCalculator";
 import { RoadmapGroup } from "../FetchRecommendation";
-import { TRACER_DESCRIPTIONS } from "../../../utils/TRACERdescriptions";
+import { TRACER_DESCRIPTIONS } from "../../../utils/tracerDescriptions";
 
 /*    ─ Types  */
 
