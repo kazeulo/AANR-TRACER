@@ -5,7 +5,7 @@ import { TRLResult, QuestionItem } from "../../../utils/trlCalculator";
 import { RoadmapGroup } from "../FetchRecommendation";
 import { TRACER_DESCRIPTIONS } from "../../../utils/tracerDescriptions";
 
-/*    ─ Types  */
+/* Types */
 export interface ExportFormData {
   name:         string;
   email:        string;
@@ -24,7 +24,7 @@ export interface PDFContentProps {
   closing?:         string;
 }
 
-/*    ─ TRL Maps   ─ */
+/* TRL Maps */
 
 export const TRL_LABELS: Record<number, string> = {
   1: "Concept & Market Definition",
@@ -68,17 +68,10 @@ export function usePDFExport() {
   return { pdfRef, exporting, setExporting, exportForm, triggerExport, clearForm };
 }
 
-/*    ─ PDF Document (react-pdf)    ────────────────────────────────────────── */
-// Loaded dynamically so it never runs on the server.
-// Call generateAndDownloadPDF() from a client component.
-
+/* PDF Document (react-pdf) */
 export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
-  // Dynamic imports — keeps the bundle lean
   const { pdf, Document, Page, Text, View, Image, StyleSheet, Font } =
     await import("@react-pdf/renderer");
-
-  //     Fonts ─
-  // Use built-in Helvetica
 
   //     Styles 
   const s = StyleSheet.create({
@@ -330,7 +323,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     },
   });
 
-  //     Helper components    ──────────────────────────────────────────────────
+  // Helper components
 
   function FieldRow({ label, value }: { label: string; value?: string }) {
     if (!value) return null;
@@ -413,7 +406,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     );
   }
 
-  //     Build document    ─────────────────────────────────────────────────────
+  // Build document
 
   const {
     result, techName, techType, techDescription, fundingSource,
@@ -541,7 +534,7 @@ export async function generatePDFBlob(props: PDFContentProps): Promise<Blob> {
     </Document>
   );
 
-  //     Build blob    ────────────────────────────────────────────────────────
+  // Build blob
   const blob = await pdf(MyDoc).toBlob();
   return blob;
 }
@@ -569,9 +562,7 @@ export async function generatePDFAsBase64(props: PDFContentProps): Promise<strin
 }
 
 
-/*    ─ Dummy PDFContent — kept so ResultsPage import doesn't break    ─────── */
-// ResultsPage renders this into a hidden div; with react-pdf we no longer need
-// that div. Keep the export so the import compiles without changes.
+/* Dummy PDFContent so ResultsPage import doesn't break */
 export function PDFContent(_props: PDFContentProps) {
   return null;
 }
