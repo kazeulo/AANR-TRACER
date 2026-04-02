@@ -1,7 +1,3 @@
-// Auto-generated from official TRACER Level descriptions by technology type.
-// Key: technologyType string (must match AssessmentContext exactly)
-// Value: Record<trlLevel, { title: string; description: string }>
-
 export interface TracerLevelInfo {
   title: string;
   description: string;
