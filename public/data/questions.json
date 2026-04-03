@@ -67,7 +67,7 @@
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "Laboratory test to measure the basic nutrients in a product, such as protein, fat, moisture, and minerals is initiated."
       }
     ],
     "4": [
@@ -85,7 +85,7 @@
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "Laboratory results confirm that the product contains the expected levels of key nutrients and meets its intended composition."
       },
       {
         "id": "tech_dev_0_14",
@@ -475,7 +475,7 @@
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "Laboratory test to measure the basic nutrients in a product, such as protein, fat, moisture, and minerals is initiated."
       },
       {
         "id": "tech_dev_1_4",
@@ -509,7 +509,7 @@
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "Laboratory results confirm that the product contains the expected levels of key nutrients and meets its intended composition."
       }, 
       {
         "id": "tech_dev_1_14",
