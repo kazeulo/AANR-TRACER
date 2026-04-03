@@ -47,17 +47,19 @@ function TechTypeGrid() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 items-start">
+    
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 items-start ">
       {aanrTypes.map(({ Icon, label, sub, definition }) => {
         const isOpen = expanded === label;
         return (
           <button
+            aria-expanded={isOpen}
             key={label}
-            onClick={() => setExpanded(isOpen ? null : label)}
+            onClick={() => setExpanded(prev => prev === label ? null : label)}
             className={`bg-[var(--color-bg-card)] border rounded-2xl px-5 py-5 flex flex-col items-start text-left gap-2.5 transition-all duration-200 group w-full h-fit
               ${isOpen
-                ? "border-[#4aa35a]/40 shadow-[0_6px_24px_rgba(15,46,26,0.10)]"
-                : "border-[var(--color-border)] hover:border-[#4aa35a] hover:shadow-[0_6px_20px_rgba(15,46,26,0.07)]"
+                ? "border-[var(--color-accent)]/40 shadow-[0_6px_24px_rgba(15,46,26,0.10)]"
+                : "border-[var(--color-border)] hover:border-[var(--color-accent-hover)] hover:shadow-[0_6px_20px_rgba(15,46,26,0.07)]"
               }`}
           >
             {/* Top row */}
@@ -78,13 +80,13 @@ function TechTypeGrid() {
               {/* +/− toggle icon */}
               <div className={`flex-shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-all duration-200 ${
                 isOpen
-                  ? "border-[#4aa35a]/50 bg-[#4aa35a]/10"
-                  : "border-[var(--color-border)] bg-transparent group-hover:border-[#4aa35a]/40 group-hover:bg-[#4aa35a]/[0.06]"
+                  ? "border-[var(--color-accent)]/50 bg-[var(--color-accent)]/10"
+                  : "border-[var(--color-border)] bg-transparent group-hover:border-[var(--color-accent-hover)]/40 group-hover:bg-[#var(--color-accent)-hover]/[0.06]"
               }`}>
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                   stroke={isOpen ? "#4aa35a" : "#94a3a0"} strokeWidth="1.8"
                   strokeLinecap="round"
-                  className="transition-colors duration-200 group-hover:stroke-[#4aa35a]"
+                  className="transition-colors duration-200 group-hover:stroke-[var(--color-accent-hover)]"
                 >
                   {isOpen ? (
                     <path d="M2 5h6" />
@@ -101,7 +103,7 @@ function TechTypeGrid() {
             {/* "Tap to learn more" hint — only shown when collapsed */}
             {!isOpen && (
               <p className="text-[10.5px] text-[var(--color-text-light-gray)] font-light italic pl-[52px] -mt-1 group-hover:text-[#4aa35a]/60 transition-colors duration-200">
-                Tap to learn more
+                View details →
               </p>
             )}
 
@@ -153,7 +155,7 @@ export default function HomePage() {
         <FishDecor className="absolute right-[4%] bottom-[28%] w-[70px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
         <WaveRipple className="absolute bottom-[90px] left-0 w-full text-[var(--color-accent-15)] pointer-events-none" />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-[60px] items-center">
+        <div className="relative z-10 max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
           {/* Left */}
           <div>
@@ -170,7 +172,7 @@ export default function HomePage() {
 
             <button
               onClick={() => router.push("/assessment/disclaimer")}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[#4aa35a] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white text-[15px] font-semibold rounded-full shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[#3d8f4c] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)] transition-all duration-300"
             >
               Start Your Assessment
               <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
@@ -199,7 +201,7 @@ export default function HomePage() {
           <div className="hidden lg:flex flex-col gap-2.5">
             <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faint)] mb-2">TRACER Scale</div>
             {tracerLevels.map(({ n, label, w, color }) => (
-              <div key={n} className="flex items-center gap-3">
+              <div key={n} className="flex items-center gap-5">
                 <span className="text-[12px] font-bold text-[#4a6657] w-[22px] text-right flex-shrink-0">{n}</span>
                 <div className="flex-1 h-2 bg-[var(--white-15)] rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${w} ${color}`} />
@@ -212,13 +214,13 @@ export default function HomePage() {
 
         {/* Wave */}
         <svg className="absolute bottom-[-1px] left-0 w-full" viewBox="0 0 1440 80" preserveAspectRatio="none">
-          <path fill="#1a3d26" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" />
+          <path fill="var(--color-primary-mid)" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" />
         </svg>
       </section>
 
       {/* ═══ STATS STRIP ═══ */}
-      <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-8">
-        <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4">
+      <div className="bg-[var(--color-primary-mid)] px-6 lg:px-[6vw] py-8">
+        <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4 ">
           {[
             { n: "9",  label: "TRACER Levels",     Icon: IconBarChart },
             { n: "9",  label: "Technology Types",  Icon: IconFlask },
@@ -226,9 +228,9 @@ export default function HomePage() {
             { n: "1",  label: "Clear Roadmap",     Icon: IconListCheck },
           ].map(({ n, label, Icon }) => (
             <div key={label} className="text-center px-6 border-r border-white/[0.08] last:border-r-0 flex flex-col items-center gap-1">
-              <Icon className="w-5 h-5 text-[var(--color-accent)] mb-3" />
-              <div className=" text-[32px] text-[var(--color-accent)] leading-none">{n}</div>
-              <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
+              <Icon className="w-5 h-5 text-[var(--color-text-faintest)] mb-3" />
+              <div className=" text-[32px] text-[var(--color-text-faintest)] leading-none">{n}</div>
+              <div className="text-[11px] text-[var(--color-text-faintest)] uppercase tracking-[1.5px] font-medium mt-1">{label}</div>
             </div>
           ))}
         </div>
@@ -244,7 +246,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto relative z-10">
           <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-10">
             <div>
-              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[var(--color-accent)]">
                 Covered Technologies
               </span>
               <h2 className=" text-[clamp(28px,3vw,38px)] text-[var(--color-primary)] tracking-tight leading-snug">
@@ -265,7 +267,7 @@ export default function HomePage() {
 
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center relative z-10">
           <div>
-            <span className="inline-block text-[11px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+            <span className="inline-block text-[11px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[var(--color-accent)]">
               About TRACER
             </span>
 
@@ -314,7 +316,7 @@ export default function HomePage() {
           {/* Image */}
           <div className="relative">
 
-            <div className="absolute -top-4 -left-4 right-4 bottom-4 border-2 border-[#4aa35a] rounded-[20px] z-0" />
+            <div className="absolute -top-4 -left-4 right-4 bottom-4 border-2 border-[var(--color-accent)] rounded-[20px] z-0" />
             <img
               src="/img/pcaarrd-building.jpg"
               alt="PCAARRD Building"
@@ -330,7 +332,7 @@ export default function HomePage() {
 
       {/* ═══ HOW IT WORKS ═══ */}
       <section className="relative py-[100px] px-6 lg:px-[6vw] bg-[#0f2e1a] overflow-hidden">
-
+        
         <div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
@@ -343,7 +345,7 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <div className="mb-14">
-            <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+            <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[var(--color-accent)]">
               Process
             </span>
             <h2 className=" text-[clamp(30px,3vw,42px)] text-white tracking-tight">
@@ -353,7 +355,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {steps.map(({ n, Icon, title, desc }) => (
-              <div key={n} className="bg-[var(--white-10)] border border-[var(--white-35)] hover:bg-[var(--white-10) hover:border-[#4aa35a]/20 transition-all duration-300 rounded-2xl p-8">
+              <div key={n} className="bg-[var(--white-10)] border border-[var(--white-35)] hover:bg-[var(--white-10)] hover:border-[var(--color-accent)]/20 transition-all duration-300 rounded-2xl p-8">
                 <div className=" text-[54px] text-[var(--color-accent)] leading-none mb-5 tracking-[-2px]">
                   {n}
                 </div>
@@ -377,7 +379,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-10">
             <div>
-              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[#4aa35a]">
+              <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[var(--color-accent)]">
                 Find Us
               </span>
               <h2 className=" text-[clamp(28px,2.5vw,38px)] text-[var(--color-primary)] tracking-tight">
