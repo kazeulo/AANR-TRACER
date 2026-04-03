@@ -6,7 +6,7 @@ import { createContext, useContext, useState, useEffect, useRef, ReactNode } fro
 import type { AnswerValue } from "../utils/trlCalculator";
 export type { AnswerValue, MultiConditionalAnswer, DropdownAnswer } from "../utils/trlCalculator";
 
-// ─── IP Types ─────────────────────────────────────────────────────────────────
+// IP Types
 
 export interface IPQuestionData {
   dusPvpStatus: any;
@@ -19,7 +19,7 @@ export interface IPData {
   [questionKey: string]: IPQuestionData;
 }
 
-// ─── Assessment Data ──────────────────────────────────────────────────────────
+// Assessment Data
 
 interface AssessmentData {
   technologyName:        string;
@@ -51,7 +51,7 @@ const DEFAULT_DATA: AssessmentData = {
   ipData:                {},
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function loadFromSession(): AssessmentData {
   if (typeof window === "undefined") return DEFAULT_DATA;
@@ -74,14 +74,14 @@ function saveToSession(data: AssessmentData) {
   }
 }
 
-// ─── Provider ─────────────────────────────────────────────────────────────────
+// Provider 
 
 const AssessmentContext = createContext<AssessmentContextType | undefined>(undefined);
 
 export function AssessmentProvider({ children }: { children: ReactNode }) {
   const [data, setData]         = useState<AssessmentData>(DEFAULT_DATA);
   const [hydrated, setHydrated] = useState(false);
-  const isClearing              = useRef(false);   // ← prevents re-save after clear
+  const isClearing              = useRef(false);   // prevents re-save after clear
 
   const [lastCategoryIndex, setLastCategoryIndex] = useState(0);
   const [lastPage, setLastPage]                   = useState(0);
