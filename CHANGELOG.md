@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v1.3.1 - Clean Up, Refactoring, and Minor improvements
+
+### Changes
+- Removed unused files and imports
+
 ## v1.3.0 – Questionnaire & Content Update
 March 2026
 
@@ -30,7 +35,7 @@ March 2026
 - revised tool tip
 
 ### Changed
-- Refactores questionnaire page. Separated contacts and ip section into different components
+- Refactore questionnaire page. Separated contacts and ip section into different components
 
 ---
 

@@ -11,7 +11,7 @@ export async function getQuestionsJSON(): Promise<QuestionsJSON> {
   return data as QuestionsJSON;
 }
 
-/** Optional: preload helper */
+/* preload helper */
 export function prefetchQuestionsJSON(): void {
   fetch("/data/questions.json");
 }

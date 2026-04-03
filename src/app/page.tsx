@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { useAssessment } from "./assessment/AssessmentContext";
 import { tracerLevels } from "./utils/helperConstants";
 import { 
   IconWheat, 
@@ -12,12 +10,7 @@ import {
   IconLeaf,
   IconTree,
   IconFlask,
-  IconCog,
-  IconDna,
-  IconChip,
-  IconDroplets,
   IconSeedling,
-  IconPackage,
   RiceStalk,
   WaveRipple,
   LeafSprig,
@@ -49,7 +42,7 @@ const steps = [
 ];
 
 // Interactive Tech Type Grid
-
+// showcase of supported technology types
 function TechTypeGrid() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -125,7 +118,7 @@ function TechTypeGrid() {
   );
 }
 
-//    ─ Main Component 
+// Main Component 
 
 export default function HomePage() {
   const router = useRouter();
