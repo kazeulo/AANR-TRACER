@@ -108,10 +108,29 @@ function DropdownQuestion({
               +
             </button>
           )}
+          
         </div>
-        {q.toolTip && expanded && (
+
+        {/* {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-border-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
             {q.toolTip}
+          </div>
+        )} */}
+
+        {q.toolTip && expanded && (
+          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
+            {q.toolTip}
+            
+            <a  href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+            >
+              Learn more
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
           </div>
         )}
 
@@ -179,6 +198,17 @@ function MultiConditionalQuestion({
         {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
             {q.toolTip}
+            
+            <a  href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+            >
+              Learn more
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
           </div>
         )}
 
@@ -667,9 +697,26 @@ export default function QuestionnairePage() {
                           )}
                         </div>
 
-                        {q.toolTip && expandedTips[q.id] && (
+                        {/* {q.toolTip && expandedTips[q.id] && (
                           <div className="mt-3 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed">
                             {q.toolTip}
+                          </div>
+                        )} */}
+
+                        {q.toolTip && expandedTips[q.id] && (
+                          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
+                            {q.toolTip}
+                            
+                            <a  href="/terms"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+                            >
+                              Learn more
+                              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </a>
                           </div>
                         )}
                         
