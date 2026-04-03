@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { categories } from "../utils/faqUtils";
 
-//    ─ SVG Icon component    ───────────────────────────────────────────────────
+// SVG Icon component 
 
 function CategoryIcon({ name, size = 16, color = "#4aa35a" }: { name: string; size?: number; color?: string }) {
   const s = { width: size, height: size, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -59,7 +59,7 @@ export default function FAQ() {
 
         {/* Sidebar */}
         <aside className="hidden lg:block sticky top-[72px]">
-          <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-text-faintest)] mb-4 pb-3 border-b border-[var(--color-border-input)]">
+          <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-[var(--color-text-gray)] mb-4 pb-3 border-b border-[var(--color-border-input)]">
             Categories
           </div>
           {categories.map(cat => (
@@ -68,7 +68,7 @@ export default function FAQ() {
               onClick={() => scrollToCategory(cat.title)}
               className={`flex items-center gap-2.5 w-full px-3.5 py-3 rounded-[10px] text-[14px] font-medium text-left mb-0.5 border transition-all duration-200 ${
                 activeCategory === cat.title
-                  ? "bg-[var(--white-35)] text-[var(--color-primary)] border-[#4aa35a]/25 font-semibold"
+                  ? "bg-white text-[var(--color-primary)] border-[#4aa35a]/25 font-semibold"
                   : "bg-transparent text-[#6b7a75] border-transparent hover:bg-[#0f2e1a]/[0.05] hover:text-[var(--color-primary)]"
               }`}
             >
