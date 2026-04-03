@@ -2371,7 +2371,7 @@
         "toolTip": ""
       },
       {
-        "id": "tech_dev_6_15",
+        "id": "tech_dev_6_17",
         "questionText": "Prototype Material or Product Fabricated",
         "trlLevel": 6,
         "category": "Technology Development Status",
@@ -2411,7 +2411,7 @@
     ],
     "7": [
       {
-        "id": "tech_dev_6_15",
+        "id": "tech_dev_6_16",
         "questionText": "Standardized Production Protocol/Manual Established",
         "trlLevel": 7,
         "category": "Technology Development Status",

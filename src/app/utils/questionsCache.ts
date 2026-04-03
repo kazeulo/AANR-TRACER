@@ -1,14 +1,17 @@
-// Questions data 
-// Statically imported at build time — no fetch, no network, no env vars.
-// Move questions.json from /public to /src/data/questions.json (or adjust path).
-
-import questionsData from "../../data/questions.json";
-
 type QuestionsJSON = Record<string, Record<string, unknown[]>>;
 
 export async function getQuestionsJSON(): Promise<QuestionsJSON> {
-  return questionsData as unknown as QuestionsJSON;
+  const res = await fetch("/data/questions.json");
+
+  if (!res.ok) {
+    throw new Error("Failed to load questions.json");
+  }
+
+  const data = await res.json();
+  return data as QuestionsJSON;
 }
 
-/** No-op — kept so existing callers don't break. */
-export function prefetchQuestionsJSON(): void {}
+/** Optional: preload helper */
+export function prefetchQuestionsJSON(): void {
+  fetch("/data/questions.json");
+}

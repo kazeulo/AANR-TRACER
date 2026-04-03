@@ -18,7 +18,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const INPUT     = path.resolve(__dirname, "../src/data/questions.json");
+const INPUT     = path.resolve(__dirname, "/data/questions.json");
 const OUTPUT    = path.resolve(__dirname, "../questions-export.csv");
 
 //     Load ───
