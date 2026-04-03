@@ -29,6 +29,9 @@ March 2026
 - Review extempted
 - revised tool tip
 
+### Changed
+- Refactores questionnaire page. Separated contacts and ip section into different components
+
 ---
 
 ## v1.2.0 – Results & Export Enhancement
