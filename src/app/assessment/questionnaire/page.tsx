@@ -111,12 +111,6 @@ function DropdownQuestion({
           
         </div>
 
-        {/* {q.toolTip && expanded && (
-          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-border-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            {q.toolTip}
-          </div>
-        )} */}
-
         {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
             {q.toolTip}
@@ -197,7 +191,7 @@ function MultiConditionalQuestion({
 
         {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            {q.toolTip}
+            {q.toolTip} 
             
             <a  href="/terms"
               target="_blank"
@@ -285,8 +279,10 @@ export default function QuestionnairePage() {
 
   const questionsPerPage = 5;
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
-
+  
+  // for tool tips
   const [expandedTips, setExpandedTips] = useState<Record<string, boolean>>({});
+  const [openModal, setOpenModal] = useState(false);  // learn more modal
 
   const toggleTip = (id: string) => {
     setExpandedTips(prev => ({
@@ -697,17 +693,11 @@ export default function QuestionnairePage() {
                           )}
                         </div>
 
-                        {/* {q.toolTip && expandedTips[q.id] && (
-                          <div className="mt-3 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed">
-                            {q.toolTip}
-                          </div>
-                        )} */}
-
                         {q.toolTip && expandedTips[q.id] && (
                           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-                            {q.toolTip}
+                            {q.toolTip} 
                             
-                            <a  href="/terms"
+                            {/* <a  href="/terms"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
@@ -716,7 +706,28 @@ export default function QuestionnairePage() {
                               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                                 <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                               </svg>
-                            </a>
+                            </a> */}
+
+                            {/* modal for learn more */}
+                            <button 
+                              onClick={() => setOpenModal(true)} 
+                              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+                            >
+                                Learn more
+                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </button>
+
+                            {openModal && (
+                              <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                                <div className="bg-white p-6 rounded-xl max-w-lg">
+                                  <h2 className="font-semibold mb-2">More Info</h2>
+                                  <p>Long explanation here...</p>
+                                  <button onClick={() => setOpenModal(false)}>Close</button>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
                         
