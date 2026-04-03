@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { categories } from "../utils/termsUtils";
+import { useState, useRef, useEffect } from "react";
 
 function TermIcon({ name, size = 18, color = "#4aa35a" }: { name: string; size?: number; color?: string }) {
   const s = { width: size, height: size, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -19,9 +18,45 @@ function TermIcon({ name, size = 18, color = "#4aa35a" }: { name: string; size?:
 }
 
 export default function Terms() {
+  const [loading, setLoading] = useState(true); 
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState(categories[0].title);
+  const [activeCategory, setActiveCategory] = useState("");
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  type Section = {
+    title: string;
+    definition: string;
+    examples?: string[];
+  };
+
+  type Category = {
+    title: string;
+    icon: string;
+    sections: Section[];
+  };
+
+const [categories, setCategories] = useState<Category[]>([]);
+
+  // fetch terminologies
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const res = await fetch("/data/terminologies.json");
+        const json = await res.json();
+        setCategories(json.categories);
+
+        if (json.categories.length > 0) {
+          setActiveCategory(json.categories[0].title);
+        }
+      } catch (err) {
+        console.error("Failed to load JSON", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const scrollToId = (id: string) => {
     setActiveCategory(id);
@@ -31,7 +66,7 @@ export default function Terms() {
   const filtered = categories
     .map(cat => {
       const q = search.toLowerCase();
-      const sections = cat.sections.filter(s =>
+      const sections = cat.sections?.filter(s =>
         !q ||
         cat.title.toLowerCase().includes(q) ||
         s.title.toLowerCase().includes(q) ||
@@ -42,6 +77,14 @@ export default function Terms() {
       return null;
     })
     .filter(Boolean) as typeof categories;
+
+  if (loading) {
+    return <div className="p-10 text-center">Loading...</div>;
+  }
+
+  if (!categories.length) {
+    return <div className="p-10 text-center">No data found</div>;
+  }
 
   return (
     <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
@@ -126,7 +169,7 @@ export default function Terms() {
         </aside>
 
         {/* Main */}
-        <main className="px-6 lg:px-12 py-14 max-w-[900px]">
+        <main className="px-6 lg:px-12 py-14 max-w-[1100px]">
           {filtered.length === 0 ? (
             <div className="text-center py-20 text-[var(--color-text-faintest)] text-[15px] font-light">
               <div className="mb-3 w-10 h-10 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center mx-auto">
@@ -166,7 +209,7 @@ export default function Terms() {
                     </div>
                     {/* Card body */}
                     <div className="px-7 py-5">
-                      <p className="text-[14px] leading-[1.85] text-[var(--color-text-gray)] font-light mb-5">
+                      <p className="text-[14px] leading-[1.85] text-[var(--color-text-gray)] font-light mb-5 text-justify">
                         {section.definition}
                       </p>
                       
