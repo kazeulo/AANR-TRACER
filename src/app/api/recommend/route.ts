@@ -1,40 +1,64 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 const MODEL          = "gpt-4o-mini";
 
-//    ─ Hard limits   ─
-const MAX_TOKENS_ALLOWED  = 2500;   // never let a caller request more than this
-const MAX_MESSAGES        = 3;      // system + user
-const MAX_MESSAGE_LENGTH  = 8000;   // chars per message — ~2000 tokens worst case
-const MAX_BODY_BYTES      = 32_000; // ~32KB total request body cap
+// Hard limits
+const MAX_TOKENS_ALLOWED  = 2500; 
+const MAX_MESSAGES        = 3;
+const MAX_MESSAGE_LENGTH  = 8000;
+const MAX_BODY_BYTES      = 32_000;
 
-//    ─ Simple in-memory rate limiter (per IP)    ───────────────────────────────
-// Allows 10 requests per minute per IP. Resets on server restart.
-// For production at scale, replace with Upstash Redis rate limiter.
-const ipRequestLog = new Map<string, { count: number; resetAt: number }>();
+// for testing rate limiter only
+// upgrade to upstash later
 
-function isRateLimited(ip: string): boolean {
-  const now   = Date.now();
-  const entry = ipRequestLog.get(ip);
+// const ipRequestLog = new Map<string, { count: number; resetAt: number }>();
 
-  if (!entry || now > entry.resetAt) {
-    // First request or window expired — reset
-    ipRequestLog.set(ip, { count: 1, resetAt: now + 60_000 });
-    return false;
+// function isRateLimited(ip: string): boolean {
+//   const now   = Date.now();
+//   const entry = ipRequestLog.get(ip);
+
+//   if (!entry || now > entry.resetAt) {
+//     ipRequestLog.set(ip, { count: 1, resetAt: now + 60_000 });
+//     return false;
+//   }
+
+//   if (entry.count >= 10) return true;
+
+//   entry.count++;
+//   return false;
+// }
+
+// using upstash redis
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+const RATE_LIMIT = 10; // requests
+const WINDOW = 60;     // seconds
+
+async function isRateLimited(ip: string): Promise<boolean> {
+  const key = `rate_limit:${ip}`;
+
+  const current = await redis.incr(key);
+
+  if (current === 1) {
+    // First request → set expiration window
+    await redis.expire(key, WINDOW);
   }
 
-  if (entry.count >= 10) return true;
-
-  entry.count++;
-  return false;
+  return current > RATE_LIMIT;
 }
 
-//    ─ Route handler    ────────────────────────────────────────────────────────
+// route handler
+
 export async function POST(req: NextRequest) {
 
-  // 1. API key check
+  // API key check
   if (!OPENAI_API_KEY) {
     return NextResponse.json(
       { error: "Service is not configured." },
@@ -42,19 +66,21 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 2. Rate limit by IP
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-    ?? req.headers.get("x-real-ip")
-    ?? "unknown";
+  // Get client IP
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
 
-  if (isRateLimited(ip)) {
+  // Rate limit check
+  if (await isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please wait a moment before trying again." },
       { status: 429 }
     );
   }
 
-  // 3. Body size check — reject oversized payloads before parsing
+  // Body size check
   const contentLength = Number(req.headers.get("content-length") ?? 0);
   if (contentLength > MAX_BODY_BYTES) {
     return NextResponse.json(
@@ -63,7 +89,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 4. Parse body safely
+  // Parse body safely
   let body: unknown;
   try {
     body = await req.json();
@@ -75,12 +101,15 @@ export async function POST(req: NextRequest) {
   }
 
   if (!body || typeof body !== "object") {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid request body." },
+      { status: 400 }
+    );
   }
 
   const { messages, max_tokens } = body as Record<string, unknown>;
 
-  // 5. Validate messages array
+  // Validate messages
   if (!Array.isArray(messages) || messages.length === 0) {
     return NextResponse.json(
       { error: "messages must be a non-empty array." },
@@ -98,8 +127,8 @@ export async function POST(req: NextRequest) {
   for (const msg of messages) {
     if (
       typeof msg !== "object" || msg === null ||
-      typeof (msg as Record<string, unknown>).role !== "string" ||
-      typeof (msg as Record<string, unknown>).content !== "string"
+      typeof (msg as any).role !== "string" ||
+      typeof (msg as any).content !== "string"
     ) {
       return NextResponse.json(
         { error: "Each message must have a string role and string content." },
@@ -107,8 +136,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const role    = (msg as Record<string, unknown>).role as string;
-    const content = (msg as Record<string, unknown>).content as string;
+    const role = (msg as any).role;
+    const content = (msg as any).content;
 
     if (!["system", "user", "assistant"].includes(role)) {
       return NextResponse.json(
@@ -125,21 +154,24 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 6. Cap max_tokens — caller cannot exceed the hard limit
+  // Token cap
   const requestedTokens = typeof max_tokens === "number" ? max_tokens : 1600;
-  const cappedTokens    = Math.min(Math.max(requestedTokens, 100), MAX_TOKENS_ALLOWED);
+  const cappedTokens = Math.min(
+    Math.max(requestedTokens, 100),
+    MAX_TOKENS_ALLOWED
+  );
 
-  // 7. Call OpenAI
+  // Call OpenAI
   let response: Response;
   try {
     response = await fetch(OPENAI_API_URL, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type":  "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model:      MODEL,
+        model: MODEL,
         max_tokens: cappedTokens,
         messages,
       }),
@@ -152,17 +184,17 @@ export async function POST(req: NextRequest) {
   }
 
   if (!response.ok) {
-    // Don't leak raw OpenAI error details to the client
     const status = response.status;
     const msg =
       status === 429 ? "AI service is busy. Please try again shortly." :
       status === 401 ? "AI service authentication failed." :
-                       "AI service returned an error. Please try again.";
+      "AI service returned an error. Please try again.";
+
     return NextResponse.json({ error: msg }, { status });
   }
 
-  const data       = await response.json();
-  const completion = (data.choices?.[0]?.message?.content ?? "") as string;
+  const data = await response.json();
+  const completion = data.choices?.[0]?.message?.content ?? "";
 
   return NextResponse.json({ completion });
 }

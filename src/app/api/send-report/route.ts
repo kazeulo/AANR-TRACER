@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-//    ─ Types ─
+// types
 
 interface SendReportBody {
   recipientEmail: string;
@@ -17,7 +17,7 @@ interface SendReportBody {
   pdfBase64: string; // base64-encoded PDF
 }
 
-//    ─ Route handler    ────────────────────────────────────────────────────────
+// Route handler 
 
 export async function POST(req: NextRequest) {
   try {
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
     }
 
-    //     Nodemailer transporter via Gmail App Password    ──────────────────
+    // Nodemailer transporter via Gmail App Password
     const transporter = nodemailer.createTransport({
       host:   "smtp.gmail.com",
       port:   465,
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       },
     } as nodemailer.TransportOptions);
 
-    //     Email body    ─────────────────────────────────────────────────────
+    // Email body
     const htmlBody = `
 <div style="font-family: Arial, sans-serif; font-size: 14px; color: #1a2e1e; line-height: 1.7; max-width: 600px;">
   <p>Good day,</p>
@@ -108,7 +108,7 @@ For questions, contact: ${submittedByEmail}
 Best regards,
 TRACER Team`;
 
-    //     Send      
+    //  Send      
     await transporter.sendMail({
       from: `"TRACER Team" <${process.env.GMAIL_USER}>`,
       to: recipientEmail,
