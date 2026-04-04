@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAssessment } from "../AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
+import { IP_CATEGORY } from "../../utils/ipHelpers";
 import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/tracerDescriptions";
 import { getTracerLabel } from "./Levelsdescription";
@@ -24,7 +25,7 @@ import AIRecommendationCard from "./RecommendationCard";
 import ExportModal, { AssessmentMeta } from "./exportPDF/exportModal";
 import CategoryAnalysis     from "./CategoryAnalysis";
 
-//    ─ Skeleton shimmer    ─────────────────────────────────────────────────────
+// Skeleton shimmer
 
 function PageLoader() {
 
@@ -243,10 +244,10 @@ function CongratulatoryHero({
   );
 }
 
-//    ─ Main page      ─
+// Main page
 
 export default function ResultsPage() {
-  const { data, clearData } = useAssessment();
+  const { data, clearData, hydrated } = useAssessment();
   const router   = useRouter();
 
   type ScoreData = { result: TRLResult; aiInput: RecommendationInput; officialInfo: ReturnType<typeof getTracerInfo> };
@@ -257,6 +258,12 @@ export default function ResultsPage() {
   const { exporting, setExporting, exportForm, triggerExport, clearForm } = usePDFExport();
 
   useEffect(() => {
+    
+    // Wait for sessionStorage hydration before calculating.
+    // hydrated=false means the context is still on DEFAULT_DATA - ipData would be empty
+    // causing all IP questions to appear as unanswered on refresh 
+    if (!hydrated || !data.technologyType) return;
+
     const run = async () => {
       const allGrouped = await getQuestionsJSON() as Record<string, Record<string, QuestionItem[]>>;
       const questions  = Object.values(allGrouped[data.technologyType] ?? {}).flat() as QuestionItem[];
@@ -268,10 +275,11 @@ export default function ResultsPage() {
         technologyDescription: data.technologyDescription ?? "",
         completedTRL:          result.highestCompletedTRL,
         achievableTRL:         result.highestAchievableTRL,
-        lackingItems:          result.lackingToLevel9.map(q => ({
-          trlLevel:     q.trlLevel,
-          questionText: q.questionText,
-        })),
+        lackingItems:          result.lackingToLevel9.filter(q => q.category !== IP_CATEGORY)
+          .map(q => ({
+            trlLevel:     q.trlLevel,
+            questionText: q.questionText,
+          })),
       };
       const officialInfo = getTracerInfo(data.technologyType, result.highestCompletedTRL);
 
@@ -294,7 +302,7 @@ export default function ResultsPage() {
     };
 
     run();
-  }, [data]);
+  }, [data, hydrated]);
 
   if (!scoreData || !aiResult) return <PageLoader />;
 

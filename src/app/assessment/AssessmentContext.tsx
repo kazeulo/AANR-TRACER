@@ -38,6 +38,7 @@ interface AssessmentContextType {
   setLastCategoryIndex:   (index: number) => void;
   lastPage:               number;
   setLastPage:            (page: number) => void;
+  hydrated:               boolean; 
 }
 
 const SESSION_KEY = "aanr_tracer_assessment";
@@ -79,7 +80,11 @@ function saveToSession(data: AssessmentData) {
 const AssessmentContext = createContext<AssessmentContextType | undefined>(undefined);
 
 export function AssessmentProvider({ children }: { children: ReactNode }) {
-  const [data, setData]         = useState<AssessmentData>(DEFAULT_DATA);
+  const [data, setData] = useState<AssessmentData>(() => {
+    if (typeof window === "undefined") return DEFAULT_DATA;
+    return loadFromSession(); // load immediately from sessionStorage
+  });
+  
   const [hydrated, setHydrated] = useState(false);
   const isClearing              = useRef(false);   // prevents re-save after clear
 
@@ -88,7 +93,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
 
   // Load from sessionStorage once on mount (client only)
   useEffect(() => {
-    // If navigated with ?fresh=1, always start clean
+
     const isFresh = typeof window !== "undefined" &&
       new URLSearchParams(window.location.search).get("fresh") === "1";
 
@@ -104,8 +109,6 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     setHydrated(true);
   }, []);
 
-  // Persist to sessionStorage whenever data changes —
-  // but skip the write if we're in the middle of a clear.
   useEffect(() => {
     if (!hydrated) return;
     if (isClearing.current) {
@@ -120,7 +123,6 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
   };
 
   const clearData = () => {
-    // Set the flag BEFORE setState so the persist effect skips the next write
     isClearing.current = true;
     setData(DEFAULT_DATA);
     setLastCategoryIndex(0);
@@ -140,6 +142,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
         setLastCategoryIndex,
         lastPage,
         setLastPage,
+        hydrated
       }}
     >
       {children}
