@@ -41,11 +41,12 @@ export default function TechnologyDescriptionPage() {
         </div>
 
         {/* Title */}
-        <h1 className=" text-[clamp(28px,4vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
+        <h1 className=" text-[clamp(28px,5vw,42px)] text-[var(--color-primary)] leading-tight tracking-tight text-center mb-4">
           Describe your <em className="text-[var(--color-accent)]">technology</em>
         </h1>
-        <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-sm mx-auto leading-relaxed mb-12">
-          A brief description helps us understand your innovation and tailor the assessment questions to your context.
+
+        <p className="text-[14px] text-[var(--color-text-light-gray)] font-light text-center max-w-lg mx-auto leading-relaxed mb-12">
+          Provide a short description of your technology. Include what it does, who it is for, and what problem does it solve. This helps us tailor the results and recommendations more accurately to your context.
         </p>
 
         {/* Textarea card */}
