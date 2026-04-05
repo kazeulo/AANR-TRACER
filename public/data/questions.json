@@ -7,7 +7,8 @@
         "trlLevel": 1,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": ""
+        "toolTip": "",
+        "expandedToolTip": ""
       },
       {
         "id": "market_0_24",
@@ -67,7 +68,8 @@
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Laboratory test to measure the basic nutrients in a product, such as protein, fat, moisture, and minerals is initiated."
+        "toolTip": "Laboratory test to measure the basic nutrients in a product, such as protein, fat, moisture, and minerals is initiated.",
+        "expandedToolTip": "A laboratory test to determine the basic nutritional composition of a food, feed, or biological material is initiated or currently conducted. This test measures the major components such as moisture (water), protein, fat, ash or minerals, fiber, and carbohydrates to help researchers and producers understand the product’s nutritional value, quality, and suitability for consumption or use in food and feed applications."
       }
     ],
     "4": [
@@ -85,7 +87,8 @@
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Laboratory results confirm that the product contains the expected levels of key nutrients and meets its intended composition."
+        "toolTip": "Laboratory results confirm that the product contains the expected levels of key nutrients and meets its intended composition.",
+        "expandedToolTip": "Positive proximate analysis confirmed means that the laboratory test results show that the product contains the expected or desirable levels of basic nutrients such as protein, fat, moisture, ash (minerals), fiber, and carbohydrates, consistent with the intended formulation or quality standards. \nThis indicates that the product composition has been successfully verified through laboratory testing and that the results support its intended nutritional value, functionality, or product claims."
       },
       {
         "id": "tech_dev_0_14",
@@ -138,7 +141,8 @@
         "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. ",
+        "expandedToolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage." 
       },
       {
         "id": "market_0_26",
@@ -475,7 +479,8 @@
         "trlLevel": 3,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Laboratory test to measure the basic nutrients in a product, such as protein, fat, moisture, and minerals is initiated."
+        "toolTip": "Laboratory test to measure the basic nutrients in a product, such as protein, fat, moisture, and minerals is initiated.",
+        "expandedToolTip": "A laboratory test to determine the basic nutritional composition of a food, feed, or biological material is initiated or currently conducted. This test measures the major components such as moisture (water), protein, fat, ash or minerals, fiber, and carbohydrates to help researchers and producers understand the product’s nutritional value, quality, and suitability for consumption or use in food and feed applications. "
       },
       {
         "id": "tech_dev_1_4",
@@ -509,7 +514,8 @@
         "trlLevel": 4,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Laboratory results confirm that the product contains the expected levels of key nutrients and meets its intended composition."
+        "toolTip": "Laboratory results confirm that the product contains the expected levels of key nutrients and meets its intended composition.",
+        "expandedToolTip": "Positive proximate analysis confirmed means that the laboratory test results show that the product contains the expected or desirable levels of basic nutrients such as protein, fat, moisture, ash (minerals), fiber, and carbohydrates, consistent with the intended formulation or quality standards. \nThis indicates that the product composition has been successfully verified through laboratory testing and that the results support its intended nutritional value, functionality, or product claims."
       }, 
       {
         "id": "tech_dev_1_14",
@@ -595,7 +601,8 @@
         "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale.",
+        "expandedToolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage."
       },
       {
         "id": "market_1_26",
@@ -956,7 +963,8 @@
         "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale.",
+        "expandedToolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage."
       },
       {
         "id": "market_2_26",
@@ -1315,7 +1323,8 @@
         "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale.",
+        "expandedToolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage."
       },
       {
         "id": "market_3_26",
@@ -1718,7 +1727,8 @@
         "trlLevel": 7,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale.",
+        "expandedToolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage."
       },
       {
         "id": "licensing_4",
@@ -2358,7 +2368,8 @@
         "trlLevel": 5,
         "category": "Technology Development Status",
         "type": "checkbox",
-        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. "
+        "toolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale.",
+        "expandedToolTip": "Pilot scale production refers to the intermediate stage between laboratory experimentation and full commercial manufacturing, involving a 10× to 100× increase in production volume relative to laboratory scale. This stage utilizes semi-industrial or near-commercial equipment (e.g., pilot fermenters, spray dryers, industrial mixers) to validate process stability, yield consistency, product quality, safety parameters, and preliminary cost efficiency under simulated real-world manufacturing conditions. A pilot-scale production manual and process documentation are established at this stage."
       }
     ],
     "6": [

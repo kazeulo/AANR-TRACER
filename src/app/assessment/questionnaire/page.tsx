@@ -44,6 +44,7 @@ interface Question {
   technologyType: string;
   category: string;
   toolTip?: string;
+  expandedToolTip?: string;
   type?: "checkbox" | "dropdown" | "multi-conditional";
   options?: DropdownOption[];
 }
@@ -75,7 +76,13 @@ function Tooltip({ text }: { text: string }) {
 // Dropdown Question 
 
 function DropdownQuestion({
-  q, value, onChange, technologyType, expanded, toggleTip
+  q, 
+  value, 
+  onChange, 
+  technologyType, 
+  expanded, 
+  toggleTip,
+  setOpenModal
 }: {
   q: Question;
   value: string | null;
@@ -83,6 +90,7 @@ function DropdownQuestion({
   technologyType: string;
   expanded?: boolean;
   toggleTip?: () => void;
+  setOpenModal: (val: boolean) => void;
 }) {
   const selected = q.options?.find(o => o.value === value);
   const showContact = selected?.contactLabel;
@@ -102,6 +110,7 @@ function DropdownQuestion({
                 e.preventDefault();
                 e.stopPropagation();
                 toggleTip?.();
+                
               }}
               className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
             >
@@ -113,18 +122,65 @@ function DropdownQuestion({
 
         {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            {q.toolTip}
-            
-            <a  href="/terms"
-              target="_blank"
-              rel="noopener noreferrer"
+            <p>{q.toolTip}</p> 
+
+            <button 
+              onClick={() => setOpenModal(true)} 
               className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
             >
-              Learn more
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
+                Learn more
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            </button>
+
+            {setOpenModal && (
+              <div
+                className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
+                onClick={(e) => e.target === e.currentTarget && setOpenModal(false)}
+              >
+                <div className="bg-white border border-[#ede9e0] rounded-2xl w-full max-w-[480px] overflow-hidden shadow-[0_20px_60px_rgba(15,46,26,0.15)]">
+
+                  {/* Header */}
+                  <div className="flex items-start justify-between gap-3 px-6 pt-5 pb-4 border-b border-[#f0ede6]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-[#4aa35a]/[0.08] border border-[#4aa35a]/25 flex items-center justify-center flex-shrink-0">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-0.5">Definition</p>
+                        <p className="text-[15px] font-semibold text-[#0f2e1a] leading-snug">{q.questionText}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setOpenModal(false)}
+                      className="w-7 h-7 rounded-lg bg-[#f5f2ec] border border-[#ede9e0] flex items-center justify-center text-[#94a3a0] hover:text-[#0f2e1a] transition-colors flex-shrink-0"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Body */}
+                  <div className="px-6 py-5">
+                    <p className="text-[14px] text-[#2d3748] leading-[1.75] mb-4">{q.expandedToolTip}</p>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => setOpenModal(false)}
+                        className="px-5 py-2 rounded-full bg-[#4aa35a] text-white text-[13px] font-semibold hover:bg-[#3d8f4c] transition-colors"
+                      >
+                        Got it
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -610,6 +666,7 @@ export default function QuestionnairePage() {
                       technologyType={data.technologyType}
                       expanded={!!expandedTips[q.id]}
                       toggleTip={() => toggleTip(q.id)}
+                      setOpenModal={setOpenModal}
                     />
                   );
                 }
@@ -695,20 +752,8 @@ export default function QuestionnairePage() {
 
                         {q.toolTip && expandedTips[q.id] && (
                           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-                            {q.toolTip} 
-                            
-                            {/* <a  href="/terms"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-                            >
-                              Learn more
-                              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </a> */}
+                            <p>{q.toolTip}</p> 
 
-                            {/* modal for learn more */}
                             <button 
                               onClick={() => setOpenModal(true)} 
                               className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
@@ -720,11 +765,49 @@ export default function QuestionnairePage() {
                             </button>
 
                             {openModal && (
-                              <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-                                <div className="bg-white p-6 rounded-xl max-w-lg">
-                                  <h2 className="font-semibold mb-2">More Info</h2>
-                                  <p>Long explanation here...</p>
-                                  <button onClick={() => setOpenModal(false)}>Close</button>
+                              <div
+                                className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
+                                onClick={(e) => e.target === e.currentTarget && setOpenModal(false)}
+                              >
+                                <div className="bg-white border border-[#ede9e0] rounded-2xl w-full max-w-[480px] overflow-hidden shadow-[0_20px_60px_rgba(15,46,26,0.15)]">
+
+                                  {/* Header */}
+                                  <div className="flex items-start justify-between gap-3 px-6 pt-5 pb-4 border-b border-[#f0ede6]">
+                                    <div className="flex items-center gap-3">
+                                      <div className="w-8 h-8 rounded-xl bg-[#4aa35a]/[0.08] border border-[#4aa35a]/25 flex items-center justify-center flex-shrink-0">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+                                        </svg>
+                                      </div>
+                                      <div>
+                                        <p className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-0.5">Definition</p>
+                                        <p className="text-[15px] font-semibold text-[#0f2e1a] leading-snug">{q.questionText}</p>
+                                      </div>
+                                    </div>
+                                    <button
+                                      onClick={() => setOpenModal(false)}
+                                      className="w-7 h-7 rounded-lg bg-[#f5f2ec] border border-[#ede9e0] flex items-center justify-center text-[#94a3a0] hover:text-[#0f2e1a] transition-colors flex-shrink-0"
+                                    >
+                                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                        <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                      </svg>
+                                    </button>
+                                  </div>
+
+                                  {/* Body */}
+                                  <div className="px-6 py-5">
+                                    <p className="text-[14px] text-[#2d3748] leading-[1.75] mb-4 text-justify">{q.expandedToolTip}</p>
+
+                                    <div className="flex items-center gap-3">
+                                      <button
+                                        onClick={() => setOpenModal(false)}
+                                        className="px-5 py-2 rounded-full bg-[#4aa35a] text-white text-[13px] font-semibold hover:bg-[#3d8f4c] transition-colors"
+                                      >
+                                        Got it
+                                      </button>
+                                    </div>
+                                  </div>
+
                                 </div>
                               </div>
                             )}
