@@ -33,22 +33,66 @@ This supports:
 
 ---
 
-## Tech Stack
+## Assessment flow
+
+Users are guided through a fixed sequence of steps. Each step must be completed before proceeding — no steps can be skipped.
+```
+Disclaimer → Data Privacy → Technology Name → Technology Type
+→ Description → Funding Source → Questionnaire → Summary → Results
+```
+
+At the **Results** step, the platform outputs:
+- An assigned **TRACER level** (1–9) based on the questionnaire responses
+- **Insights** drawn from the assessment
+- An **AI-generated recommendation** for progressing to the next level
+
+Users may then optionally **download a PDF report** or **send it to an email address**.
+
+For the full step-by-step breakdown, see [`docs/assessment-flow.md`](docs/assessment_flow.md).
+
+---
+
+## System architecture
+
+AANR-TRACER is a stateless Next.js application — no database is used. All assessment responses are held in browser session storage for the duration of the session and cleared automatically on exit.
+
+| Concern | Approach |
+|---|---|
+| Assessment scoring | Custom TRACER calculator running client-side (`trlCalculator.ts`) |
+| AI recommendations | OpenAI GPT-4o mini via `/api/recommend` serverless route |
+| PDF generation | `@react-pdf/renderer` compiled and streamed server-side |
+| Email delivery | Nodemailer + Gmail SMTP via `/api/report` serverless route |
+| State management | React Context API + `sessionStorage` — no server-side persistence |
+| Hosting | Vercel (edge CDN + serverless functions) |
+
+**Data flow in brief:**
+
+1. User completes the assessment — responses saved to session storage at each step.
+2. On submission, `trlCalculator.ts` runs client-side and computes the TRACER level.
+3. Structured results are sent to `/api/recommend`, which calls GPT-4o mini and returns the AI recommendation.
+4. Results, insights, and the recommendation are displayed on the results page.
+5. Optionally, `/api/report` generates a PDF and delivers it via download or email.
+
+For the full architecture diagram and component breakdown, see [`docs/architecture.md`](docs/architecture.md).
+
+---
+
+## Tech stack
 
 | Layer | Technology |
 |---|---|
 | Framework | Next.js 14 (App Router) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v3 |
-| AI Recommendations | OpenAI API (`gpt-4o-mini`) |
-| PDF Generation | `@react-pdf/renderer` |
-| Email Delivery | Nodemailer + Gmail OAuth2 |
-| State Management | React Context API + `sessionStorage` |
+| AI recommendations | OpenAI API (`gpt-4o-mini`) |
+| PDF generation | `@react-pdf/renderer` |
+| Email delivery | Nodemailer + Gmail OAuth2 |
+| State management | React Context API + `sessionStorage` |
 | Data | `questions.json` — structured question bank |
+
 ---
 
-## Project Structure
-
+## Project structure
 ```
 AANR-TRACER/
 ├── docs/                          # Project documentation
@@ -90,15 +134,6 @@ AANR-TRACER/
 ├── README.md
 ├── package.json
 └── next.config.ts
-```
-
----
-
-## Assessment Flow
-
-```
-Disclaimer → Data Privacy → Technology Name → Technology Type
-→ Description → Funding Source → Questionnaire → Summary → Results
 ```
 
 ---

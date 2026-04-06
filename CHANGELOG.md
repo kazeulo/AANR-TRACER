@@ -9,9 +9,12 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## v1.3.1 - Clean Up, Refactoring, and Minor improvements
+April 2026
 
 ### Changes
 - Removed unused files and imports
+- Update docs
+- Refactor codes for optimization
 
 ## v1.3.0 – Questionnaire & Content Update
 March 2026
