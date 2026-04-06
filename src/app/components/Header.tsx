@@ -42,7 +42,7 @@ export default function Header() {
       <nav
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#0f2e1a]/90 backdrop-blur-sm border-b border-white/5 shadow-lg shadow-black/20"
+            ? "bg-[#0f2e1a]/95 border-b border-white/10"
             : "bg-[var(--color-primary)]"
         }`}
       >

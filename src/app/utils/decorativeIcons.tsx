@@ -1,4 +1,4 @@
-//    ─ Sector SVG Icons    ─────────────────────────────────────────────────────
+// Sector SVG Icons
 
 export function IconWheat({ className }: { className?: string }) {
   return (
@@ -106,7 +106,7 @@ export function IconPackage({ className }: { className?: string }) {
   );
 }
 
-//    ─ Decorative SVG Motifs    ────────────────────────────────────────────────
+// Decorative SVG Motifs
 
 export function RiceStalk({ className }: { className?: string }) {
   return (
@@ -124,9 +124,31 @@ export function RiceStalk({ className }: { className?: string }) {
 export function WaveRipple({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 25 C37.5 10 75 40 112.5 25 C150 10 187.5 40 225 25 C262.5 10 300 40 300 25" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <path d="M0 35 C37.5 20 75 50 112.5 35 C150 20 187.5 50 225 35 C262.5 20 300 50 300 35" stroke="currentColor" strokeWidth="0.8" fill="none" />
-      <path d="M0 15 C37.5 0 75 30 112.5 15 C150 0 187.5 30 225 15 C262.5 0 300 30 300 15" stroke="currentColor" strokeWidth="0.5" fill="none" />
+      
+      {/* Main wave */}
+      <path
+        d="M0 25 C75 5 150 45 225 25 C262.5 15 300 35 300 25"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        fill="none"
+      />
+
+      {/* Middle wave */}
+      <path
+        d="M0 35 C75 20 150 55 225 35 C262.5 25 300 45 300 35"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+      />
+
+      {/* Top wave */}
+      <path
+        d="M0 15 C75 -5 150 35 225 15 C262.5 5 300 25 300 15"
+        stroke="currentColor"
+        strokeWidth="1"
+        fill="none"
+      />
+
     </svg>
   );
 }
