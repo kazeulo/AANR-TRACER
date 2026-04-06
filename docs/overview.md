@@ -2,13 +2,6 @@
 
 ## About the Website
 
-**TRLars** is an assessment and recommendation support tool designed to systematically evaluate the **Technology Readiness Level (TRL)** of innovations within the **Agriculture, Aquatic, and Natural Resources (AANR)** sector.
-
-The platform applies a structured readiness assessment framework and generates **evidence-based, indicative recommendations** to support the progression of technologies from research and development through adoption and practical utilization.
-
-Technologies are evaluated using clearly defined criteria that cover:
-- Technology development status  
-- Intellectual property position  
-- Technology transfer and commercialization readiness  
-
-By standardizing evaluation and documentation across stages of technology maturation, TRLars supports **informed decision-making**, **strategic planning**, and **consistent reporting** for researchers, innovators, and technology transfer stakeholders.
+AANR-TRACER is a digital assessment tool developed for the Department of Science and Technology — Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD) under the RAISE Program. Its purpose is to help technology developers in the agriculture, aquatic, and natural resources (AANR) sector determine how commercially ready their innovation is. It also guides them by outlining steps towards successful commercialization.
+ 
+The system measures readiness using a framework called TRACER Levels — a nine-point scale that is carefully curated by referencing internationally recognized Technology Readiness Level (TRL) systems. Each level represents a stage of development from initial research all the way through to full market commercialization.
