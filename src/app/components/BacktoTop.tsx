@@ -19,11 +19,11 @@ export default function BackToTop() {
     <button
       onClick={scrollToTop}
       aria-label="Back to top"
-      className="fixed bottom-12 right-10 z-50 w-14 h-14 rounded-full
-                 bg-[var(--color-accent)] text-white shadow-[var(--shadow-btn-sm)]
-                 flex items-center justify-center
-                 hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5
-                 transition-all duration-200"
+      className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 w-14 h-14 rounded-full
+           bg-[var(--color-accent)] text-white shadow-[var(--shadow-btn-sm)]
+           flex items-center justify-center
+           hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5
+           transition-all duration-200"
     >
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M7 11V3M3 7l4-4 4 4"

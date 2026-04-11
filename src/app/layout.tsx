@@ -8,6 +8,7 @@ import FontSizeControl from "./utils/fontZoom/FontsizeControl";
 import { FontSizeProvider } from "./utils/fontZoom/FontsizeContext";
 
 import { AssessmentProvider } from "./assessment/AssessmentContext";
+import AssistantWidget from "./components/ChatbotWidget";
 
 // components
 import Header from "./components/Header";
@@ -36,6 +37,14 @@ export default function RootLayout({
           <FontSizeProvider>
             <Header />
             {children}
+            {/* <AssistantWidget
+              context={{
+                technologyType: "",
+                currentCategory: "",
+                currentTRLLevel: 0,
+                questionText: undefined,
+              }}
+            /> */}
             <Footer />
             <FontSizeControl />
             <BackToTop />

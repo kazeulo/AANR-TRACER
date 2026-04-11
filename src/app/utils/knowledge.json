@@ -1,0 +1,678 @@
+{
+  "version": "1.0",
+  "entries": [
+
+    {
+      "id": "glossary_proximate_analysis",
+      "topic": "glossary",
+      "question": "What is proximate analysis?",
+      "keywords": ["proximate", "analysis", "proximate analysis", "chemical properties", "nutritional"],
+      "answer": "Proximate analysis is a set of laboratory tests that determines the basic chemical composition of a product — typically measuring moisture content, crude protein, crude fat, crude fiber, ash, and carbohydrates. In the TRACER assessment, it is used to confirm that a food product or animal feed meets its nutritional and quality claims before moving to consumer validation or industry testing."
+    },
+
+    {
+      "id": "glossary_pilot_scale",
+      "topic": "glossary",
+      "question": "What does pilot-scale mean?",
+      "keywords": ["pilot", "scale", "pilot scale", "pilot-scale", "scale up", "scaleup", "manufacturing"],
+      "answer": "Pilot-scale production is the intermediate stage between laboratory experimentation and full commercial manufacturing. It typically involves a 10x to 100x increase in production volume relative to laboratory scale. At this stage, researchers test whether a process that worked in the lab can be reproduced consistently at a larger volume before committing to full industrial production."
+    },
+
+    {
+      "id": "glossary_benchscale",
+      "topic": "glossary",
+      "question": "What is bench-scale or benchscale?",
+      "keywords": ["bench", "benchscale", "bench-scale", "bench scale", "laboratory scale"],
+      "answer": "Bench-scale refers to experiments or processes conducted at a small, laboratory workbench level — the smallest practical scale of experimentation. It is the first step where a concept is tested under controlled conditions before being scaled up to pilot or commercial scale."
+    },
+
+    {
+      "id": "glossary_sensory_analysis",
+      "topic": "glossary",
+      "question": "What is sensory analysis or sensory testing?",
+      "keywords": ["sensory", "sensory analysis", "sensory testing", "sensory evaluation", "taste", "acceptability"],
+      "answer": "Sensory analysis is the scientific evaluation of a product's properties as perceived by the human senses — taste, smell, texture, appearance, and sound. In food technology assessment, internal sensory screening is done first by the research team, followed by consumer sensory testing with the target market to validate acceptability before commercial launch."
+    },
+
+    {
+      "id": "glossary_shelf_life",
+      "topic": "glossary",
+      "question": "What is shelf-life and how is it established?",
+      "keywords": ["shelf", "shelf-life", "shelf life", "stability", "expiry", "expiration"],
+      "answer": "Shelf-life is the length of time a product remains safe and suitable for use or consumption under specified storage conditions. It is established through stability testing — storing the product under controlled conditions and regularly testing it for physical, chemical, and microbiological changes over time. At TRACER Level 4, shelf-life must be established at minimum under laboratory conditions before progressing to pilot testing."
+    },
+
+    {
+      "id": "glossary_gmp",
+      "topic": "glossary",
+      "question": "What is GMP or Good Manufacturing Practices?",
+      "keywords": ["gmp", "good manufacturing", "manufacturing practices", "gmp manual"],
+      "answer": "Good Manufacturing Practices (GMP) is a system of guidelines and regulations that ensures products are consistently produced and controlled according to quality standards. A GMP manual documents the standardized procedures for production, quality control, equipment maintenance, and personnel hygiene. In the TRACER assessment, a GMP manual is required at TRACER Level 7 before industry-scale production can be validated."
+    },
+
+    {
+      "id": "glossary_haccp",
+      "topic": "glossary",
+      "question": "What is HACCP certification?",
+      "keywords": ["haccp", "hazard analysis", "critical control", "food safety certification"],
+      "answer": "HACCP (Hazard Analysis and Critical Control Points) is an internationally recognized food safety management system that identifies and controls potential hazards — biological, chemical, and physical — in food production. HACCP certification is required for food products at TRACER Level 8, confirming the production process meets food safety standards before full commercial launch."
+    },
+
+    {
+      "id": "glossary_halal",
+      "topic": "glossary",
+      "question": "What is HALAL certification?",
+      "keywords": ["halal", "halal certification", "islamic", "muslim"],
+      "answer": "HALAL certification confirms that a product is permissible under Islamic law — covering ingredients, production processes, and handling. In the Philippines, HALAL certification is issued by accredited bodies recognized by the Islamic Da'wah Council of the Philippines (IDCP) or the Office for Muslim Affairs (OMA). It is required for food products targeting Muslim consumers and is listed as a TRACER Level 8 requirement."
+    },
+
+    {
+      "id": "glossary_allergen",
+      "topic": "glossary",
+      "question": "What is allergen profiling or allergen screening?",
+      "keywords": ["allergen", "allergen profiling", "allergen screening", "allergy", "allergic"],
+      "answer": "Allergen profiling or screening is the process of identifying and documenting potential allergens present in a food product. Common allergens include peanuts, tree nuts, milk, eggs, wheat, soy, fish, and shellfish. This is required at TRACER Level 6 for food products to ensure consumer safety and comply with food labeling regulations before market testing begins."
+    },
+
+    {
+      "id": "glossary_feeding_trial",
+      "topic": "glossary",
+      "question": "What is a feeding trial?",
+      "keywords": ["feeding trial", "feeding test", "animal feeding", "feed trial"],
+      "answer": "A feeding trial is a controlled experiment where target animals are given the formulated feed product to evaluate its nutritional adequacy, palatability, safety, and performance effects such as growth rate, feed conversion ratio, and health outcomes. In the TRACER assessment for animal feed, initial feeding trials are required at TRACER Level 3, with further validation at subsequent levels."
+    },
+
+    {
+      "id": "glossary_toxicity",
+      "topic": "glossary",
+      "question": "What is toxicity evaluation or toxicity testing?",
+      "keywords": ["toxicity", "toxicity evaluation", "toxicity test", "toxic", "safety testing"],
+      "answer": "Toxicity evaluation assesses whether a product or substance causes harmful effects when organisms are exposed to it. This includes acute toxicity (short-term, single exposure) and chronic toxicity (long-term, repeated exposure) tests. Passing toxicity evaluation is required at TRACER Level 4 for animal feed, fertilizer, pesticide, and related products before proceeding to broader validation."
+    },
+
+    {
+      "id": "glossary_efficacy",
+      "topic": "glossary",
+      "question": "What does efficacy mean in the context of fertilizers and pesticides?",
+      "keywords": ["efficacy", "effectiveness", "efficacy testing", "product efficacy"],
+      "answer": "Efficacy refers to the ability of a product to produce the intended effect under controlled conditions — for example, whether a fertilizer increases crop yield or whether a pesticide effectively controls the target pest. Efficacy testing is conducted under laboratory or controlled field conditions and must be confirmed at TRACER Level 4 before advancing to pilot-scale production."
+    },
+
+    {
+      "id": "glossary_dus_testing",
+      "topic": "glossary",
+      "question": "What is DUS testing?",
+      "keywords": ["dus", "dus testing", "distinctness", "uniformity", "stability", "plant variety"],
+      "answer": "DUS testing stands for Distinctness, Uniformity, and Stability testing. It is a formal evaluation required for new plant variety registration that confirms: Distinctness — the variety is clearly distinguishable from existing varieties; Uniformity — all plants of the variety are sufficiently uniform in key characteristics; Stability — the variety remains true to its description after repeated propagation. DUS testing is required for registration under Plant Variety Protection (PVP) in the Philippines, administered by the National Seed Industry Council (NSIC) or DA-BPI."
+    },
+
+    {
+      "id": "glossary_pvp",
+      "topic": "glossary",
+      "question": "What is Plant Variety Protection (PVP)?",
+      "keywords": ["pvp", "plant variety protection", "plant variety", "variety registration", "seed protection"],
+      "answer": "Plant Variety Protection (PVP) is a form of intellectual property right that protects new plant varieties developed through breeding. It grants the breeder exclusive rights to produce, sell, and distribute the protected variety. In the Philippines, PVP is administered by the National Seed Industry Council (NSIC) and the Department of Agriculture - Bureau of Plant Industry (DA-BPI). It is the IP equivalent of a patent for plant varieties."
+    },
+
+    {
+      "id": "glossary_germplasm",
+      "topic": "glossary",
+      "question": "What is germplasm?",
+      "keywords": ["germplasm", "genetic material", "plant material", "seed material", "breeding material"],
+      "answer": "Germplasm refers to the genetic material — seeds, plant tissue, pollen, or living organisms — that carries the hereditary information used in breeding programs. Collecting germplasm is the first step in developing new plant varieties or animal breeds, as it provides the genetic diversity needed to select and develop desirable traits."
+    },
+
+    {
+      "id": "glossary_alpha_testing",
+      "topic": "glossary",
+      "question": "What is alpha testing?",
+      "keywords": ["alpha", "alpha testing", "alpha test", "internal testing"],
+      "answer": "Alpha testing is the initial phase of software or system testing conducted internally by the development team or a limited group of users in a controlled environment. It aims to identify bugs, functional issues, and usability problems before the product is exposed to external users. In the TRACER assessment for ICT systems, successful alpha testing is required at TRACER Level 4."
+    },
+
+    {
+      "id": "glossary_beta_testing",
+      "topic": "glossary",
+      "question": "What is beta testing?",
+      "keywords": ["beta", "beta testing", "beta test", "external testing", "user testing"],
+      "answer": "Beta testing is the evaluation of a product or system by a limited group of external users under real-world conditions before full commercial launch. It focuses on user feedback, performance under varied conditions, and identification of issues not caught during alpha testing. For ICT systems in the TRACER assessment, beta testing with select external users is required at TRACER Level 5."
+    },
+
+    {
+      "id": "glossary_fto",
+      "topic": "glossary",
+      "question": "What is a Freedom to Operate (FTO) report?",
+      "keywords": ["fto", "freedom to operate", "freedom-to-operate", "patent clearance", "ip clearance"],
+      "answer": "A Freedom to Operate (FTO) report is a legal analysis that determines whether a product, process, or technology can be commercialized without infringing on existing intellectual property rights — primarily patents — held by third parties. It identifies relevant patents in the target market and assesses the risk of infringement. An FTO report is required at TRACER Level 7 as part of the pre-commercialization document requirements."
+    },
+
+    {
+      "id": "glossary_ip_valuation",
+      "topic": "glossary",
+      "question": "What is IP valuation?",
+      "keywords": ["ip valuation", "intellectual property valuation", "technology valuation", "valuation"],
+      "answer": "IP valuation is the process of determining the economic value of intellectual property assets such as patents, trademarks, copyrights, or trade secrets. It is used to inform licensing negotiations, investment decisions, and commercialization strategies. In the TRACER assessment, IP valuation is required at TRACER Level 7 as part of the pre-commercialization document package."
+    },
+
+    {
+      "id": "glossary_bmc",
+      "topic": "glossary",
+      "question": "What is a Business Model Canvas (BMC)?",
+      "keywords": ["bmc", "business model canvas", "business model", "canvas"],
+      "answer": "A Business Model Canvas (BMC) is a strategic management tool that provides a visual framework for developing, describing, and analyzing a business model. It covers nine key building blocks: customer segments, value propositions, channels, customer relationships, revenue streams, key resources, key activities, key partnerships, and cost structure. An initial BMC is required at TRACER Level 5 to guide early commercialization planning."
+    },
+
+    {
+      "id": "glossary_commercialization_plan",
+      "topic": "glossary",
+      "question": "What is a Technology Commercialization Plan?",
+      "keywords": ["commercialization plan", "technology commercialization", "tcp", "commercialization strategy"],
+      "answer": "A Technology Commercialization Plan is a document that outlines the strategy and action steps for bringing a technology to market. It typically includes market analysis, target customer identification, commercialization pathway (licensing, spin-off, direct sale), resource requirements, timeline, and financial projections. It is required at TRACER Level 7-8 depending on the technology type."
+    },
+
+    {
+      "id": "glossary_fairness_opinion",
+      "topic": "glossary",
+      "question": "What is a Fairness Opinion Report?",
+      "keywords": ["fairness opinion", "fairness report", "fair value", "independent assessment"],
+      "answer": "A Fairness Opinion Report is an independent assessment that evaluates whether the terms of a proposed transaction — such as a licensing agreement or technology sale — are fair and reasonable from a financial perspective. It is typically prepared by a third-party financial expert and is required at TRACER Level 8 to protect both the technology developer and the government agency funding the research."
+    },
+
+    {
+      "id": "glossary_loi",
+      "topic": "glossary",
+      "question": "What is a Letter of Intent (LOI) for licensing?",
+      "keywords": ["loi", "letter of intent", "licensing intent", "licensing letter"],
+      "answer": "A Letter of Intent (LOI) for licensing is a non-binding document that expresses a potential licensee's intention to enter into a technology licensing agreement. It signals serious interest in commercializing the technology and typically outlines the proposed terms, scope, and timeline for negotiation. Securing an LOI is required at TRACER Level 7 as a key milestone toward a formal licensing agreement."
+    },
+
+    {
+      "id": "glossary_licensing_agreement",
+      "topic": "glossary",
+      "question": "What is a Technology Licensing Agreement?",
+      "keywords": ["licensing agreement", "technology licensing", "license", "tla", "royalty agreement"],
+      "answer": "A Technology Licensing Agreement (TLA) is a legal contract in which the IP owner (licensor) grants another party (licensee) the right to use, produce, or commercialize the technology in exchange for compensation — typically royalty payments. A signed TLA is the final milestone at TRACER Level 9, signifying that the technology has been fully transferred for commercial use."
+    },
+
+    {
+      "id": "glossary_royalty",
+      "topic": "glossary",
+      "question": "What is royalty income?",
+      "keywords": ["royalty", "royalties", "royalty income", "licensing fee", "commercialization income"],
+      "answer": "Royalty income is the payment received by the IP owner (typically the research institution or developer) in exchange for granting another party the right to use their intellectual property. It is usually calculated as a percentage of sales or a fixed fee per unit produced. Documented royalty income is the indicator of TRACER Level 9 — full commercialization."
+    },
+
+    {
+      "id": "glossary_dost_term_sheet",
+      "topic": "glossary",
+      "question": "What is a DOST Term Sheet?",
+      "keywords": ["dost term sheet", "term sheet", "dost", "licensing terms"],
+      "answer": "A DOST Term Sheet is a document issued by the Department of Science and Technology that outlines the proposed terms and conditions for a technology licensing agreement. It serves as the basis for formal licensing negotiations between DOST (or its affiliated institution) and the prospective licensee. Signing a DOST Term Sheet is a milestone at TRACER Level 8."
+    },
+
+    {
+      "id": "glossary_spin_off",
+      "topic": "glossary",
+      "question": "What does 'technology is for spin-off' mean?",
+      "keywords": ["spin-off", "spinoff", "spin off", "startup", "university spinoff"],
+      "answer": "A spin-off (or spinout) is a new company or enterprise created to commercialize a technology developed by a research institution. When a technology is designated 'for spin-off,' it means the commercialization pathway is through establishing a startup company rather than licensing to an existing industry partner. This affects certain TRACER requirements — some industry partner and licensing steps are marked as 'Not Required/Optional Only' for spin-off technologies."
+    },
+
+    {
+      "id": "glossary_amtec",
+      "topic": "glossary",
+      "question": "What is AMTEC certification?",
+      "keywords": ["amtec", "agricultural machinery testing", "machinery testing", "amtec certification"],
+      "answer": "AMTEC stands for the Agricultural Machinery Testing and Evaluation Center, based at the University of the Philippines Los Baños. It is the official body in the Philippines that tests and certifies agricultural machinery and equipment for performance, safety, and quality. AMTEC certification is required at TRACER Level 7 for Agri-Aqua Machinery and Facility technologies before they can be commercially sold or distributed."
+    },
+
+    {
+      "id": "glossary_multi_location_testing",
+      "topic": "glossary",
+      "question": "What is multi-location testing or multi-location trials?",
+      "keywords": ["multi-location", "multi location", "multilocation", "location testing", "field trials"],
+      "answer": "Multi-location testing involves evaluating a technology, variety, or product across multiple geographic sites with different environmental conditions such as soil type, climate, and farming practices. This confirms that the technology performs consistently across diverse real-world conditions — not just in a single controlled location. It is typically required at TRACER Level 6 for plant varieties, animal breeds, and machinery."
+    },
+
+    {
+      "id": "glossary_confined_field_trial",
+      "topic": "glossary",
+      "question": "What is a confined field trial?",
+      "keywords": ["confined field trial", "confined trial", "biosafety", "gmo trial", "contained trial"],
+      "answer": "A confined field trial is a controlled outdoor experiment for genetically modified or gene-edited crops that is conducted under strict biosafety containment measures to prevent unintended release into the environment. It is a regulatory requirement for GM/gene-edited plant varieties in the Philippines, overseen by the Department of Agriculture - Bureau of Plant Industry (DA-BPI) under the biosafety regulatory framework."
+    },
+
+    {
+      "id": "glossary_ibc",
+      "topic": "glossary",
+      "question": "What is IBC approval?",
+      "keywords": ["ibc", "institutional biosafety committee", "biosafety", "biosafety approval"],
+      "answer": "IBC stands for Institutional Biosafety Committee — an internal committee at a research institution that reviews and approves research involving genetically modified organisms (GMOs) or gene-editing to ensure it complies with biosafety regulations. IBC approval is required before conducting gene editing or GM work in the laboratory, and is listed as an early requirement for Gene-Edited and GM plant variety development."
+    },
+
+    {
+      "id": "glossary_packaging_compatibility",
+      "topic": "glossary",
+      "question": "What is packaging compatibility validation?",
+      "keywords": ["packaging", "packaging compatibility", "packaging validation", "shelf life packaging"],
+      "answer": "Packaging compatibility validation tests whether a product's packaging material is suitable for maintaining product safety, quality, and shelf-life under actual storage and distribution conditions. It checks for issues like chemical migration from packaging to product, seal integrity, and physical protection. For food products, this is required at TRACER Level 7; for fertilizers and pesticides, at TRACER Level 6."
+    },
+
+    {
+      "id": "glossary_production_manual",
+      "topic": "glossary",
+      "question": "What is a production manual?",
+      "keywords": ["production manual", "manufacturing manual", "process manual", "sop", "standard operating procedure"],
+      "answer": "A production manual is a documented set of standardized procedures that describes how to consistently manufacture or produce a product at a given scale. It includes formulation, equipment settings, process parameters, quality checkpoints, and safety protocols. At pilot scale, a production manual ensures the process can be replicated; at industry scale, it forms the basis for GMP compliance."
+    },
+
+    {
+      "id": "ip_patent",
+      "topic": "intellectual_property",
+      "question": "What is a patent?",
+      "keywords": ["patent", "patent application", "patent filing", "invention patent"],
+      "answer": "A patent is a form of intellectual property protection granted by the Intellectual Property Office of the Philippines (IPOPHL) that gives the inventor exclusive rights to make, use, and sell an invention for 20 years. A patent covers new and inventive products or processes. In the TRACER assessment, filing a patent application satisfies the 'IP Filed' milestone, while registration/grant satisfies 'IP Registered.'"
+    },
+
+    {
+      "id": "ip_utility_model",
+      "topic": "intellectual_property",
+      "question": "What is a utility model?",
+      "keywords": ["utility model", "utility model certificate", "petty patent"],
+      "answer": "A utility model (sometimes called a petty patent) is a simpler, faster, and cheaper form of IP protection for inventions — typically devices or structures. In the Philippines, utility model registration through IPOPHL has a term of 7 years. It is suitable for incremental innovations and improvements that may not meet the full inventiveness requirement of a standard patent."
+    },
+
+    {
+      "id": "ip_industrial_design",
+      "topic": "intellectual_property",
+      "question": "What is an industrial design?",
+      "keywords": ["industrial design", "design registration", "product design", "aesthetic design"],
+      "answer": "An industrial design protects the ornamental or aesthetic aspects of a product — its shape, pattern, color, or combination thereof. It does not protect the functional features. Industrial design registration through IPOPHL grants protection for 5 years, renewable up to 15 years. It is relevant for AANR products with distinctive packaging or product forms."
+    },
+
+    {
+      "id": "ip_trademark",
+      "topic": "intellectual_property",
+      "question": "What is a trademark?",
+      "keywords": ["trademark", "brand", "logo", "trade mark", "brand protection"],
+      "answer": "A trademark is a sign, symbol, logo, name, or combination thereof that distinguishes the goods or services of one enterprise from another. Trademark registration through IPOPHL grants exclusive rights to use the mark for 10 years, renewable indefinitely. For AANR technologies, a trademark protects the brand identity of the commercialized product."
+    },
+
+    {
+      "id": "ip_copyright",
+      "topic": "intellectual_property",
+      "question": "What is copyright?",
+      "keywords": ["copyright", "copyright protection", "creative work", "original work"],
+      "answer": "Copyright is an automatic IP right that protects original creative works — written materials, software code, manuals, artistic works — from the moment of creation. It does not require registration in the Philippines, though voluntary registration with the National Library or IPOPHL can be done for evidentiary purposes. For ICT systems, copyright protects the source code and documentation."
+    },
+
+    {
+      "id": "ip_trade_secret",
+      "topic": "intellectual_property",
+      "question": "What is a trade secret?",
+      "keywords": ["trade secret", "confidential", "trade secrets", "know-how", "confidential information"],
+      "answer": "A trade secret is confidential business information — formulas, processes, methods, or technical knowledge — that provides a competitive advantage and is kept secret through confidentiality measures. Unlike patents, trade secrets do not require registration and have no expiration, but protection is lost if the information becomes public. Non-disclosure agreements (NDAs) are essential for protecting trade secrets."
+    },
+
+    {
+      "id": "ip_ipophl",
+      "topic": "intellectual_property",
+      "question": "What is IPOPHL?",
+      "keywords": ["ipophl", "intellectual property office", "ip office", "philippines ip"],
+      "answer": "IPOPHL stands for the Intellectual Property Office of the Philippines. It is the government agency responsible for registering and administering intellectual property rights in the Philippines — including patents, utility models, industrial designs, trademarks, and copyrights. Technology developers can file IP applications directly through IPOPHL or seek assistance from their institution's technology transfer office."
+    },
+
+    {
+      "id": "regulatory_fda",
+      "topic": "regulatory",
+      "question": "What is the FDA and what does it regulate?",
+      "keywords": ["fda", "food and drug administration", "fda approval", "fda certification", "food drug"],
+      "answer": "The Food and Drug Administration (FDA) of the Philippines, under the Department of Health, regulates food products, food ingredients, beverages, drugs, medical devices, and cosmetics. For AANR technologies under the Food category, FDA certification/approval is required at TRACER Level 7-8. The FDA reviews product safety, efficacy, and labeling compliance before a product can be commercially sold. Visit: www.fda.gov.ph"
+    },
+
+    {
+      "id": "regulatory_bai",
+      "topic": "regulatory",
+      "question": "What is the BAI and what does it regulate?",
+      "keywords": ["bai", "bureau of animal industry", "animal feed regulation", "livestock regulation"],
+      "answer": "The Bureau of Animal Industry (BAI), under the Department of Agriculture, regulates livestock, poultry, animal feeds, veterinary products, and animal breeds in the Philippines. For animal feed technologies, BAI certification is required at TRACER Level 7. For new animal breeds (terrestrial), BAI handles breed registration and approval. Visit: www.bai.da.gov.ph"
+    },
+
+    {
+      "id": "regulatory_bfar",
+      "topic": "regulatory",
+      "question": "What is BFAR and what does it regulate?",
+      "keywords": ["bfar", "bureau of fisheries", "aquatic resources", "fish regulation", "aquaculture"],
+      "answer": "The Bureau of Fisheries and Aquatic Resources (BFAR), under the Department of Agriculture, regulates fisheries and aquatic resources in the Philippines — including aquaculture products, fish breeds, diagnostic kits for aquatic species, and related technologies. For Agri-Aqua Device and Diagnostic Kits and New Animal Breeds (aquatic), BFAR validation or certification may be required at TRACER Level 7."
+    },
+
+    {
+      "id": "regulatory_fpa",
+      "topic": "regulatory",
+      "question": "What is the FPA and what does it regulate?",
+      "keywords": ["fpa", "fertilizer pesticide authority", "fertilizer registration", "pesticide registration"],
+      "answer": "The Fertilizer and Pesticide Authority (FPA), under the Department of Agriculture, regulates the registration, manufacture, importation, distribution, and use of fertilizers and pesticides in the Philippines. For Fertilizer and Pesticide technologies, FPA product registration is required at TRACER Level 7. The registration process includes efficacy, safety, and environmental impact data submission."
+    },
+
+    {
+      "id": "regulatory_bafs",
+      "topic": "regulatory",
+      "question": "What is BAFS and what does it regulate?",
+      "keywords": ["bafs", "bureau of agriculture fisheries standards", "organic certification", "agriculture standards"],
+      "answer": "The Bureau of Agriculture and Fisheries Standards (BAFS), under the Department of Agriculture, develops and implements standards for agriculture and fisheries products, including organic certification standards. For organic fertilizers and bio-based pesticides, BAFS registration is required at TRACER Level 8 to confirm compliance with Philippine National Standards for organic products."
+    },
+
+    {
+      "id": "regulatory_nsic",
+      "topic": "regulatory",
+      "question": "What is NSIC and what does it regulate?",
+      "keywords": ["nsic", "national seed industry council", "seed registration", "variety registration", "seed certification"],
+      "answer": "The National Seed Industry Council (NSIC) is the body responsible for the testing, evaluation, and registration of new plant varieties in the Philippines. NSIC registration confirms that a variety has undergone the required DUS and Value for Cultivation and Use (VCU) testing and is suitable for commercial release. NSIC or DA-BPI certification is required at TRACER Level 7 for new plant varieties."
+    },
+
+    {
+      "id": "regulatory_dabpi",
+      "topic": "regulatory",
+      "question": "What is DA-BPI?",
+      "keywords": ["da-bpi", "bpi", "bureau of plant industry", "plant industry", "da bpi"],
+      "answer": "The Bureau of Plant Industry (BPI), under the Department of Agriculture, oversees the development, protection, and regulation of plant-based industries in the Philippines. It handles seed certification, plant quarantine, and the biosafety regulatory process for genetically modified and gene-edited crops. DA-BPI works alongside NSIC in the variety registration process for new plant varieties."
+    },
+
+    {
+      "id": "regulatory_dict",
+      "topic": "regulatory",
+      "question": "What is DICT and what regulations apply to ICT systems?",
+      "keywords": ["dict", "department of information communications technology", "ict regulation", "data privacy"],
+      "answer": "The Department of Information and Communications Technology (DICT) is the primary government agency for ICT policy, planning, and regulation in the Philippines. For ICT-based AANR technologies, compliance with DICT standards and the National Privacy Commission (NPC) — which enforces the Data Privacy Act of 2012 — is required at TRACER Level 7. This includes data protection, cybersecurity, and system compliance requirements."
+    },
+
+    {
+      "id": "regulatory_npc",
+      "topic": "regulatory",
+      "question": "What is the NPC and the Data Privacy Act?",
+      "keywords": ["npc", "national privacy commission", "data privacy", "data privacy act", "personal data"],
+      "answer": "The National Privacy Commission (NPC) enforces the Data Privacy Act of 2012 (Republic Act 10173), which governs the collection, processing, and storage of personal data in the Philippines. ICT systems that collect or process user data must comply with the Data Privacy Act — including proper consent, data security measures, and breach notification procedures. NPC compliance is a TRACER Level 7 requirement for ICT technologies."
+    },
+
+    {
+      "id": "regulatory_atbi",
+      "topic": "regulatory",
+      "question": "What is the DOST-PCAARRD ATBI?",
+      "keywords": ["atbi", "agri-based technology business incubator", "dost pcaarrd", "business incubator", "technology incubator"],
+      "answer": "The DOST-PCAARRD Agri-based Technology Business Incubator (ATBI) is a program that supports AANR technology developers in navigating regulatory compliance and commercialization processes. ATBI provides guidance on regulatory requirements, connects developers with relevant agencies, and offers business development support. Researchers who need assistance with FDA, BAI, FPA, BAFS, or other regulatory applications are encouraged to contact their regional ATBI office."
+    },
+
+    {
+      "id": "regulatory_pcc",
+      "topic": "regulatory",
+      "question": "What is the Philippine Carabao Center (PCC)?",
+      "keywords": ["pcc", "philippine carabao center", "carabao", "dairy cattle", "buffalo"],
+      "answer": "The Philippine Carabao Center (PCC) is a government center under the Department of Agriculture focused on carabao (water buffalo) genetic improvement, dairy development, and related technologies. For new carabao breeds or genetic resources, PCC certification and approval is required as part of the regulatory compliance process at TRACER Level 7."
+    },
+
+    {
+      "id": "regulatory_nda",
+      "topic": "regulatory",
+      "question": "What is the National Dairy Authority (NDA)?",
+      "keywords": ["nda", "national dairy authority", "dairy", "dairy cattle", "milk"],
+      "answer": "The National Dairy Authority (NDA) is the government body responsible for developing the Philippine dairy industry. For new dairy cattle breeds or genetic resources, NDA approval is part of the regulatory compliance requirements at TRACER Level 7 under the New Animal Breed category."
+    },
+
+    {
+      "id": "raise_program",
+      "topic": "program",
+      "question": "What is the RAISE Program?",
+      "keywords": ["raise", "raise program", "raise agribusiness", "agribusiness hub", "abh"],
+      "answer": "RAISE stands for Regional Agri-based Industries and Small Enterprise Development Program — a DOST-PCAARRD initiative that supports agricultural and fisheries enterprises through technology transfer, business development, and market linkage. Under RAISE, Agribusiness Hub (ABH) projects in each region provide support for pre-commercialization activities including packaging, market testing, and promotional materials. For pre-commercialization packaging assistance, researchers can contact their regional ABH."
+    },
+
+    {
+      "id": "raise_contacts_car",
+      "topic": "contacts",
+      "question": "Who to contact in CAR region for RAISE program?",
+      "keywords": ["car", "cordillera", "bsu", "benguet state university", "raise car"],
+      "answer": "For the Cordillera Administrative Region (CAR): Contact Benguet State University (BSU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region1",
+      "topic": "contacts",
+      "question": "Who to contact in Region 1 Ilocos for RAISE program?",
+      "keywords": ["region 1", "ilocos", "mmsu", "mariano marcos state university", "raise region 1"],
+      "answer": "For Region 1 (Ilocos): Contact Mariano Marcos State University (MMSU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region2",
+      "topic": "contacts",
+      "question": "Who to contact in Region 2 Cagayan Valley for RAISE program?",
+      "keywords": ["region 2", "cagayan valley", "isu", "isabela state university", "raise region 2"],
+      "answer": "For Region 2 (Cagayan Valley): Contact Isabela State University (ISU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region3",
+      "topic": "contacts",
+      "question": "Who to contact in Region 3 Central Luzon for RAISE program?",
+      "keywords": ["region 3", "central luzon", "pcc clsu", "philippine carabao center", "clsu", "raise region 3"],
+      "answer": "For Region 3 (Central Luzon): Contact PCC @ CLSU (Philippine Carabao Center at Central Luzon State University) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region4",
+      "topic": "contacts",
+      "question": "Who to contact in Region 4 Southern Tagalog for RAISE program?",
+      "keywords": ["region 4", "southern tagalog", "cvsu", "cavite state university", "raise region 4"],
+      "answer": "For Region 4 (Southern Tagalog): Contact Cavite State University (CvSU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region5",
+      "topic": "contacts",
+      "question": "Who to contact in Region 5 Bicol for RAISE program?",
+      "keywords": ["region 5", "bicol", "bu", "bicol university", "raise region 5"],
+      "answer": "For Region 5 (Bicol Region): Contact Bicol University (BU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region6",
+      "topic": "contacts",
+      "question": "Who to contact in Region 6 Western Visayas for RAISE program?",
+      "keywords": ["region 6", "western visayas", "upv", "up visayas", "raise region 6"],
+      "answer": "For Region 6 (Western Visayas): Contact UP Visayas (UPV) under the RAISE Program. Email: upvraise.agribusiness@gmail.com"
+    },
+
+    {
+      "id": "raise_contacts_region7",
+      "topic": "contacts",
+      "question": "Who to contact in Region 7 Central Visayas for RAISE program?",
+      "keywords": ["region 7", "central visayas", "vsu", "visayas state university", "raise region 7"],
+      "answer": "For Region 7 (Central Visayas): Contact Visayas State University (VSU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region8",
+      "topic": "contacts",
+      "question": "Who to contact in Region 8 Eastern Visayas for RAISE program?",
+      "keywords": ["region 8", "eastern visayas", "bisu", "biliran island state university", "raise region 8"],
+      "answer": "For Region 8 (Eastern Visayas): Contact Biliran Island State University (BISU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region9",
+      "topic": "contacts",
+      "question": "Who to contact in Region 9 Western Mindanao for RAISE program?",
+      "keywords": ["region 9", "western mindanao", "wmsu", "western mindanao state university", "raise region 9"],
+      "answer": "For Region 9 (Western Mindanao): Contact Western Mindanao State University (WMSU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region10",
+      "topic": "contacts",
+      "question": "Who to contact in Region 10 Northern Mindanao for RAISE program?",
+      "keywords": ["region 10", "northern mindanao", "cmu", "central mindanao university", "raise region 10"],
+      "answer": "For Region 10 (Northern Mindanao): Contact Central Mindanao University (CMU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region11",
+      "topic": "contacts",
+      "question": "Who to contact in Region 11 Southern Mindanao for RAISE program?",
+      "keywords": ["region 11", "southern mindanao", "usep", "university of southeastern philippines", "raise region 11"],
+      "answer": "For Region 11 (Southern Mindanao): Contact University of Southeastern Philippines (USeP) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region12",
+      "topic": "contacts",
+      "question": "Who to contact in Region 12 SOCCSKSARGEN for RAISE program?",
+      "keywords": ["region 12", "soccsksargen", "usm", "university of southern mindanao", "raise region 12"],
+      "answer": "For Region 12 (SOCCSKSARGEN): Contact University of Southern Mindanao (USM) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "raise_contacts_region13",
+      "topic": "contacts",
+      "question": "Who to contact in Region 13 Caraga for RAISE program?",
+      "keywords": ["region 13", "caraga", "csu", "caraga state university", "raise region 13"],
+      "answer": "For Region 13 (Caraga): Contact Caraga State University (CSU) under the RAISE Program for pre-commercialization and Agribusiness Hub support."
+    },
+
+    {
+      "id": "tracer_overview",
+      "topic": "tracer",
+      "question": "What is TRACER and what does it stand for?",
+      "keywords": ["tracer", "what is tracer", "tracer meaning", "tracer acronym", "aanr tracer"],
+      "answer": "TRACER stands for Technology Readiness Assessment for Commercialization Enhancement and Roadmapping. It is a web-based assessment tool developed by DOST-PCAARRD under the RAISE Program to evaluate the development status and commercialization preparedness of Agriculture, Aquatic, and Natural Resources (AANR) technologies. TRACER uses a 9-level scale adapted from international TRL frameworks and tailored for Philippine AANR technologies and government-funded research commercialization requirements."
+    },
+
+    {
+      "id": "tracer_level1",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 1?",
+      "keywords": ["tracer level 1", "trl 1", "level 1", "concept development", "prior art"],
+      "answer": "TRACER Level 1 — Concept and Market Definition: The technology concept has been clearly defined, supported by prior art search or initial concept validation. Potential end-users, beneficiaries, and relevant industry sectors have been identified. This is the earliest stage where the basic idea is established and its potential market relevance is scoped out."
+    },
+
+    {
+      "id": "tracer_level2",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 2?",
+      "keywords": ["tracer level 2", "trl 2", "level 2", "formulation", "prototype planning", "initial experiments"],
+      "answer": "TRACER Level 2 — Design / Formulation / Prototype Planning: Initial experiments or designs have been conducted at bench or laboratory scale. A first prototype or formulation has been created. Preliminary assessments of user requirements and potential applications have been completed. IP protection has been initiated."
+    },
+
+    {
+      "id": "tracer_level3",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 3?",
+      "keywords": ["tracer level 3", "trl 3", "level 3", "prototype development", "laboratory testing"],
+      "answer": "TRACER Level 3 — Prototype Development and Laboratory Testing: A working prototype or formulation has been developed and tested under controlled laboratory conditions. Key performance parameters have been confirmed. IP protection has been initiated."
+    },
+
+    {
+      "id": "tracer_level4",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 4?",
+      "keywords": ["tracer level 4", "trl 4", "level 4", "controlled validation", "ip filing", "industry partner"],
+      "answer": "TRACER Level 4 — Controlled Validation and IP Filing: The technology has been validated under controlled conditions. IP protection has been filed. Market viability has been assessed using at least secondary data. A potential industry partner has been identified. Pre-commercialization document preparation has started."
+    },
+
+    {
+      "id": "tracer_level5",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 5?",
+      "keywords": ["tracer level 5", "trl 5", "level 5", "pilot testing", "industry engagement", "bmc"],
+      "answer": "TRACER Level 5 — Pilot Testing and Industry Engagement: A pilot-scale version has been developed with a production manual. Initial promotional activities and product profiling have been conducted. Engagement with potential industry partners has begun. A Business Model Canvas (BMC) has been prepared. IP protection is pending review."
+    },
+
+    {
+      "id": "tracer_level6",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 6?",
+      "keywords": ["tracer level 6", "trl 6", "level 6", "scale up", "industry testing", "market testing"],
+      "answer": "TRACER Level 6 — Multi-location Testing and Scale-up Preparation: The technology has been tested at pilot or industry scale with secured industry partnerships. Multi-location or industry-scale testing has been initiated. Initial market testing and limited commercial release have been conducted. Manufacturing protocols have been finalized."
+    },
+
+    {
+      "id": "tracer_level7",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 7?",
+      "keywords": ["tracer level 7", "trl 7", "level 7", "industry validation", "regulatory submission", "loi"],
+      "answer": "TRACER Level 7 — Industry Validation and Regulatory Submission: Industry-scale validation has been successfully completed. Standardized production manuals have been established. A Letter of Intent for licensing has been secured. FTO and IP valuation reports have been prepared. Regulatory applications have been initiated. IP protection has been filed."
+    },
+
+    {
+      "id": "tracer_level8",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 8?",
+      "keywords": ["tracer level 8", "trl 8", "level 8", "commercial production readiness", "regulatory approval"],
+      "answer": "TRACER Level 8 — Commercial Production Readiness: The technology is ready for full-scale commercial production with consistent and replicable processes. Required regulatory certifications and approvals have been obtained. Licensing terms have been finalized. A Fairness Opinion Report has been requested. The technology commercialization plan is complete."
+    },
+
+    {
+      "id": "tracer_level9",
+      "topic": "tracer_levels",
+      "question": "What is TRACER Level 9?",
+      "keywords": ["tracer level 9", "trl 9", "level 9", "full commercialization", "royalty", "commercialized"],
+      "answer": "TRACER Level 9 — Full Commercial Deployment: The technology is fully commercialized. The product is commercially available to target users. A signed Technology Licensing Agreement is in place. Royalty income has been documented. This is the highest level of technology readiness — the technology has successfully moved from research to market."
+    },
+
+    {
+      "id": "tracer_categories",
+      "topic": "tracer",
+      "question": "What are the assessment categories in TRACER?",
+      "keywords": ["categories", "assessment categories", "evaluation areas", "assessment areas"],
+      "answer": "TRACER evaluates technologies across five categories: (1) Technology Development Status — the technical maturity and validation of the technology; (2) Market and Pre-commercialization Preparedness — market research, promotional activities, and commercialization documents; (3) Intellectual Property Protection Status — IP filing, registration, and protection; (4) Industry Validation and Adoption Status — industry partnerships, testing, and licensing; (5) Regulatory Compliance Status — certifications and approvals from relevant Philippine regulatory bodies."
+    },
+
+    {
+      "id": "tracer_technology_types",
+      "topic": "tracer",
+      "question": "What technology types does TRACER cover?",
+      "keywords": ["technology types", "aanr types", "technology categories", "what technologies"],
+      "answer": "TRACER covers 9 AANR technology types: (1) Food, Food Ingredients and Beverages; (2) Animal Feed, Feed Ingredients and Animal Nutrition; (3) Fertilizer and Pesticide (including Organic and Bio-based Products); (4) Agri-Aqua Machinery and Facility; (5) Agri-Aqua Device and Diagnostic Kits; (6) ICT (Apps and Systems involving IoT); (7) Natural Resource-Derived Materials; (8) New Plant Variety (Conventional); (9) New Plant Variety (Gene-Edited and GM); and New Animal Breed or Genetic Resources (Aquatic and Terrestrial)."
+    },
+
+    {
+      "id": "market_viability_assessment",
+      "topic": "documents",
+      "question": "What is a Market Viability Assessment?",
+      "keywords": ["market viability", "market assessment", "feasibility study", "market study", "secondary data"],
+      "answer": "A Market Viability Assessment (or Market/Feasibility Study) evaluates the potential of a technology to succeed commercially. Using at least secondary data — published market reports, industry statistics, consumer surveys — it analyzes market size, target customers, competition, pricing, and demand. This is a TRACER Level 4 requirement and forms the basis for the Business Model Canvas and commercialization planning."
+    },
+
+    {
+      "id": "technology_profile",
+      "topic": "documents",
+      "question": "What is a basic technology profile?",
+      "keywords": ["technology profile", "tech profile", "basic technology profile", "technology brief"],
+      "answer": "A basic technology profile is a concise document or presentation that describes a technology's key features, benefits, applications, target users, and development status. It is used for promotional purposes at exhibits, trade fairs, and pitching events. Preparing and using a basic technology profile for promotion is a TRACER Level 5 requirement to generate market interest and attract potential industry partners."
+    },
+
+    {
+      "id": "spinoff_vs_licensing",
+      "topic": "commercialization",
+      "question": "What is the difference between spin-off and licensing as commercialization pathways?",
+      "keywords": ["spin-off vs licensing", "commercialization pathway", "licensing vs spinoff", "technology transfer pathway"],
+      "answer": "Licensing means granting an existing company the rights to use and commercialize your technology in exchange for royalties or fees — the research institution retains IP ownership. A spin-off means creating a new startup company to commercialize the technology, often with the researchers or institution as founders. In TRACER, technologies designated for spin-off have some industry partner and licensing requirements marked as optional, since the commercialization happens internally through the new company."
+    },
+
+    {
+      "id": "privately_funded",
+      "topic": "commercialization",
+      "question": "What does privately funded mean in the TRACER assessment?",
+      "keywords": ["privately funded", "private funding", "private fund", "not required privately"],
+      "answer": "In the TRACER assessment, 'privately funded' refers to technologies developed using private sector funds rather than government (DOST) funds. Some requirements — particularly pre-commercialization documents and the Fairness Opinion Report — are marked as 'Not Required / Optional Only (Privately Funded)' because these are primarily obligations for government-funded research to ensure proper use of public funds. Privately funded technologies have more flexibility in their commercialization pathway."
+    },
+
+    {
+      "id": "dost_pcaarrd",
+      "topic": "program",
+      "question": "What is DOST-PCAARRD?",
+      "keywords": ["dost pcaarrd", "pcaarrd", "dost", "philippine council", "aanr research"],
+      "answer": "DOST-PCAARRD stands for the Department of Science and Technology - Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development. Based in Los Baños, Laguna, it is the lead government agency for funding, coordinating, and monitoring research and development in the AANR sector in the Philippines. TRACER is a tool developed under DOST-PCAARRD to support the commercialization of AANR research outputs."
+    }
+
+  ]
+}
