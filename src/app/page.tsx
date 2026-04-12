@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { tracerLevels } from "./utils/helperConstants";
@@ -132,17 +132,36 @@ export default function HomePage() {
     }
   }, []);
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgRef      = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || !bgRef.current) return;
+      const rect   = sectionRef.current.getBoundingClientRect();
+      const offset = rect.top * 0.35;
+      bgRef.current.style.transform = `translateY(${offset}px)`;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <main className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)]">
 
-      {/* ═══ HERO ═══ */}
+      {/* HERO */}
       <section className="relative min-h-screen flex items-center bg-[var(--color-primary)] overflow-hidden px-6 lg:px-[6vw] pt-[60px] pb-[120px]">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
         {/* Glows */}
         <div className="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle,rgba(76, 177, 95, 0.18) 0%,transparent 75%)" }} />
+          style={{ background: "radial-gradient(circle,rgba(141,197,64,0.18) 0%,transparent 75%)" }} />
         <div className="absolute -bottom-[100px] left-[30%] w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle,rgba(42, 228, 110, 0.07) 0%,transparent 75%)" }} />
+          style={{ background: "radial-gradient(circle,rgba(141,197,64,0.07) 0%,transparent 75%)" }} />
+
+        <div className="absolute -top-[100px] -left-[150px] w-[500px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle,rgba(0,173,241,0.10) 0%,transparent 70%)" }} />
 
         {/* Decorative motifs */}
         <WaveRipple className="absolute bottom-[90px] left-0 w-full text-[var(--color-accent-15)] pointer-events-none" />
@@ -210,7 +229,7 @@ export default function HomePage() {
         </svg>
       </section>
 
-      {/* ═══ STATS STRIP ═══ */}
+      {/* STATS STRIP */}
       <div className="bg-[var(--color-primary-mid)] px-6 lg:px-[6vw] py-8">
         <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around gap-4 ">
           {[
@@ -228,7 +247,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ═══ AANR SECTOR SHOWCASE ═══ */}
+      {/* AANR SECTOR SHOWCASE */}
       <section className="py-[80px] px-6 lg:px-[6vw] bg-[var(--color-bg)] relative overflow-hidden">
 
         {/* Subtle dot grid bg */}
@@ -254,7 +273,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ ABOUT ═══ */}
+      {/* ABOUT */}
       <section className="py-[100px] px-6 lg:px-[6vw] bg-[var(--color-bg-card)] relative overflow-hidden">
 
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center relative z-10">
@@ -322,33 +341,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ HOW IT WORKS ═══ */}
-      <section className="relative py-[100px] px-6 lg:px-[6vw] bg-[#0f2e1a] overflow-hidden">
-        
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+      {/* HOW IT WORKS */}
+      <section
+        ref={sectionRef}
+        className="relative py-[100px] px-6 lg:px-[6vw] bg-[#0f2e1a] overflow-hidden"
+      >
+        {/* Parallax background */}
+        <div
+          ref={bgRef}
+          className="absolute inset-[-20%] pointer-events-none will-change-transform"
+          style={{
+            backgroundImage: `url('/img/pcaarrd-building.jpg')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.05,
+            filter: "grayscale(100%)",
+          }}
+        />
 
-        {/* Decorative motifs */}
-        <FishDecor className="absolute right-[4%] top-[12%] w-[80px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
-        <FishDecor className="absolute right-[14%] top-[22%] w-[50px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
-        <LeafSprig className="absolute left-[2%] bottom-[14%] w-[55px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
-        <RiceStalk className="absolute left-[7%] bottom-[10%] w-[20px] text-[var(--color-accent-15)] pointer-events-none hidden lg:block" />
-        <WaveRipple className="absolute bottom-[80px] left-0 w-full text-[var(--color-accent-15)] pointer-events-none" />
+        {/* Dark overlay to keep text readable */}
+        <div className="absolute inset-0 bg-[#0f2e1a]/80 pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <div className="mb-14">
             <span className="inline-block text-[10px] font-bold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 pb-4 border-b-2 border-[var(--color-accent)]">
               Process
             </span>
-            <h2 className=" text-[clamp(30px,3vw,42px)] text-white tracking-tight">
+            <h2 className="text-[clamp(30px,3vw,42px)] text-white tracking-tight">
               How <span className="text-[var(--color-accent)] italic">TRACER</span> works
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {steps.map(({ n, Icon, title, desc }) => (
-              <div key={n} className="bg-[var(--white-10)] border border-[var(--white-35)] hover:bg-[var(--white-15)] hover:border-[var(--color-accent)]/20 transition-all duration-300 rounded-2xl p-8">
-                <div className=" text-[54px] text-[var(--color-accent)] leading-none mb-5 tracking-[-2px]">
+              <div
+                key={n}
+                className="bg-[var(--white-10)] border border-[var(--white-35)] hover:bg-[var(--white-15)] hover:border-[var(--color-accent)]/20 transition-all duration-300 rounded-2xl p-8"
+              >
+                <div className="text-[54px] text-[var(--color-accent)] leading-none mb-5 tracking-[-2px]">
                   {n}
                 </div>
                 <div className="w-10 h-10 rounded-[10px] bg-[var(--color-accent)]/12 flex items-center justify-center mb-5">
@@ -366,7 +396,7 @@ export default function HomePage() {
         </svg>
       </section>
 
-      {/* ═══ MAP ═══ */}
+      {/* MAP */}
       <section className="py-[100px] px-6 lg:px-[6vw] bg-[var(--color-bg)]">
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-10">

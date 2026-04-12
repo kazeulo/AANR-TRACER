@@ -375,7 +375,7 @@ export default function ResultsPage() {
               <QuestionGroup
                 title={`Lacking to Reach Highest Potential TRACER Level ${result.highestAchievableTRL}`}
                 questions={result.lackingForAchievable}
-                accent="#3b82f6"
+                accent="#00adf1"
                 defaultOpen={false}
                 techType={data.technologyType}
               />

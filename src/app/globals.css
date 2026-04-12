@@ -32,6 +32,19 @@ html {
   --color-accent-30:     rgba(74, 163, 90, 0.30);
   --color-accent-35:     rgba(74, 163, 90, 0.35);
 
+  /* DOST institutional colors */
+  --color-dost-green:        #8dc540;
+  --color-dost-green-hover:  #7db035;
+  --color-dost-green-08:     rgba(141, 197, 64, 0.08);
+  --color-dost-green-15:     rgba(141, 197, 64, 0.15);
+  --color-dost-green-30:     rgba(141, 197, 64, 0.30);
+
+  --color-dost-blue:         #00adf1;
+  --color-dost-blue-hover:   #009fd8;
+  --color-dost-blue-08:      rgba(0, 173, 241, 0.08);
+  --color-dost-blue-15:      rgba(0, 173, 241, 0.15);
+  --color-dost-blue-30:      rgba(0, 173, 241, 0.30);
+
   /* Motifs */
   --color-accent-15: rgba(74, 163, 90, 0.10);
 

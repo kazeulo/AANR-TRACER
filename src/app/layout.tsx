@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import "./globals.css";
 import { Montserrat } from 'next/font/google';
 import type { Metadata } from 'next';
 import BackToTop from "./components/BacktoTop";
