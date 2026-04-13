@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, X, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 export default function Footer() {
@@ -37,7 +37,7 @@ export default function Footer() {
             <div className="flex gap-2.5 items-center">
               {[
                 { href: "https://facebook.com",  Icon: Facebook,  label: "Facebook"  },
-                { href: "https://twitter.com",   Icon: Twitter,   label: "Twitter"   },
+                { href: "https://twitter.com",   Icon: X,   label: "Twitter"   },
                 { href: "https://instagram.com", Icon: Instagram, label: "Instagram" },
                 { href: "https://linkedin.com",  Icon: Linkedin,  label: "LinkedIn"  },
               ].map(({ href, Icon, label }) => (
