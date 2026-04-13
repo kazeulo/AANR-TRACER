@@ -1,4 +1,4 @@
-import knowledge from "./knowledge.json";
+import knowledge from "../../lib/knowledge.json";
 
 interface KnowledgeEntry {
   id: string;
