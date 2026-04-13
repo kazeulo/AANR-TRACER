@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
-import knowledge from "../../utils/knowledge.json";
+import knowledge from "../../../lib/knowledge.json";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 

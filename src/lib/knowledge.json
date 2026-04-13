@@ -672,7 +672,140 @@
       "question": "What is DOST-PCAARRD?",
       "keywords": ["dost pcaarrd", "pcaarrd", "dost", "philippine council", "aanr research"],
       "answer": "DOST-PCAARRD stands for the Department of Science and Technology - Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development. Based in Los Baños, Laguna, it is the lead government agency for funding, coordinating, and monitoring research and development in the AANR sector in the Philippines. TRACER is a tool developed under DOST-PCAARRD to support the commercialization of AANR research outputs."
+    },
+    {
+      "id": "tracer_definition",
+      "topic": "general",
+      "question": "What is the AANR TRACER Application?",
+      "keywords": ["tracer app", "aanr tracer", "what is tracer", "technology readiness", "trl tool"],
+      "answer": "The AANR Technology Readiness Assessment for Commercialization Enhancement and Roadmapping (TRACER) Application is a web-based assessment and recommendation-support tool designed to evaluate the Technology Readiness Level (TRL) of innovations in the Agriculture, Aquatic, and Natural Resources (AANR) sector. It helps users understand the maturity of their technology and identify next steps toward commercialization, adoption, or utilization."
+    },
+    {
+      "id": "tracer_users",
+      "topic": "general",
+      "question": "Who can use the TRACER Application?",
+      "keywords": ["who can use tracer", "target users", "intended users", "aanr users"],
+      "answer": "The application is intended for researchers and innovators in the AANR sector, technology transfer offices and commercialization units, academic, research, and government institutions, and organizations supporting innovation, incubation, and technology adoption."
+    },
+    {
+      "id": "tracer_login",
+      "topic": "general",
+      "question": "Do I need to log in or create an account?",
+      "keywords": ["login", "account", "sign up", "credentials", "access tracer"],
+      "answer": "No. You do not need any log-in credentials to access and use the application."
+    },
+    {
+      "id": "tracer_free",
+      "topic": "general",
+      "question": "Is the AANR TRACER Application free to use?",
+      "keywords": ["free", "cost", "pricing", "subscription", "fee"],
+      "answer": "Yes. The AANR TRACER App is free to use and accessible to anyone through desktop, laptop, or any mobile device using any browser."
+    },
+    {
+      "id": "tracer_faq_updates",
+      "topic": "general",
+      "question": "Will the FAQs be updated?",
+      "keywords": ["faq updates", "latest info", "updates", "changes"],
+      "answer": "Yes. This FAQ section may be updated periodically to reflect system enhancements, policy updates, or user feedback. Users are advised to refer to the latest version available on the website."
+    },
+    {
+      "id": "technology_scope",
+      "topic": "assessment",
+      "question": "What types of technologies can be assessed?",
+      "keywords": ["technology scope", "eligible technologies", "aanr technologies", "assessment coverage"],
+      "answer": "AANR TRACER is suitable for technologies that fall under the Agriculture, Aquatic, and Natural Resources (AANR) sector and are intended for commercial purposes through modes such as licensing, joint venture, profit sharing, or buy-out."
+    },
+    {
+      "id": "tracer_level_basis",
+      "topic": "assessment",
+      "question": "How does TRACER determine the TRACER Level?",
+      "keywords": ["trl calculation", "tracer level", "assessment method", "how it works"],
+      "answer": "The application uses a structured readiness assessment framework based on the NASA TRL scale, adapted for AANR technologies, the DOST–PCAARRD assessment framework, and expert experience in R&D and commercialization — reviewed by subject-matter experts and researchers across various commodities."
+    },
+    {
+      "id": "tracer_results_validity",
+      "topic": "assessment",
+      "question": "Are the TRACER Level results final and absolute?",
+      "keywords": ["results accuracy", "final results", "validity", "reliability"],
+      "answer": "No. The TRACER Level results are indicative and apply only to the technology assessed. Results are entirely based on the accuracy and completeness of the information provided by the user at the time of the assessment."
+    },
+    {
+      "id": "incorrect_input",
+      "topic": "assessment",
+      "question": "What happens if incomplete or incorrect information is entered?",
+      "keywords": ["wrong input", "incomplete data", "errors", "accuracy"],
+      "answer": "Incomplete or incorrect information may result in inaccurate TRACER Level classification or recommendations. Users are responsible for ensuring accuracy. The developers shall not be liable for errors resulting from such inputs."
+    },
+    {
+      "id": "data_validation",
+      "topic": "assessment",
+      "question": "Does the system verify or validate information provided?",
+      "keywords": ["validation", "verify data", "data checking", "system verification"],
+      "answer": "No. The AANR TRACER Application does not independently verify or validate user-provided information. All assessments are generated solely based on the data entered by the user."
+    },
+    {
+      "id": "recommendations_generation",
+      "topic": "recommendations",
+      "question": "How are gaps and recommendations generated?",
+      "keywords": ["recommendations", "gaps", "ai analysis", "how recommendations work"],
+      "answer": "Identified gaps and recommendations are produced through AI-driven analysis aligned with the structured readiness assessment framework. These recommendations are indicative and intended to support planning and decision-making."
+    },
+    {
+      "id": "recommendations_mandatory",
+      "topic": "recommendations",
+      "question": "Are the recommendations mandatory to follow?",
+      "keywords": ["mandatory", "required", "optional recommendations"],
+      "answer": "No. The recommendations are not prescriptive or mandatory. They are provided as guidance to help users understand potential next steps and areas for improvement."
+    },
+    {
+      "id": "data_storage",
+      "topic": "data",
+      "question": "Is my data saved in the system?",
+      "keywords": ["data storage", "save data", "privacy", "server storage"],
+      "answer": "No. Data saving only occurs if the user opts to download the generated PDF or sends it via email. Assessment data is not stored server-side."
+    },
+    {
+      "id": "export_results",
+      "topic": "data",
+      "question": "Can I download or export my assessment results?",
+      "keywords": ["download", "export pdf", "save results"],
+      "answer": "Yes. The application allows users to download and export assessment summaries and results as a PDF file for internal use, reporting, or strategic planning."
+    },
+    {
+      "id": "multiple_assessments",
+      "topic": "data",
+      "question": "Can I assess more than one technology?",
+      "keywords": ["multiple assessments", "many technologies", "repeat use"],
+      "answer": "Yes. Users may conduct multiple assessments for different technologies, provided each assessment is completed separately with accurate and relevant information."
+    },
+    {
+      "id": "assessment_duration",
+      "topic": "data",
+      "question": "How long does it take to complete an assessment?",
+      "keywords": ["duration", "time needed", "how long", "assessment time"],
+      "answer": "On average, completing an assessment takes about 10 minutes once all required details are prepared, depending on the complexity of the technology."
+    },
+    {
+      "id": "support_contact",
+      "topic": "data",
+      "question": "Who should I contact for technical or methodological support?",
+      "keywords": ["support", "help", "contact", "assistance"],
+      "answer": "For technical assistance or clarification on methodology, contact your institutional technology transfer office or refer to the support materials provided on the AANR TRACER Application website."
+    },
+    {
+      "id": "tracer_developers",
+      "topic": "program",
+      "question": "Who created the TRACER Application?",
+      "keywords": [
+        "who created tracer",
+        "tracer developers",
+        "who developed tracer",
+        "tracer creators",
+        "aanr tracer developers",
+        "dost pcaarrd tracer",
+        "upv ttbdo tracer"
+      ],
+      "answer": "The TRACER Application is a collaborative project developed by the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD), the University of the Philippines Visayas Technology Transfer and Business Development Office (UPV TTBIDO), the Western Visayas RAISE Program, and the Agribusiness Hub Western Visayas. It was created to support the assessment and commercialization of AANR technologies."
     }
-
   ]
 }

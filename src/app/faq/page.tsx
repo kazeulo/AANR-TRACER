@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { categories } from "../utils/faqUtils";
+import { categories } from "../../lib/faqUtils";
 
 // SVG Icon component 
 

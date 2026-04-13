@@ -27,6 +27,7 @@ March 2026
 - IP questions filtered out of AI roadmap generation — IP steps no longer appear in the commercialization roadmap
 - Funding source added to generated PDF report
 - `questions-to-csv.mjs` export script — converts `questions.json` to a client-readable CSV with full option/choice expansion per row including TRL satisfied per choice and checklist sub-items
+- Add assistant chatbot
 
 ### Fixed
 - Home page now clears session data on mount via `sessionStorage.removeItem` — resolves persisting assessment data when navigating home through any route
