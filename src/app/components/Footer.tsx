@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, X, Instagram, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { FaFacebook, FaInstagram, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import Image from "next/image";
 
 export default function Footer() {
@@ -36,10 +37,10 @@ export default function Footer() {
             {/* Social icons */}
             <div className="flex gap-2.5 items-center">
               {[
-                { href: "https://facebook.com",  Icon: Facebook,  label: "Facebook"  },
-                { href: "https://twitter.com",   Icon: X,   label: "Twitter"   },
-                { href: "https://instagram.com", Icon: Instagram, label: "Instagram" },
-                { href: "https://linkedin.com",  Icon: Linkedin,  label: "LinkedIn"  },
+                { href: "https://facebook.com",  Icon: FaFacebook,  label: "Facebook"  },
+                { href: "https://twitter.com",   Icon: FaXTwitter,   label: "Twitter"   },
+                { href: "https://instagram.com", Icon: FaInstagram, label: "Instagram" },
+                { href: "https://linkedin.com",  Icon: FaLinkedin,  label: "LinkedIn"  },
               ].map(({ href, Icon, label }) => (
                 <a
                   key={label}
