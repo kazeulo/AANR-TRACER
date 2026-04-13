@@ -75,7 +75,7 @@ export default function AssistantWidget({ context }: Props) {
       <button
         onClick={() => setOpen(o => !o)}
         aria-label={open ? "Close assistant" : "Open TRACER Assistant"}
-        className={`fixed bottom-6 right-6 z-50 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(15,46,26,0.25)] transition-all duration-300 ${
+        className={`fixed bottom-12 right-10 z-50 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(15,46,26,0.25)] transition-all duration-300 ${
           open
             ? "bg-[#0f2e1a] scale-95"
             : "bg-[#4aa35a] hover:bg-[#3d8f4c] hover:-translate-y-0.5"
@@ -96,7 +96,7 @@ export default function AssistantWidget({ context }: Props) {
 
       {/* Panel */}
       <div
-        className={`fixed bottom-[72px] right-6 z-50 w-[340px] bg-white border border-[#ede9e0] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 shadow-[0_16px_48px_rgba(15,46,26,0.14)] ${
+        className={`fixed bottom-24 right-10 z-50 w-[340px] bg-white border border-[#ede9e0] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 shadow-[0_16px_48px_rgba(15,46,26,0.14)] ${
           open
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 translate-y-4 pointer-events-none"

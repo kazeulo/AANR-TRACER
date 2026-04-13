@@ -1,11 +1,12 @@
 import "./globals.css";
+
 import { Montserrat } from 'next/font/google';
 import type { Metadata } from 'next';
 import BackToTop from "./components/BacktoTop";
 
 // for fontsize control
-import FontSizeControl from "./utils/fontZoom/FontsizeControl";
-import { FontSizeProvider } from "./utils/fontZoom/FontsizeContext";
+import FontSizeControl from "./components/fontZoom/FontsizeControl";
+import { FontSizeProvider } from "./components/fontZoom/FontsizeContext";
 
 import { AssessmentProvider } from "./assessment/AssessmentContext";
 import AssistantWidget from "./components/ChatbotWidget";
@@ -37,14 +38,14 @@ export default function RootLayout({
           <FontSizeProvider>
             <Header />
             {children}
-            {/* <AssistantWidget
+            <AssistantWidget
               context={{
                 technologyType: "",
                 currentCategory: "",
                 currentTRLLevel: 0,
                 questionText: undefined,
               }}
-            /> */}
+            />
             <Footer />
             <FontSizeControl />
             <BackToTop />
