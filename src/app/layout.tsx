@@ -9,7 +9,7 @@ import FontSizeControl from "./components/fontZoom/FontsizeControl";
 import { FontSizeProvider } from "./components/fontZoom/FontsizeContext";
 
 import { AssessmentProvider } from "./assessment/AssessmentContext";
-import AssistantWidget from "./components/ChatbotWidget";
+import AssistantWidget from "./components/AssistantWidget";
 
 // components
 import Header from "./components/Header";

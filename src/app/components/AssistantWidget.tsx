@@ -25,6 +25,19 @@ export default function AssistantWidget({ context }: Props) {
   const [loading, setLoading]   = useState(false);
   const bottomRef               = useRef<HTMLDivElement>(null);
   const inputRef                = useRef<HTMLInputElement>(null);
+  const widgetRef               = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (widgetRef.current && !widgetRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
 
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 100);
@@ -70,33 +83,12 @@ export default function AssistantWidget({ context }: Props) {
   ];
 
   return (
-    <>
-      {/* Floating button */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-label={open ? "Close assistant" : "Open TRACER Assistant"}
-        className={`fixed bottom-12 right-10 z-50 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(15,46,26,0.25)] transition-all duration-300 ${
-          open
-            ? "bg-[#0f2e1a] scale-95"
-            : "bg-[#4aa35a] hover:bg-[#3d8f4c] hover:-translate-y-0.5"
-        }`}
-        style={{ width: 52, height: 52 }}
-      >
-        {open ? (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 3l10 10M13 3L3 13" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-              stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )}
-      </button>
+    // Single wrapper ref covers both the button and the panel
+    <div ref={widgetRef} className="fixed bottom-12 right-10 z-50">
 
       {/* Panel */}
       <div
-        className={`fixed bottom-24 right-10 z-50 w-[340px] bg-white border border-[#ede9e0] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 shadow-[0_16px_48px_rgba(15,46,26,0.14)] ${
+        className={`absolute bottom-16 right-0 w-[340px] bg-white border border-[#ede9e0] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 shadow-[0_16px_48px_rgba(15,46,26,0.14)] ${
           open
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 translate-y-4 pointer-events-none"
@@ -260,12 +252,35 @@ export default function AssistantWidget({ context }: Props) {
         </div>
       </div>
 
+      {/* Floating button */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-label={open ? "Close assistant" : "Open TRACER Assistant"}
+        className={`relative z-10 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(15,46,26,0.25)] transition-all duration-300 ${
+          open
+            ? "bg-[#0f2e1a] scale-95"
+            : "bg-[#4aa35a] hover:bg-[#3d8f4c] hover:-translate-y-0.5"
+        }`}
+        style={{ width: 52, height: 52 }}
+      >
+        {open ? (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 3l10 10M13 3L3 13" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+              stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </button>
+
       <style>{`
         @keyframes bounce {
           0%, 60%, 100% { transform: translateY(0); }
           30% { transform: translateY(-4px); }
         }
       `}</style>
-    </>
+    </div>
   );
 }
