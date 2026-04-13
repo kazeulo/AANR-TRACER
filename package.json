@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@react-email/components": "^1.0.9",
-    "@react-pdf/renderer": "^4.3.2",
+    "@react-pdf/renderer": "^4.4.1",
     "@upstash/redis": "^1.37.0",
     "framer-motion": "^12.34.3",
     "html2canvas": "^1.4.1",
