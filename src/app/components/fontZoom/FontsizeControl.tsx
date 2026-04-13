@@ -3,12 +3,41 @@
 import { useState, useEffect, useRef } from "react";
 import { useFontSize } from "./FontsizeContext";
 
+const STORAGE_KEY = "rrc-fontsize-tooltip-seen";
+
 export default function FontSizeControl() {
   const { scaleIndex, label, canIncrease, canDecrease, increase, decrease, reset } = useFontSize();
   const [open, setOpen] = useState(false);
+  const [autoTooltip, setAutoTooltip] = useState(false);
   const isDefault = scaleIndex === 1;
   const ref = useRef<HTMLDivElement>(null);
 
+  // Show tooltip automatically on first visit
+  useEffect(() => {
+    const seen = sessionStorage.getItem(STORAGE_KEY);
+    if (!seen) {
+      // Small delay so the page has settled before it appears
+      const showTimer = setTimeout(() => setAutoTooltip(true), 800);
+      // Auto-dismiss after 4 seconds
+      const hideTimer = setTimeout(() => {
+        setAutoTooltip(false);
+        sessionStorage.setItem(STORAGE_KEY, "1");
+      }, 4800);
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, []);
+
+  // Dismiss auto-tooltip immediately if user opens the panel
+  function handleOpen() {
+    setAutoTooltip(false);
+    sessionStorage.setItem(STORAGE_KEY, "1");
+    setOpen(true);
+  }
+
+  // Close panel on outside click
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -27,7 +56,7 @@ export default function FontSizeControl() {
       {!open && (
         <div className="relative group">
           <button
-            onClick={() => setOpen(true)}
+            onClick={handleOpen}
             aria-label="Open text size panel"
             className="w-8 h-20 rounded-r-xl flex items-center justify-center shadow-xl
                        transition-all duration-200 bg-[var(--color-accent)]"
@@ -40,7 +69,28 @@ export default function FontSizeControl() {
             </span>
           </button>
 
-          {/* Hover tooltip */}
+          {/* Auto-show tooltip on first visit */}
+          <div
+            className={`pointer-events-none absolute left-10 top-1/2 -translate-y-1/2
+                        transition-all duration-300
+                        ${autoTooltip ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-1"}
+                        group-hover:opacity-0`}
+          >
+            <div className="flex items-center">
+              <div className="w-0 h-0
+                              border-t-[6px] border-t-transparent
+                              border-b-[6px] border-b-transparent
+                              border-r-[7px] border-r-[var(--color-primary)]" />
+              <div className="bg-[var(--color-primary-mid)] text-[12px] text-white font-medium
+                              px-5 py-2 rounded-lg shadow-xl whitespace-nowrap leading-snug">
+                Adjust <span className="text-[var(--color-accent)] font-bold">text size</span>
+                <br />
+                <span className="text-white/60 text-[10px]">Click to expand</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Hover tooltip (always available after first visit) */}
           <div className="pointer-events-none absolute left-10 top-1/2 -translate-y-1/2
                           opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100">
             <div className="flex items-center">
@@ -59,7 +109,7 @@ export default function FontSizeControl() {
         </div>
       )}
 
-      {/* Expanded panel — darker, warmer */}
+      {/* Expanded panel */}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
           open ? "w-[138px] opacity-100" : "w-0 opacity-0"
