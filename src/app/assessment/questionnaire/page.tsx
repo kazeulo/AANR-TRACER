@@ -753,16 +753,18 @@ export default function QuestionnairePage() {
                         {q.toolTip && expandedTips[q.id] && (
                           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
                             <p>{q.toolTip}</p> 
-
-                            <button 
-                              onClick={() => setOpenModal(true)} 
-                              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-                            >
+                        
+                            {q.expandedToolTip && (
+                              <button 
+                                onClick={() => setOpenModal(true)} 
+                                className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+                              >
                                 Learn more
                                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                                   <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
-                            </button>
+                              </button>
+                            )}
 
                             {openModal && (
                               <div
