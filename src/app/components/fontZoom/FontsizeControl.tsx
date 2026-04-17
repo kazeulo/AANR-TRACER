@@ -50,7 +50,7 @@ export default function FontSizeControl() {
   }, [open]);
 
   return (
-    <div ref={ref} className="fixed left-0 top-3/4 -translate-y-1/2 z-50 flex items-center">
+    <div ref={ref} className="fixed left-0 top-3/4 -translate-y-1/2 z-10 flex items-center">
 
       {/* Collapsed Aa button */}
       {!open && (
