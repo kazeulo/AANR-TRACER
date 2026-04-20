@@ -35,7 +35,7 @@
     "eslint-config-next": "16.1.6",
     "postcss": "^8.5.9",
     "tailwindcss": "^3.3.4",
-    "typescript": "^5.2.2"
+    "typescript": "^6.0.3"
   },
   "description": "**Technology Readiness Assessment for Commercialization Enhancement and Roadmapping**",
   "main": "index.js",
