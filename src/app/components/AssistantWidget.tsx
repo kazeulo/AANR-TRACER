@@ -84,11 +84,11 @@ export default function AssistantWidget({ context }: Props) {
 
   return (
     // Single wrapper ref covers both the button and the panel
-    <div ref={widgetRef} className="fixed bottom-8 right-6 z-50">
+    <div ref={widgetRef} className="fixed bottom-8 right-4 sm:right-6 z-50">
 
       {/* Panel */}
       <div
-        className={`absolute bottom-16 right-0 w-[340px] z-20 margin-auto bg-white border border-[#ede9e0] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 shadow-[0_16px_48px_rgba(15,46,26,0.14)] ${
+        className={`absolute bottom-16 right-0 w-[calc(100vw-3rem)] max-w-[340px] z-20 bg-white border border-[#ede9e0] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 shadow-[0_16px_48px_rgba(15,46,26,0.14)] ${
           open
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 translate-y-4 pointer-events-none"

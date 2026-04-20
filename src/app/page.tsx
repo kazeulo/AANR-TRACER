@@ -41,7 +41,6 @@ const steps = [
   },
 ];
 
-// Interactive Tech Type Grid
 // showcase of supported technology types
 function TechTypeGrid() {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -100,7 +99,7 @@ function TechTypeGrid() {
               </div>
             </div>
 
-            {/* "Tap to learn more" hint — only shown when collapsed */}
+            {/* "Tap to learn more" hint - only shown when collapsed */}
             {!isOpen && (
               <p className="text-[10.5px] text-[var(--color-text-light-gray)] font-light italic pl-[52px] -mt-1 group-hover:text-[#4aa35a]/60 transition-colors duration-200">
                 View details →
@@ -121,7 +120,6 @@ function TechTypeGrid() {
 }
 
 // Main Component 
-
 export default function HomePage() {
   const router = useRouter();
  
