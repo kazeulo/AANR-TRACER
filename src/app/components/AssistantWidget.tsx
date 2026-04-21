@@ -76,7 +76,7 @@ export default function AssistantWidget({ context }: Props) {
   };
 
   const suggestedQuestions = [
-    "What is proximate analysis?",
+    "What is AANR-TRACER?",
     "What does pilot-scale mean?",
     "What is an FTO report?",
     "What is a Business Model Canvas?",
@@ -152,7 +152,7 @@ export default function AssistantWidget({ context }: Props) {
               </div>
 
               <div className="pl-8 space-y-1.5">
-                <p className="text-[10px] text-[#94a3a0] uppercase tracking-[1px] font-medium mb-2">
+                <p className="text-[10px] text-[var(--color-accent)] uppercase tracking-[1px] font-medium mb-2">
                   Try asking
                 </p>
                 {suggestedQuestions.map(q => (
