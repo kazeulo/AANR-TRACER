@@ -14,10 +14,10 @@ import {
 import { getQuestionsJSON } from "../../utils/questionsCache";
 
 // components
-
 import { IPSection } from './components/ip/ipSection';
 import { ABHContactPanel } from "./components/contacts/ABHContactPanel";
 import { ATBIContactPanel } from "./components/contacts/ATBIContactPanel";
+import { LearnMoreModal } from "./components/LearnMoreModal";
 
 const questionsCache: Record<string, Record<string, Question[]>> = {};
 
@@ -49,40 +49,15 @@ interface Question {
   options?: DropdownOption[];
 }
 
-// Tool tips
-
-function Tooltip({ text }: { text: string }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <span className="relative inline-flex items-center">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="ml-2 w-4 h-4 rounded-full border border-[var(--color-border-input)] text-[10px] flex items-center justify-center text-[var(--color-text-faintest)] hover:bg-[var(--color-bg-subtle)] transition"
-      >
-        ?
-      </button>
-
-      {open && (
-        <div className="absolute left-0 top-6 z-50 w-[240px] rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] p-3 text-[12px] text-[var(--color-text-gray)] shadow-lg">
-          {text}
-        </div>
-      )}
-    </span>
-  );
-}
-
 // Dropdown Question 
 
 function DropdownQuestion({
-  q, 
-  value, 
-  onChange, 
-  technologyType, 
-  expanded, 
+  q,
+  value,
+  onChange,
+  technologyType,
+  expanded,
   toggleTip,
-  setOpenModal
 }: {
   q: Question;
   value: string | null;
@@ -90,9 +65,10 @@ function DropdownQuestion({
   technologyType: string;
   expanded?: boolean;
   toggleTip?: () => void;
-  setOpenModal: (val: boolean) => void;
 }) {
-  const selected = q.options?.find(o => o.value === value);
+  const [openModal, setOpenModal] = useState(false);
+
+  const selected = q.options?.find((o) => o.value === value);
   const showContact = selected?.contactLabel;
 
   return (
@@ -110,88 +86,43 @@ function DropdownQuestion({
                 e.preventDefault();
                 e.stopPropagation();
                 toggleTip?.();
-                
               }}
               className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
             >
               +
             </button>
           )}
-          
         </div>
 
+        {/* Tooltip — only the text + Learn more button, no modal nested here */}
         {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            <p>{q.toolTip}</p> 
-
-            <button 
-              onClick={() => setOpenModal(true)} 
-              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-            >
+            <p>{q.toolTip}</p>
+            {q.expandedToolTip && (
+              <button
+                onClick={() => setOpenModal(true)}
+                className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+              >
                 Learn more
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-            </button>
-
-            {setOpenModal && (
-              <div
-                className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
-                onClick={(e) => e.target === e.currentTarget && setOpenModal(false)}
-              >
-                <div className="bg-white border border-[#ede9e0] rounded-2xl w-full max-w-[480px] overflow-hidden shadow-[0_20px_60px_rgba(15,46,26,0.15)]">
-
-                  {/* Header */}
-                  <div className="flex items-start justify-between gap-3 px-6 pt-5 pb-4 border-b border-[#f0ede6]">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-[#4aa35a]/[0.08] border border-[#4aa35a]/25 flex items-center justify-center flex-shrink-0">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-0.5">Definition</p>
-                        <p className="text-[15px] font-semibold text-[#0f2e1a] leading-snug">{q.questionText}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setOpenModal(false)}
-                      className="w-7 h-7 rounded-lg bg-[#f5f2ec] border border-[#ede9e0] flex items-center justify-center text-[#94a3a0] hover:text-[#0f2e1a] transition-colors flex-shrink-0"
-                    >
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                      </svg>
-                    </button>
-                  </div>
-
-                  {/* Body */}
-                  <div className="px-6 py-5">
-                    <p className="text-[14px] text-[#2d3748] leading-[1.75] mb-4">{q.expandedToolTip}</p>
-
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => setOpenModal(false)}
-                        className="px-5 py-2 rounded-full bg-[#4aa35a] text-white text-[13px] font-semibold hover:bg-[#3d8f4c] transition-colors"
-                      >
-                        Got it
-                      </button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
+              </button>
             )}
           </div>
         )}
 
+        {/* Modal is outside the tooltip guard — survives tooltip collapse */}
+        {openModal && <LearnMoreModal q={q} onClose={() => setOpenModal(false)} />}
+
         <div className="relative">
           <select
             value={value ?? ""}
-            onChange={e => onChange(e.target.value)}
+            onChange={(e) => onChange(e.target.value)}
             className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
           >
             <option value="">Select an option…</option>
-            {q.options?.map(opt => (
+            {q.options?.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
@@ -207,7 +138,7 @@ function DropdownQuestion({
   );
 }
 
-// Multi-Conditional Question 
+// Multi-Conditional Question
 
 function MultiConditionalQuestion({
   q, value, onSelectionChange, onItemToggle, expanded, toggleTip
@@ -219,8 +150,8 @@ function MultiConditionalQuestion({
   onSelectionChange: (sel: string) => void;
   onItemToggle: (item: string) => void;
 }) {
-  const yesOption = q.options?.find(o => o.action === "checklist");
-  const noOption  = q.options?.find(o => o.action === "contacts");
+  const yesOption = q.options?.find((o) => o.action === "checklist");
+  const noOption = q.options?.find((o) => o.action === "contacts");
 
   return (
     <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-visible transition-all duration-200">
@@ -247,16 +178,17 @@ function MultiConditionalQuestion({
 
         {q.toolTip && expanded && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            {q.toolTip} 
-            
-            <a  href="/terms"
+            {q.toolTip}
+
+            <a
+              href="/terms"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
             >
               Learn more
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           </div>
@@ -265,11 +197,11 @@ function MultiConditionalQuestion({
         <div className="relative mb-4">
           <select
             value={value.selection}
-            onChange={e => onSelectionChange(e.target.value)}
+            onChange={(e) => onSelectionChange(e.target.value)}
             className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
           >
             <option value="">Select an option…</option>
-            {q.options?.map(opt => (
+            {q.options?.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
@@ -279,18 +211,25 @@ function MultiConditionalQuestion({
             </svg>
           </div>
         </div>
+
         {value.selection === "no" && noOption?.contactLabel && <ABHContactPanel />}
+
         {value.selection === "yes" && yesOption?.items && (
           <div className="space-y-2.5 mt-1">
             <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
               Select all that apply
             </p>
-            {yesOption.items.map(item => {
+            {yesOption.items.map((item) => {
               const checked = value.checkedItems.includes(item.text);
               return (
-                <label key={item.text} className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
-                  checked ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40" : "bg-[var(--color-bg-subtle)] border-[var(--color-border-input)] hover:border-[#4aa35a]/30"
-                }`}>
+                <label
+                  key={item.text}
+                  className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
+                    checked
+                      ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40"
+                      : "bg-[var(--color-bg-subtle)] border-[var(--color-border-input)] hover:border-[#4aa35a]/30"
+                  }`}
+                >
                   <div className="relative flex-shrink-0 mt-0.5">
                     <input type="checkbox" checked={checked} onChange={() => onItemToggle(item.text)} className="peer sr-only" />
                     <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
@@ -311,6 +250,7 @@ function MultiConditionalQuestion({
             })}
           </div>
         )}
+
         {value.selection === "exempt" && (
           <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-[13px] text-blue-800 font-light leading-relaxed">
             This requirement is exempted for privately funded technologies.
@@ -321,7 +261,97 @@ function MultiConditionalQuestion({
   );
 }
 
-// Main Page
+// Checkbox Question
+
+function CheckboxQuestion({
+  q,
+  checked,
+  onChange,
+  expandedTip,
+  toggleTip,
+}: {
+  q: Question;
+  checked: boolean;
+  onChange: () => void;
+  expandedTip: boolean;
+  toggleTip: () => void;
+}) {
+  const [openModal, setOpenModal] = useState(false);
+
+  return (
+    <label
+      className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
+        checked
+          ? "bg-[var(--color-bg-clicked)] border-[#4aa35a]/40"
+          : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
+      }`}
+    >
+      <div className="relative flex-shrink-0 mt-0.5">
+        <input type="checkbox" checked={checked} onChange={onChange} className="peer sr-only" />
+        <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
+          checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
+        }`}>
+          {checked && (
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          )}
+        </div>
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-3">
+          <span className={`text-[14px] leading-relaxed ${
+            checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"
+          }`}>
+            {q.questionText}
+          </span>
+
+          {q.toolTip && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleTip();
+              }}
+              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
+            >
+              +
+            </button>
+          )}
+        </div>
+
+        {/* Tooltip — only text + Learn more button, no modal nested here */}
+        {q.toolTip && expandedTip && (
+          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
+            <p>{q.toolTip}</p>
+            {q.expandedToolTip && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setOpenModal(true);
+                }}
+                className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
+              >
+                Learn more
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Modal is outside the tooltip guard — survives tooltip collapse */}
+        {openModal && <LearnMoreModal q={q} onClose={() => setOpenModal(false)} />}
+      </div>
+    </label>
+  );
+}
+
+// Main Page 
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();
@@ -335,16 +365,12 @@ export default function QuestionnairePage() {
 
   const questionsPerPage = 5;
   const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
-  
-  // for tool tips
+
+  // Tooltip expand state — keyed by question id
   const [expandedTips, setExpandedTips] = useState<Record<string, boolean>>({});
-  const [openModal, setOpenModal] = useState(false);  // learn more modal
 
   const toggleTip = (id: string) => {
-    setExpandedTips(prev => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setExpandedTips((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   useEffect(() => {
@@ -360,7 +386,7 @@ export default function QuestionnairePage() {
     if (questionsCache[data.technologyType]) {
       const groupedData = questionsCache[data.technologyType];
       const ordered = categoryOrder.filter(
-        cat => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
+        (cat) => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
       );
       setGrouped(groupedData);
       setOrderedCategories(ordered);
@@ -377,14 +403,14 @@ export default function QuestionnairePage() {
       const flat: Question[] = Object.values(byLevel).flat();
 
       const seen = new Set<string>();
-      const uniqueFlat = flat.filter(q => {
+      const uniqueFlat = flat.filter((q) => {
         if (seen.has(q.id)) return false;
         seen.add(q.id);
         return true;
       });
 
       const groupedData: Record<string, Question[]> = {};
-      uniqueFlat.forEach(q => {
+      uniqueFlat.forEach((q) => {
         if (!groupedData[q.category]) groupedData[q.category] = [];
         groupedData[q.category].push(q);
       });
@@ -392,7 +418,7 @@ export default function QuestionnairePage() {
       questionsCache[data.technologyType] = groupedData;
 
       const ordered = categoryOrder.filter(
-        cat => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
+        (cat) => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
       );
 
       setGrouped(groupedData);
@@ -495,11 +521,11 @@ export default function QuestionnairePage() {
 
   const handleNext = () => {
     if (!isIPCategory && currentPage < totalPages - 1) {
-      setCurrentPage(p => p + 1);
+      setCurrentPage((p) => p + 1);
       setLastCategoryIndex(currentCategoryIndex);
       setLastPage(currentPage + 1);
     } else if (currentCategoryIndex < orderedCategories.length - 1) {
-      setCurrentCategoryIndex(c => c + 1);
+      setCurrentCategoryIndex((c) => c + 1);
       setCurrentPage(0);
       setLastCategoryIndex(currentCategoryIndex + 1);
       setLastPage(0);
@@ -510,7 +536,7 @@ export default function QuestionnairePage() {
 
   const handlePrev = () => {
     if (!isIPCategory && currentPage > 0) {
-      setCurrentPage(p => p - 1);
+      setCurrentPage((p) => p - 1);
     } else if (currentCategoryIndex > 0) {
       const prevIndex = currentCategoryIndex - 1;
       const prevCat = orderedCategories[prevIndex];
@@ -529,7 +555,6 @@ export default function QuestionnairePage() {
 
   const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
 
-  // ipBlocksNext
   const ipBlocksNext = (() => {
     if (!isIPCategory) return false;
     const ipKey = IP_INITIATED_LABEL;
@@ -546,12 +571,12 @@ export default function QuestionnairePage() {
       .filter(([, v]) => v)
       .map(([k]) => k);
     if (checkedTypes.length === 0) return true;
-    return checkedTypes.some(t => !current.typeStatuses[t]);
+    return checkedTypes.some((t) => !current.typeStatuses[t]);
   })();
 
   const dropdownBlocksNext = (() => {
     if (isIPCategory) return false;
-    return visibleQuestions.some(q => {
+    return visibleQuestions.some((q) => {
       if (q.type === "dropdown") return !data.answers[q.id];
       if (q.type === "multi-conditional") {
         const val = data.answers[q.id] as { selection?: string } | undefined;
@@ -563,7 +588,6 @@ export default function QuestionnairePage() {
 
   const blocksNext = ipBlocksNext || dropdownBlocksNext;
 
-  // Progress
   const totalSteps = orderedCategories.reduce((acc, cat) => {
     if (cat === IP_CATEGORY) return acc + 1;
     return acc + buildPageGroups(grouped[cat] ?? []).length;
@@ -630,7 +654,7 @@ export default function QuestionnairePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
             Assessment · Category {currentCategoryIndex + 1}
           </div>
-          <h1 className=" text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
+          <h1 className="text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
             {currentCategory}
           </h1>
           {categoryDescriptions[currentCategory] && (
@@ -653,7 +677,7 @@ export default function QuestionnairePage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {visibleQuestions.map(q => {
+              {visibleQuestions.map((q) => {
                 const qType = q.type ?? "checkbox";
 
                 if (qType === "dropdown") {
@@ -662,11 +686,10 @@ export default function QuestionnairePage() {
                       key={q.id}
                       q={q}
                       value={(data.answers[q.id] as string | null) ?? null}
-                      onChange={val => handleDropdown(q.id, val)}
+                      onChange={(val) => handleDropdown(q.id, val)}
                       technologyType={data.technologyType}
                       expanded={!!expandedTips[q.id]}
                       toggleTip={() => toggleTip(q.id)}
-                      setOpenModal={setOpenModal}
                     />
                   );
                 }
@@ -680,17 +703,17 @@ export default function QuestionnairePage() {
                       value={mcVal}
                       expanded={!!expandedTips[q.id]}
                       toggleTip={() => toggleTip(q.id)}
-                      onSelectionChange={sel =>
+                      onSelectionChange={(sel) =>
                         handleMultiConditional(q.id, {
                           selection: sel,
                           checkedItems: sel !== "yes" ? [] : mcVal.checkedItems,
                         })
                       }
-                      onItemToggle={item => {
+                      onItemToggle={(item) => {
                         const already = mcVal.checkedItems.includes(item);
                         handleMultiConditional(q.id, {
                           checkedItems: already
-                            ? mcVal.checkedItems.filter(i => i !== item)
+                            ? mcVal.checkedItems.filter((i) => i !== item)
                             : [...mcVal.checkedItems, item],
                         });
                       }}
@@ -698,127 +721,16 @@ export default function QuestionnairePage() {
                   );
                 }
 
-                const checked = data.answers[q.id] === true;
+                // Checkbox — now uses its own component with local modal state
                 return (
-                  <label
+                  <CheckboxQuestion
                     key={q.id}
-                    className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
-                      checked
-                        ? "bg-[var(--color-bg-clicked)] border-[#4aa35a]/40"
-                        : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
-                    }`}
-                  >
-                    <div className="relative flex-shrink-0 mt-0.5">
-                      <input type="checkbox" checked={checked} onChange={() => handleCheckbox(q.id)} className="peer sr-only" />
-                      <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-                        checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
-                      }`}>
-                        {checked && (
-                          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                            <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-3">
-                          <span
-                            className={`text-[14px] leading-relaxed ${
-                              checked
-                                ? "text-[var(--color-primary)] font-medium"
-                                : "text-[var(--color-text-gray)] font-light"
-                            }`}
-                          >
-                            {q.questionText}
-                          </span>
-
-                          {q.toolTip && (
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                toggleTip(q.id);
-                              }}
-                              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
-                            >
-                              +
-                            </button>
-                          )}
-                        </div>
-
-                        {q.toolTip && expandedTips[q.id] && (
-                          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-                            <p>{q.toolTip}</p> 
-                        
-                            {q.expandedToolTip && (
-                              <button 
-                                onClick={() => setOpenModal(true)} 
-                                className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-                              >
-                                Learn more
-                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                              </button>
-                            )}
-
-                            {openModal && (
-                              <div
-                                className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
-                                onClick={(e) => e.target === e.currentTarget && setOpenModal(false)}
-                              >
-                                <div className="bg-white border border-[#ede9e0] rounded-2xl w-full max-w-[480px] overflow-hidden shadow-[0_20px_60px_rgba(15,46,26,0.15)]">
-
-                                  {/* Header */}
-                                  <div className="flex items-start justify-between gap-3 px-6 pt-5 pb-4 border-b border-[#f0ede6]">
-                                    <div className="flex items-center gap-3">
-                                      <div className="w-8 h-8 rounded-xl bg-[#4aa35a]/[0.08] border border-[#4aa35a]/25 flex items-center justify-center flex-shrink-0">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
-                                        </svg>
-                                      </div>
-                                      <div>
-                                        <p className="text-[10px] font-bold tracking-[2px] uppercase text-[#4aa35a] mb-0.5">Definition</p>
-                                        <p className="text-[15px] font-semibold text-[#0f2e1a] leading-snug">{q.questionText}</p>
-                                      </div>
-                                    </div>
-                                    <button
-                                      onClick={() => setOpenModal(false)}
-                                      className="w-7 h-7 rounded-lg bg-[#f5f2ec] border border-[#ede9e0] flex items-center justify-center text-[#94a3a0] hover:text-[#0f2e1a] transition-colors flex-shrink-0"
-                                    >
-                                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                        <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                      </svg>
-                                    </button>
-                                  </div>
-
-                                  {/* Body */}
-                                  <div className="px-6 py-5">
-                                    <p className="text-[14px] text-[#2d3748] leading-[1.75] mb-4 text-justify">{q.expandedToolTip}</p>
-
-                                    <div className="flex items-center gap-3">
-                                      <button
-                                        onClick={() => setOpenModal(false)}
-                                        className="px-5 py-2 rounded-full bg-[#4aa35a] text-white text-[13px] font-semibold hover:bg-[#3d8f4c] transition-colors"
-                                      >
-                                        Got it
-                                      </button>
-                                    </div>
-                                  </div>
-
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                        
-                      </div>
-                    </div>
-                  </label>
+                    q={q}
+                    checked={data.answers[q.id] === true}
+                    onChange={() => handleCheckbox(q.id)}
+                    expandedTip={!!expandedTips[q.id]}
+                    toggleTip={() => toggleTip(q.id)}
+                  />
                 );
               })}
             </div>
