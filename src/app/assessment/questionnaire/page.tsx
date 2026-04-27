@@ -1,506 +1,50 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useAssessment, IPData, AnswerValue } from "../AssessmentContext";
+// react imports
+import { useState } from "react";
+
+// utils
+import { useAssessment, IPData } from "../AssessmentContext";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
-import { categoryOrder, categoryDescriptions } from "../../utils/helperConstants";
-import { useRouter } from "next/navigation";
-import {
-  PLANT_ANIMAL_TYPES,
-  PLANT_VARIETY_TYPES,
-  IP_INITIATED_LABEL,
-  IP_CATEGORY,
-} from "../../utils/ipHelpers";
-import { getQuestionsJSON } from "../../utils/questionsCache";
+import { categoryDescriptions } from "../../utils/helperConstants";
+import { IP_INITIATED_LABEL, IP_CATEGORY } from "../../utils/ipHelpers";
+
+// hooks
+import { useBlocksNext } from "./hooks/useBlocksNext";
+import { usePagination } from "./hooks/usePagination";
+import { useQuestions } from "./hooks/useQuestions";
+import { useProgressBar } from "./hooks/useProgressBar";
 
 // components
-import { IPSection } from './components/ip/ipSection';
-import { ABHContactPanel } from "./components/contacts/ABHContactPanel";
-import { ATBIContactPanel } from "./components/contacts/ATBIContactPanel";
-import { LearnMoreModal } from "./components/LearnMoreModal";
-
-const questionsCache: Record<string, Record<string, Question[]>> = {};
-
-export interface IPSectionProps {
-  label: string;
-  ipData: IPData;
-  onChange: (updated: IPData) => void;
-  technologyType: string;
-}
-
-interface DropdownOption {
-  label: string;
-  value: string;
-  trlSatisfied?: number | null;
-  contactLabel?: string;
-  action?: string;
-  items?: { text: string; trlLevel: number }[];
-}
-
-interface Question {
-  id: string;
-  questionText: string;
-  trlLevel: number;
-  technologyType: string;
-  category: string;
-  toolTip?: string;
-  expandedToolTip?: string;
-  type?: "checkbox" | "dropdown" | "multi-conditional";
-  options?: DropdownOption[];
-}
-
-// Dropdown Question 
-
-function DropdownQuestion({
-  q,
-  value,
-  onChange,
-  technologyType,
-  expanded,
-  toggleTip,
-}: {
-  q: Question;
-  value: string | null;
-  onChange: (val: string) => void;
-  technologyType: string;
-  expanded?: boolean;
-  toggleTip?: () => void;
-}) {
-  const [openModal, setOpenModal] = useState(false);
-
-  const selected = q.options?.find((o) => o.value === value);
-  const showContact = selected?.contactLabel;
-
-  return (
-    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-visible transition-all duration-200">
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
-            {q.questionText}
-          </p>
-
-          {q.toolTip && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleTip?.();
-              }}
-              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
-            >
-              +
-            </button>
-          )}
-        </div>
-
-        {/* Tooltip — only the text + Learn more button, no modal nested here */}
-        {q.toolTip && expanded && (
-          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            <p>{q.toolTip}</p>
-            {q.expandedToolTip && (
-              <button
-                onClick={() => setOpenModal(true)}
-                className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-              >
-                Learn more
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Modal is outside the tooltip guard — survives tooltip collapse */}
-        {openModal && <LearnMoreModal q={q} onClose={() => setOpenModal(false)} />}
-
-        <div className="relative">
-          <select
-            value={value ?? ""}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
-          >
-            <option value="">Select an option…</option>
-            {q.options?.map((opt) => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-        </div>
-        {showContact && <ATBIContactPanel technologyType={technologyType} />}
-      </div>
-    </div>
-  );
-}
-
-// Multi-Conditional Question
-
-function MultiConditionalQuestion({
-  q, value, onSelectionChange, onItemToggle, expanded, toggleTip
-}: {
-  q: Question;
-  value: MultiConditionalAnswer;
-  expanded?: boolean;
-  toggleTip?: () => void;
-  onSelectionChange: (sel: string) => void;
-  onItemToggle: (item: string) => void;
-}) {
-  const yesOption = q.options?.find((o) => o.action === "checklist");
-  const noOption = q.options?.find((o) => o.action === "contacts");
-
-  return (
-    <div className="bg-[var(--color-bg-card)] border-2 border-[var(--color-border)] rounded-2xl overflow-visible transition-all duration-200">
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed">
-            {q.questionText}
-          </p>
-
-          {q.toolTip && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleTip?.();
-              }}
-              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-faintest)] hover:bg-[var(--color-bg-subtle)] transition"
-            >
-              +
-            </button>
-          )}
-        </div>
-
-        {q.toolTip && expanded && (
-          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            {q.toolTip}
-
-            <a
-              href="/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-            >
-              Learn more
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </div>
-        )}
-
-        <div className="relative mb-4">
-          <select
-            value={value.selection}
-            onChange={(e) => onSelectionChange(e.target.value)}
-            className="w-full appearance-none bg-[var(--color-bg-subtle)] border border-[var(--color-border-input)] rounded-xl px-4 py-3 text-[14px] text-[var(--color-text)] font-light focus:outline-none focus:ring-2 focus:ring-[#4aa35a]/30 focus:border-[#4aa35a] transition-all cursor-pointer pr-10"
-          >
-            <option value="">Select an option…</option>
-            {q.options?.map((opt) => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-faintest)]">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-        </div>
-
-        {value.selection === "no" && noOption?.contactLabel && <ABHContactPanel />}
-
-        {value.selection === "yes" && yesOption?.items && (
-          <div className="space-y-2.5 mt-1">
-            <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-text-faintest)] mb-2">
-              Select all that apply
-            </p>
-            {yesOption.items.map((item) => {
-              const checked = value.checkedItems.includes(item.text);
-              return (
-                <label
-                  key={item.text}
-                  className={`flex items-start gap-3 cursor-pointer p-3.5 rounded-xl border transition-all duration-200 ${
-                    checked
-                      ? "bg-[var(--color-accent)]/[0.05] border-[#4aa35a]/40"
-                      : "bg-[var(--color-bg-subtle)] border-[var(--color-border-input)] hover:border-[#4aa35a]/30"
-                  }`}
-                >
-                  <div className="relative flex-shrink-0 mt-0.5">
-                    <input type="checkbox" checked={checked} onChange={() => onItemToggle(item.text)} className="peer sr-only" />
-                    <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-                      checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
-                    }`}>
-                      {checked && (
-                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                          <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                  <span className={`text-[13px] leading-relaxed ${checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"}`}>
-                    {item.text}
-                  </span>
-                </label>
-              );
-            })}
-          </div>
-        )}
-
-        {value.selection === "exempt" && (
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-[13px] text-blue-800 font-light leading-relaxed">
-            This requirement is exempted for privately funded technologies.
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// Checkbox Question
-
-function CheckboxQuestion({
-  q,
-  checked,
-  onChange,
-  expandedTip,
-  toggleTip,
-}: {
-  q: Question;
-  checked: boolean;
-  onChange: () => void;
-  expandedTip: boolean;
-  toggleTip: () => void;
-}) {
-  const [openModal, setOpenModal] = useState(false);
-
-  return (
-    <label
-      className={`flex items-start gap-4 cursor-pointer p-5 rounded-2xl border-2 transition-all duration-200 ${
-        checked
-          ? "bg-[var(--color-bg-clicked)] border-[#4aa35a]/40"
-          : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[#4aa35a]/25 hover:bg-[var(--color-accent)]/[0.02]"
-      }`}
-    >
-      <div className="relative flex-shrink-0 mt-0.5">
-        <input type="checkbox" checked={checked} onChange={onChange} className="peer sr-only" />
-        <div className={`w-5 h-5 rounded-[5px] border-2 flex items-center justify-center transition-all duration-200 ${
-          checked ? "bg-[var(--color-accent)] border-[#4aa35a]" : "bg-[var(--color-bg-card)] border-[#c8c3b8]"
-        }`}>
-          {checked && (
-            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-              <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
-        </div>
-      </div>
-
-      <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between gap-3">
-          <span className={`text-[14px] leading-relaxed ${
-            checked ? "text-[var(--color-primary)] font-medium" : "text-[var(--color-text-gray)] font-light"
-          }`}>
-            {q.questionText}
-          </span>
-
-          {q.toolTip && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleTip();
-              }}
-              className="flex-shrink-0 w-5 h-5 rounded-full border border-[var(--color-border-input)] text-[12px] flex items-center justify-center text-[var(--color-text-gray)] hover:bg-[var(--color-bg-subtle)] transition"
-            >
-              +
-            </button>
-          )}
-        </div>
-
-        {/* Tooltip — only text + Learn more button, no modal nested here */}
-        {q.toolTip && expandedTip && (
-          <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
-            <p>{q.toolTip}</p>
-            {q.expandedToolTip && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setOpenModal(true);
-                }}
-                className="inline-flex items-center gap-1 mt-2 text-[12px] text-[#4aa35a] hover:underline underline-offset-2 font-medium"
-              >
-                Learn more
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Modal is outside the tooltip guard — survives tooltip collapse */}
-        {openModal && <LearnMoreModal q={q} onClose={() => setOpenModal(false)} />}
-      </div>
-    </label>
-  );
-}
-
-// Main Page 
+import { IPSection } from "./components/ip/ipSection";
+import { CheckboxQuestion } from "./components/questions/CheckboxQuestion";
+import { DropdownQuestion } from "./components/questions/DropdownQuestion";
+import { MultiConditionalQuestion } from "./components/questions/MultiConditionalQuestion";
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();
-  const router = useRouter();
 
-  const [grouped, setGrouped] = useState<Record<string, Question[]>>({});
-  const [orderedCategories, setOrderedCategories] = useState<string[]>([]);
-  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const { grouped, orderedCategories, loading } = useQuestions(data.technologyType, lastCategoryIndex, lastPage);
 
-  const questionsPerPage = 5;
-  const isPlantAnimal = PLANT_ANIMAL_TYPES.includes(data.technologyType ?? "");
+  const pagination = usePagination({ orderedCategories, grouped, lastCategoryIndex, lastPage, setLastCategoryIndex, setLastPage });
 
-  // Tooltip expand state — keyed by question id
+  const { blocksNext, blockMessage } = useBlocksNext({
+    isIPCategory: pagination.isIPCategory,
+    visibleQuestions: pagination.visibleQuestions,
+    answers: data.answers,
+    ipData: data.ipData,
+    technologyType: data.technologyType,
+  });
+
+  const { progressPct } = useProgressBar({
+    orderedCategories,
+    grouped,
+    currentCategoryIndex: pagination.currentCategoryIndex,
+    currentPage: pagination.currentPage,
+  });
+
   const [expandedTips, setExpandedTips] = useState<Record<string, boolean>>({});
-
-  const toggleTip = (id: string) => {
-    setExpandedTips((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  useEffect(() => {
-    if (lastCategoryIndex >= 0 && lastPage >= 0 && orderedCategories.length > 0) {
-      setCurrentCategoryIndex(Math.min(lastCategoryIndex, orderedCategories.length - 1));
-      setCurrentPage(lastPage);
-    }
-  }, [lastCategoryIndex, lastPage, orderedCategories.length]);
-
-  useEffect(() => {
-    if (!data.technologyType) return;
-
-    if (questionsCache[data.technologyType]) {
-      const groupedData = questionsCache[data.technologyType];
-      const ordered = categoryOrder.filter(
-        (cat) => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
-      );
-      setGrouped(groupedData);
-      setOrderedCategories(ordered);
-      setCurrentCategoryIndex(Math.min(lastCategoryIndex, ordered.length - 1));
-      setCurrentPage(lastPage);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    const loadQuestions = async () => {
-      const allGrouped = await getQuestionsJSON() as Record<string, Record<string, Question[]>>;
-      const byLevel = allGrouped[data.technologyType] ?? {};
-      const flat: Question[] = Object.values(byLevel).flat();
-
-      const seen = new Set<string>();
-      const uniqueFlat = flat.filter((q) => {
-        if (seen.has(q.id)) return false;
-        seen.add(q.id);
-        return true;
-      });
-
-      const groupedData: Record<string, Question[]> = {};
-      uniqueFlat.forEach((q) => {
-        if (!groupedData[q.category]) groupedData[q.category] = [];
-        groupedData[q.category].push(q);
-      });
-
-      questionsCache[data.technologyType] = groupedData;
-
-      const ordered = categoryOrder.filter(
-        (cat) => cat === IP_CATEGORY || (groupedData[cat] && groupedData[cat].length > 0)
-      );
-
-      setGrouped(groupedData);
-      setOrderedCategories(ordered);
-      setCurrentCategoryIndex(Math.min(lastCategoryIndex, ordered.length - 1));
-      setCurrentPage(lastPage);
-      setLoading(false);
-    };
-
-    loadQuestions();
-  }, [data.technologyType]);
-
-  const currentCategory = orderedCategories[currentCategoryIndex] ?? "";
-  const isIPCategory = currentCategory === IP_CATEGORY;
-  const currentQuestions = grouped[currentCategory] ?? [];
-
-  function buildPageGroups(questions: Question[]): Question[][] {
-    const before: Question[] = [];
-    const precomList: Question[] = [];
-    const after: Question[] = [];
-    let seenPrecom = false;
-
-    for (const q of questions) {
-      if (q.id.startsWith("precom_docs") || q.id.startsWith("packaging")) {
-        seenPrecom = true;
-        precomList.push(q);
-      } else if (seenPrecom) {
-        after.push(q);
-      } else {
-        before.push(q);
-      }
-    }
-
-    if (precomList.length === 0) {
-      const groups: Question[][] = [];
-      let b: Question[] = [];
-      for (const q of questions) {
-        b.push(q);
-        if (b.length >= questionsPerPage) { groups.push(b); b = []; }
-      }
-      if (b.length > 0) groups.push(b);
-      return groups;
-    }
-
-    const groups: Question[][] = [];
-    let b: Question[] = [];
-    for (const q of before) {
-      b.push(q);
-      if (b.length >= questionsPerPage) { groups.push(b); b = []; }
-    }
-    const slotsLeft = b.length > 0 ? questionsPerPage - b.length : 0;
-    const beforeBatch = [...b];
-    b = [];
-
-    for (const q of precomList) groups.push([q]);
-
-    const afterWithBackfill = [...after];
-    const backfillItems = afterWithBackfill.splice(0, Math.min(slotsLeft, afterWithBackfill.length));
-
-    if (beforeBatch.length > 0 || backfillItems.length > 0) {
-      groups.splice(groups.length - precomList.length, 0, [...beforeBatch, ...backfillItems]);
-    }
-
-    for (const q of afterWithBackfill) {
-      b.push(q);
-      if (b.length >= questionsPerPage) { groups.push(b); b = []; }
-    }
-    if (b.length > 0) groups.push(b);
-    return groups;
-  }
-
-  const pageGroups: Question[][] = useMemo(() => {
-    if (isIPCategory) return [];
-    return buildPageGroups(currentQuestions);
-  }, [currentQuestions, isIPCategory]);
-
-  const totalPages = isIPCategory ? 1 : pageGroups.length;
-
-  const visibleQuestions = useMemo(() => {
-    if (isIPCategory) return [];
-    return pageGroups[currentPage] ?? [];
-  }, [currentPage, pageGroups, isIPCategory]);
+  const toggleTip = (id: string) => setExpandedTips((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const handleCheckbox = (id: string) => {
     updateData({ answers: { ...data.answers, [id]: !data.answers[id] } });
@@ -518,87 +62,6 @@ export default function QuestionnairePage() {
   const handleIPChange = (updated: IPData) => {
     updateData({ ipData: updated });
   };
-
-  const handleNext = () => {
-    if (!isIPCategory && currentPage < totalPages - 1) {
-      setCurrentPage((p) => p + 1);
-      setLastCategoryIndex(currentCategoryIndex);
-      setLastPage(currentPage + 1);
-    } else if (currentCategoryIndex < orderedCategories.length - 1) {
-      setCurrentCategoryIndex((c) => c + 1);
-      setCurrentPage(0);
-      setLastCategoryIndex(currentCategoryIndex + 1);
-      setLastPage(0);
-    } else {
-      router.push("/assessment/summary");
-    }
-  };
-
-  const handlePrev = () => {
-    if (!isIPCategory && currentPage > 0) {
-      setCurrentPage((p) => p - 1);
-    } else if (currentCategoryIndex > 0) {
-      const prevIndex = currentCategoryIndex - 1;
-      const prevCat = orderedCategories[prevIndex];
-      const prevQuestions = grouped[prevCat] ?? [];
-      const prevPageGroups: Question[][] =
-        prevCat === IP_CATEGORY ? [] : buildPageGroups(prevQuestions);
-      const lastPageOfPrev = prevCat === IP_CATEGORY ? 0 : Math.max(0, prevPageGroups.length - 1);
-      setCurrentCategoryIndex(prevIndex);
-      setCurrentPage(lastPageOfPrev);
-    }
-  };
-
-  const isLastStep =
-    currentCategoryIndex === orderedCategories.length - 1 &&
-    (isIPCategory || currentPage === totalPages - 1);
-
-  const isPrevDisabled = currentCategoryIndex === 0 && currentPage === 0;
-
-  const ipBlocksNext = (() => {
-    if (!isIPCategory) return false;
-    const ipKey = IP_INITIATED_LABEL;
-    const current = data.ipData[ipKey] ?? { initiated: "", selectedTypes: {}, typeStatuses: {}, dusPvpStatus: "" };
-
-    if (current.initiated === "") return true;
-    if (current.initiated === "no" || current.initiated === "trade_secret") return false;
-
-    if (PLANT_VARIETY_TYPES.includes(data.technologyType)) {
-      return !current.dusPvpStatus;
-    }
-
-    const checkedTypes = Object.entries(current.selectedTypes ?? {})
-      .filter(([, v]) => v)
-      .map(([k]) => k);
-    if (checkedTypes.length === 0) return true;
-    return checkedTypes.some((t) => !current.typeStatuses[t]);
-  })();
-
-  const dropdownBlocksNext = (() => {
-    if (isIPCategory) return false;
-    return visibleQuestions.some((q) => {
-      if (q.type === "dropdown") return !data.answers[q.id];
-      if (q.type === "multi-conditional") {
-        const val = data.answers[q.id] as { selection?: string } | undefined;
-        return !val?.selection;
-      }
-      return false;
-    });
-  })();
-
-  const blocksNext = ipBlocksNext || dropdownBlocksNext;
-
-  const totalSteps = orderedCategories.reduce((acc, cat) => {
-    if (cat === IP_CATEGORY) return acc + 1;
-    return acc + buildPageGroups(grouped[cat] ?? []).length;
-  }, 0);
-
-  const stepsCompleted = orderedCategories.slice(0, currentCategoryIndex).reduce((acc, cat) => {
-    if (cat === IP_CATEGORY) return acc + 1;
-    return acc + buildPageGroups(grouped[cat] ?? []).length;
-  }, 0) + currentPage;
-
-  const progressPct = totalSteps > 0 ? Math.round((stepsCompleted / totalSteps) * 100) : 0;
 
   if (loading) {
     return (
@@ -629,11 +92,11 @@ export default function QuestionnairePage() {
         <div className="max-w-[860px] mx-auto">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[11px] font-semibold text-[var(--color-accent)] uppercase tracking-[1.5px] truncate mr-4">
-              {currentCategory}
+              {pagination.currentCategory}
             </span>
             <span className="text-[11px] text-[var(--color-text-faintest)] font-light flex-shrink-0">
-              Category {currentCategoryIndex + 1} of {orderedCategories.length}
-              {!isIPCategory && ` · Page ${currentPage + 1} of ${totalPages}`}
+              Category {pagination.currentCategoryIndex + 1} of {orderedCategories.length}
+              {!pagination.isIPCategory && ` · Page ${pagination.currentPage + 1} of ${pagination.totalPages}`}
             </span>
           </div>
           <div className="h-1 bg-[#e5e1d8] rounded-full overflow-hidden">
@@ -652,21 +115,21 @@ export default function QuestionnairePage() {
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-accent)] mb-4 px-3.5 py-1.5 border border-[#4aa35a]/30 rounded-full bg-[var(--color-accent)]/[0.08]">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
-            Assessment · Category {currentCategoryIndex + 1}
+            Assessment · Category {pagination.currentCategoryIndex + 1}
           </div>
           <h1 className="text-[clamp(24px,3.5vw,36px)] text-[var(--color-primary)] leading-tight tracking-tight mb-3">
-            {currentCategory}
+            {pagination.currentCategory}
           </h1>
-          {categoryDescriptions[currentCategory] && (
+          {categoryDescriptions[pagination.currentCategory] && (
             <p className="text-[14px] text-[var(--color-text-faint)] font-light leading-relaxed max-w-2xl">
-              {categoryDescriptions[currentCategory]}
+              {categoryDescriptions[pagination.currentCategory]}
             </p>
           )}
         </div>
 
         {/* Questions */}
         <div style={{ minHeight: 420 }}>
-          {isIPCategory ? (
+          {pagination.isIPCategory ? (
             <div className="space-y-6">
               <IPSection
                 label={IP_INITIATED_LABEL}
@@ -677,7 +140,7 @@ export default function QuestionnairePage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {visibleQuestions.map((q) => {
+              {pagination.visibleQuestions.map((q) => {
                 const qType = q.type ?? "checkbox";
 
                 if (qType === "dropdown") {
@@ -721,7 +184,6 @@ export default function QuestionnairePage() {
                   );
                 }
 
-                // Checkbox — now uses its own component with local modal state
                 return (
                   <CheckboxQuestion
                     key={q.id}
@@ -740,10 +202,10 @@ export default function QuestionnairePage() {
         {/* Navigation */}
         <div className="flex items-center justify-between mt-10">
           <button
-            onClick={handlePrev}
-            disabled={isPrevDisabled}
+            onClick={pagination.handlePrev}
+            disabled={pagination.isPrevDisabled}
             className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium transition-all duration-200 ${
-              isPrevDisabled
+              pagination.isPrevDisabled
                 ? "text-[#c8c3b8] bg-[var(--color-bg-card)] border border-[var(--color-border-input)] cursor-not-allowed"
                 : "text-[#6b7a75] bg-[var(--color-bg-card)] border border-[var(--color-border-input)] hover:border-[#0f2e1a]/30 hover:text-[var(--color-primary)]"
             }`}
@@ -761,17 +223,11 @@ export default function QuestionnairePage() {
                   <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                   <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                {(() => {
-                  if (dropdownBlocksNext) return "Please answer all questions on this page to continue.";
-                  const current = data.ipData[IP_INITIATED_LABEL] ?? { initiated: "", selectedTypes: {}, typeStatuses: {}, dusPvpStatus: "" };
-                  if (current.initiated === "") return "Please answer the IP initiation question to continue.";
-                  if (PLANT_VARIETY_TYPES.includes(data.technologyType)) return "Please select a Plant Variety Protection status to continue.";
-                  return "Select at least one IP type and set its status to continue.";
-                })()}
+                {blockMessage}
               </p>
             )}
             <button
-              onClick={handleNext}
+              onClick={pagination.handleNext}
               disabled={blocksNext}
               className={`inline-flex items-center gap-3 px-10 py-3.5 rounded-full text-[15px] font-semibold transition-all duration-300 ${
                 blocksNext
@@ -779,7 +235,7 @@ export default function QuestionnairePage() {
                   : "text-white bg-[var(--color-accent)] shadow-[0_8px_32px_rgba(74,163,90,0.35)] hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(74,163,90,0.45)]"
               }`}
             >
-              {isLastStep ? "Finish Assessment" : "Continue"}
+              {pagination.isLastStep ? "Finish Assessment" : "Continue"}
               <span className="w-5 h-5 rounded-full bg-[var(--color-bg-card)]/20 flex items-center justify-center">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M2 5h6M5 2l3 3-3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
