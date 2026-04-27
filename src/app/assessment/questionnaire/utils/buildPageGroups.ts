@@ -1,6 +1,6 @@
 "use client";
 
-import type { Question } from "../types/questions";
+import type { Question } from "@/types/questions";
 
 const QUESTIONS_PER_PAGE = 5;
 

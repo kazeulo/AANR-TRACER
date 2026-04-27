@@ -67,7 +67,7 @@ export const TRL_COLORS: Record<number, string> = {
   9: "#4aa35a",
 };
 
-//    ─ Helpers ─
+// Helpers
 
 function formatLacking(items: LackingItem[]): string {
   return items.map(i => `- [TRACER Level ${i.trlLevel}] ${i.questionText}`).join("\n");
@@ -99,7 +99,6 @@ async function callProxy(
 }
 
 // Combined schema 
-
 const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
 {
   "header": {
@@ -121,7 +120,6 @@ const COMBINED_SCHEMA = `Return ONLY this JSON (no markdown, no extra text):
 }`;
 
 // Prompt builder 
-
 function buildPrompt(
   i: RecommendationInput,
   officialDescription?: { title: string; description: string } | null
@@ -172,7 +170,6 @@ ${COMBINED_SCHEMA}`;
 }
 
 // Single combined fetch
-
 export async function fetchRecommendation(
   input: RecommendationInput,
   officialDescription?: { title: string; description: string } | null
