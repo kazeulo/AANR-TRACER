@@ -8,7 +8,7 @@ import {
     IP_STATUS_OPTIONS,
     REGION_CONTACTS
 } from "../../../../utils/ipHelpers";
-import { IPSectionProps} from "../../page";
+import type { IPSectionProps } from "@/types/questions";
 
 // IP Section
 export function IPSection({ label, ipData, onChange, technologyType }: IPSectionProps) {

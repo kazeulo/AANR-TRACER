@@ -5,7 +5,7 @@ import { useState } from "react";
 import { LearnMoreModal } from "../LearnMoreModal";
 
 // type
-import { Question } from "../../types/questions";
+import { Question } from "../../../../../types/questions";
 
 export function CheckboxQuestion({
   q,
