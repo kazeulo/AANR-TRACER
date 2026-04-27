@@ -1,6 +1,6 @@
 import { IP_CATEGORY } from "../../../utils/ipHelpers";
 import { buildPageGroups } from "../utils/buildPageGroups";
-import type { Question } from "../types/questions";
+import type { Question } from "@/types/questions";
 
 interface UseProgressBarProps {
   orderedCategories: string[];

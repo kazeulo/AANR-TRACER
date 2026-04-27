@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getQuestionsJSON } from "../../../utils/questionsCache";
 import { categoryOrder } from "../../../utils/helperConstants";
 import { IP_CATEGORY } from "../../../utils/ipHelpers";
-import type { Question } from "../types/questions";
+import type { Question } from "@/types/questions";
 
 const questionsCache: Record<string, Record<string, Question[]>> = {};
 

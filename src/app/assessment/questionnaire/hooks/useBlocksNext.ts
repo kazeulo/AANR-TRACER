@@ -3,7 +3,7 @@
 import { IP_INITIATED_LABEL, PLANT_VARIETY_TYPES } from "../../../utils/ipHelpers";
 import type { IPData, AnswerValue } from "../../AssessmentContext";
 import type { MultiConditionalAnswer } from "../../../utils/trlCalculator";
-import type { Question } from "../types/questions";
+import type { Question } from "@/types/questions";
 
 interface UseBlocksNextProps {
   isIPCategory: boolean;

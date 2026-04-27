@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { IP_CATEGORY } from "../../../utils/ipHelpers";
 import { buildPageGroups } from "../../questionnaire/utils/buildPageGroups";
-import type { Question } from "../types/questions";
+import type { Question } from "@/types/questions";
 
 interface UsePaginationProps {
   orderedCategories: string[];
