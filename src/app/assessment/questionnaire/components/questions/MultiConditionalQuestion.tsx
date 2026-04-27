@@ -1,5 +1,5 @@
 import { MultiConditionalAnswer } from "../../../AssessmentContext";
-import { Question } from "../../types/questions";
+import { Question } from "@/types/questions";
 import { ABHContactPanel } from "../contacts/ABHContactPanel";
 
 // Multi-Conditional Question

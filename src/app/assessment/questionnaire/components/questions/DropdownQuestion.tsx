@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Question } from "../../types/questions";
+import { Question } from "@/types/questions";
 import { LearnMoreModal } from "../LearnMoreModal";
 import { ATBIContactPanel } from "../contacts/ATBIContactPanel";
 
