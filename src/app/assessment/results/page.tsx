@@ -7,7 +7,7 @@ import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator
 import { IP_CATEGORY } from "../../utils/ipHelpers";
 import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/tracerDescriptions";
-import { getTracerLabel } from "./Levelsdescription";
+import { getTracerLabel } from "./utils/Levelsdescription";
 import {
   fetchRecommendation,
   AIResult,
@@ -15,18 +15,17 @@ import {
   RecommendationInput,
   TRL_COLORS,
   TRL_LABELS,
-} from "./FetchRecommendation";
+} from "./types/FetchRecommendation";
 import { getCongratulatoryMessage } from "../../utils/congratulatoryMessages";
 
 import { getQuestionsJSON } from "../../utils/questionsCache";
-import ScoreCards           from "./ScoreCards";
-import QuestionGroup        from "./QuestionGroup";
-import AIRecommendationCard from "./RecommendationCard";
+import ScoreCards           from "./components/ScoreCards";
+import QuestionGroup        from "./components/QuestionGroup";
+import AIRecommendationCard from "./components/RecommendationCard";
 import ExportModal, { AssessmentMeta } from "./exportPDF/exportModal";
-import CategoryAnalysis     from "./CategoryAnalysis";
+import CategoryAnalysis     from "./components/CategoryAnalysis";
 
 // Skeleton shimmer
-
 function PageLoader() {
 
   const steps = [

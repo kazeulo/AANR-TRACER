@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { QuestionItem } from "../../utils/trlCalculator";
-import { categoryOrder } from "../../utils/helperConstants";
+import { QuestionItem } from "../../../utils/trlCalculator";
+import { categoryOrder } from "../../../utils/helperConstants";
 
 // Types
 

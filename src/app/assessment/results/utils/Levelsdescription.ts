@@ -1,4 +1,4 @@
-import { TRACER_LEVELS } from "../../utils/helperConstants";
+import { TRACER_LEVELS } from "../../../utils/helperConstants";
 
 export const levelsDescription = [
   { level: 1, label: "Concept & Market Definition" },

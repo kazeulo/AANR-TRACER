@@ -1,5 +1,5 @@
-import { TRL_LABELS } from "./FetchRecommendation";
-import { TRACER_DESCRIPTIONS } from "../../utils/tracerDescriptions";
+import { TRL_LABELS } from "../types/FetchRecommendation";
+import { TRACER_DESCRIPTIONS } from "../../../utils/tracerDescriptions";
 import TRLStepBar from "./TRLStepBar";
 
 interface ScoreCardsProps {

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { QuestionItem } from "../../utils/trlCalculator";
-import { TRL_LABELS, TRL_COLORS } from "./exportPDF/UsePDFExport";
+import { QuestionItem } from "../../../utils/trlCalculator";
+import { TRL_LABELS, TRL_COLORS } from "../exportPDF/UsePDFExport";
 
 interface AchievableBannerProps {
   completedTRL: number;

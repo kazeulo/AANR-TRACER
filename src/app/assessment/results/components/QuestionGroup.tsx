@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { QuestionItem } from "../../utils/trlCalculator";
-import { TRL_COLORS } from "./exportPDF/UsePDFExport";
-import { TRACER_DESCRIPTIONS } from "../../utils/tracerDescriptions";
-import { TRL_LABELS } from "./FetchRecommendation";
+import { QuestionItem } from "../../../utils/trlCalculator";
+import { TRL_COLORS } from "../exportPDF/UsePDFExport";
+import { TRACER_DESCRIPTIONS } from "../../../utils/tracerDescriptions";
+import { TRL_LABELS } from "../types/FetchRecommendation";
 
 interface QuestionGroupProps {
   title: string;

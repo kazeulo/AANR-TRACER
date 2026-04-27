@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExportFormData } from "./exportPDF/UsePDFExport";
+import { ExportFormData } from "../exportPDF/UsePDFExport";
 
 interface ExportModalProps {
   onClose: () => void;

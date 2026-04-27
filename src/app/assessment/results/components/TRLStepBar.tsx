@@ -1,4 +1,4 @@
-import { TRL_COLORS } from "./exportPDF/UsePDFExport";
+import { TRL_COLORS } from "../exportPDF/UsePDFExport";
 
 interface TRLStepBarProps {
   completed: number;
