@@ -8,7 +8,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## v1.3.1 - Clean Up, Refactoring, and Minor improvements
+## v1.3.0 - Refactoring, Follow best practices and conventions, clean-up organization
+
+### changes
+- refactored questionnaire page, followed SRP
+- reorganize files for results page
+
+## v1.2.1 - Clean Up, Refactoring, and Minor improvements
 April 2026
 
 ### Changes
@@ -16,7 +22,7 @@ April 2026
 - Update docs
 - Refactor codes for optimization
 
-## v1.3.0 – Questionnaire & Content Update
+## v1.2.0 – Questionnaire & Content Update
 March 2026
 
 ### Added

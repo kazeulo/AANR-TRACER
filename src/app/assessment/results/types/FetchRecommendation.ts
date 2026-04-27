@@ -1,5 +1,4 @@
 // Types 
-
 export interface LackingItem {
   trlLevel: number;
   questionText: string;
