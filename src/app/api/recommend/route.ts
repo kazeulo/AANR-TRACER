@@ -186,8 +186,8 @@ export async function POST(req: NextRequest) {
   if (!response.ok) {
     const status = response.status;
     const msg =
-      status === 429 ? "AI service is busy. Please try again shortly." :
-      status === 401 ? "AI service authentication failed." :
+      status === 429 ? "Service is busy. Please try again shortly." :
+      status === 401 ? "Service authentication failed." :
       "AI service returned an error. Please try again.";
 
     return NextResponse.json({ error: msg }, { status });

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ExportFormData } from "./UsePDFExport";
 
-//    ─ Types ─
+// Types
 
 export interface AssessmentMeta {
   technologyName: string;
@@ -21,8 +21,7 @@ interface ExportModalProps {
 
 type Mode = "download" | "email" | "both";
 
-//    ─ Field component    ──────────────────────────────────────────────────────
-
+// Field component
 function Field({
   id, label, placeholder, required = false, type = "text",
   value, error, onChange,
@@ -58,7 +57,7 @@ function Field({
   );
 }
 
-//    ─ Mode toggle pill    ─────────────────────────────────────────────────────
+// Mode toggle pill
 
 function ModePill({ active, onClick, icon, label }: {
   active: boolean; onClick: () => void;
@@ -79,7 +78,7 @@ function ModePill({ active, onClick, icon, label }: {
   );
 }
 
-//    ─ Main modal      
+// Main modal      
 
 export default function ExportModal({ onClose, onExport, exporting, meta }: ExportModalProps) {
   const [mode, setMode] = useState<Mode>("download");

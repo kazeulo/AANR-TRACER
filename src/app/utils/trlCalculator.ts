@@ -322,7 +322,6 @@ function multiConditionalFullySatisfied(
 }
 
 // Answer evaluation
-
 function isAnsweredYesAtLevel(
   q: QuestionItem,
   answers: Record<string, AnswerValue>,

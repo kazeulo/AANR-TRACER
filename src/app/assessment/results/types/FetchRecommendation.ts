@@ -164,7 +164,7 @@ Produce a complete roadmap to TRACER Level 9.
 2. For EACH item, one step: action = exact requirement text, detail = 2 concrete sentence.
 3. Every requirement = its own step. Do not merge or skip any.
 4. Do NOT invent requirements. Completed levels (≤ ${i.completedTRL}) must NOT appear.
-CLOSING: 1 warm sentence.
+CLOSING: 2 warm and motivational sentences.
 
 ${COMBINED_SCHEMA}`;
 }
