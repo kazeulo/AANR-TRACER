@@ -89,10 +89,13 @@ const [categories, setCategories] = useState<Category[]>([]);
   return (
     <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
 
-      {/* ═══ HEADER ═══ */}
+      {/* HEADER */}
       <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[140px] pb-[100px] overflow-hidden">
+        {/* grid */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "35px 35px" }} />
+        
+        {/* glow */}
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
         <div className="relative z-10 max-w-[1200px] mx-auto">
@@ -110,7 +113,7 @@ const [categories, setCategories] = useState<Category[]>([]);
         <path fill="#1a3d26" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
       </svg>
 
-      {/* ═══ SEARCH ═══ */}
+      {/* SEARCH */}
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-6">
         <div className="max-w-[1000px] mx-auto relative">
           <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4a6657] pointer-events-none" width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -140,7 +143,7 @@ const [categories, setCategories] = useState<Category[]>([]);
         <path fill="#f5f2ec" d="M0,0 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" />
       </svg>
 
-      {/* ═══ BODY ═══ */}
+      {/* BODY */}
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] max-w-[1400px] mx-auto min-h-[calc(100vh-400px)]">
 
         {/* Sidebar */}

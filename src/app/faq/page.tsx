@@ -15,7 +15,6 @@ function CategoryIcon({ name, size = 16, color = "#4aa35a" }: { name: string; si
 }
 
 //  Page 
-
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<Record<string, number | null>>({});
   const [activeCategory, setActiveCategory] = useState(categories[0].title);
@@ -33,12 +32,17 @@ export default function FAQ() {
   return (
     <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)]">
 
-      {/* ═══ HEADER ═══ */}
+      {/* HEADER */}
       <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[80px] pb-[100px] overflow-hidden">
+        
+        {/* grid */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "35px 35px" }} />
+        
+        {/* glow */}
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
+       
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <h1 className=" text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[580px]">
             Frequently Asked <em className="text-[var(--color-accent)]">Questions</em>

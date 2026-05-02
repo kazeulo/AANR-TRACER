@@ -18,7 +18,7 @@ export default function Footer() {
       <footer className="bg-[var(--color-primary)] text-white font-['DM Sans']">
         <div className="max-w-[1370px] mx-auto px-6 lg:px-[6vw]">
 
-          {/* Brand + socials */}
+          {/* Brand and socials */}
           <div className="flex flex-col md:flex-row justify-between items-start gap-6 py-12 border-b border-[var(--white-15)]">
 
             <div className="max-w-500">
@@ -89,10 +89,16 @@ export default function Footer() {
               >
                 User Guide
               </a>
-              <Link href="/privacy" className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit">
+              <Link 
+                href="/https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
+                className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit"
+              >
                 Data Privacy Statement
               </Link>
-              <Link href="/support" className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit">
+              <Link 
+                href="/https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
+                className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit"
+              >
                 Support
               </Link>
             </div>
@@ -117,30 +123,30 @@ export default function Footer() {
                 09054439916
               </a>
 
-              {/* <a
+              <a
                 href="https://www.google.com/maps/place/DOST+PCAARRD"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-2.5 text-[13px] text-[var(--color-text-muted)] font-light hover:text-white transition-colors"
+                className="flex items-start gap-2.5 text-[13px] text-[var(--color-text-faintest)] font-light mb-3.5 hover:text-white transition-colors"
               >
-                <span className="w-[30px] h-[30px] bg-[var(--color-accent)]/10 rounded-lg flex items-center justify-center text-[var(--color-accent)] flex-shrink-0 mt-0.5">
+                <span className="w-[30px] h-[30px] bg-[var(--white-10)] rounded-lg flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
                   <MapPin size={14} />
                 </span>
                 <span>DOST PCAARRD<br />Jamboree Rd, Los Baños, Laguna</span>
-              </a> */}
+              </a>
             </div>
           </div>
 
           {/* Bottom bar */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 py-6">
-            <p className="text-[12px] text-white">
+            {/* <p className="text-[12px] text-white">
               © {new Date().getFullYear()} AANR-TRACER 
-            </p>
+            </p> */}
             <div className="flex gap-5">
               {[
-                { href: "/privacy", label: "Privacy Policy" },
+                { href: "/https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link", label: "Privacy Policy" },
                 { href: "/terms",   label: "Terms" },
-                { href: "/support", label: "Support" },
+                // { href: "/support", label: "Support" },
               ].map(({ href, label }) => (
                 <Link key={href} href={href} className="text-[12px] text-white hover:text-[var(--color-text-muted)] transition-colors">
                   {label}

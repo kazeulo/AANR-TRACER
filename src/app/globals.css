@@ -5,7 +5,7 @@
  
 /* Font zoom fix */
 html {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -13,9 +13,10 @@ html {
 /* Design tokens */
 :root {
   --font-scale: 1;
+  
   /* Fonts */
   --font-heading: 'DM Serif Display', serif;
-  --font-body:    'DM Sans', sans-serif;
+  --font-body:    'Monterrat', sans-serif;
 
   /* Brand greens */
   --color-primary:       #0f2e1a;   /* dark forest — hero bg, headings */
@@ -251,5 +252,22 @@ html {
     border-color: rgba(74, 163, 90, 0.3);
     border-top-color: var(--color-accent);
   }
+}
+
+/* tracer scale animation on homepage */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.45s ease forwards;
+  opacity: 0;
 }
 

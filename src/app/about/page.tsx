@@ -1,6 +1,5 @@
 "use client";
 
-
 function StepIcon({ name }: { name: string }) {
   const s = { width: 17, height: 17, fill: "none", stroke: "#4aa35a", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   if (name === "clipboard")  return <svg viewBox="0 0 24 24" style={s}><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/></svg>;
@@ -14,10 +13,14 @@ export default function About() {
   return (
     <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)]">
 
-      {/* ═══ HEADER ═══ */}
+      {/* HEADER */}
       <section className="relative bg-[#0f2e1a] px-6 lg:px-[6vw] pt-[140px] pb-[100px] overflow-hidden">
+        
+        {/* grid */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "35px 35px" }} />
+        
+        {/* glow */}
         <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
 
@@ -36,7 +39,7 @@ export default function About() {
         <path fill="#f5f2ec" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
       </svg>
 
-      {/* ═══ OVERVIEW ═══ */}
+      {/* OVERVIEW */}
       <section className="py-[100px] px-6 lg:px-[6vw] bg-[var(--color-bg)]">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center">
           <div>
