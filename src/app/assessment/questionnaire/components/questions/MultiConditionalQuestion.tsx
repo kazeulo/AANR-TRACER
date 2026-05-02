@@ -1,4 +1,4 @@
-import { MultiConditionalAnswer } from "../../../AssessmentContext";
+import { MultiConditionalAnswer } from "@/contexts/AssessmentContext";
 import { Question } from "@/types/questions";
 import { ABHContactPanel } from "../contacts/ABHContactPanel";
 
