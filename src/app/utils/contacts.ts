@@ -1,4 +1,4 @@
-//    ─ ABH Regional Contacts    ────────────────────────────────────────────────
+// ABH Regional Contacts
 
 export const ABH_REGIONS = [
   { region: "CAR",        university: "BSU"        },
@@ -34,7 +34,7 @@ export const ATBI_REGIONS = [
   { region: "Region 13: Caraga",           university: "CSU"        },
 ];
 
-//    ─ ATBI Regulatory Contacts    ─────────────────────────────────────────────
+// ATBI Regulatory Contacts 
 
 export const REGULATORY_BODIES: Record<string, { body: string; url: string }> = {
   "Food, Food Ingredients and Beverages": {
