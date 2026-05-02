@@ -8,9 +8,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v1.3.1 - Refactoring, Follow best practices and conventions, clean-up
+May 2026
+
+## Changes
+- refactored chatbot component
+- improve project structure
+
+## Added
+- implement context window for chatbot
+
 ## v1.3.0 - Refactoring, Follow best practices and conventions, clean-up organization
 
-### changes
+### Changes
 - refactored questionnaire page, followed SRP
 - reorganize files for results page
 
