@@ -6,11 +6,13 @@ import { retrieveRelevant }  from "@/lib/assistant/knowledge";
 import type { Message } from "@/types/assistant";
 
 // constants
-const RETRIEVAL_TOP_K    = 4;
-const MAX_TOKENS         = 350;
-const TEMPERATURE        = 0.4;
-const MAX_MESSAGE_LENGTH = 600;
 const MODEL              = "gpt-4o-mini" as const;
+const TEMPERATURE        = 0.4;
+const RETRIEVAL_TOP_K    = 4;
+
+// caps to avoid abuse
+const MAX_TOKENS         = 350;
+const MAX_MESSAGE_LENGTH = 600;
 const MAX_HISTORY        = 5;
 
 if (!process.env.OPENAI_API_KEY) {
@@ -34,7 +36,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message is too long." }, { status: 400 });
     }
 
-    // 👇 now lives inside the handler where history is available
+    // context window
     const conversationHistory = history
       .slice(-MAX_HISTORY)
       .map((m: Message) => ({
