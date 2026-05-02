@@ -10,10 +10,10 @@ import { categoryDescriptions } from "../../utils/helperConstants";
 import { IP_INITIATED_LABEL, IP_CATEGORY } from "../../utils/ipHelpers";
 
 // hooks
-import { useBlocksNext } from "./hooks/useBlocksNext";
-import { usePagination } from "./hooks/usePagination";
-import { useQuestions } from "./hooks/useQuestions";
-import { useProgressBar } from "./hooks/useProgressBar";
+import { useBlocksNext } from "@/hooks/assessment/questionnaire/useBlocksNext";
+import { usePagination } from "@/hooks/assessment/questionnaire/usePagination";
+import { useQuestions } from "@/hooks/assessment/questionnaire/useQuestions";
+import { useProgressBar } from "@/hooks/assessment/questionnaire/useProgressBar";
 
 // components
 import { IPSection } from "./components/ip/ipSection";

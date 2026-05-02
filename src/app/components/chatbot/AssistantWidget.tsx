@@ -1,6 +1,6 @@
 "use client";
 
-import { useAssistant } from "@/hooks/useAssistant";
+import { useAssistant } from "@/hooks/assistant/useAssistant";
 import type { AssistantProps } from "@/types/assistant";
 
 import AssistantHeader      from "./AssistantHeader";

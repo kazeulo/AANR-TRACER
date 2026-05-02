@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { getQuestionsJSON } from "../../../utils/questionsCache";
-import { categoryOrder } from "../../../utils/helperConstants";
-import { IP_CATEGORY } from "../../../utils/ipHelpers";
+import { getQuestionsJSON } from "@/app/utils/questionsCache";
+import { categoryOrder } from "@/app/utils/helperConstants";
+import { IP_CATEGORY } from "@/app/utils/ipHelpers";
 import type { Question } from "@/types/questions";
 
 const questionsCache: Record<string, Record<string, Question[]>> = {};
