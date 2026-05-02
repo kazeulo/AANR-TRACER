@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAssessment } from "../AssessmentContext";
+import { useAssessment } from "@/contexts/AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
 import { IP_CATEGORY } from "../../utils/ipHelpers";
 import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
