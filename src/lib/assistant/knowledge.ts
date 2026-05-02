@@ -1,12 +1,5 @@
-import knowledge from "../../lib/knowledge.json";
-
-interface KnowledgeEntry {
-  id: string;
-  topic: string;
-  question: string;
-  keywords: string[];
-  answer: string;
-}
+import { KnowledgeEntry } from "@/types/knowledge";
+import knowledge from "@/data/knowledge.json"
 
 export function retrieveRelevant(query: string, topK = 4): KnowledgeEntry[] {
   const q = query.toLowerCase();

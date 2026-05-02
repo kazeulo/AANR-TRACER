@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAssessment } from "../AssessmentContext";
+import { useAssessment } from "@/contexts/AssessmentContext";
 import { categoryOrder } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";

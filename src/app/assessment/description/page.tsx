@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAssessment } from "../AssessmentContext";
+import { useAssessment } from "@/contexts/AssessmentContext";
 import { useState } from "react";
 
 export default function TechnologyDescriptionPage() {

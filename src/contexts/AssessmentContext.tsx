@@ -3,11 +3,10 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useRef, ReactNode } from "react";
-import type { AnswerValue } from "../utils/trlCalculator";
-export type { AnswerValue, MultiConditionalAnswer, DropdownAnswer } from "../utils/trlCalculator";
+import type { AnswerValue } from "@/app/utils/trlCalculator";
+export type { AnswerValue, MultiConditionalAnswer, DropdownAnswer } from "@/app/utils/trlCalculator";
 
 // IP Types
-
 export interface IPQuestionData {
   dusPvpStatus: any;
   initiated: "yes" | "no" | "trade_secret" | "";
@@ -20,7 +19,6 @@ export interface IPData {
 }
 
 // Assessment Data
-
 interface AssessmentData {
   technologyName:        string;
   technologyDescription: string;

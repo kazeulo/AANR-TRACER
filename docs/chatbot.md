@@ -1,612 +1,451 @@
-# TRACER Assistant — Technical Documentation
-
-> AANR-TRACER · DOST-PCAARRD · Confidential
-
----
+# TRACER Assistant — Chatbot Implementation Documentation
 
 ## Table of Contents
 
-1. [Overview](#1-overview)
-2. [Architecture](#2-architecture)
-3. [Component Breakdown](#3-component-breakdown)
-4. [Conversation Flow](#4-conversation-flow)
-5. [Context System](#5-context-system)
-6. [Knowledge Base (RAG)](#6-knowledge-base-rag)
-7. [API Route](#7-api-route)
-8. [Safeguards](#8-safeguards)
-9. [Cost and Performance](#9-cost-and-performance)
-10. [Environment Variables](#10-environment-variables)
-11. [File Structure](#11-file-structure)
-12. [Turnover Notes for DOST](#12-turnover-notes-for-dost)
+1. [Overview](#overview)
+2. [Architecture](#architecture)
+3. [File Structure](#file-structure)
+4. [Types](#types)
+5. [Constants](#constants)
+6. [Service Layer](#service-layer)
+7. [Custom Hook](#custom-hook)
+8. [API Route](#api-route)
+9. [Components](#components)
+10. [Data Flow](#data-flow)
+11. [Environment Variables](#environment-variables)
+12. [Conversation History](#conversation-history)
+13. [Knowledge Retrieval](#knowledge-retrieval)
 
 ---
 
-## 1. Overview
+## Overview
 
-The TRACER Assistant is a floating AI-powered chat widget embedded throughout the AANR-TRACER platform. Its primary purpose is to help researchers and technology developers understand jargon, requirements, and concepts they encounter while going through the TRACER assessment — without leaving the page.
+The TRACER Assistant is a floating AI-powered chat widget embedded in the AANR-TRACER platform. It provides contextual guidance to researchers and technology developers as they navigate the technology assessment process.
 
-**What it does:**
-- Explains technical terms (e.g., proximate analysis, DUS testing, GMP, FTO report)
-- Answers questions about TRACER levels and assessment criteria
-- Provides information about Philippine regulatory bodies (FDA, BAI, BFAR, FPA, BAFS, NSIC, AMTEC, DICT, NPC)
-- Explains pre-commercialization documents (BMC, IP valuation, commercialization plan)
-- Provides regional contact information for the RAISE Program
-
-**What it does not do:**
-- Give legal or regulatory advice
-- Access real-time data or external websites
-- Remember conversations across sessions
-- Modify assessment answers or results
+It uses:
+- **OpenAI `gpt-4o-mini`** as the language model
+- **Keyword-based RAG (Retrieval-Augmented Generation)** using a local `knowledge.json` file
+- **Conversation history** to maintain context across messages within a session
+- **Assessment context injection** to tailor responses to the user's current position in the form
 
 ---
 
-## 2. Architecture
+## Architecture
 
 ```
-User (Browser)
-     │
-     ▼
-AssistantWidget.tsx          ← Floating chat UI (React component)
-     │
-     │  POST /api/assistant
-     │  { message, context }
-     ▼
-app/api/assistant/route.ts   ← Next.js API route (server-side)
-     │
-     ├── retrieveRelevant()  ← Keyword matching against knowledge.json
-     │        │
-     │        ▼
-     │   utils/knowledge.json  ← Static RAG knowledge base (84 entries)
-     │
-     ├── Builds system prompt with context + retrieved entries
-     │
-     │  POST https://api.openai.com/v1/chat/completions
-     ▼
-OpenAI GPT-4o-mini           ← LLM inference
-     │
-     ▼
-{ reply: string }            ← Response returned to widget
+User types message
+      │
+      ▼
+AssistantWidget (UI shell)
+      │
+      ▼
+useAssistant (hook — manages state)
+      │
+      ▼
+fetchAssistantReply (service — sends request)
+      │
+      ▼
+POST /api/assistant (route handler)
+      │
+      ├── retrieveRelevant()     → keyword search on knowledge.json
+      ├── buildSystemPrompt()    → constructs system prompt with context
+      └── openai.chat.completions.create()
+            │
+            ▼
+         AI reply returned to UI
 ```
-
-**No external database. No vector store. All knowledge is bundled in the project.**
 
 ---
 
-## 3. Component Breakdown
+## File Structure
 
-### 3.1 `AssistantWidget.tsx`
+```
+src/
+├── app/
+│   └── api/
+│       └── assistant/
+│           └── route.ts                  # API route handler
+│
+├── components/
+│   └── assistant/
+│       ├── AssistantWidget.tsx           # Root shell — composes all sub-components
+│       ├── AssistantHeader.tsx           # Dark green header bar
+│       ├── AssistantContextPill.tsx      # "Currently: X" context strip
+│       ├── AssistantMessages.tsx         # Scrollable message list
+│       ├── AssistantInput.tsx            # Text input + send button
+│       ├── BotAvatar.tsx                 # Reusable bot icon
+│       ├── TypingIndicator.tsx           # Bouncing dots loading state
+│       ├── WelcomeState.tsx              # Empty state + suggested questions
+│       └── SuggestedQuestions.tsx        # Suggested question constants
+│
+├── hooks/
+│   └── useAssistant.ts                   # All chat state and side effects
+│
+├── lib/
+│   ├── assistantService.ts               # fetch() call to the API
+│   └── assistant/
+│       ├── buildPrompt.ts                # System prompt construction
+│       └── knowledge.ts                  # Keyword retrieval logic
+│
+├── types/
+│   └── assistant.ts                      # Shared TypeScript interfaces
+│
+└── data/
+    └── knowledge.json                    # Local knowledge base (RAG source)
+```
 
-Located at: `components/AssistantWidget.tsx`
+---
 
-**Responsibilities:**
-- Renders the floating chat button (bottom-right of every page)
-- Manages chat panel open/close state
-- Displays message history for the current session
-- Sends user messages to `/api/assistant`
-- Shows typing indicator while waiting for response
-- Closes on outside click
-- Displays suggested starter questions on first open
+## Types
+
+**File:** `types/assistant.ts`
+
+```typescript
+/** A single message in the conversation */
+export interface Message {
+  role: "user" | "assistant";
+  text: string;
+}
+
+/**
+ * Context passed from the parent assessment page.
+ * Used to tailor the AI response to the user's current position in the form.
+ */
+export interface AssistantContext {
+  /** The type of technology being assessed (e.g. "Biotech", "Software") */
+  technologyType?: string;
+
+  /** The current section/category of the assessment form */
+  currentCategory?: string;
+
+  /** The current Technology Readiness Level score (1–9) */
+  currentTRLLevel?: number;
+
+  /** The exact text of the question the user is currently answering */
+  questionText?: string;
+}
+
+/** Props accepted by the root AssistantWidget component */
+export interface AssistantProps {
+  context?: AssistantContext;
+}
+```
+
+---
+
+## Constants
+
+**File:** `components/assistant/SuggestedQuestions.ts`
+
+Predefined questions shown to the user on the welcome screen before any messages are sent.
+
+```typescript
+export const SUGGESTED_QUESTIONS = [
+  "What is AANR-TRACER?",
+  "What does pilot-scale mean?",
+  "What is an FTO report?",
+  "What is a Business Model Canvas?",
+] as const;
+```
+
+**File:** `app/api/assistant/route.ts` (module-level constants)
+
+```typescript
+const RETRIEVAL_TOP_K    = 4;    // max knowledge entries retrieved per query
+const MAX_TOKENS         = 350;  // max tokens in AI response
+const TEMPERATURE        = 0.4;  // lower = more factual, less creative
+const MAX_MESSAGE_LENGTH = 600;  // max characters allowed per user message
+const MODEL              = "gpt-4o-mini" as const;
+const MAX_HISTORY        = 5;    // max past messages sent with each request
+```
+
+---
+
+## Service Layer
+
+**File:** `lib/assistantService.ts`
+
+Responsible for sending the user message, context, and conversation history to the API and returning the AI reply. This is the only file that communicates with the backend.
+
+```typescript
+import type { AssistantContext, Message } from "@/types/assistant";
+
+/**
+ * Sends a message to the assistant API and returns the AI reply.
+ *
+ * @param message - The user's current message
+ * @param context - The assessment context from the parent page
+ * @param history - The full conversation history for this session
+ * @returns The assistant's reply as a plain string
+ * @throws Error if the network request fails or returns a non-OK status
+ */
+export async function fetchAssistantReply(
+  message: string,
+  context: AssistantContext,
+  history: Message[]
+): Promise<string> {
+  const res = await fetch("/api/assistant", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, context, history }),
+  });
+
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+
+  const data = await res.json();
+  return data.reply ?? "Sorry, I couldn't generate a response.";
+}
+```
+
+---
+
+## Custom Hook
+
+**File:** `hooks/useAssistant.ts`
+
+Manages all state and side effects for the chat widget. Keeps the UI components free of logic.
+
+### State
+
+| State | Type | Description |
+|---|---|---|
+| `open` | `boolean` | Whether the chat panel is visible |
+| `messages` | `Message[]` | Full conversation history for the session |
+| `input` | `string` | Current value of the text input |
+| `loading` | `boolean` | Whether a reply is being fetched |
+
+### Refs
+
+| Ref | Type | Purpose |
+|---|---|---|
+| `widgetRef` | `HTMLDivElement` | Detects outside clicks to close the panel |
+| `inputRef` | `HTMLInputElement` | Programmatically focuses the input on open |
+| `bottomRef` | `HTMLDivElement` | Auto-scrolls to the latest message |
+
+### Side Effects
+
+```
+1. Outside click listener  → closes panel when user clicks outside widgetRef
+2. Focus on open           → focuses inputRef 100ms after panel opens
+3. Scroll to bottom        → scrolls bottomRef into view on new messages or loading state
+```
+
+### `send()` function
+
+```
+1. Trims input, guards against empty or loading state
+2. Appends user message to messages[]
+3. Calls fetchAssistantReply(text, context, messages)
+4. Appends assistant reply to messages[]
+5. On error: appends a fallback error message
+6. Always: sets loading to false in finally block
+```
+
+---
+
+## API Route
+
+**File:** `app/api/assistant/route.ts`
+
+The Next.js route handler that processes each chat request.
+
+### Request body
+
+```typescript
+{
+  message: string;           // the user's current message
+  context: AssistantContext; // assessment context from the frontend
+  history: Message[];        // past messages in this session
+}
+```
+
+### Response body
+
+```typescript
+// success
+{ reply: string }
+
+// error
+{ error: string }
+```
+
+### Request lifecycle
+
+```
+1. Parse body — extract message, context, history
+2. Validate message — must be a non-empty string under MAX_MESSAGE_LENGTH
+3. Slice history — keep only the last MAX_HISTORY messages
+4. retrieveRelevant(message) — find matching knowledge entries
+5. buildSystemPrompt(context, relevant) — construct the full system prompt
+6. openai.chat.completions.create() — send to OpenAI
+7. Return { reply } or { error }
+```
+
+### Validation rules
+
+| Field | Rule | Status code |
+|---|---|---|
+| `message` | Required, must be a string | 400 |
+| `message` | Max 600 characters | 400 |
+| Server error | Any uncaught exception | 500 |
+
+---
+
+## Components
+
+### `AssistantWidget.tsx`
+The root shell. Composes all sub-components and consumes the `useAssistant` hook. Contains the floating button and the panel wrapper. Does not contain any business logic.
+
+### `AssistantHeader.tsx`
+Displays the assistant name, technology type subtitle, and online indicator. Accepts `context?: AssistantContext`.
+
+### `AssistantContextPill.tsx`
+A slim strip below the header showing the user's current assessment category. Shows "General TRACER guidance" when no category is active. Accepts `context?: AssistantContext`.
+
+### `AssistantMessages.tsx`
+The scrollable message area. Renders the welcome state when empty, the message list when messages exist, and the typing indicator when loading.
 
 **Props:**
 
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `context` | `AssistantContext` | No | Current assessment context passed from the parent page |
+| Prop | Type | Description |
+|---|---|---|
+| `messages` | `Message[]` | Full conversation history |
+| `loading` | `boolean` | Shows typing indicator when true |
+| `input` | `string` | Current input value |
+| `setInput` | `Dispatch<SetStateAction<string>>` | Updates input state |
+| `inputRef` | `RefObject<HTMLInputElement \| null>` | Passed to WelcomeState for focus |
+| `bottomRef` | `RefObject<HTMLDivElement \| null>` | Scroll anchor |
 
-**AssistantContext shape:**
+### `AssistantInput.tsx`
+The text input and send button at the bottom of the panel. Handles Enter key submission. Send button is disabled when input is empty or loading.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `technologyType` | `string` | e.g., "Food, Food Ingredients and Beverages" |
-| `currentCategory` | `string` | e.g., "Technology Development Status" |
-| `currentTRLLevel` | `number` | Current TRACER level (1–9) |
-| `questionText` | `string` | Text of the current question being answered |
+**Props:**
 
-**State:**
+| Prop | Type | Description |
+|---|---|---|
+| `input` | `string` | Current input value |
+| `loading` | `boolean` | Disables input while fetching |
+| `inputRef` | `RefObject<HTMLInputElement \| null>` | Ref for programmatic focus |
+| `setInput` | `Dispatch<SetStateAction<string>>` | Updates input state |
+| `send` | `() => void` | Triggers the send action |
 
-| State | Type | Description |
-|-------|------|-------------|
-| `open` | `boolean` | Whether the chat panel is visible |
-| `messages` | `Message[]` | Array of user and assistant messages for this session |
-| `input` | `string` | Current text in the input field |
-| `loading` | `boolean` | Whether a request is in-flight |
+### `BotAvatar.tsx`
+A small circular avatar with a bot icon. Used in `AssistantMessages`, `WelcomeState`, and `TypingIndicator`. Extracted to avoid repeating the same markup in three places.
 
-**Notes:**
-- Messages are stored in component state only — they are lost on page navigation or refresh (by design, for privacy)
-- The widget is mounted globally via `AssistantWidgetWithContext` in the root layout
-- On the questionnaire page, richer context (category, question text) is passed in
+### `TypingIndicator.tsx`
+Three animated bouncing dots shown while the AI reply is loading. Uses a CSS `@keyframes bounce` animation.
 
----
-
-### 3.2 `AssistantWidgetWithContext.tsx`
-
-Located at: `components/AssistantWidgetWithContext.tsx`
-
-A thin wrapper that reads from `AssessmentContext` and passes the current technology type to `AssistantWidget`. Used in the root layout so the assistant always knows which technology type the user is assessing, even outside the questionnaire.
-
-```tsx
-"use client";
-import { useAssessment } from "../assessment/AssessmentContext";
-import AssistantWidget from "./AssistantWidget";
-
-export default function AssistantWidgetWithContext() {
-  const { data } = useAssessment();
-  return (
-    <AssistantWidget
-      context={{
-        technologyType: data?.technologyType ?? "",
-        currentCategory: "",
-        currentTRLLevel: 0,
-      }}
-    />
-  );
-}
-```
+### `WelcomeState.tsx`
+Shown when `messages.length === 0`. Displays a welcome message and the list of suggested questions. Clicking a suggested question populates the input and focuses it.
 
 ---
 
-### 3.3 `app/api/assistant/route.ts`
+## Data Flow
 
-The server-side API route that handles all assistant requests.
-
-**Request body:**
-
-```json
-{
-  "message": "What is proximate analysis?",
-  "context": {
-    "technologyType": "Food, Food Ingredients and Beverages",
-    "currentCategory": "Technology Development Status",
-    "currentTRLLevel": 3,
-    "questionText": "Proximate Analysis Initiated to Assess Chemical Properties"
-  }
-}
 ```
-
-**Response body:**
-
-```json
-{
-  "reply": "Proximate analysis is a set of laboratory tests..."
-}
-```
-
-**Error response:**
-
-```json
-{
-  "error": "Something went wrong. Please try again."
-}
+AssistantWidget
+│
+├── reads:  useAssistant(context)
+│           → { open, setOpen, messages, input, setInput, loading, send, refs }
+│
+├── passes to AssistantHeader:
+│           context
+│
+├── passes to AssistantContextPill:
+│           context
+│
+├── passes to AssistantMessages:
+│           messages, loading, input, setInput, inputRef, bottomRef
+│           └── passes to WelcomeState:
+│                   onSelectQuestion → calls setInput + inputRef.focus()
+│
+└── passes to AssistantInput:
+            input, loading, inputRef, setInput, send
 ```
 
 ---
 
-### 3.4 `utils/knowledge.json`
-
-The static knowledge base used for retrieval-augmented generation. Contains 84 entries across 7 topics.
-
-**Topics covered:**
-
-| Topic | Entry Count | Contents |
-|-------|-------------|----------|
-| `glossary` | 24 | Technical jargon: proximate analysis, pilot-scale, GMP, HACCP, DUS testing, FTO, BMC, etc. |
-| `intellectual_property` | 7 | Patent, trademark, copyright, utility model, industrial design, trade secret, IPOPHL |
-| `regulatory` | 11 | FDA, BAI, BFAR, FPA, BAFS, NSIC, DA-BPI, DICT, NPC, ATBI, PCC, NDA |
-| `program` | 2 | RAISE Program, DOST-PCAARRD |
-| `contacts` | 14 | Regional ABH contacts per region (CAR, R1–R13) |
-| `tracer_levels` | 11 | TRACER Level 1–9 descriptions + overview + categories + tech types |
-| `documents` | 3 | Market viability assessment, technology profile, commercialization documents |
-| `commercialization` | 3 | Spin-off vs licensing, privately funded, royalties |
-
-**Entry schema:**
-
-```json
-{
-  "id": "glossary_proximate_analysis",
-  "topic": "glossary",
-  "question": "What is proximate analysis?",
-  "keywords": ["proximate", "analysis", "proximate analysis", "chemical properties"],
-  "answer": "Proximate analysis is a set of laboratory tests..."
-}
-```
-
----
-
-## 4. Conversation Flow
-
-```
-User opens widget
-       │
-       ▼
-Welcome message shown
-Suggested questions displayed:
-  • What is AANR-TRACER?
-  • What does pilot-scale mean?
-  • What is an FTO report?
-  • What is a Business Model Canvas?
-       │
-       ▼
-User types message or clicks suggestion
-       │
-       ▼
-Input trimmed and validated (empty = blocked)
-Message added to local state (user bubble)
-Loading indicator shown (animated dots)
-       │
-       ▼
-POST /api/assistant
-  body: { message, context }
-       │
-       ├── [Server] Validate message field present
-       │
-       ├── [Server] retrieveRelevant(message, topK=4)
-       │      │
-       │      ├── Lowercase the query
-       │      ├── Score each knowledge entry by keyword overlap
-       │      ├── Filter entries with score > 0
-       │      └── Return top 4 by score
-       │
-       ├── [Server] Build system prompt
-       │      │
-       │      ├── Role definition
-       │      ├── Context line (tech type, category, TRL level, question)
-       │      ├── Behavioral rules
-       │      └── Retrieved knowledge entries (if any)
-       │
-       ├── [Server] Call OpenAI GPT-4o-mini
-       │      model: gpt-4o-mini
-       │      max_tokens: 350
-       │      temperature: 0.4
-       │
-       └── [Server] Return { reply }
-       │
-       ▼
-Assistant bubble added to local state
-Loading indicator hidden
-Auto-scroll to bottom
-```
-
----
-
-## 5. Context System
-
-The assistant receives context from the current page to make responses more relevant. Context changes as the user navigates through the assessment.
-
-### 5.1 Context levels
-
-| Page | Context Available | Richness |
-|------|-------------------|----------|
-| Home, About, FAQ | None (empty object) | Low — general TRACER guidance |
-| Assessment start pages (name, type selection) | `technologyType` only | Medium — tech-specific guidance |
-| Questionnaire pages | `technologyType`, `currentCategory`, `currentTRLLevel`, `questionText` | High — fully contextual |
-| Results page | `technologyType` | Medium — result interpretation guidance |
-
-### 5.2 How context is injected into the prompt
-
-```
-// With full context:
-"The user is currently assessing a 'Food, Food Ingredients and Beverages'
-technology under the 'Technology Development Status' category at TRACER
-Level 3. They are currently answering: 'Proximate Analysis Initiated to
-Assess Chemical Properties'"
-
-// Without context (general browsing):
-"The user is browsing the AANR-TRACER platform and may have general
-questions about the tool, TRACER levels, or technology commercialization."
-```
-
-### 5.3 Context is never stored
-
-Context is passed per-request only. It is not logged, stored in a database, or retained between sessions.
-
----
-
-## 6. Knowledge Base (RAG)
-
-### 6.1 Retrieval mechanism
-
-The assistant uses keyword-based retrieval — no vector embeddings, no external database.
-
-```typescript
-function retrieveRelevant(query: string, topK = 4): KnowledgeEntry[] {
-  const q = query.toLowerCase();
-  return (knowledge.entries as KnowledgeEntry[])
-    .map(entry => ({
-      ...entry,
-      score: entry.keywords.filter(k => q.includes(k.toLowerCase())).length,
-    }))
-    .filter(entry => entry.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, topK);
-}
-```
-
-**How scoring works:**
-- Each knowledge entry has a `keywords` array (2–8 keywords)
-- The user's query is checked for each keyword using `includes()`
-- Score = number of matching keywords
-- Top 4 entries by score are injected into the system prompt
-- If no entries match (score = 0 for all), no knowledge context is injected — the LLM answers from its training data and the system prompt rules only
-
-### 6.2 Updating the knowledge base
-
-The knowledge base is a static JSON file at `utils/knowledge.json`. To add or update entries:
-
-1. Open `utils/knowledge.json`
-2. Add a new entry following the schema (see Section 3.4)
-3. Ensure the `id` is unique
-4. Add relevant `keywords` — include common misspellings, abbreviations, and alternate phrasings
-5. Keep `answer` to 2–4 sentences — the LLM will expand and adapt it
-6. Redeploy the application (no database migration needed)
-
-### 6.3 Adding a new topic area
-
-If the knowledge base needs to cover a new area (e.g., new regulatory body, new document type):
-
-1. Add entries to `knowledge.json` with a new `topic` value
-2. No code changes required — the retrieval function works on all entries regardless of topic
-3. Consider adding a new suggested question in `AssistantWidget.tsx` if the topic is commonly asked about
-
----
-
-## 7. API Route
-
-### 7.1 Route location
-
-```
-app/api/assistant/route.ts
-```
-
-### 7.2 Full system prompt structure
-
-```
-You are TRACER Assistant, a concise and helpful guide for researchers
-and technology developers using the AANR-TRACER platform in the Philippines.
-
-[CONTEXT LINE — dynamic, based on current page]
-
-Your role:
-- Explain technical jargon, acronyms, and requirements in plain language
-- Answer general questions about TRACER levels, technology types, and the
-  assessment process
-- Keep answers short and practical — 2 to 4 sentences unless more detail
-  is genuinely needed
-- Reference Philippine regulatory bodies (FDA, BAI, BFAR, FPA, BAFS,
-  NSIC, AMTEC, DICT, NPC) when relevant
-- Explain documents like FTO reports, IP valuation, BMC, GMP manuals,
-  DUS testing when asked
-- Do not give legal or regulatory advice — refer users to DOST-PCAARRD
-  ATBI for specific guidance
-- If the question is unrelated to AANR technologies or TRACER, politely
-  redirect the user
-
-If you don't know something, say so clearly rather than guessing.
-
-[RETRIEVED KNOWLEDGE — injected if relevant entries found]
-Relevant reference material:
-Q: What is proximate analysis?
-A: Proximate analysis is a set of laboratory tests...
-
-Q: What does pilot-scale mean?
-A: Pilot-scale production is the intermediate stage...
-```
-
-### 7.3 Model parameters
-
-| Parameter | Value | Reason |
-|-----------|-------|--------|
-| `model` | `gpt-4o-mini` | Cost-efficient, fast, sufficient for Q&A |
-| `max_tokens` | `350` | Keeps responses concise, controls cost |
-| `temperature` | `0.4` | Low randomness for factual, consistent answers |
-
-### 7.4 Error handling
-
-| Error scenario | Response |
-|----------------|----------|
-| Missing `message` field | 400 Bad Request: `{ error: "Message is required." }` |
-| OpenAI API failure | 500 Internal Server Error: `{ error: "Something went wrong. Please try again." }` |
-| Empty OpenAI response | Returns: `"I couldn't generate a response. Please try again."` |
-| Network timeout (client) | Widget catches the error and shows: `"Something went wrong. Please try again."` |
-
----
-
-## 8. Safeguards
-
-### 8.1 Input safeguards
-
-| Safeguard | Implementation | Location |
-|-----------|----------------|----------|
-| Empty input blocked | `if (!text \|\| loading) return` | `AssistantWidget.tsx` → `send()` |
-| Duplicate send blocked | `loading` state prevents re-submission | `AssistantWidget.tsx` |
-| Input field disabled while loading | `disabled={!input.trim() \|\| loading}` | Send button |
-| Enter key handling | Only fires on `Enter` without `Shift` — `Shift+Enter` reserved for future multiline | `AssistantWidget.tsx` |
-
-### 8.2 Output safeguards (system prompt rules)
-
-| Rule | Prompt instruction |
-|------|--------------------|
-| No legal advice | "Do not give legal or regulatory advice — refer users to DOST-PCAARRD ATBI" |
-| No hallucination | "If you don't know something, say so clearly rather than guessing" |
-| Stay on topic | "If the question is unrelated to AANR technologies or TRACER, politely redirect the user" |
-| Concise responses | "Keep answers short and practical — 2 to 4 sentences unless more detail is genuinely needed" |
-| Factual grounding | Retrieved knowledge entries injected into prompt to anchor responses |
-
-### 8.3 Privacy safeguards
-
-| Concern | Mitigation |
-|---------|------------|
-| Assessment data in context | Only non-sensitive fields passed: technology type, category name, TRL level, question text — no personal data, no answers |
-| Message history | Stored in React component state only — cleared on page navigation or refresh, never sent to any server other than OpenAI |
-| No logging | The API route does not log messages or context to any database or file |
-| OpenAI data policy | Messages are sent to OpenAI's API. Under the default API usage policy, OpenAI does not use API inputs/outputs to train models. Verify current policy at platform.openai.com/docs/guides/privacy |
-
-### 8.4 UI safeguards
-
-| Safeguard | Implementation |
-|-----------|----------------|
-| Disclaimer shown | "AI-generated guidance only. It's best to consult and verify with your technology transfer specialist." — displayed persistently below messages |
-| Outside click closes panel | `mousedown` event listener on document, checks if click is outside `widgetRef` |
-| Mobile panel width | `w-[calc(100vw-3rem)] max-w-[340px]` — prevents panel from overflowing viewport on small screens |
-| Z-index management | Widget at `z-50`, panel at `z-20` within the wrapper — sits above all page content |
-
-### 8.5 API safeguards
-
-| Safeguard | Implementation |
-|-----------|----------------|
-| Server-side API key | `OPENAI_API_KEY` is an environment variable — never exposed to the client |
-| Input validation | `message` field checked for presence and string type before API call |
-| Try/catch on OpenAI call | All OpenAI errors caught and returned as 500 with generic message |
-| `max_tokens: 350` | Hard cap on response length prevents runaway token usage |
-| Temperature `0.4` | Reduces creative/hallucinated responses |
-
-### 8.6 Rate limiting (recommended for production)
-
-The current implementation has no rate limiting. For production deployment, it is recommended to add:
-
-```typescript
-// Example using Upstash Rate Limit or a simple in-memory approach
-// Limit: 20 requests per IP per hour
-import { Ratelimit } from "@upstash/ratelimit";
-```
-
-Alternatively, Next.js middleware can be used to rate-limit the `/api/assistant` route before it reaches the handler.
-
----
-
-## 9. Cost and Performance
-
-### 9.1 Token breakdown per request
-
-| Component | Approximate tokens |
-|-----------|--------------------|
-| System prompt (base) | ~200 tokens |
-| Context line | ~50 tokens |
-| Retrieved knowledge (4 entries) | ~300–400 tokens |
-| User message | ~20–50 tokens |
-| **Total input** | **~570–700 tokens** |
-| Assistant response | ~150–300 tokens |
-| **Total per request** | **~720–1000 tokens** |
-
-### 9.2 Cost estimate (GPT-4o-mini pricing)
-
-| Volume | Input tokens | Output tokens | Estimated cost |
-|--------|-------------|---------------|----------------|
-| 100 requests/week | ~70,000 | ~25,000 | ~$0.03/week |
-| 500 requests/week | ~350,000 | ~125,000 | ~$0.13/week |
-| 2,000 requests/week | ~1,400,000 | ~500,000 | ~$0.51/week |
-
-*Based on GPT-4o-mini pricing: $0.15/1M input tokens, $0.60/1M output tokens as of 2025.*
-
-### 9.3 Performance characteristics
-
-| Metric | Typical value |
-|--------|---------------|
-| Retrieval time (keyword matching) | < 5ms (in-memory, no network) |
-| OpenAI API latency | 800ms – 2,500ms |
-| Total response time | ~1–3 seconds |
-| Knowledge base size | ~49KB (knowledge.json) |
-| Memory footprint | Negligible (loaded once at startup) |
-
----
-
-## 10. Environment Variables
+## Environment Variables
 
 | Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENAI_API_KEY` | Yes | OpenAI API key. Obtainable from platform.openai.com. Must have access to `gpt-4o-mini`. |
+|---|---|---|
+| `OPENAI_API_KEY` | Yes | Your OpenAI API key. The server throws at startup if this is missing. |
 
-**Setup:**
-
-Create a `.env.local` file in the project root:
-
-```
-OPENAI_API_KEY=sk-proj-...
-```
-
-**Never commit `.env.local` to version control.** The `.gitignore` should already exclude it. Verify with:
+Add to your `.env.local`:
 
 ```bash
-grep ".env.local" .gitignore
+OPENAI_API_KEY=sk-...
 ```
 
----
+The server guard:
 
-## 11. File Structure
-
-```
-project/
-├── app/
-│   ├── api/
-│   │   └── assistant/
-│   │       └── route.ts              ← API handler
-│   └── layout.tsx                    ← Widget mounted here (global)
-│
-├── components/
-│   ├── AssistantWidget.tsx           ← Chat UI component
-│   └── AssistantWidgetWithContext.tsx ← Context wrapper for layout
-│
-└── utils/
-    └── knowledge.json                ← Static knowledge base (84 entries)
-```
-
----
-
-## 12. Turnover Notes for DOST
-
-### What needs to be maintained
-
-| Item | Frequency | Responsible party |
-|------|-----------|-------------------|
-| `OPENAI_API_KEY` rotation | Every 90 days (recommended) or if compromised | DOST IT team |
-| `knowledge.json` updates | When new regulatory requirements, programs, or terminology are introduced | DOST-PCAARRD technical team or contracted developer |
-| OpenAI billing monitoring | Monthly | DOST IT team |
-| Model version updates | When OpenAI deprecates `gpt-4o-mini` | Contracted developer |
-
-### How to update the knowledge base
-
-1. Open `utils/knowledge.json`
-2. Add a new entry at the end of the `entries` array following this structure:
-
-```json
-{
-  "id": "unique_snake_case_id",
-  "topic": "glossary",
-  "question": "What is [term]?",
-  "keywords": ["term", "alternate spelling", "abbreviation"],
-  "answer": "2-4 sentence explanation of the term in plain language."
+```typescript
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("Missing OPENAI_API_KEY environment variable");
 }
 ```
 
-3. Save the file and redeploy the application
-4. No database migration, no environment variable changes needed
+---
 
-### How to change the AI model
+## Conversation History
 
-If OpenAI deprecates `gpt-4o-mini`, update a single line in `app/api/assistant/route.ts`:
+Each session maintains an in-memory message history inside `useAssistant`. On every `send()`, the full `messages` array is passed to `fetchAssistantReply` and forwarded to the API.
 
-```typescript
-// Find this line:
-model: "gpt-4o-mini",
+The API slices the history to the last `MAX_HISTORY` (5) messages before sending to OpenAI to control token usage.
 
-// Replace with the new model name, e.g.:
-model: "gpt-4o-mini-2025",
+```
+Session messages:  [m1, m2, m3, m4, m5, m6, m7, m8]
+Sent to OpenAI:                        [m4, m5, m6, m7, m8]  ← last 5 only
 ```
 
-### How to disable the assistant
+History is not persisted. Refreshing the page starts a new session.
 
-If the chatbot needs to be temporarily disabled, comment out the widget in `app/layout.tsx`:
+### Token budget per request (approximate)
 
-```tsx
-// Comment out or remove this line:
-{/* <AssistantWidgetWithContext /> */}
-```
-
-Redeploy. No other changes needed.
-
-### How to monitor usage
-
-Log in to platform.openai.com with the account that owns the API key. Navigate to **Usage** to view token consumption, request counts, and cost by day. Set up usage alerts under **Billing → Usage limits** to receive email notifications when spending thresholds are reached.
+| Part | Tokens |
+|---|---|
+| System prompt | ~300 |
+| Knowledge context (up to 4 entries) | ~200 |
+| Conversation history (last 5 messages) | ~250 |
+| Current user message | ~50 |
+| **Total input** | **~800** |
+| Max output (`max_tokens: 350`) | 350 |
+| **Total per request** | **~1,150** |
 
 ---
 
-*Document version 1.0 — AANR-TRACER Project*  
+## Knowledge Retrieval
+
+**File:** `lib/assistant/knowledge.ts`
+
+Uses a simple keyword-matching algorithm against `data/knowledge.json`. No embeddings or vector database are used.
+
+### Algorithm
+
+```
+1. Lowercase the user query
+2. For each knowledge entry, count how many of its keywords appear in the query
+3. Filter out entries with score = 0
+4. Sort by score descending
+5. Return top RETRIEVAL_TOP_K entries (default: 4)
+```
+
+### knowledge.json structure
+
+```json
+{
+  "entries": [
+    {
+      "id": "unique-id",
+      "topic": "FTO Report",
+      "question": "What is an FTO report?",
+      "keywords": ["fto", "freedom to operate", "patent"],
+      "answer": "An FTO (Freedom to Operate) report..."
+    }
+  ]
+}
+```
+
+### Limitations
+
+Keyword matching is fast and zero-cost but has no semantic understanding. "What is freedom to operate?" will match, but "Can I use this technology commercially?" may not — even though both questions are about FTO. Consider upgrading to embedding-based retrieval if the knowledge base grows significantly.

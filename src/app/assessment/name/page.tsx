@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAssessment } from "../AssessmentContext";
+import { useAssessment } from "@/contexts/AssessmentContext";
 
 export default function TechnologyNamePage() {
   const { data, updateData } = useAssessment();

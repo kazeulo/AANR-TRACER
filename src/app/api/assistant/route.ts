@@ -1,72 +1,61 @@
+// app/api/assistant/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
-import knowledge from "../../../lib/knowledge.json";
+import { OpenAI } from "openai";
+import { buildSystemPrompt } from "@/lib/assistant/buildPrompt";
+import { retrieveRelevant }  from "@/lib/assistant/knowledge";
+import type { Message } from "@/types/assistant";
+
+// constants
+const MODEL              = "gpt-4o-mini" as const;
+const TEMPERATURE        = 0.4;
+const RETRIEVAL_TOP_K    = 4;
+
+// caps to avoid abuse
+const MAX_TOKENS         = 350;
+const MAX_MESSAGE_LENGTH = 600;
+const MAX_HISTORY        = 5;
+
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("Missing OPENAI_API_KEY environment variable");
+}
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-interface KnowledgeEntry {
-  id: string;
-  topic: string;
-  question: string;
-  keywords: string[];
-  answer: string;
-}
-
-function retrieveRelevant(query: string, topK = 4): KnowledgeEntry[] {
-  const q = query.toLowerCase();
-  return (knowledge.entries as KnowledgeEntry[])
-    .map(entry => ({
-      ...entry,
-      score: entry.keywords.filter(k => q.includes(k.toLowerCase())).length,
-    }))
-    .filter(entry => entry.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, topK);
-}
-
 export async function POST(req: NextRequest) {
   try {
-    const { message, context } = await req.json();
+    const body    = await req.json();
+    const message = body.message?.trim();
+    const context = body.context ?? {};
+    const history = body.history ?? []; 
 
     if (!message || typeof message !== "string") {
       return NextResponse.json({ error: "Message is required." }, { status: 400 });
     }
 
-    const relevant = retrieveRelevant(message);
-    const knowledgeContext = relevant.length > 0
-      ? `\n\nRelevant reference material:\n${relevant.map(e => `Q: ${e.question}\nA: ${e.answer}`).join("\n\n")}`
-      : "";
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json({ error: "Message is too long." }, { status: 400 });
+    }
 
-    const hasContext = context?.technologyType && context?.currentCategory;
+    // context window
+    const conversationHistory = history
+      .slice(-MAX_HISTORY)
+      .map((m: Message) => ({
+        role: m.role,
+        content: m.text,
+      }));
 
-    const contextLine = hasContext
-      ? `The user is currently assessing a "${context.technologyType}" technology under the "${context.currentCategory}" category at TRACER Level ${context.currentTRLLevel ?? 0}.${context.questionText ? ` They are currently answering: "${context.questionText}"` : ""}`
-      : "The user is browsing the AANR-TRACER platform and may have general questions about the tool, TRACER levels, or technology commercialization.";
-
-    const systemPrompt = `You are TRACER Assistant, a concise and helpful guide for researchers and technology developers using the AANR-TRACER platform in the Philippines.
-
-${contextLine}
-
-Your role:
-- Explain technical jargon, acronyms, and requirements in plain language
-- Answer general questions about TRACER levels, technology types, and the assessment process
-- Keep answers short and practical — 2 to 4 sentences unless more detail is genuinely needed
-- Reference Philippine regulatory bodies (FDA, BAI, BFAR, FPA, BAFS, NSIC, AMTEC, DICT, NPC) when relevant
-- Explain documents like FTO reports, IP valuation, BMC, GMP manuals, DUS testing when asked
-- Do not use markdown formatting in your responses. No bold (**), italics (*), headers (#), or bullet symbols. Write in plain prose only.
-- Do not give legal or regulatory advice — refer users to DOST-PCAARRD ATBI for specific guidance
-- If the question is unrelated to AANR technologies or TRACER, politely redirect the user
-
-If you don't know something, say so clearly rather than guessing.${knowledgeContext}`;
+    const relevant     = retrieveRelevant(message, RETRIEVAL_TOP_K);
+    const systemPrompt = buildSystemPrompt(context, relevant);
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: MODEL,
       messages: [
         { role: "system", content: systemPrompt },
+        ...conversationHistory,
         { role: "user",   content: message },
       ],
-      max_tokens: 350,
-      temperature: 0.4,
+      max_tokens: MAX_TOKENS,
+      temperature: TEMPERATURE,
     });
 
     const reply = completion.choices[0]?.message?.content?.trim()
@@ -75,7 +64,7 @@ If you don't know something, say so clearly rather than guessing.${knowledgeCont
     return NextResponse.json({ reply });
 
   } catch (err) {
-    console.error("Assistant API error:", err);
+    console.error("[Assistant API] error:", err);
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 }

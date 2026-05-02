@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAssessment } from "../AssessmentContext";
+import { useAssessment } from "@/contexts/AssessmentContext";
 
 const fundingOptions = [
   { value: "Government", icon: "🏛️", desc: "Funded by a government agency, department, or program" },
