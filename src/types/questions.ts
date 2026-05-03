@@ -1,6 +1,8 @@
 // src/types/questions.ts
 
-import type { IPData } from "./trl";
+import { IPData } from "@/app/utils/trlCalculator/trlCalculator";
+
+
 
 export interface DropdownOption {
   label: string;
@@ -33,7 +35,7 @@ export interface Question {
   toolTip?: string;
   expandedToolTip?: string;
   type?: "checkbox" | "dropdown" | "multi-conditional";
-  options?: DropdownOption[];
+  options?: DropdownOption[] | MultiConditionalOption[];
 }
 
 // QuestionItem is the calculator-facing version (no UI fields like toolTip)

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAssessment } from "@/contexts/AssessmentContext";
-import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
+import { useAssessment } from "@/hooks/assessment/useAssessment";
+
 import { IP_CATEGORY } from "@/constants/ip";
 import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/tracerDescriptions";
@@ -17,7 +17,7 @@ import {
   TRL_LABELS,
 } from "./types/FetchRecommendation";
 
-import { getCongratulatoryMessage } from "../../utils/congratulatoryMessages";
+import { getCongratulatoryMessage } from "@/constants/congratulatoryMessages";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 import ScoreCards           from "./components/ScoreCards";
 import QuestionGroup        from "./components/QuestionGroup";
@@ -26,6 +26,9 @@ import ExportModal, { AssessmentMeta } from "./exportPDF/exportModal";
 import CategoryAnalysis     from "./components/CategoryAnalysis";
 import { CongratulatoryHero } from "./components/CongratulatoryHero";
 import { PageLoader } from "./components/PageLoader";
+
+import { calculateTRL, QuestionItem, TRLResult } from "@/app/utils/trlCalculator/trlCalculator";
+
 
 // Main page
 export default function ResultsPage() {
@@ -57,11 +60,11 @@ export default function ResultsPage() {
         technologyDescription: data.technologyDescription ?? "",
         completedTRL:          result.highestCompletedTRL,
         achievableTRL:         result.highestAchievableTRL,
-        lackingItems:          result.lackingToLevel9.filter(q => q.category !== IP_CATEGORY)
-          .map(q => ({
-            trlLevel:     q.trlLevel,
-            questionText: q.questionText,
-          })),
+        lackingItems: result.lackingToLevel9
+        .map(q => ({
+          trlLevel:     q.trlLevel,
+          questionText: q.questionText,
+        })),
       };
       const officialInfo = getTracerInfo(data.technologyType, result.highestCompletedTRL);
 

@@ -4,8 +4,8 @@
 import { useState } from "react";
 
 // utils
-import { useAssessment, IPData } from "@/contexts/AssessmentContext";
-import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
+import { useAssessment} from "@/hooks/assessment/useAssessment";
+import { IPData, MultiConditionalAnswer } from "@/types/assessment";
 import { categoryDescriptions } from "../../utils/helperConstants";
 import { IP_INITIATED_LABEL } from "@/constants/ip";
 

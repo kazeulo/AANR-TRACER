@@ -8,7 +8,7 @@ import BackToTop from "@/components/ui/BacktoTop";
 import FontSizeControl from "@/components/fontZoom/FontsizeControl";
 import { FontSizeProvider } from "@/contexts/FontSizeContext";
 
-import { AssessmentProvider } from "@/contexts/AssessmentContext";
+import { AssessmentProvider } from "@/contexts/AssessmentProvider";
 
 // components
 import AssistantWidget from "@/components/chatbot/AssistantWidget";

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useAssessment } from "@/contexts/AssessmentContext";
+import { useAssessment } from "@/hooks/assessment/useAssessment";
 
 const links = [
   { href: "/", label: "Home" },
