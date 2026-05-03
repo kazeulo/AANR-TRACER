@@ -20,10 +20,6 @@ export default function About() {
         <div className="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,rgba(141,197,64,0.18) 0%,transparent 50%)" }} />
 
-          {/* blue glow */}
-      <div className="absolute -top-[100px] -left-[150px] w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle,rgba(0,173,241,0.10) 0%,transparent 70%)" }} />
-
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <h1 className=" text-[clamp(40px,5vw,64px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             About <em className="text-[var(--color-accent)]">TRACER</em>
