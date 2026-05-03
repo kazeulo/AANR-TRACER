@@ -6,7 +6,7 @@ import BackToTop from "../components/ui/BacktoTop";
 
 // for fontsize control
 import FontSizeControl from "../components/fontZoom/FontsizeControl";
-import { FontSizeProvider } from "../components/fontZoom/FontsizeContext";
+import { FontSizeProvider } from "@/contexts/FontSizeContext";
 
 import { AssessmentProvider } from "@/contexts/AssessmentContext";
 
