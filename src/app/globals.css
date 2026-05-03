@@ -5,7 +5,7 @@
  
 /* Font zoom fix */
 html {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -13,9 +13,10 @@ html {
 /* Design tokens */
 :root {
   --font-scale: 1;
+  
   /* Fonts */
   --font-heading: 'DM Serif Display', serif;
-  --font-body:    'DM Sans', sans-serif;
+  --font-body:    'Monterrat', sans-serif;
 
   /* Brand greens */
   --color-primary:       #0f2e1a;   /* dark forest — hero bg, headings */
@@ -108,7 +109,7 @@ html {
   font-size: calc(16px * var(--font-scale));
 }
 
-/*    ─ Base styles    ────────────────────────────────────────────────────── */
+/*  Base styles */
 @layer base {
   html {
     font-family: var(--font-body);
@@ -138,7 +139,7 @@ html {
 /* Reusable component classes */
 @layer components {
 
-  /*     Buttons     */
+  /* Buttons */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full
            text-[15px] font-semibold text-white transition-all duration-300;
@@ -171,7 +172,7 @@ html {
     color: var(--color-primary);
   }
 
-  /*     Cards     */
+  /* Cards */
   .card {
     background-color: var(--color-bg-card);
     border: 1px solid var(--color-border);
@@ -196,7 +197,7 @@ html {
     color: var(--color-accent);
   }
 
-  /*     Inputs     */
+  /* Inputs */
   .input {
     @apply w-full px-4 py-3 text-[14px] font-light transition-all;
     background-color: var(--color-bg-input);
@@ -213,7 +214,7 @@ html {
     box-shadow: 0 0 0 3px var(--color-accent-15);
   }
 
-  /*     Tags / Pills     */
+  /* Tags / Pills */
   .tag-accent {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full
            text-[11px] font-semibold tracking-[2px] uppercase;
@@ -222,7 +223,7 @@ html {
     border: 1px solid var(--color-accent-30);
   }
 
-  /*     Eyebrow label (used across all pages)     */
+  /* Eyebrow label (used across all pages) */
   .eyebrow {
     @apply inline-flex items-center gap-2 text-[11px] font-semibold tracking-[3px] uppercase
            px-3.5 py-1.5 rounded-full;
@@ -231,25 +232,42 @@ html {
     border: 1px solid var(--color-accent-30);
   }
 
-  /*     Section heading     */
+  /* Section heading */
   .section-heading {
     font-family: var(--font-heading);
     @apply text-[clamp(28px,4vw,42px)] leading-tight tracking-tight;
     color: var(--color-text-heading);
   }
 
-  /*     Warning / amber notice     */
+  /*bWarning / amber notice */
   .notice-amber {
     @apply flex items-start gap-3 px-5 py-4 rounded-xl;
     background-color: var(--color-warning-bg);
     border: 1px solid var(--color-warning-border);
   }
 
-  /*     Spinner     */
+  /* Spinner */
   .spinner {
     @apply w-10 h-10 rounded-full border-2 animate-spin;
     border-color: rgba(74, 163, 90, 0.3);
     border-top-color: var(--color-accent);
   }
+}
+
+/* tracer scale animation on homepage */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.45s ease forwards;
+  opacity: 0;
 }
 
