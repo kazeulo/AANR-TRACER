@@ -1,5 +1,5 @@
 // ATBI Contact Panel
-import { REGULATORY_BODIES, ATBI_REGIONS } from "../../../../utils/contacts";
+import { REGULATORY_BODIES, ATBI_REGIONS } from "@/constants/contacts";
 
 export function ATBIContactPanel({ technologyType }: { technologyType: string }) {
   const reg = REGULATORY_BODIES[technologyType];

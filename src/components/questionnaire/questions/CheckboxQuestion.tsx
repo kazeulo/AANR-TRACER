@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // component
-import { LearnMoreModal } from "../LearnMoreModal";
+import { LearnMoreModal } from "../modal/LearnMoreModal";
 
 // type
 import { Question } from "@/types/questions";
@@ -66,7 +66,7 @@ export function CheckboxQuestion({
           )}
         </div>
 
-        {/* Tooltip — only text + Learn more button, no modal nested here */}
+        {/* Tooltip — text + Learn more button */}
         {q.toolTip && expandedTip && (
           <div className="mb-4 text-[13px] text-[var(--color-text-light-gray)] bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-lg p-3 leading-relaxed transition-all duration-300">
             <p>{q.toolTip}</p>

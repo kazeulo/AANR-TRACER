@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Question } from "@/types/questions";
-import { LearnMoreModal } from "../LearnMoreModal";
+import { LearnMoreModal } from "../modal/LearnMoreModal";
 import { ATBIContactPanel } from "../contacts/ATBIContactPanel";
 
 // Dropdown Question 

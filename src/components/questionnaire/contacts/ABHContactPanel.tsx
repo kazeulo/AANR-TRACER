@@ -1,5 +1,5 @@
 // ABH Contact Panel
-import { ABH_REGIONS } from "../../../../utils/contacts"
+import { ABH_REGIONS } from "@/constants/contacts"
 
 export function ABHContactPanel() {
   return (

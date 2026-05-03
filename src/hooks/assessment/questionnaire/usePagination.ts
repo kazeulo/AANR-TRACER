@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { IP_CATEGORY } from "@/app/utils/ipHelpers";
-import { buildPageGroups } from "@/app/assessment/questionnaire/utils/buildPageGroups";
+import { IP_CATEGORY } from "@/constants/ip";
+import { buildPageGroups } from "@/lib/questionnaire/buildPageGroups";
 import type { Question } from "@/types/questions";
 
 interface UsePaginationProps {
