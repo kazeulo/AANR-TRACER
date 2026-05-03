@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useAssessment, IPData } from "@/contexts/AssessmentContext";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { categoryDescriptions } from "../../utils/helperConstants";
-import { IP_INITIATED_LABEL, IP_CATEGORY } from "../../utils/ipHelpers";
+import { IP_INITIATED_LABEL } from "@/constants/ip";
 
 // hooks
 import { useBlocksNext } from "@/hooks/assessment/questionnaire/useBlocksNext";
@@ -16,10 +16,10 @@ import { useQuestions } from "@/hooks/assessment/questionnaire/useQuestions";
 import { useProgressBar } from "@/hooks/assessment/questionnaire/useProgressBar";
 
 // components
-import { IPSection } from "./components/ip/ipSection";
-import { CheckboxQuestion } from "./components/questions/CheckboxQuestion";
-import { DropdownQuestion } from "./components/questions/DropdownQuestion";
-import { MultiConditionalQuestion } from "./components/questions/MultiConditionalQuestion";
+import { IPSection } from "@/components/questionnaire/ip/ipSection";
+import { CheckboxQuestion } from "@/components/questionnaire/questions/CheckboxQuestion";
+import { DropdownQuestion } from "@/components/questionnaire/questions/DropdownQuestion";
+import { MultiConditionalQuestion } from "@/components/questionnaire/questions/MultiConditionalQuestion";
 
 export default function QuestionnairePage() {
   const { data, updateData, lastCategoryIndex, setLastCategoryIndex, lastPage, setLastPage } = useAssessment();

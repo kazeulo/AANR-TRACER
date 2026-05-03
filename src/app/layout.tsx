@@ -2,18 +2,18 @@ import "./globals.css";
 
 import { Montserrat } from 'next/font/google';
 import type { Metadata } from 'next';
-import BackToTop from "../components/ui/BacktoTop";
+import BackToTop from "@/components/ui/BacktoTop";
 
 // for fontsize control
-import FontSizeControl from "../components/fontZoom/FontsizeControl";
+import FontSizeControl from "@/components/fontZoom/FontsizeControl";
 import { FontSizeProvider } from "@/contexts/FontSizeContext";
 
 import { AssessmentProvider } from "@/contexts/AssessmentContext";
 
 // components
-import AssistantWidget from "../components/chatbot/AssistantWidget";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import AssistantWidget from "@/components/chatbot/AssistantWidget";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const montserrat = Montserrat({
   subsets: ['latin'],

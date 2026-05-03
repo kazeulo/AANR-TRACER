@@ -4,7 +4,7 @@ import {
   IP_INITIATED_LABEL,
   IP_PENDING_LABEL,
   IP_FILED_LABEL,
-} from "./ipHelpers";
+} from "@/constants/ip";
 
 // Types
 

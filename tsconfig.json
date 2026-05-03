@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-, "src/app/assessment"  ],
+, "src/app/assessment", "src/components/questionnaire/questions", "src/components/questionnaire/ip", "src/components/questionnaire/contacts"  ],
   "exclude": ["node_modules"]
 }

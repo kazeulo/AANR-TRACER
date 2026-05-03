@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { useAssessment } from "@/contexts/AssessmentContext";
 
 const fundingOptions = [
-  { value: "Government", icon: "🏛️", desc: "Funded by a government agency, department, or program" },
-  { value: "Private",    icon: "🏢", desc: "Funded by private individuals, companies, or investors" },
-  { value: "Not funded yet", icon: "🌱", desc: "Currently self-funded or still seeking funding" },
+  { value: "Government",      icon: "🏛️", desc: "Funded by a government agency, department, or program" },
+  { value: "Private",         icon: "🏢", desc: "Funded by private individuals, companies, or investors" },
+  { value: "Not funded yet",  icon: "🌱", desc: "Currently self-funded or still seeking funding" },
 ];
 
 export default function FundingSourcePage() {

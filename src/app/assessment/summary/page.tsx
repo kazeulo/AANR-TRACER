@@ -6,11 +6,10 @@ import { categoryOrder } from "../../utils/helperConstants";
 import { useRouter } from "next/navigation";
 import type { MultiConditionalAnswer } from "../../utils/trlCalculator";
 import { getQuestionsJSON, prefetchQuestionsJSON } from "../../utils/questionsCache";
-import { ConfirmSubmitModal } from "./confirmSubmitModal";
-import { ConfirmChangeModal } from "./confirmChangeModal";
+import { ConfirmSubmitModal } from "@/components/summary/modals/confirmSubmitModal";
+import { ConfirmChangeModal } from "@/components/summary/modals/confirmChangeModal";
 
 // Types
-
 interface DropdownOption {
   label: string;
   value: string;

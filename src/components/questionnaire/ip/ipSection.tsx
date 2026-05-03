@@ -6,8 +6,8 @@ import {
     DUS_PVP_OPTIONS,
     ANIMAL_BREED_IP_STATUS_OPTIONS,
     IP_STATUS_OPTIONS,
-    REGION_CONTACTS
-} from "../../../../utils/ipHelpers";
+} from "@/constants/ip";
+import { IPTBM_CONTACTS } from "@/constants/contacts";
 import type { IPSectionProps } from "@/types/questions";
 
 // IP Section
@@ -209,7 +209,7 @@ export function IPSection({ label, ipData, onChange, technologyType }: IPSection
               For assistance with Intellectual Property Protection applications, you may contact the following Regional IP-TBM Offices under the RAISE Program.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
-              {REGION_CONTACTS.map(r => (
+              {IPTBM_CONTACTS.map(r => (
                 <div key={r.label} className="flex items-baseline gap-1.5 text-[12px]">
                   <span className="font-medium text-amber-800 flex-shrink-0">{r.label}</span>
                   <span className="text-amber-600">–</span>

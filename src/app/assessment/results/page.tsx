@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAssessment } from "@/contexts/AssessmentContext";
 import { calculateTRL, QuestionItem, TRLResult } from "../../utils/trlCalculator";
-import { IP_CATEGORY } from "../../utils/ipHelpers";
+import { IP_CATEGORY } from "@/constants/ip";
 import { usePDFExport, PDFContent, generateAndDownloadPDF, generatePDFAsBase64 } from "./exportPDF/UsePDFExport";
 import { getTracerInfo, TracerLevelInfo } from "../../utils/tracerDescriptions";
 import { getTracerLabel } from "./utils/Levelsdescription";

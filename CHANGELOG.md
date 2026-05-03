@@ -13,6 +13,8 @@ May 2026
 
 ## Changes
 - refactored chatbot component
+- refactored fontSizeZoom component
+- refactored homepage, followed srp
 - improve project structure
 
 ## Added
