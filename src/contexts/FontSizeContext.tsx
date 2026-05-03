@@ -1,15 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-
-// Config 
-
-const SCALES = [0.9, 1, 1.1, 1.2, 1.3] as const;
-const LABELS = ["Small", "Default", "Large", "X-Large", "XX-Large"] as const;
-const STORAGE_KEY = "aanr-font-scale";
-const DEFAULT_INDEX = 1; // "Default" = 1.0
-
-// Context
+import { SCALES, LABELS, DEFAULT_INDEX, SCALE_STORAGE_KEY } from "@/constants/fontSizeConfig";
 
 interface FontSizeContextValue {
   scaleIndex: number;
@@ -24,37 +16,33 @@ interface FontSizeContextValue {
 
 const FontSizeContext = createContext<FontSizeContextValue | null>(null);
 
-// Provider 
+function getInitialIndex(): number {
+  if (typeof window === "undefined") return DEFAULT_INDEX;
+  try {
+    const saved = localStorage.getItem(SCALE_STORAGE_KEY);
+    if (saved !== null) {
+      const idx = Number(saved);
+      if (idx >= 0 && idx < SCALES.length) return idx;
+    }
+  } catch { /* localStorage unavailable */ }
+  return DEFAULT_INDEX;
+}
 
 export function FontSizeProvider({ children }: { children: React.ReactNode }) {
-  const [scaleIndex, setScaleIndex] = useState<number>(DEFAULT_INDEX);
+  const [scaleIndex, setScaleIndex] = useState<number>(getInitialIndex);
 
-  // Load saved preference on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved !== null) {
-        const idx = Number(saved);
-        if (idx >= 0 && idx < SCALES.length) setScaleIndex(idx);
-      }
-    } catch { /* localStorage unavailable */ }
-  }, []);
-
-  // Apply zoom to <html> so ALL elements (px, rem, em, spacing) scale uniformly.
-  // iOS Safari doesn't support zoom on <html> — we work around this by also
-  // setting font-size as a fallback, and the CSS in globals.css pins the
-  // font-family so it never falls back to the system font.
   useEffect(() => {
     const scale = SCALES[scaleIndex];
     const root = document.documentElement;
     root.style.zoom = String(scale);
-    // iOS/WebKit fallback — won't scale px values but keeps fonts correct
+    // iOS/WebKit fallback — zoom is non-standard; font-size keeps text correct
     root.style.fontSize = `${16 * scale}px`;
     try {
-      localStorage.setItem(STORAGE_KEY, String(scaleIndex));
+      localStorage.setItem(SCALE_STORAGE_KEY, String(scaleIndex));
     } catch { /* ignore */ }
 
     return () => {
+      // Only runs on unmount (app teardown) — safe to clear
       root.style.zoom = "";
       root.style.fontSize = "";
     };
@@ -79,8 +67,6 @@ export function FontSizeProvider({ children }: { children: React.ReactNode }) {
     </FontSizeContext.Provider>
   );
 }
-
-// Hook
 
 export function useFontSize() {
   const ctx = useContext(FontSizeContext);

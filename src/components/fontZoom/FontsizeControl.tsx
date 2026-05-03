@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useFontSize } from "./FontsizeContext";
+import { useFontSize } from "@/contexts/FontSizeContext";
+import { TOOLTIP_SEEN_KEY } from "@/constants/fontSizeConfig";
 
-const STORAGE_KEY = "rrc-fontsize-tooltip-seen";
+// fixed panel width
+const PANEL_W = "w-[138px]";
 
 export default function FontSizeControl() {
   const { scaleIndex, label, canIncrease, canDecrease, increase, decrease, reset } = useFontSize();
@@ -12,16 +14,13 @@ export default function FontSizeControl() {
   const isDefault = scaleIndex === 1;
   const ref = useRef<HTMLDivElement>(null);
 
-  // Show tooltip automatically on first visit
   useEffect(() => {
-    const seen = sessionStorage.getItem(STORAGE_KEY);
+    const seen = sessionStorage.getItem(TOOLTIP_SEEN_KEY);
     if (!seen) {
-      // Small delay so the page has settled before it appears
       const showTimer = setTimeout(() => setAutoTooltip(true), 800);
-      // Auto-dismiss after 4 seconds
       const hideTimer = setTimeout(() => {
         setAutoTooltip(false);
-        sessionStorage.setItem(STORAGE_KEY, "1");
+        sessionStorage.setItem(TOOLTIP_SEEN_KEY, "1"); 
       }, 4800);
       return () => {
         clearTimeout(showTimer);
@@ -30,14 +29,13 @@ export default function FontSizeControl() {
     }
   }, []);
 
-  // Dismiss auto-tooltip immediately if user opens the panel
   function handleOpen() {
     setAutoTooltip(false);
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    sessionStorage.setItem(TOOLTIP_SEEN_KEY, "1"); 
     setOpen(true);
   }
 
-  // Close panel on outside click
+  // Outside click
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -49,10 +47,18 @@ export default function FontSizeControl() {
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open]);
+
   return (
     <div ref={ref} className="fixed left-0 top-3/4 -translate-y-1/2 z-10 flex items-center">
 
-      {/* Collapsed Aa button */}
       {!open && (
         <div className="relative group">
           <button
@@ -69,7 +75,6 @@ export default function FontSizeControl() {
             </span>
           </button>
 
-          {/* Auto-show tooltip on first visit */}
           <div
             className={`pointer-events-none absolute left-10 top-1/2 -translate-y-1/2
                         transition-all duration-300
@@ -90,7 +95,6 @@ export default function FontSizeControl() {
             </div>
           </div>
 
-          {/* Hover tooltip (always available after first visit) */}
           <div className="pointer-events-none absolute left-10 top-1/2 -translate-y-1/2
                           opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100">
             <div className="flex items-center">
@@ -109,15 +113,18 @@ export default function FontSizeControl() {
         </div>
       )}
 
-      {/* Expanded panel */}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          open ? "w-[138px] opacity-100" : "w-0 opacity-0"
+          open ? `${PANEL_W} opacity-100` : "w-0 opacity-0"
         }`}
       >
-        <div className="flex flex-col gap-3 w-[138px] rounded-r-2xl px-4 py-4
-                        shadow-xl border-y border-r border-[var(--color-accent-20)]"
+        <div className={`flex flex-col gap-3 ${PANEL_W} rounded-r-2xl px-4 py-4
+                        shadow-xl border-y border-r border-[var(--color-accent-20)]`}
             style={{ background: "var(--color-primary-mid)" }}>
+
+          <div role="status" aria-live="polite" className="sr-only">
+            Text size: {label}
+          </div>
 
           <p className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--color-accent)]">Text Size</p>
           <p className="text-[11px] text-white/70 font-light -mt-1">{label}</p>
