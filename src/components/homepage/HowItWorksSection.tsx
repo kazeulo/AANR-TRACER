@@ -8,7 +8,7 @@ export default function HowItWorksSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef      = useRef<HTMLDivElement>(null);
 
-  // parallax lives here now, not in page.tsx
+  // parallax lives here
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current || !bgRef.current) return;

@@ -1,62 +1,24 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { Search, X } from "lucide-react";
+import { useState, useRef } from "react";
+import { iconMap } from "@/constants/terms";
+import { Category } from "@/types/terms";
+
+// terms data
+import termsData from "@/data/terms.json";
+const categories = termsData.categories as Category[];
 
 function TermIcon({ name, size = 18, color = "#4aa35a" }: { name: string; size?: number; color?: string }) {
-  const s = { width: size, height: size, fill: "none", stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-  if (name === "leaf")     return <svg viewBox="0 0 24 24" style={s}><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>;
-  if (name === "fish")     return <svg viewBox="0 0 24 24" style={s}><path d="M6.5 12c0 0-3-3-4-5 2 0 5 1 7 3"/><path d="M6.5 12c0 0-3 3-4 5 2 0 5-1 7-3"/><ellipse cx="14" cy="12" rx="6" ry="4"/><circle cx="17" cy="10.5" r="1" fill={color} stroke="none"/></svg>;
-  if (name === "cog")      return <svg viewBox="0 0 24 24" style={s}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>;
-  if (name === "wrench")   return <svg viewBox="0 0 24 24" style={s}><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>;
-  if (name === "chip")     return <svg viewBox="0 0 24 24" style={s}><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M15 2v3M9 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>;
-  if (name === "seedling") return <svg viewBox="0 0 24 24" style={s}><path d="M12 22V10"/><path d="M12 10C12 10 7 9 5 5c3.5-1 7 1 7 5z"/><path d="M12 13c0 0 5-1 7-5-3.5-1-7 1-7 5z"/></svg>;
-  if (name === "animal")   return <svg viewBox="0 0 24 24" style={s}><path d="M19 9c0 4-2.5 7.4-6 8.7V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.3C7.5 16.4 5 13 5 9a7 7 0 0 1 14 0z"/><path d="M9 9h.01M15 9h.01"/></svg>;
-  if (name === "tree")     return <svg viewBox="0 0 24 24" style={s}><path d="M12 22v-7"/><path d="M9 7 7 22h10L15 7"/><path d="M12 7c0 0-3-5 0-7 3 2 0 7 0 7z"/></svg>;
-  if (name === "book")     return <svg viewBox="0 0 24 24" style={s}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>;
-  if (name === "bargraph") return <svg viewBox="0 0 24 24" style={s} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20V10" /><path d="M10 20V6" /><path d="M16 20V13" /><path d="M22 20H2" /></svg>;
-  return null;
+  const Icon = iconMap[name as keyof typeof iconMap];
+  if (!Icon) return null;
+  return <Icon size={size} color={color} strokeWidth={1.8} />;
 }
 
 export default function Terms() {
-  const [loading, setLoading] = useState(true); 
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
+  const [activeCategory, setActiveCategory] = useState(categories[0]?.title ?? "");
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
-
-  type Section = {
-    title: string;
-    definition: string;
-    examples?: string[];
-  };
-
-  type Category = {
-    title: string;
-    icon: string;
-    sections: Section[];
-  };
-
-const [categories, setCategories] = useState<Category[]>([]);
-
-  // fetch terminologies
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const res = await fetch("/data/terminologies.json");
-        const json = await res.json();
-        setCategories(json.categories);
-
-        if (json.categories.length > 0) {
-          setActiveCategory(json.categories[0].title);
-        }
-      } catch (err) {
-        console.error("Failed to load JSON", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
 
   const scrollToId = (id: string) => {
     setActiveCategory(id);
@@ -76,15 +38,9 @@ const [categories, setCategories] = useState<Category[]>([]);
       if (!q || cat.title.toLowerCase().includes(q) || sections.length > 0) return { ...cat, sections };
       return null;
     })
-    .filter(Boolean) as typeof categories;
+    .filter(Boolean) as Category[];
 
-  if (loading) {
-    return <div className="p-10 text-center">Loading...</div>;
-  }
-
-  if (!categories.length) {
-    return <div className="p-10 text-center">No data found</div>;
-  }
+  if (!categories.length) return <div className="p-10 text-center">No data found</div>;
 
   return (
     <main className="font-['DM Sans'] bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
@@ -95,11 +51,17 @@ const [categories, setCategories] = useState<Category[]>([]);
         <div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)", backgroundSize: "35px 35px" }} />
         
-        {/* glow */}
-        <div className="absolute -top-[150px] -right-[80px] w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle,rgba(74,163,90,0.15) 0%,transparent 70%)" }} />
+        {/* glows */}
+        <div className="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle,rgba(141,197,64,0.18) 0%,transparent 50%)" }} />
+
+        {/* blue glow */}
+        <div className="absolute -top-[100px] -left-[150px] w-[500px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle,rgba(0,173,241,0.10) 0%,transparent 70%)" }} />
+        
+        {/* hero */}
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <h1 className=" text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
+          <h1 className="text-[clamp(38px,5vw,60px)] text-white leading-[1.1] tracking-tight mb-5 max-w-[600px]">
             Terms &amp; <em className="text-[var(--color-accent)]">Definitions</em>
           </h1>
           <p className="text-[16px] text-[var(--color-text-faintest)] font-light max-w-[500px] leading-[1.7]">
@@ -116,22 +78,24 @@ const [categories, setCategories] = useState<Category[]>([]);
       {/* SEARCH */}
       <div className="bg-[#1a3d26] px-6 lg:px-[6vw] py-6">
         <div className="max-w-[1000px] mx-auto relative">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4a6657] pointer-events-none" width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8"/>
-            <path d="M16.5 16.5l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
+          <Search
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4a6657] pointer-events-none"
+            size={18}
+            strokeWidth={1.8}
+          />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search terms, definitions, or examples…"
-            className="w-full pl-12 pr-20 py-3.5 bg-[var(--white-10)] border border-[var(--white-35)]  rounded-xl text-[14px] text-white placeholder-white/40 font-light focus:outline-none focus:border-[#4aa35a] focus:bg-[var(--color-bg-card)]/10 transition-all"
+            className="w-full pl-12 pr-20 py-3.5 bg-[var(--white-10)] border border-[var(--white-35)] rounded-xl text-[14px] text-white placeholder-white/40 font-light focus:outline-none focus:border-[#4aa35a] focus:bg-[var(--color-bg-card)]/10 transition-all"
           />
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-white bg-[var(--white-15)] hover:bg-[var(--color-bg-card)] hover:text-black px-2.5 py-1 rounded-md transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[13px] text-white bg-[var(--white-15)] hover:bg-[var(--color-bg-card)] hover:text-black px-2.5 py-1 rounded-md transition-colors"
             >
+              <X size={12} strokeWidth={2} />
               Clear
             </button>
           )}
@@ -161,9 +125,11 @@ const [categories, setCategories] = useState<Category[]>([]);
                   : "border-transparent hover:bg-[#0f2e1a]/[0.04]"
               }`}
             >
-              <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-[14px] flex-shrink-0 ${
+              <span className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
                 activeCategory === cat.title ? "bg-[var(--color-accent)]/15" : "bg-[var(--color-bg)]"
-              }`}><TermIcon name={cat.icon} size={15} color={activeCategory === cat.title ? "#4aa35a" : "#6b7a75"} /></span>
+              }`}>
+                <TermIcon name={cat.icon} size={15} color={activeCategory === cat.title ? "#4aa35a" : "#6b7a75"} />
+              </span>
               <span className={`text-[12px] leading-[1.3] ${
                 activeCategory === cat.title ? "text-[var(--color-primary)] font-semibold" : "text-[#6b7a75] font-medium"
               }`}>{cat.title}</span>
@@ -176,10 +142,8 @@ const [categories, setCategories] = useState<Category[]>([]);
           {filtered.length === 0 ? (
             <div className="text-center py-20 text-[var(--color-text-faintest)] text-[15px] font-light">
               <div className="mb-3 w-10 h-10 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center mx-auto">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4aa35a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-              </svg>
-            </div>
+                <Search size={20} color="#4aa35a" strokeWidth={1.8} />
+              </div>
               No matching terms found for "<strong className="text-[var(--color-primary)]">{search}</strong>"
             </div>
           ) : (
@@ -194,7 +158,7 @@ const [categories, setCategories] = useState<Category[]>([]);
                   <div className="w-12 h-12 bg-[#0f2e1a] rounded-[14px] flex items-center justify-center flex-shrink-0">
                     <TermIcon name={cat.icon} size={22} color="#4aa35a" />
                   </div>
-                  <h2 className=" text-[26px] text-[var(--color-primary)] tracking-tight leading-[1.2]">
+                  <h2 className="text-[26px] text-[var(--color-primary)] tracking-tight leading-[1.2]">
                     {cat.title}
                   </h2>
                 </div>
@@ -205,29 +169,22 @@ const [categories, setCategories] = useState<Category[]>([]);
                     key={i}
                     className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden mb-4 hover:shadow-[0_6px_24px_rgba(15,46,26,0.07)] transition-shadow duration-200"
                   >
-                    {/* Card header */}
                     <div className="flex items-center gap-2.5 px-7 py-5 border-b border-[#f5f2ec]">
                       <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
                       <span className="text-[15px] font-semibold text-[var(--color-primary)]">{section.title}</span>
                     </div>
-                    {/* Card body */}
                     <div className="px-7 py-5">
                       <p className="text-[14px] leading-[1.85] text-[var(--color-text-gray)] font-light mb-5 text-justify">
                         {section.definition}
                       </p>
-                      
                       {section.examples && section.examples.length > 0 && (
                         <div className="bg-[var(--color-bg-subtle)] rounded-[10px] px-5 py-4">
                           <div className="text-[10px] font-bold tracking-[2px] uppercase text-[var(--color-accent)] mb-2.5">
                             Examples
                           </div>
-
                           <ul className="flex flex-col gap-1.5">
                             {section.examples.map((ex, j) => (
-                              <li
-                                key={j}
-                                className="flex items-start gap-2 text-[13px] text-[#5a6a65] font-light leading-[1.6]"
-                              >
+                              <li key={j} className="flex items-start gap-2 text-[13px] text-[#5a6a65] font-light leading-[1.6]">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] flex-shrink-0 mt-[6px]" />
                                 {ex}
                               </li>

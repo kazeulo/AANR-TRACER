@@ -1,7 +1,12 @@
-import { tracerLevels } from "@/app/utils/helperConstants";
-import { PARTNER_LOGOS } from "@/constants/homepage";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+
+// helper
+import { WaveRipple } from "@/utils/design/WaveRipple";
+import { tracerLevels } from "@/app/utils/helperConstants";
+
+// components
+import { PARTNER_LOGOS } from "@/constants/homepage";
 
 export default function HeroSection(){
 
@@ -18,13 +23,18 @@ export default function HeroSection(){
 
       {/* Glows */}
       <div className="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle,rgba(141,197,64,0.18) 0%,transparent 70%)" }} />
+        style={{ background: "radial-gradient(circle,rgba(141,197,64,0.18) 0%,transparent 50%)" }} />
       <div className="absolute -bottom-[100px] left-[30%] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle,rgba(141,197,64,0.07) 0%,transparent 70%)" }} />
 
+      {/* blue glow */}
       <div className="absolute -top-[100px] -left-[150px] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle,rgba(0,173,241,0.10) 0%,transparent 70%)" }} />
 
+      {/* Wave design */}
+      <WaveRipple className="absolute bottom-[70px] left-0 w-full text-[var(--color-accent-08)] pointer-events-none" />  
+
+      {/* website name + CTA */}
       <div className="relative z-10 max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         {/* Left */}
