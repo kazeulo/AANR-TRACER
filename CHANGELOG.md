@@ -19,6 +19,7 @@ May 2026
 
 ## Added
 - implement context window for chatbot
+- add tracer scale on sm and md screen sizes
 
 ## v1.3.0 - Refactoring, Follow best practices and conventions, clean-up organization
 

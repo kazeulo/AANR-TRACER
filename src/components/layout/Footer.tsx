@@ -90,13 +90,13 @@ export default function Footer() {
                 User Guide
               </a>
               <Link 
-                href="/https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
+                href="https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
                 className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit"
               >
                 Data Privacy Statement
               </Link>
               <Link 
-                href="/https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
+                href="https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link" 
                 className="block text-[13px] text-[var(--color-text-faintest)] font-light mb-2.5 hover:text-white transition-colors w-fit"
               >
                 Support
@@ -144,7 +144,7 @@ export default function Footer() {
             </p> */}
             <div className="flex gap-5">
               {[
-                { href: "/https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link", label: "Privacy Policy" },
+                { href: "https://drive.google.com/file/d/1baQGFaAyWe0yONORw3aArAEctstu1kHi/view?usp=drive_link", label: "Privacy Policy" },
                 { href: "/terms",   label: "Terms" },
                 // { href: "/support", label: "Support" },
               ].map(({ href, label }) => (
