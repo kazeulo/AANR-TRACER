@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAssessment } from "@/contexts/AssessmentContext";
+import { useAssessment } from "@/hooks/assessment/useAssessment";
 import { useEffect, useState } from "react";
 import { getQuestionsJSON } from "../../utils/questionsCache";
 

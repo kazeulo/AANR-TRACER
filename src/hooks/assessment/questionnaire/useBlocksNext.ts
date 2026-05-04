@@ -1,8 +1,7 @@
 "use client";
 
 import { IP_INITIATED_LABEL, PLANT_VARIETY_TYPES } from "@/constants/ip";
-import type { IPData, AnswerValue } from "@/contexts/AssessmentContext";
-import type { MultiConditionalAnswer } from "@/app/utils/trlCalculator";
+import type { AnswerValue, IPData, MultiConditionalAnswer } from "@/app/utils/trlCalculator";
 import type { Question } from "@/types/questions";
 
 interface UseBlocksNextProps {

@@ -1,6 +1,7 @@
-import { MultiConditionalAnswer } from "@/contexts/AssessmentContext";
+
 import { Question } from "@/types/questions";
 import { ABHContactPanel } from "../contacts/ABHContactPanel";
+import { MultiConditionalAnswer } from "@/types/assessment";
 
 // Multi-Conditional Question
 export function MultiConditionalQuestion({
