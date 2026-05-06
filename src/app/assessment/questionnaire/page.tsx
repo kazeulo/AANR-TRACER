@@ -94,7 +94,7 @@ export default function QuestionnairePage() {
             <span className="text-[11px] font-semibold text-[var(--color-accent)] uppercase tracking-[1.5px] truncate mr-4">
               {pagination.currentCategory}
             </span>
-            <span className="text-[11px] text-[var(--color-text-faintest)] font-light flex-shrink-0">
+            <span className="text-[11px] text-[var(--color-text)] font-light flex-shrink-0">
               Category {pagination.currentCategoryIndex + 1} of {orderedCategories.length}
               {!pagination.isIPCategory && ` · Page ${pagination.currentPage + 1} of ${pagination.totalPages}`}
             </span>
