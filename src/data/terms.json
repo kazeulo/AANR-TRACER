@@ -271,6 +271,18 @@
         {
           "title": "Potential Industry Partner",
           "definition": "A potential industry partner is not limited to a company that will license the technology. It can be any industry willing to enter into an agreement, such as a Collaborative Research Agreement (CRA), Research Service Agreement (RSA), or Memorandum of Agreement (MOA) to test the technology at an industry scale or to help improve it for future large-scale production."
+        },
+        {
+          "title": "Commercialization",
+          "definition": "Market-driven use of a technology to generate value (e.g., product sales, licensing, or startup creation)."
+        },
+        {
+          "title": "Extension",
+          "definition": "Sharing technologies or knowledge with end-users for adoption and capacity-building, without requiring licensing fees, royalties, or profit-sharing (e.g., free training on setting up longline mussel culture)."
+        },
+        {
+          "title": "Deployment",
+          "definition": "Use of a technology in real-world settings without market-based or profit-oriented activities (e.g., free use of longline mussel culture by farmers)."
         }
       ]
     }
