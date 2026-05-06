@@ -2,6 +2,8 @@
 "use client";
 
 import { useEffect } from "react";
+
+// components
 import HeroSection        from "@/components/homepage/HeroSection";
 import StatsStrip         from "@/components/homepage/StatStrip";
 import AanrSectorSection  from "@/components/homepage/AanrSectorSection";

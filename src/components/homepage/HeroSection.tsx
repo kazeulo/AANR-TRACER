@@ -12,7 +12,7 @@ export default function HeroSection() {
   const router = useRouter();
 
   return (
-    <section className="relative flex items-start lg:items-center bg-[var(--color-primary)] overflow-hidden px-5 sm:px-6 md:px-[5vw] lg:px-[6vw] pt-[80px] sm:pt-[80px] pb-[100px] sm:pb-[110px]">
+    <section className="relative flex items-start lg:items-center bg-[var(--color-primary)] overflow-hidden px-5 sm:px-6 md:px-[5vw] lg:px-[6vw] pt-[80px] sm:pt-[60px] pb-[100px] sm:pb-[110px]">
 
       {/* Grid design */}
       <div
@@ -42,7 +42,7 @@ export default function HeroSection() {
 
         {/* Left */}
         <div>
-          <h1 className="text-[clamp(26px,7.5vw,55px)] sm:text-[clamp(30px,5.5vw,55px)] xl:text-[clamp(36px,4.2vw,55px)] leading-[1.12] text-white mb-4 sm:mb-5 tracking-tight">
+          <h1 className="text-[clamp(35px,7.5vw,55px)] sm:text-[clamp(30px,5.5vw,55px)] xl:text-[clamp(36px,4.2vw,55px)] leading-[1.12] text-white mb-4 sm:mb-5 tracking-tight">
             Technology Readiness<br />
             Assessment for{" "}
             <em className="text-[var(--color-accent)] italic">Commercialization</em>

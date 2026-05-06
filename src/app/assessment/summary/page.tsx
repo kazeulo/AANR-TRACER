@@ -2,14 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
+// hooks
 import { useAssessment } from "@/hooks/assessment/useAssessment";
-import { categoryOrder } from "../../utils/helperConstants";
-import { getQuestionsJSON, prefetchQuestionsJSON } from "../../utils/questionsCache";
+
+// types
+import type { Question } from "@/types/questions";
+
+// components
 import { ConfirmSubmitModal } from "@/components/summary/modals/confirmSubmitModal";
 import { TechnologyDetailsCard } from "@/components/summary/TechnologyDetailsCard";
 import { CategoryCard } from "@/components/summary/CategoryCard";
 import { IPSummary } from "@/components/summary/IPSummary";
-import type { Question } from "@/types/questions";
+
+// data
+import { getQuestionsJSON, prefetchQuestionsJSON } from "../../utils/questionsCache";
+import { categoryOrder } from "@/constants/categories";
 
 export default function SummaryPage() {
   const { data, updateData } = useAssessment();

@@ -1,24 +1,3 @@
-export const categoryOrder = [
-  "Technology Development Status",
-  "Market and Pre-commercialization Preparedness",
-  "Intellectual Property Protection Status",
-  "Industry Validation and Adoption Status",
-  "Regulatory Compliance Status",
-];
-
-export const categoryDescriptions: Record<string, string> = {
-  "Technology Development Status":
-    "Assess where your technology stands in terms of development, functionality, and readiness for real-world use.",
-  "Market and Pre-commercialization Preparedness":
-    "Evaluate how prepared your technology is to enter the market and meet customer needs.",
-  "Intellectual Property Protection Status":
-    "Review the protections in place for your innovation, such as patents and trademarks.",
-  "Industry Validation and Adoption Status":
-    "Check how your technology is being accepted and used within your target industry or sector.",
-  "Regulatory Compliance Status":
-    "Ensure your technology meets all necessary legal and industry standards for safety and quality.",
-};
-
 export const tracerLevels = [
   { n: 1, label: "Concept & Market Definition",                     w: "w-[11%]",  color: "bg-slate-400" },
   { n: 2, label: "Design / Formulation / Prototype Planning",       w: "w-[22%]",  color: "bg-slate-500" },
