@@ -1,10 +1,5 @@
 "use client";
 
-// components/ui/Tooltip.tsx
-//
-// Hover shows the bubble. Clicking locks it open.
-// Clicking again or clicking outside dismisses it.
-
 import { useState, useRef, useEffect } from "react";
 
 export function Tooltip({
@@ -53,7 +48,7 @@ export function Tooltip({
         className={`font-medium text-[#1a5c2a] underline decoration-dotted underline-offset-[3px] cursor-help transition-colors ${
           locked
             ? "decoration-[#2d7a3a]"           // solid underline when locked
-            : "decoration-[#2d7a3a]/50"         // dotted when just hovering
+            : "decoration-[#2d7a3a]/50"        // dotted when just hovering
         }`}
       >
         {children}

@@ -7,8 +7,8 @@ import {
     ANIMAL_BREED_IP_STATUS_OPTIONS,
     IP_STATUS_OPTIONS,
 } from "@/constants/ip";
-import { IPTBM_CONTACTS } from "@/constants/contacts";
 import type { IPSectionProps } from "@/types/questions";
+import { IPTBMContactPanel } from "../contacts/IPTBMContactPanel";
 
 // IP Section
 export function IPSection({ label, ipData, onChange, technologyType }: IPSectionProps) {
@@ -201,23 +201,7 @@ export function IPSection({ label, ipData, onChange, technologyType }: IPSection
 
         {/* NO — Regional IP-TBM contacts */}
         {current.initiated === "no" && (
-          <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl space-y-3">
-            <p className="text-[14px] font-semibold text-amber-800">
-              Protecting your technology is an important step toward commercialization.
-            </p>
-            <p className="text-[13px] text-amber-700 font-light leading-relaxed">
-              For assistance with Intellectual Property Protection applications, you may contact the following Regional IP-TBM Offices under the RAISE Program.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
-              {IPTBM_CONTACTS.map(r => (
-                <div key={r.label} className="flex items-baseline gap-1.5 text-[12px]">
-                  <span className="font-medium text-amber-800 flex-shrink-0">{r.label}</span>
-                  <span className="text-amber-600">–</span>
-                  <a href={`mailto:${r.email}`} className="text-[var(--color-accent)] hover:underline underline-offset-2 truncate">{r.email}</a>
-                </div>
-              ))}
-            </div>
-          </div>
+          <IPTBMContactPanel />
         )}
 
         {/* TRADE SECRET */}
