@@ -1,3 +1,5 @@
+import { ABHRegion, IPTBMRegion } from "@/types/contacts";
+
 // ABH Regional Contacts
 export const ABH_REGIONS: ABHRegion[] = [
   {

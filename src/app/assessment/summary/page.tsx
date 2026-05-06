@@ -17,7 +17,7 @@ import { IPSummary } from "@/components/summary/IPSummary";
 
 // data
 import { getQuestionsJSON, prefetchQuestionsJSON } from "../../utils/questionsCache";
-import { categoryOrder } from "@/constants/questionnaire";
+import { categoryOrder } from "@/constants/categories";
 
 export default function SummaryPage() {
   const { data, updateData } = useAssessment();

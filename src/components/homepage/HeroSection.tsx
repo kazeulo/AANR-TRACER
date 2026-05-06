@@ -12,7 +12,7 @@ export default function HeroSection() {
   const router = useRouter();
 
   return (
-    <section className="relative flex items-start lg:items-center bg-[var(--color-primary)] overflow-hidden px-5 sm:px-6 md:px-[5vw] lg:px-[6vw] pt-[80px] sm:pt-[80px] pb-[100px] sm:pb-[110px]">
+    <section className="relative flex items-start lg:items-center bg-[var(--color-primary)] overflow-hidden px-5 sm:px-6 md:px-[5vw] lg:px-[6vw] pt-[80px] sm:pt-[60px] pb-[100px] sm:pb-[110px]">
 
       {/* Grid design */}
       <div

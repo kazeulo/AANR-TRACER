@@ -6,7 +6,7 @@ import { useState } from "react";
 // utils
 import { useAssessment} from "@/hooks/assessment/useAssessment";
 import { IPData, MultiConditionalAnswer } from "@/types/assessment";
-import { categoryDescriptions } from "@/constants/questionnaire";
+import { categoryDescriptions } from "@/constants/categories";
 import { IP_INITIATED_LABEL } from "@/constants/ip";
 
 // hooks
