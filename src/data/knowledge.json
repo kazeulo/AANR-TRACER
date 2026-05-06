@@ -242,29 +242,6 @@
       "answer": "A confined field trial is a controlled outdoor experiment for genetically modified or gene-edited crops that is conducted under strict biosafety containment measures to prevent unintended release into the environment. It is a regulatory requirement for GM/gene-edited plant varieties in the Philippines, overseen by the Department of Agriculture - Bureau of Plant Industry (DA-BPI) under the biosafety regulatory framework."
     },
 
-    {
-      "id": "glossary_ibc",
-      "topic": "glossary",
-      "question": "What is IBC approval?",
-      "keywords": ["ibc", "institutional biosafety committee", "biosafety", "biosafety approval"],
-      "answer": "IBC stands for Institutional Biosafety Committee — an internal committee at a research institution that reviews and approves research involving genetically modified organisms (GMOs) or gene-editing to ensure it complies with biosafety regulations. IBC approval is required before conducting gene editing or GM work in the laboratory, and is listed as an early requirement for Gene-Edited and GM plant variety development."
-    },
-
-    {
-      "id": "glossary_packaging_compatibility",
-      "topic": "glossary",
-      "question": "What is packaging compatibility validation?",
-      "keywords": ["packaging", "packaging compatibility", "packaging validation", "shelf life packaging"],
-      "answer": "Packaging compatibility validation tests whether a product's packaging material is suitable for maintaining product safety, quality, and shelf-life under actual storage and distribution conditions. It checks for issues like chemical migration from packaging to product, seal integrity, and physical protection. For food products, this is required at TRACER Level 7; for fertilizers and pesticides, at TRACER Level 6."
-    },
-
-    {
-      "id": "glossary_production_manual",
-      "topic": "glossary",
-      "question": "What is a production manual?",
-      "keywords": ["production manual", "manufacturing manual", "process manual", "sop", "standard operating procedure"],
-      "answer": "A production manual is a documented set of standardized procedures that describes how to consistently manufacture or produce a product at a given scale. It includes formulation, equipment settings, process parameters, quality checkpoints, and safety protocols. At pilot scale, a production manual ensures the process can be replicated; at industry scale, it forms the basis for GMP compliance."
-    },
 
     {
       "id": "ip_patent",
@@ -422,7 +399,7 @@
       "id": "raise_program",
       "topic": "program",
       "question": "What is the RAISE Program?",
-      "keywords": ["raise", "raise program", "raise agribusiness", "agribusiness hub", "abh"],
+      "keywords": ["raise", "raise program", "raise agribusiness"],
       "answer": "RAISE stands for Regional Agri-based Industries and Small Enterprise Development Program — a DOST-PCAARRD initiative that supports agricultural and fisheries enterprises through technology transfer, business development, and market linkage. Under RAISE, Agribusiness Hub (ABH) projects in each region provide support for pre-commercialization activities including packaging, market testing, and promotional materials. For pre-commercialization packaging assistance, researchers can contact their regional ABH."
     },
 
@@ -806,6 +783,34 @@
         "upv ttbdo tracer"
       ],
       "answer": "The TRACER Application is a collaborative project developed by the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD), the University of the Philippines Visayas Technology Transfer and Business Development Office (UPV TTBIDO), the Western Visayas RAISE Program, and the Agribusiness Hub Western Visayas. It was created to support the assessment and commercialization of AANR technologies."
+    },
+    {
+      "id": "support_contact",
+      "topic": "data",
+      "question": "Who should I contact for technical or methodological support?",
+      "keywords": ["support", "help", "contact", "assistance"],
+      "answer": "For technical assistance or clarification on methodology, contact your institutional technology transfer office or refer to the support materials provided on the AANR TRACER Application website."
+    },
+    {
+      "id": "ip_tbm_definition",
+      "topic": "program",
+      "question": "What is IP-TBM?",
+      "keywords": ["ip-tbm", "intellectual property tbm", "technology business management", "ip management office"],
+      "answer": "Intellectual Property and Technology Business Management (IP-TBM) refers to a network of offices established through funding support from the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD). These offices are tasked with protecting, managing, and commercializing intellectual property generated from research and development activities. Established in 2017, IP-TBM offices serve as one-stop hubs within state universities, colleges, and research institutions in the AANR sector to facilitate IP management, technology transfer, and business development."
+    },
+    {
+      "id": "atbi_definition",
+      "topic": "program",
+      "question": "What is ATBI?",
+      "keywords": ["atbi", "agri aqua incubator", "technology business incubator", "startup support aanr"],
+      "answer": "Agri-Aqua Technology Business Incubator (ATBI) refers to a program funded by the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD). It is designed to support, mentor, and accelerate the development of spinoffs, startups, and entrepreneurs in the AANR sector. The program assists incubatees in commercializing research-based technologies, improving products and processes, and scaling their ventures into sustainable and competitive businesses."
+    },
+    {
+      "id": "agribusiness_hub_definition",
+      "topic": "program",
+      "question": "What is an Agribusiness Hub?",
+      "keywords": ["agribusiness hub", "abh", "raise program hub", "commercialization support hub"],
+      "answer": "An Agribusiness Hub (ABH) is a project component of the RAISE Program of the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD). It serves as a regional one-stop hub dedicated to transforming research outputs into market-ready agri-aqua enterprises through pre-commercialization support. The ABH facilitates technology commercialization by providing assistance and enabling linkages among inventors, investors, and other stakeholders, promoting innovation-driven agribusiness development and regional wealth creation."
     }
   ]
 }

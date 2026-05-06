@@ -7,7 +7,7 @@ import type { Message } from "@/types/assistant";
 
 // constants
 const MODEL              = "gpt-4o-mini" as const;
-const TEMPERATURE        = 0.4;
+const TEMPERATURE        = 0.3;
 const RETRIEVAL_TOP_K    = 4;
 
 // caps to avoid abuse

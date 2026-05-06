@@ -283,6 +283,18 @@
         {
           "title": "Deployment",
           "definition": "Use of a technology in real-world settings without market-based or profit-oriented activities (e.g., free use of longline mussel culture by farmers)."
+        },
+        {
+          "title": "IP-TBM",
+          "definition": "Intellectual Property and Technology Business Management (IP-TBM) refers to a network of offices established through funding support from the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD). These offices are tasked with protecting, managing, and commercializing intellectual property (IP) generated from research and development activities. Established in 2017, IP-TBM offices serve as one-stop hubs within state universities, colleges, and research institutions, particularly in the agriculture, aquatic, and natural resources (AANR) sectors, to facilitate IP management, technology transfer, and business development."
+        },
+        {
+          "title": "ATBI",
+          "definition": "Agri-Aqua Technology Business Incubator (ATBI) refers to a program funded by the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD). It is designed to support, mentor, and accelerate the development of spinoffs, startups, and entrepreneurs in the agriculture, aquatic, and natural resources (AANR) sectors. The program assists incubatees in commercializing research-based technologies, improving products and processes, and scaling their ventures into sustainable and competitive businesses."
+        },
+        {
+          "title": "Agribusiness Hub",
+          "defini tion": "Agribusiness Hub (ABH) is a project component of the RAISE Program of the Department of Science and Technology – Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development (DOST-PCAARRD). It serves as a regional one-stop hub dedicated to transforming research outputs into market-ready agri-aqua enterprises through pre-commercialization support. The ABH facilitates technology commercialization by providing assistance and enabling linkages among inventors, investors, and other key stakeholders. It aims to promote innovation-driven agribusiness development and support wealth creation across regions."
         }
       ]
     }
