@@ -1,7 +1,7 @@
 // ABH Regional Contacts
 
 export const ABH_REGIONS = [
-  { region: "CAR",        university: "BSU"        },
+  { region: "CAR",                         university: "BSU",        email: "agribusinesshubraisecar@gmail.com"},
   { region: "Region 1: Ilocos",            university: "MMSU"       },
   { region: "Region 2: Cagayan Valley",    university: "ISU"        },
   { region: "Region 3: Central Luzon",     university: "PCC @ CLSU" },
@@ -19,8 +19,8 @@ export const ABH_REGIONS = [
 
 // ATBI regions
 export const ATBI_REGIONS = [
-  { region: "CAR",        university: "BSU"        },
-  { region: "Region 1: Ilocos",            university: "MMSU"       },
+  { region: "CAR",                         university: "BSU"        },
+  { region: "Region 1: Ilocos",            university: "MMSU",      },
   { region: "Region 2: Cagayan Valley",    university: "ISU"        },
   { region: "Region 3: Central Luzon",     university: "PCC @ CLSU" },
   { region: "Region 4: Southern Tagalog",  university: "CvSU"       },
@@ -38,7 +38,7 @@ export const ATBI_REGIONS = [
 // IP contacts
 export const IPTBM_CONTACTS = [
   { label: "Cordillera Administrative Region(CAR)", email: "car@email.com" },
-  { label: "Region 1: Ilocos", email: "region1@email.com"},
+  { label: "Region 1: Ilocos", email: "dsbucao@mmsu.edu.ph/uitso@mmsu.edu.ph"},
   { label: "Region 2: Cagayan Valley", email: "region2@email.com"},
   { label: "Region 3: Central Luzon", email: "region3@email.com"},
   { label: "Region 4: Southern Tagalog", email: "region4@gmail.com"},
