@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v1.3.2 - Revisions from May 05 meeting
+MAy 2026
+
+## added
+
+- revised diclaimer page, added definition for some terms
+
 ## v1.3.1 - Refactoring, Follow best practices and conventions, clean-up
 May 2026
 
@@ -43,9 +50,6 @@ March 2026
 - Questions after `precom_docs` backfill into the before-batch if space is available, preventing single-question orphan pages
 - ABH (Agribusiness Hub) regional contact panel — structured table of 14 regions with corresponding universities and email addresses, shown when user selects "No" on pre-commercialization documents
 - ATBI (Agri-based Technology Business Incubator) contact panel — shows relevant regulatory body, website link, and full ABH/RAISE regional contacts, shown when user selects "Not Yet Initiated" on certification questions
-- IP questions filtered out of AI roadmap generation — IP steps no longer appear in the commercialization roadmap
-- Funding source added to generated PDF report
-- `questions-to-csv.mjs` export script — converts `questions.json` to a client-readable CSV with full option/choice expansion per row including TRL satisfied per choice and checklist sub-items
 - Add assistant chatbot
 
 ### Fixed
