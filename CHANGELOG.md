@@ -11,9 +11,12 @@ All notable changes to this project will be documented in this file.
 ## v1.3.2 - Revisions from May 05 meeting
 MAy 2026
 
-## added
+## Changes
+- revised disclaimer page
+- revised contact panels
 
-- revised diclaimer page, added definition for some terms
+## Added
+- added definition for some terms
 
 ## v1.3.1 - Refactoring, Follow best practices and conventions, clean-up
 May 2026
