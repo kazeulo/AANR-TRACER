@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { getQuestionsJSON } from "@/app/utils/questionsCache";
-import { categoryOrder } from "@/app/utils/helperConstants";
+import { categoryOrder } from "@/constants/questionnaire";
 import { IP_CATEGORY } from "@/constants/ip";
 import type { Question } from "@/types/questions";
 

@@ -6,7 +6,7 @@ import { useState } from "react";
 // utils
 import { useAssessment} from "@/hooks/assessment/useAssessment";
 import { IPData, MultiConditionalAnswer } from "@/types/assessment";
-import { categoryDescriptions } from "../../utils/helperConstants";
+import { categoryDescriptions } from "@/constants/questionnaire";
 import { IP_INITIATED_LABEL } from "@/constants/ip";
 
 // hooks
@@ -121,7 +121,7 @@ export default function QuestionnairePage() {
             {pagination.currentCategory}
           </h1>
           {categoryDescriptions[pagination.currentCategory] && (
-            <p className="text-[14px] text-[var(--color-text-faint)] font-light leading-relaxed max-w-2xl">
+            <p className="text-[14px] text-[var(--color-text-gray)] font-light leading-relaxed max-w-2xl">
               {categoryDescriptions[pagination.currentCategory]}
             </p>
           )}
